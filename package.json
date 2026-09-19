@@ -1,0 +1,14 @@
+{
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "clean": "rimraf src/.observablehq/cache",
+    "dev": "observable preview",
+    "build": "observable build",
+    "deploy": "observable deploy",
+    "observable": "observable"
+  },
+  "dependencies": {
+    "@observablehq/framework": "^1"
+  }
+}

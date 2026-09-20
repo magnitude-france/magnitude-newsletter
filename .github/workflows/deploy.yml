@@ -33,6 +33,18 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Copy static numero assets (deep dives, numero pages)
+        # Observable Framework only auto-copies files it detects as
+        # referenced via <img>/<link>/<audio>/<video> attributes (or an
+        # explicit FileAttachment() call) at build time -- plain <a href>
+        # links (our "Lire le deep dive" / "Voir le numéro complet"
+        # links) are treated purely as internal page-routing hints and
+        # never trigger a file copy. Without this step, the .html report
+        # pages under src/numeros/ never end up in dist/, so those links
+        # 404 on the deployed site even though the charts (referenced via
+        # <img src>) build correctly on their own.
+        run: cp -r src/numeros dist/numeros
+
       - name: Copy CNAME (custom domain magnitude.pub)
         run: cp CNAME dist/CNAME
 

@@ -10,7 +10,7 @@ sidebar: false
    une cohérence visuelle entre le site, le front clickable et l'email. */
 :root {
   --accent: #D97706;
-  --reference: #2A78D6;
+  --reference: #3D5A6C;
   --ink: #0B0B0B;
   --ink-secondary: #52514E;
   --ink-muted: #898781;
@@ -58,6 +58,7 @@ body {
   line-height: 1.2;
   margin: 0 0 20px;
   max-width: 18ch;
+  color: var(--ink);
 }
 .mg-lede {
   font-size: 18px;
@@ -70,11 +71,12 @@ body {
   font-family: Georgia, "Times New Roman", serif;
   font-size: 28px;
   margin: 0 0 24px;
+  color: var(--ink);
 }
 .mg-cta {
   display: inline-block;
   background: var(--accent);
-  color: #fff;
+  color: #fff !important;
   text-decoration: none;
   font-weight: 700;
   font-size: 15px;
@@ -85,7 +87,7 @@ body {
 .mg-cta-ghost {
   display: inline-block;
   border: 1px solid var(--accent);
-  color: var(--accent);
+  color: var(--accent) !important;
   text-decoration: none;
   font-weight: 700;
   font-size: 14px;
@@ -96,7 +98,7 @@ body {
 
 .mg-pillars { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; margin-top: 8px; }
 .mg-pillar { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 22px 22px; }
-.mg-pillar h3 { font-size: 15px; margin: 0 0 8px; }
+.mg-pillar h3 { font-size: 15px; margin: 0 0 8px; color: var(--ink); }
 .mg-pillar p { font-size: 14px; color: var(--ink-secondary); margin: 0; line-height: 1.55; }
 
 .mg-not-list { list-style: none; padding: 0; margin: 24px 0 0; }
@@ -106,8 +108,9 @@ body {
 .mg-example { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: center; margin-top: 28px; }
 .mg-example img { width: 100%; border-radius: 6px; border: 1px solid var(--border); display: block; }
 .mg-example .mg-tag { display:inline-block; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.04em; padding:3px 9px; border-radius:3px; background:#f3ede2; color:#92610a; margin-bottom:12px; }
-.mg-example h3 { font-family: Georgia, serif; font-size: 19px; margin: 0 0 10px; }
+.mg-example h3 { font-family: Georgia, serif; font-size: 19px; margin: 0 0 10px; color: var(--ink); }
 .mg-example p { font-size: 14.5px; color: var(--ink-secondary); line-height:1.6; margin: 0 0 14px; }
+.mg-example a { font-size: 14px; font-weight: 700; color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent); padding-bottom: 1px; }
 
 .mg-filters { display: flex; gap: 12px; flex-wrap: wrap; margin: 8px 0 28px; }
 .mg-filters select {
@@ -119,8 +122,8 @@ body {
 .mg-card img { width: 100%; height: auto; display: block; border-bottom: 1px solid var(--border); }
 .mg-card .mg-body { padding: 16px 18px 18px; }
 .mg-card .mg-tag { display:inline-block; font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.04em; padding:2px 8px; border-radius:3px; background:#f3ede2; color:#92610a; margin-bottom:9px; }
-.mg-card .mg-theme { display:inline-block; font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.04em; padding:2px 8px; border-radius:3px; background:#e9f0fa; color:var(--reference); margin-bottom:9px; margin-left:6px; }
-.mg-card h4 { font-family: Georgia, serif; font-size: 15.5px; line-height:1.35; margin: 0 0 12px; }
+.mg-card .mg-theme { display:inline-block; font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.04em; padding:2px 8px; border-radius:3px; background:#E7EEF0; color:var(--reference); margin-bottom:9px; margin-left:6px; }
+.mg-card h4 { font-family: Georgia, serif; font-size: 15.5px; line-height:1.35; margin: 0 0 12px; color: var(--ink); }
 .mg-card a { font-size: 13px; font-weight: 700; color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent); padding-bottom: 1px; }
 .mg-empty { color: var(--ink-muted); font-size: 14px; padding: 24px 0; }
 
@@ -129,7 +132,7 @@ body {
 .mg-offer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 24px; }
 .mg-offer { border: 1px solid var(--border); border-radius: 8px; padding: 24px 24px; background: var(--surface); }
 .mg-offer.mg-offer-premium { border-color: var(--accent); }
-.mg-offer h3 { font-family: Georgia, serif; font-size: 18px; margin: 0 0 6px; }
+.mg-offer h3 { font-family: Georgia, serif; font-size: 18px; margin: 0 0 6px; color: var(--ink); }
 .mg-offer .mg-price { font-size: 13px; color: var(--ink-muted); margin: 0 0 14px; }
 .mg-offer ul { padding-left: 18px; margin: 0; font-size: 14px; color: var(--ink-secondary); line-height: 1.7; }
 .mg-offer .mg-soon { display:inline-block; margin-top:14px; font-size:12px; color: var(--ink-muted); font-style: italic; }
@@ -219,7 +222,56 @@ body {
       <option value="">Toutes les familles politiques</option>
     </select>
   </div>
-  <div class="mg-grid" id="mg-grid"></div>
+  <div class="mg-grid" id="mg-grid">
+    <div class="mg-card" data-theme="Fiscalité" data-famille="Centre-droit — Horizons">
+      <img src="/numeros/0/charts/carte_03_philippe_fiscalite.png" alt="Philippe veut baisser la fiscalité des classes moyennes — où la France se situe-t-elle vraiment ?" loading="lazy">
+      <div class="mg-body">
+        <span class="mg-tag">Centre-droit — Horizons</span><span class="mg-theme">Fiscalité</span>
+        <h4>Philippe veut baisser la fiscalité des classes moyennes — où la France se situe-t-elle vraiment ?</h4>
+        <a href="/numeros/0/reports/carte_03_philippe_fiscalite.html">Lire le deep dive →</a>
+      </div>
+    </div>
+    <div class="mg-card" data-theme="Fiscalité &amp; patrimoine" data-famille="Centre-gauche — Place Publique">
+      <img src="/numeros/0/charts/carte_04_glucksmann_patrimoine.png" alt="Glucksmann veut taxer davantage les grandes fortunes — la concentration du patrimoine en 3 chiffres" loading="lazy">
+      <div class="mg-body">
+        <span class="mg-tag">Centre-gauche — Place Publique</span><span class="mg-theme">Fiscalité & patrimoine</span>
+        <h4>Glucksmann veut taxer davantage les grandes fortunes — la concentration du patrimoine en 3 chiffres</h4>
+        <a href="/numeros/0/reports/carte_04_glucksmann_patrimoine.html">Lire le deep dive →</a>
+      </div>
+    </div>
+    <div class="mg-card" data-theme="Institutions" data-famille="Droite — LR">
+      <img src="/numeros/0/charts/carte_02_retailleau_referendum.png" alt="Retailleau veut élargir le référendum — la France n'en a pas organisé depuis 21 ans" loading="lazy">
+      <div class="mg-body">
+        <span class="mg-tag">Droite — LR</span><span class="mg-theme">Institutions</span>
+        <h4>Retailleau veut élargir le référendum — la France n'en a pas organisé depuis 21 ans</h4>
+        <a href="/numeros/0/reports/carte_02_retailleau_referendum.html">Lire le deep dive →</a>
+      </div>
+    </div>
+    <div class="mg-card" data-theme="Climat" data-famille="Gauche écologiste — Les Écologistes">
+      <img src="/numeros/0/charts/carte_05_tondelier_climat.png" alt="Tondelier veut une fiscalité verte pour la transition — l'ampleur du décrochage de rythme" loading="lazy">
+      <div class="mg-body">
+        <span class="mg-tag">Gauche écologiste — Les Écologistes</span><span class="mg-theme">Climat</span>
+        <h4>Tondelier veut une fiscalité verte pour la transition — l'ampleur du décrochage de rythme</h4>
+        <a href="/numeros/0/reports/carte_05_tondelier_climat.html">Lire le deep dive →</a>
+      </div>
+    </div>
+    <div class="mg-card" data-theme="Logement" data-famille="Extrême-droite — RN">
+      <img src="/numeros/0/charts/carte_01_le_pen_logement.png" alt="Le Pen veut faciliter l'achat d'un premier logement — le vrai décrochage est ailleurs" loading="lazy">
+      <div class="mg-body">
+        <span class="mg-tag">Extrême-droite — RN</span><span class="mg-theme">Logement</span>
+        <h4>Le Pen veut faciliter l'achat d'un premier logement — le vrai décrochage est ailleurs</h4>
+        <a href="/numeros/0/reports/carte_01_le_pen_logement.html">Lire le deep dive →</a>
+      </div>
+    </div>
+    <div class="mg-card" data-theme="Institutions" data-famille="Extrême-gauche — LFI">
+      <img src="/numeros/0/charts/carte_06_melenchon_confiance.png" alt="Mélenchon veut une VIe République — la confiance dans les institutions au plus bas" loading="lazy">
+      <div class="mg-body">
+        <span class="mg-tag">Extrême-gauche — LFI</span><span class="mg-theme">Institutions</span>
+        <h4>Mélenchon veut une VIe République — la confiance dans les institutions au plus bas</h4>
+        <a href="/numeros/0/reports/carte_06_melenchon_confiance.html">Lire le deep dive →</a>
+      </div>
+    </div>
+  </div>
   <p class="mg-empty" id="mg-empty" style="display:none;">Aucune carte ne correspond à ce filtre.</p>
   <div class="mg-numero-link">
     <a class="mg-cta-ghost" href="/numeros/0/numero-0.html">Voir le numéro #0 complet →</a>
@@ -289,7 +341,7 @@ body {
         <li>Packs de crédits (dès 5 €) ou abonnement illimité</li>
         <li>Accès à l'intégralité du récit et de ses sources</li>
       </ul>
-      <span class="mg-soon">Pas encore actif — Magnitude démarre 100 % gratuite, le palier premium arrive une fois l'audience installée.</span>
+      <span class="mg-soon">En cours de construction — sera bientôt disponible. Magnitude démarre 100 % gratuite le temps que l'offre premium soit prête.</span>
     </div>
   </div>
 </section>
@@ -309,57 +361,30 @@ body {
 </section>
 
 <script type="module">
-// Données du grid "historique des numéros" — recopiées à la main depuis
-// magnitude-analysis/scripts/build_front.py (CARTES_ORDONNEES, numéro #0).
-// TODO (futur) : générer ce bloc automatiquement depuis le pipeline
-// Python plutôt que de le recopier à la main à chaque nouveau numéro.
-const numeros = [
-  {
-    numero: 0,
-    cartes: [
-      { slug: "philippe-fiscalite", candidat: "Édouard Philippe", famille: "Centre-droit — Horizons", theme: "Fiscalité",
-        titre: "Philippe veut baisser la fiscalité des classes moyennes — où la France se situe-t-elle vraiment ?",
-        chart: "/numeros/0/charts/carte_03_philippe_fiscalite.png",
-        deepDive: "/numeros/0/reports/carte_03_philippe_fiscalite.html" },
-      { slug: "glucksmann-patrimoine", candidat: "Raphaël Glucksmann", famille: "Centre-gauche — Place Publique", theme: "Fiscalité & patrimoine",
-        titre: "Glucksmann veut taxer davantage les grandes fortunes — la concentration du patrimoine en 3 chiffres",
-        chart: "/numeros/0/charts/carte_04_glucksmann_patrimoine.png",
-        deepDive: "/numeros/0/reports/carte_04_glucksmann_patrimoine.html" },
-      { slug: "retailleau-referendum", candidat: "Bruno Retailleau", famille: "Droite — LR", theme: "Institutions",
-        titre: "Retailleau veut élargir le référendum — la France n'en a pas organisé depuis 21 ans",
-        chart: "/numeros/0/charts/carte_02_retailleau_referendum.png",
-        deepDive: "/numeros/0/reports/carte_02_retailleau_referendum.html" },
-      { slug: "tondelier-climat", candidat: "Marine Tondelier", famille: "Gauche écologiste — Les Écologistes", theme: "Climat",
-        titre: "Tondelier veut une fiscalité verte pour la transition — l'ampleur du décrochage de rythme",
-        chart: "/numeros/0/charts/carte_05_tondelier_climat.png",
-        deepDive: "/numeros/0/reports/carte_05_tondelier_climat.html" },
-      { slug: "le-pen-logement", candidat: "Marine Le Pen", famille: "Extrême-droite — RN", theme: "Logement",
-        titre: "Le Pen veut faciliter l'achat d'un premier logement — le vrai décrochage est ailleurs",
-        chart: "/numeros/0/charts/carte_01_le_pen_logement.png",
-        deepDive: "/numeros/0/reports/carte_01_le_pen_logement.html" },
-      { slug: "melenchon-confiance", candidat: "Jean-Luc Mélenchon", famille: "Extrême-gauche — LFI", theme: "Institutions",
-        titre: "Mélenchon veut une VIe République — la confiance dans les institutions au plus bas",
-        chart: "/numeros/0/charts/carte_06_melenchon_confiance.png",
-        deepDive: "/numeros/0/reports/carte_06_melenchon_confiance.html" }
-    ]
-  }
-];
-
-const allCartes = numeros.flatMap(n => n.cartes.map(c => ({...c, numero: n.numero})));
-
+// Les cartes du grid "historique des numéros" sont maintenant du HTML
+// statique (voir ci-dessus), pas générées en JS : Observable Framework
+// ne détecte au moment du build que les images/liens présents dans le
+// HTML statique de la page pour les copier au bon endroit -- des <img>
+// injectées dynamiquement via innerHTML passaient inaperçues et
+// pointaient vers un chemin qui n'existait plus une fois le site
+// construit (d'où les images cassées). Ce script ne fait plus que
+// filtrer (afficher/masquer) les cartes déjà présentes dans le DOM.
+// TODO (futur) : générer les cartes statiques automatiquement depuis le
+// pipeline Python plutôt que de les recopier à la main à chaque numéro.
 const grid = document.getElementById("mg-grid");
 const empty = document.getElementById("mg-empty");
 const themeSelect = document.getElementById("mg-filter-theme");
 const familleSelect = document.getElementById("mg-filter-famille");
+const cards = Array.from(grid.querySelectorAll(".mg-card"));
 
 function uniq(arr) { return [...new Set(arr)]; }
 
-uniq(allCartes.map(c => c.theme)).sort().forEach(theme => {
+uniq(cards.map(c => c.dataset.theme)).sort().forEach(theme => {
   const opt = document.createElement("option");
   opt.value = theme; opt.textContent = theme;
   themeSelect.appendChild(opt);
 });
-uniq(allCartes.map(c => c.famille)).sort().forEach(famille => {
+uniq(cards.map(c => c.dataset.famille)).sort().forEach(famille => {
   const opt = document.createElement("option");
   opt.value = famille; opt.textContent = famille;
   familleSelect.appendChild(opt);
@@ -368,23 +393,13 @@ uniq(allCartes.map(c => c.famille)).sort().forEach(famille => {
 function render() {
   const theme = themeSelect.value;
   const famille = familleSelect.value;
-  const filtered = allCartes.filter(c =>
-    (!theme || c.theme === theme) && (!famille || c.famille === famille)
-  );
-  grid.innerHTML = "";
-  empty.style.display = filtered.length ? "none" : "block";
-  filtered.forEach(c => {
-    const card = document.createElement("div");
-    card.className = "mg-card";
-    card.innerHTML = `
-      <img src="${c.chart}" alt="${c.titre}" loading="lazy">
-      <div class="mg-body">
-        <span class="mg-tag">${c.famille}</span><span class="mg-theme">${c.theme}</span>
-        <h4>${c.titre}</h4>
-        <a href="${c.deepDive}">Lire le deep dive →</a>
-      </div>`;
-    grid.appendChild(card);
+  let visible = 0;
+  cards.forEach(card => {
+    const match = (!theme || card.dataset.theme === theme) && (!famille || card.dataset.famille === famille);
+    card.style.display = match ? "" : "none";
+    if (match) visible++;
   });
+  empty.style.display = visible ? "none" : "block";
 }
 
 themeSelect.addEventListener("change", render);

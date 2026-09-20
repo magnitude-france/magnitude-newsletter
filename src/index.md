@@ -357,7 +357,7 @@ body {
   <h2 class="mg-h2">Rejoindre Magnitude</h2>
   <p>Un email par semaine, pas plus. Désinscription en un clic, à tout moment.</p>
   <a class="mg-cta" href="https://buttondown.com/magnitude-publication">S'abonner gratuitement →</a>
-  <p style="margin-top:28px;">Réseaux sociaux : bientôt disponibles.</p>
+  <p style="margin-top:28px;">Suivez Magnitude sur <a href="https://x.com/magnitudefrance" target="_blank" rel="noopener">X (@magnitudefrance)</a>.</p>
   <p class="mg-legal">
     Magnitude — publication indépendante, magnitude.pub.
     Financement privé uniquement (publicité non partisane et

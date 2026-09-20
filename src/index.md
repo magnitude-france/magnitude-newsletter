@@ -118,8 +118,14 @@ body {
   border: 1px solid var(--border); background: #fff; color: var(--ink);
 }
 .mg-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
-.mg-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; }
+.mg-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; transition: box-shadow .15s ease, transform .15s ease; }
+.mg-card:hover { box-shadow: 0 6px 18px rgba(11,11,11,0.08); transform: translateY(-1px); }
 .mg-card img { width: 100%; height: auto; display: block; border-bottom: 1px solid var(--border); }
+.mg-card > a.mg-card-link { display: block; }
+.mg-card > a.mg-card-link img { transition: opacity .15s ease; }
+.mg-card > a.mg-card-link:hover img { opacity: 0.88; }
+.mg-card h4 a.mg-card-link { color: inherit; text-decoration: none; border-bottom: none; transition: color .15s ease; }
+.mg-card h4 a.mg-card-link:hover { color: var(--accent); }
 .mg-card .mg-body { padding: 16px 18px 18px; }
 .mg-card .mg-tag { display:inline-block; font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.04em; padding:2px 8px; border-radius:3px; background:#f3ede2; color:#92610a; margin-bottom:9px; }
 .mg-card .mg-theme { display:inline-block; font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.04em; padding:2px 8px; border-radius:3px; background:#E7EEF0; color:var(--reference); margin-bottom:9px; margin-left:6px; }
@@ -224,50 +230,50 @@ body {
   </div>
   <div class="mg-grid" id="mg-grid">
     <div class="mg-card" data-theme="Fiscalité" data-famille="Centre-droit — Horizons">
-      <img src="/numeros/0/charts/carte_03_philippe_fiscalite.png" alt="Philippe veut baisser la fiscalité des classes moyennes — où la France se situe-t-elle vraiment ?" loading="lazy">
+      <a class="mg-card-link" href="/numeros/0/reports/carte_03_philippe_fiscalite.html" aria-label="Lire le deep dive : Philippe veut baisser la fiscalité des classes moyennes — où la France se situe-t-elle vraiment ?"><img src="/numeros/0/charts/carte_03_philippe_fiscalite.png" alt="Philippe veut baisser la fiscalité des classes moyennes — où la France se situe-t-elle vraiment ?" loading="lazy"></a>
       <div class="mg-body">
         <span class="mg-tag">Centre-droit — Horizons</span><span class="mg-theme">Fiscalité</span>
-        <h4>Philippe veut baisser la fiscalité des classes moyennes — où la France se situe-t-elle vraiment ?</h4>
+        <h4><a class="mg-card-link" href="/numeros/0/reports/carte_03_philippe_fiscalite.html">Philippe veut baisser la fiscalité des classes moyennes — où la France se situe-t-elle vraiment ?</a></h4>
         <a href="/numeros/0/reports/carte_03_philippe_fiscalite.html">Lire le deep dive →</a>
       </div>
     </div>
     <div class="mg-card" data-theme="Fiscalité &amp; patrimoine" data-famille="Centre-gauche — Place Publique">
-      <img src="/numeros/0/charts/carte_04_glucksmann_patrimoine.png" alt="Glucksmann veut taxer davantage les grandes fortunes — la concentration du patrimoine en 3 chiffres" loading="lazy">
+      <a class="mg-card-link" href="/numeros/0/reports/carte_04_glucksmann_patrimoine.html" aria-label="Lire le deep dive : Glucksmann veut taxer davantage les grandes fortunes — la concentration du patrimoine en 3 chiffres"><img src="/numeros/0/charts/carte_04_glucksmann_patrimoine.png" alt="Glucksmann veut taxer davantage les grandes fortunes — la concentration du patrimoine en 3 chiffres" loading="lazy"></a>
       <div class="mg-body">
         <span class="mg-tag">Centre-gauche — Place Publique</span><span class="mg-theme">Fiscalité & patrimoine</span>
-        <h4>Glucksmann veut taxer davantage les grandes fortunes — la concentration du patrimoine en 3 chiffres</h4>
+        <h4><a class="mg-card-link" href="/numeros/0/reports/carte_04_glucksmann_patrimoine.html">Glucksmann veut taxer davantage les grandes fortunes — la concentration du patrimoine en 3 chiffres</a></h4>
         <a href="/numeros/0/reports/carte_04_glucksmann_patrimoine.html">Lire le deep dive →</a>
       </div>
     </div>
     <div class="mg-card" data-theme="Institutions" data-famille="Droite — LR">
-      <img src="/numeros/0/charts/carte_02_retailleau_referendum.png" alt="Retailleau veut élargir le référendum — la France n'en a pas organisé depuis 21 ans" loading="lazy">
+      <a class="mg-card-link" href="/numeros/0/reports/carte_02_retailleau_referendum.html" aria-label="Lire le deep dive : Retailleau veut élargir le référendum — la France n'en a pas organisé depuis 21 ans"><img src="/numeros/0/charts/carte_02_retailleau_referendum.png" alt="Retailleau veut élargir le référendum — la France n'en a pas organisé depuis 21 ans" loading="lazy"></a>
       <div class="mg-body">
         <span class="mg-tag">Droite — LR</span><span class="mg-theme">Institutions</span>
-        <h4>Retailleau veut élargir le référendum — la France n'en a pas organisé depuis 21 ans</h4>
+        <h4><a class="mg-card-link" href="/numeros/0/reports/carte_02_retailleau_referendum.html">Retailleau veut élargir le référendum — la France n'en a pas organisé depuis 21 ans</a></h4>
         <a href="/numeros/0/reports/carte_02_retailleau_referendum.html">Lire le deep dive →</a>
       </div>
     </div>
     <div class="mg-card" data-theme="Climat" data-famille="Gauche écologiste — Les Écologistes">
-      <img src="/numeros/0/charts/carte_05_tondelier_climat.png" alt="Tondelier veut une fiscalité verte pour la transition — l'ampleur du décrochage de rythme" loading="lazy">
+      <a class="mg-card-link" href="/numeros/0/reports/carte_05_tondelier_climat.html" aria-label="Lire le deep dive : Tondelier veut une fiscalité verte pour la transition — l'ampleur du décrochage de rythme"><img src="/numeros/0/charts/carte_05_tondelier_climat.png" alt="Tondelier veut une fiscalité verte pour la transition — l'ampleur du décrochage de rythme" loading="lazy"></a>
       <div class="mg-body">
         <span class="mg-tag">Gauche écologiste — Les Écologistes</span><span class="mg-theme">Climat</span>
-        <h4>Tondelier veut une fiscalité verte pour la transition — l'ampleur du décrochage de rythme</h4>
+        <h4><a class="mg-card-link" href="/numeros/0/reports/carte_05_tondelier_climat.html">Tondelier veut une fiscalité verte pour la transition — l'ampleur du décrochage de rythme</a></h4>
         <a href="/numeros/0/reports/carte_05_tondelier_climat.html">Lire le deep dive →</a>
       </div>
     </div>
     <div class="mg-card" data-theme="Logement" data-famille="Extrême-droite — RN">
-      <img src="/numeros/0/charts/carte_01_le_pen_logement.png" alt="Le Pen veut faciliter l'achat d'un premier logement — le vrai décrochage est ailleurs" loading="lazy">
+      <a class="mg-card-link" href="/numeros/0/reports/carte_01_le_pen_logement.html" aria-label="Lire le deep dive : Le Pen veut faciliter l'achat d'un premier logement — le vrai décrochage est ailleurs"><img src="/numeros/0/charts/carte_01_le_pen_logement.png" alt="Le Pen veut faciliter l'achat d'un premier logement — le vrai décrochage est ailleurs" loading="lazy"></a>
       <div class="mg-body">
         <span class="mg-tag">Extrême-droite — RN</span><span class="mg-theme">Logement</span>
-        <h4>Le Pen veut faciliter l'achat d'un premier logement — le vrai décrochage est ailleurs</h4>
+        <h4><a class="mg-card-link" href="/numeros/0/reports/carte_01_le_pen_logement.html">Le Pen veut faciliter l'achat d'un premier logement — le vrai décrochage est ailleurs</a></h4>
         <a href="/numeros/0/reports/carte_01_le_pen_logement.html">Lire le deep dive →</a>
       </div>
     </div>
     <div class="mg-card" data-theme="Institutions" data-famille="Extrême-gauche — LFI">
-      <img src="/numeros/0/charts/carte_06_melenchon_confiance.png" alt="Mélenchon veut une VIe République — la confiance dans les institutions au plus bas" loading="lazy">
+      <a class="mg-card-link" href="/numeros/0/reports/carte_06_melenchon_confiance.html" aria-label="Lire le deep dive : Mélenchon veut une VIe République — la confiance dans les institutions au plus bas"><img src="/numeros/0/charts/carte_06_melenchon_confiance.png" alt="Mélenchon veut une VIe République — la confiance dans les institutions au plus bas" loading="lazy"></a>
       <div class="mg-body">
         <span class="mg-tag">Extrême-gauche — LFI</span><span class="mg-theme">Institutions</span>
-        <h4>Mélenchon veut une VIe République — la confiance dans les institutions au plus bas</h4>
+        <h4><a class="mg-card-link" href="/numeros/0/reports/carte_06_melenchon_confiance.html">Mélenchon veut une VIe République — la confiance dans les institutions au plus bas</a></h4>
         <a href="/numeros/0/reports/carte_06_melenchon_confiance.html">Lire le deep dive →</a>
       </div>
     </div>

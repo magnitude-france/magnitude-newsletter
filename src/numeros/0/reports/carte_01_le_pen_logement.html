@@ -133,6 +133,36 @@
     font-style: italic;
     margin-top: 8px;
   }
+  .kpi-row {
+    display: flex;
+    gap: 14px;
+    margin: 0 0 40px;
+    flex-wrap: wrap;
+  }
+  .kpi-tile {
+    flex: 1 1 160px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--ink-muted);
+    border-radius: 6px;
+    padding: 16px 18px;
+  }
+  .kpi-tile.kpi-accent { border-left-color: var(--accent); }
+  .kpi-tile.kpi-reference { border-left-color: var(--reference); }
+  .kpi-value {
+    font-family: -apple-system, "Helvetica Neue", Arial, sans-serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.15;
+    font-variant-numeric: proportional-nums;
+  }
+  .kpi-label {
+    font-size: 12.5px;
+    color: var(--ink-secondary);
+    margin-top: 6px;
+    line-height: 1.35;
+  }
   .mg-back {
     display: inline-flex;
     align-items: center;
@@ -156,6 +186,8 @@
     <div class="meta">Marine Le Pen · Rassemblement National (Extrême-droite) · Mesure : Favoriser l'accession à la propriété</div>
 
     <div class="chiffre-cle">Depuis 2001, le taux de propriétaires occupants en France n'a progressé que d'environ 3 points d'indice (quasi plat), pendant que l'indice prix immobilier / revenu des ménages est resté durablement supérieur à son niveau de l'an 2000 — autour de 155 en 2024 contre 100 en 2000.</div>
+
+    
 
     <p>Marine Le Pen propose de faciliter l'achat d'un premier logement. Une intention lisible — mais qu'est-ce qui bloque vraiment aujourd'hui ? Le graphique ci-dessous met en regard deux évolutions sur 20 à 40 ans : la part de Français propriétaires de leur logement (presque plate), et le rapport entre prix immobiliers et revenus des ménages (qui a décroché au début des années 2000 et n'est jamais revenu à son niveau d'avant).</p>
 

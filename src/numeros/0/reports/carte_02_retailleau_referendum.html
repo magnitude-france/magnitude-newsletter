@@ -133,6 +133,36 @@
     font-style: italic;
     margin-top: 8px;
   }
+  .kpi-row {
+    display: flex;
+    gap: 14px;
+    margin: 0 0 40px;
+    flex-wrap: wrap;
+  }
+  .kpi-tile {
+    flex: 1 1 160px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--ink-muted);
+    border-radius: 6px;
+    padding: 16px 18px;
+  }
+  .kpi-tile.kpi-accent { border-left-color: var(--accent); }
+  .kpi-tile.kpi-reference { border-left-color: var(--reference); }
+  .kpi-value {
+    font-family: -apple-system, "Helvetica Neue", Arial, sans-serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.15;
+    font-variant-numeric: proportional-nums;
+  }
+  .kpi-label {
+    font-size: 12.5px;
+    color: var(--ink-secondary);
+    margin-top: 6px;
+    line-height: 1.35;
+  }
   .mg-back {
     display: inline-flex;
     align-items: center;
@@ -156,6 +186,8 @@
     <div class="meta">Bruno Retailleau · Les Républicains (Droite) · Mesure : Élargir le champ du référendum</div>
 
     <div class="chiffre-cle">La France a organisé 10 référendums nationaux en 68 ans de Ve République — mais aucun depuis 2005, soit 21 ans de silence référendaire.</div>
+
+    
 
     <p>Bruno Retailleau propose d'élargir le champ du référendum, y compris à des sujets institutionnels ou sociétaux aujourd'hui hors de portée de l'article 11. Avant de juger l'ampleur de la mesure, un chiffre simple : depuis combien de temps la France n'a-t-elle pas soumis une question à référendum national ?</p>
 

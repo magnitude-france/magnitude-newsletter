@@ -133,6 +133,36 @@
     font-style: italic;
     margin-top: 8px;
   }
+  .kpi-row {
+    display: flex;
+    gap: 14px;
+    margin: 0 0 40px;
+    flex-wrap: wrap;
+  }
+  .kpi-tile {
+    flex: 1 1 160px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--ink-muted);
+    border-radius: 6px;
+    padding: 16px 18px;
+  }
+  .kpi-tile.kpi-accent { border-left-color: var(--accent); }
+  .kpi-tile.kpi-reference { border-left-color: var(--reference); }
+  .kpi-value {
+    font-family: -apple-system, "Helvetica Neue", Arial, sans-serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.15;
+    font-variant-numeric: proportional-nums;
+  }
+  .kpi-label {
+    font-size: 12.5px;
+    color: var(--ink-secondary);
+    margin-top: 6px;
+    line-height: 1.35;
+  }
   .mg-back {
     display: inline-flex;
     align-items: center;
@@ -156,6 +186,27 @@
     <div class="meta">Raphaël Glucksmann · Place Publique (Centre-gauche) · Mesure : Taxation accrue des grandes fortunes et des multinationales</div>
 
     <div class="chiffre-cle">Selon les estimations de la Banque de France et de la Cour des comptes, la part du patrimoine national détenue par le 1 % le plus riche est passée d'environ 16 % en 1984 à 27 % en 2025 — l'INSEE, avec une méthode différente, mesure une concentration nettement plus stable et plus faible (environ 15-16 %).</div>
+
+    
+    <div class="kpi-row">
+      
+      <div class="kpi-tile kpi-accent">
+        <div class="kpi-value">27 %</div>
+        <div class="kpi-label">du patrimoine nationale pour le 1 % le plus riche en 2025 (WID/Banque de France/CPO)</div>
+      </div>
+      
+      <div class="kpi-tile kpi-reference">
+        <div class="kpi-value">15-16 %</div>
+        <div class="kpi-label">même part mesurée par l'INSEE (Enquête Patrimoine, méthode déclarative)</div>
+      </div>
+      
+      <div class="kpi-tile">
+        <div class="kpi-value">4,2 → 2,2 Md€</div>
+        <div class="kpi-label">rendement de l'impôt sur la fortune : ISF en 2017 contre IFI en 2024</div>
+      </div>
+      
+    </div>
+    
 
     <p>Raphaël Glucksmann propose de taxer davantage les grandes fortunes et les multinationales. Avant de juger l'ampleur de la mesure, un point de méthode essentiel : la concentration du patrimoine en France se mesure différemment selon la source, et ces deux mesures ne racontent pas tout à fait la même histoire.</p>
 

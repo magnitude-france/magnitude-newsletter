@@ -133,6 +133,36 @@
     font-style: italic;
     margin-top: 8px;
   }
+  .kpi-row {
+    display: flex;
+    gap: 14px;
+    margin: 0 0 40px;
+    flex-wrap: wrap;
+  }
+  .kpi-tile {
+    flex: 1 1 160px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--ink-muted);
+    border-radius: 6px;
+    padding: 16px 18px;
+  }
+  .kpi-tile.kpi-accent { border-left-color: var(--accent); }
+  .kpi-tile.kpi-reference { border-left-color: var(--reference); }
+  .kpi-value {
+    font-family: -apple-system, "Helvetica Neue", Arial, sans-serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.15;
+    font-variant-numeric: proportional-nums;
+  }
+  .kpi-label {
+    font-size: 12.5px;
+    color: var(--ink-secondary);
+    margin-top: 6px;
+    line-height: 1.35;
+  }
   .mg-back {
     display: inline-flex;
     align-items: center;
@@ -156,6 +186,8 @@
     <div class="meta">Jean-Luc Mélenchon · La France Insoumise (Extrême-gauche) · Mesure : VIe République (Assemblée constituante)</div>
 
     <div class="chiffre-cle">En janvier 2026, seuls 20 % des Français déclarent faire confiance à l'Assemblée nationale — le niveau le plus bas mesuré depuis la création du Baromètre de la confiance politique du CEVIPOF en 2009.</div>
+
+    
 
     <p>Jean-Luc Mélenchon propose une VIe République, portée par une assemblée constituante. Sans juger si ce serait la bonne réponse, un chiffre pour situer le climat de confiance dans lequel s'inscrit cette proposition.</p>
 

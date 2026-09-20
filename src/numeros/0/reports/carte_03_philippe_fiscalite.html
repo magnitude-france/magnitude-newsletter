@@ -133,6 +133,36 @@
     font-style: italic;
     margin-top: 8px;
   }
+  .kpi-row {
+    display: flex;
+    gap: 14px;
+    margin: 0 0 40px;
+    flex-wrap: wrap;
+  }
+  .kpi-tile {
+    flex: 1 1 160px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--ink-muted);
+    border-radius: 6px;
+    padding: 16px 18px;
+  }
+  .kpi-tile.kpi-accent { border-left-color: var(--accent); }
+  .kpi-tile.kpi-reference { border-left-color: var(--reference); }
+  .kpi-value {
+    font-family: -apple-system, "Helvetica Neue", Arial, sans-serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.15;
+    font-variant-numeric: proportional-nums;
+  }
+  .kpi-label {
+    font-size: 12.5px;
+    color: var(--ink-secondary);
+    margin-top: 6px;
+    line-height: 1.35;
+  }
   .mg-back {
     display: inline-flex;
     align-items: center;
@@ -156,6 +186,8 @@
     <div class="meta">Édouard Philippe · Horizons (Centre-droit) · Mesure : Baisse de la pression fiscale sur les classes moyennes et soutien aux PME</div>
 
     <div class="chiffre-cle">En 2024, 47.2 % du coût du travail d'un salarié moyen français part en impôts et cotisations — contre environ 35 % en moyenne dans les 38 pays de l'OCDE, mais un niveau proche de la moyenne des pays d'Europe de l'OCDE.</div>
+
+    
 
     <p>Édouard Philippe propose de baisser la pression fiscale sur les classes moyennes. Un chiffre neutre pour situer le débat : la part du coût du travail absorbée par l'impôt et les cotisations en France, comparée aux autres pays de l'OCDE.</p>
 

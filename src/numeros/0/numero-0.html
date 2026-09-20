@@ -134,9 +134,25 @@
     color: var(--ink-muted);
     border-top: 1px solid var(--border);
   }
+  .mg-back {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--ink-secondary);
+    text-decoration: none;
+    box-sizing: border-box;
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 24px 24px 0;
+  }
+  .mg-back:hover { color: var(--accent); }
+  .mg-back svg { width: 14px; height: 14px; flex-shrink: 0; }
 </style>
 </head>
 <body>
+  <a class="mg-back" href="/#historique"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>Retour à Magnitude</a>
   <header class="intro">
     <div class="brand">Magnitude</div>
     <h1>Numéro #0 — Six mesures, six familles politiques, un seul chiffre à chaque fois</h1>

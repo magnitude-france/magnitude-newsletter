@@ -45,6 +45,13 @@ jobs:
         # <img src>) build correctly on their own.
         run: cp -r src/numeros dist/numeros
 
+      - name: Copy static charter pages (same reason as above)
+        # charte-ton-style.html and charte-selection-sujets.html are only
+        # ever linked via plain <a href> (from the deep dive pages and
+        # from each other), so they hit the same Observable Framework
+        # limitation described above and need an explicit copy too.
+        run: cp src/charte-ton-style.html src/charte-selection-sujets.html dist/
+
       - name: Copy CNAME (custom domain magnitude.pub)
         run: cp CNAME dist/CNAME
 

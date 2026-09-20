@@ -1,6 +1,8 @@
 {
+  "name": "magnitude-newsletter",
   "type": "module",
   "private": true,
+  "description": "Magnitude — publication data sur la vie politique et citoyenne. Angle d'actualité actuel : la présidentielle 2027.",
   "scripts": {
     "clean": "rimraf src/.observablehq/cache",
     "dev": "observable preview",

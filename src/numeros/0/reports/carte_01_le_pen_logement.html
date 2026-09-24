@@ -172,6 +172,46 @@
     margin-top: 6px;
     line-height: 1.35;
   }
+  .declarations {
+    margin: 0 0 40px;
+    padding: 20px 24px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+  }
+  .declarations .label {
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+  .declaration { margin: 0 0 16px; }
+  .declaration:last-child { margin-bottom: 0; }
+  .declaration blockquote {
+    margin: 0;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 17px;
+    line-height: 1.5;
+    color: var(--ink);
+  }
+  .declaration .ctx { font-size: 13.5px; color: var(--ink-secondary); margin-top: 4px; }
+  .declaration .src { font-size: 13px; color: var(--ink-muted); margin-top: 6px; }
+  .declaration .src a { color: var(--reference); }
+  .decl-badge {
+    display: inline-block;
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 3px;
+    margin-top: 6px;
+  }
+  .decl-a { background: #e6f4ea; color: #1b6b34; }
+  .decl-b { background: #fef3e0; color: #92610a; }
+  .decl-c { background: #fbe7e5; color: #a3352c; }
   .mg-back {
     display: inline-flex;
     align-items: center;
@@ -193,6 +233,27 @@
     <div class="kicker">Magnitude — Deep dive — Numéro 0</div>
     <h1>Le Pen veut faciliter l'achat d'un premier logement — le vrai décrochage est ailleurs</h1>
     <div class="meta">Marine Le Pen · Rassemblement National (Extrême-droite) · Mesure : Favoriser l'accession à la propriété</div>
+
+    
+    <div class="declarations">
+      <div class="label">Ce que dit le candidat</div>
+      
+      <div class="declaration">
+        <blockquote>« Libérer la construction, valoriser le parc existant, encourager et protéger la propriété »</blockquote>
+        <div class="ctx">Les trois axes du plan logement présenté lors de son meeting de rentrée.</div>
+        
+        <div class="src">— Marine Le Pen, Discours · Meeting de rentrée, Hénin-Beaumont, 13 septembre 2026 — rapporté par France Mag ; Peperenews · <a href="https://www.francemag.fr/article/3544/presidentielle-2027-marine-le-pen-devoile-ses-propositions-sur-le-logement-et-veut-favoriser-l-accession-a-la-propriete">source</a></div>
+      </div>
+      
+      <div class="declaration">
+        <blockquote>« Notre ambition est d'aller vers une société de propriétaires »</blockquote>
+        
+        
+        <div class="src">— Marine Le Pen, Discours · Meeting de rentrée, Hénin-Beaumont, 13 septembre 2026 — rapporté par France Mag · <a href="https://www.francemag.fr/article/3544/presidentielle-2027-marine-le-pen-devoile-ses-propositions-sur-le-logement-et-veut-favoriser-l-accession-a-la-propriete">source</a></div>
+      </div>
+      
+    </div>
+    
 
     <div class="chiffre-cle">Depuis 2001, le taux de propriétaires occupants en France n'a progressé que d'environ 3 points d'indice (quasi plat), pendant que l'indice prix immobilier / revenu des ménages est resté durablement supérieur à son niveau de l'an 2000 — autour de 155 en 2024 contre 100 en 2000.</div>
 
@@ -228,7 +289,7 @@
     <h2>Le récit complet</h2>
     <div class="deep-dive">
       <div class="label">Deep dive — approfondi</div>
-      <p>Depuis les années 1970, plusieurs dispositifs se sont succédé pour favoriser l'accession à la propriété en France (prêts aidés, prêt à taux zéro dans ses différentes versions, dispositifs de défiscalisation locative indirectement liés au marché de l'achat). Le taux de propriétaires occupants a pourtant très peu bougé sur les deux dernières décennies comparé à l'ampleur de ces dispositifs — signe que l'accès au crédit n'est probablement pas, à lui seul, le facteur déterminant.</p><p>L'économiste <a href="https://www.igedd.developpement-durable.gouv.fr/prix-immobilier-evolution-a-long-terme-a1048.html?lang=fr">Jacques Friggit</a> documente depuis plusieurs décennies le rapport entre prix des logements anciens et revenu disponible des ménages en France. Sa périodisation, reprise à l'identique dans ses publications récentes : une longue phase de stabilité de 1965 à 2000, puis une hausse marquée entre 2000 et 2006-2007, suivie d'un plateau élevé qui perdure depuis, sans retour au niveau d'avant 2000.</p><p><strong>Limite méthodologique importante</strong> : les valeurs numériques précises de cet indice, année par année, ne sont pas publiées sous forme de tableau chiffré officiel par Friggit — seulement en graphique. Les valeurs utilisées ici sont des lectures approximatives de ces graphiques, explicitement signalées comme telles sur la figure (marqueurs en losange, trait pointillé). Une reconstruction plus rigoureuse, à partir des séries INSEE brutes (indice des prix des logements anciens ÷ revenu disponible des ménages), est recommandée avant publication finale — voir <code>data/raw/SOURCES.md</code>.</p><p>Ce que la mesure de Marine Le Pen peut changer : elle peut faciliter l'accès au crédit pour certains ménages primo-accédants. Ce qu'elle ne change pas mécaniquement : le niveau des prix relatif aux revenus, qui est le facteur qui semble le plus corrélé à la stagnation du taux de propriétaires sur la période récente.</p>
+      <p>Depuis les années 1970, plusieurs dispositifs se sont succédé pour favoriser l'accession à la propriété en France (prêts aidés, prêt à taux zéro dans ses différentes versions, dispositifs de défiscalisation locative indirectement liés au marché de l'achat). Le taux de propriétaires occupants a pourtant très peu bougé sur les deux dernières décennies comparé à l'ampleur de ces dispositifs — signe que l'accès au crédit n'est probablement pas, à lui seul, le facteur déterminant.</p><p>L'économiste <a href="https://www.igedd.developpement-durable.gouv.fr/prix-immobilier-evolution-a-long-terme-a1048.html?lang=fr">Jacques Friggit</a> documente depuis plusieurs décennies le rapport entre prix des logements anciens et revenu disponible des ménages en France. Sa périodisation, reprise à l'identique dans ses publications récentes : une longue phase de stabilité de 1965 à 2000, puis une hausse marquée entre 2000 et 2006-2007, suivie d'un plateau élevé qui perdure depuis, sans retour au niveau d'avant 2000.</p><p><strong>Limite méthodologique importante</strong> : les valeurs numériques précises de cet indice, année par année, ne sont pas publiées sous forme de tableau chiffré officiel par Friggit — seulement en graphique. Les valeurs utilisées ici sont des lectures approximatives de ces graphiques, explicitement signalées comme telles sur la figure (marqueurs en losange, trait pointillé). Une reconstruction plus rigoureuse, à partir des séries INSEE brutes (indice des prix des logements anciens ÷ revenu disponible des ménages), reste recommandée pour consolider ces valeurs — voir <code>data/raw/SOURCES.md</code>.</p><p>Ce que la mesure de Marine Le Pen peut changer : elle peut faciliter l'accès au crédit pour certains ménages primo-accédants. Ce qu'elle ne change pas mécaniquement : le niveau des prix relatif aux revenus, qui est le facteur qui semble le plus corrélé à la stagnation du taux de propriétaires sur la période récente.</p>
     </div>
 
     <div class="sourcing-box">
@@ -265,9 +326,9 @@
         
           <li>Le taux de propriétaires combine deux séries INSEE de méthodologies différentes (enquêtes Logement espacées vs estimation annuelle SDES) — jamais présentées comme une série unique homogène sur le graphique.</li>
         
-          <li>Les valeurs 2001-2018 de la série annuelle SDES proviennent d'une édition archivée de la page INSEE, pas encore recroisées avec le fichier xlsx complet (téléchargement direct bloqué par le robots.txt d'insee.fr lors de cette recherche) — à vérifier avant publication.</li>
+          <li>Les valeurs 2001-2018 de la série annuelle SDES proviennent d'une édition archivée de la page INSEE, pas encore recroisées avec le fichier xlsx complet (téléchargement direct bloqué par le robots.txt d'insee.fr lors de cette recherche) — valeurs à recroiser avec la source complète.</li>
         
-          <li>L'indice prix/revenu (Friggit) n'existe pas en tableau chiffré officiel : les valeurs annuelles utilisées sont des lectures approximatives de graphiques PDF, avec une divergence non résolue entre les lectures 2023 et 2024 — à fiabiliser en reconstruisant l'indice depuis les séries INSEE brutes avant publication finale.</li>
+          <li>L'indice prix/revenu (Friggit) n'existe pas en tableau chiffré officiel : les valeurs annuelles utilisées sont des lectures approximatives de graphiques PDF, avec une divergence non résolue entre les lectures 2023 et 2024 — à fiabiliser en reconstruisant l'indice depuis les séries INSEE brutes.</li>
         
         </ul>
       </div>
@@ -281,8 +342,7 @@
     </div>
 
     <div class="footer">
-      Magnitude — newsletter data &amp; politique, apartisane. Généré le
-      2026-09-20.
+      Magnitude — newsletter data &amp; politique, apartisane. Newsletter confectionnée le 24 septembre 2026.
     </div>
   </div>
 </body>

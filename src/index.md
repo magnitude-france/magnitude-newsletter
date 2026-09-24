@@ -193,18 +193,19 @@ body {
   <p class="mg-lede">
     Chaque numéro assemble jusqu'à 6 cartes, une par mesure de campagne
     qui fait l'actualité. Une carte, c'est toujours la même anatomie :
-    une mesure annoncée, un graphique qui remet le chiffre en contexte,
+    une mesure annoncée — citée mot pour mot, avec la source et la date
+    de la déclaration du candidat —, un graphique qui remet le chiffre en contexte,
     et un deep dive qui raconte la donnée derrière — sourcée, datée, avec
     son niveau de confiance affiché.
   </p>
   <div class="mg-example">
-    <img src="/numeros/0/charts/carte_03_philippe_fiscalite.png" alt="Comparaison du coin fiscal France vs moyenne UE-OCDE vs moyenne OCDE, 2024" loading="lazy">
+    <img src="/numeros/0/charts/carte_03_philippe_fiscalite.png" alt="Impôts sur la production en % du PIB, France, UE à 27 et Allemagne, 2010-2024" loading="lazy">
     <div>
       <div class="mg-tag">Centre-droit — Horizons</div>
-      <h3>Philippe veut baisser la fiscalité des classes moyennes — où la France se situe-t-elle vraiment ?</h3>
-      <p>Édouard Philippe veut baisser la fiscalité des classes moyennes.
-      La fiscalité du travail française est très élevée dans l'absolu,
-      mais proche de la moyenne européenne.</p>
+      <h3>Philippe propose un « deal fiscal » aux entreprises — où en sont les impôts de production ?</h3>
+      <p>Édouard Philippe propose de baisser les impôts de production en
+      échange d'une baisse des aides aux entreprises. Ces impôts pèsent
+      4,4 % du PIB en France, près de deux fois la moyenne européenne.</p>
       <a href="/numeros/0/reports/carte_03_philippe_fiscalite.html">Lire le deep dive complet →</a>
     </div>
   </div>
@@ -229,19 +230,19 @@ body {
     </select>
   </div>
   <div class="mg-grid" id="mg-grid">
-    <div class="mg-card" data-theme="Fiscalité" data-famille="Centre-droit — Horizons">
-      <a class="mg-card-link" href="/numeros/0/reports/carte_03_philippe_fiscalite.html" aria-label="Lire le deep dive : Philippe veut baisser la fiscalité des classes moyennes — où la France se situe-t-elle vraiment ?"><img src="/numeros/0/charts/carte_03_philippe_fiscalite.png" alt="Philippe veut baisser la fiscalité des classes moyennes — où la France se situe-t-elle vraiment ?" loading="lazy"></a>
+    <div class="mg-card" data-theme="Fiscalité des entreprises" data-famille="Centre-droit — Horizons">
+      <a class="mg-card-link" href="/numeros/0/reports/carte_03_philippe_fiscalite.html" aria-label="Lire le deep dive : Philippe propose un « deal fiscal » aux entreprises — où en sont les impôts de production ?"><img src="/numeros/0/charts/carte_03_philippe_fiscalite.png" alt="Philippe propose un « deal fiscal » aux entreprises — où en sont les impôts de production ?" loading="lazy"></a>
       <div class="mg-body">
-        <span class="mg-tag">Centre-droit — Horizons</span><span class="mg-theme">Fiscalité</span>
-        <h4><a class="mg-card-link" href="/numeros/0/reports/carte_03_philippe_fiscalite.html">Philippe veut baisser la fiscalité des classes moyennes — où la France se situe-t-elle vraiment ?</a></h4>
+        <span class="mg-tag">Centre-droit — Horizons</span><span class="mg-theme">Fiscalité des entreprises</span>
+        <h4><a class="mg-card-link" href="/numeros/0/reports/carte_03_philippe_fiscalite.html">Philippe propose un « deal fiscal » aux entreprises — où en sont les impôts de production ?</a></h4>
         <a href="/numeros/0/reports/carte_03_philippe_fiscalite.html">Lire le deep dive →</a>
       </div>
     </div>
     <div class="mg-card" data-theme="Fiscalité &amp; patrimoine" data-famille="Centre-gauche — Place Publique">
-      <a class="mg-card-link" href="/numeros/0/reports/carte_04_glucksmann_patrimoine.html" aria-label="Lire le deep dive : Glucksmann veut taxer davantage les grandes fortunes — la concentration du patrimoine en 3 chiffres"><img src="/numeros/0/charts/carte_04_glucksmann_patrimoine.png" alt="Glucksmann veut taxer davantage les grandes fortunes — la concentration du patrimoine en 3 chiffres" loading="lazy"></a>
+      <a class="mg-card-link" href="/numeros/0/reports/carte_04_glucksmann_patrimoine.html" aria-label="Lire le deep dive : Glucksmann veut taxer les « méga-héritages » — la concentration du patrimoine en 3 chiffres"><img src="/numeros/0/charts/carte_04_glucksmann_patrimoine.png" alt="Glucksmann veut taxer les « méga-héritages » — la concentration du patrimoine en 3 chiffres" loading="lazy"></a>
       <div class="mg-body">
         <span class="mg-tag">Centre-gauche — Place Publique</span><span class="mg-theme">Fiscalité & patrimoine</span>
-        <h4><a class="mg-card-link" href="/numeros/0/reports/carte_04_glucksmann_patrimoine.html">Glucksmann veut taxer davantage les grandes fortunes — la concentration du patrimoine en 3 chiffres</a></h4>
+        <h4><a class="mg-card-link" href="/numeros/0/reports/carte_04_glucksmann_patrimoine.html">Glucksmann veut taxer les « méga-héritages » — la concentration du patrimoine en 3 chiffres</a></h4>
         <a href="/numeros/0/reports/carte_04_glucksmann_patrimoine.html">Lire le deep dive →</a>
       </div>
     </div>
@@ -254,10 +255,10 @@ body {
       </div>
     </div>
     <div class="mg-card" data-theme="Climat" data-famille="Gauche écologiste — Les Écologistes">
-      <a class="mg-card-link" href="/numeros/0/reports/carte_05_tondelier_climat.html" aria-label="Lire le deep dive : Tondelier veut une fiscalité verte pour la transition — l'ampleur du décrochage de rythme"><img src="/numeros/0/charts/carte_05_tondelier_climat.png" alt="Tondelier veut une fiscalité verte pour la transition — l'ampleur du décrochage de rythme" loading="lazy"></a>
+      <a class="mg-card-link" href="/numeros/0/reports/carte_05_tondelier_climat.html" aria-label="Lire le deep dive : Tondelier veut surtaxer les plus gros héritages pour la transition — l'ampleur du décrochage de rythme"><img src="/numeros/0/charts/carte_05_tondelier_climat.png" alt="Tondelier veut surtaxer les plus gros héritages pour la transition — l'ampleur du décrochage de rythme" loading="lazy"></a>
       <div class="mg-body">
         <span class="mg-tag">Gauche écologiste — Les Écologistes</span><span class="mg-theme">Climat</span>
-        <h4><a class="mg-card-link" href="/numeros/0/reports/carte_05_tondelier_climat.html">Tondelier veut une fiscalité verte pour la transition — l'ampleur du décrochage de rythme</a></h4>
+        <h4><a class="mg-card-link" href="/numeros/0/reports/carte_05_tondelier_climat.html">Tondelier veut surtaxer les plus gros héritages pour la transition — l'ampleur du décrochage de rythme</a></h4>
         <a href="/numeros/0/reports/carte_05_tondelier_climat.html">Lire le deep dive →</a>
       </div>
     </div>

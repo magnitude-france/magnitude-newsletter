@@ -172,6 +172,46 @@
     margin-top: 6px;
     line-height: 1.35;
   }
+  .declarations {
+    margin: 0 0 40px;
+    padding: 20px 24px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+  }
+  .declarations .label {
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+  .declaration { margin: 0 0 16px; }
+  .declaration:last-child { margin-bottom: 0; }
+  .declaration blockquote {
+    margin: 0;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 17px;
+    line-height: 1.5;
+    color: var(--ink);
+  }
+  .declaration .ctx { font-size: 13.5px; color: var(--ink-secondary); margin-top: 4px; }
+  .declaration .src { font-size: 13px; color: var(--ink-muted); margin-top: 6px; }
+  .declaration .src a { color: var(--reference); }
+  .decl-badge {
+    display: inline-block;
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 3px;
+    margin-top: 6px;
+  }
+  .decl-a { background: #e6f4ea; color: #1b6b34; }
+  .decl-b { background: #fef3e0; color: #92610a; }
+  .decl-c { background: #fbe7e5; color: #a3352c; }
   .mg-back {
     display: inline-flex;
     align-items: center;
@@ -193,6 +233,27 @@
     <div class="kicker">Magnitude — Deep dive — Numéro 0</div>
     <h1>Mélenchon veut une VIe République — la confiance dans les institutions au plus bas</h1>
     <div class="meta">Jean-Luc Mélenchon · La France Insoumise (Extrême-gauche) · Mesure : VIe République (Assemblée constituante)</div>
+
+    
+    <div class="declarations">
+      <div class="label">Ce que dit le candidat</div>
+      
+      <div class="declaration">
+        <blockquote>« La nouvelle France appelle sa nouvelle République. En avant vers la sixième République. »</blockquote>
+        
+        
+        <div class="src">— Jean-Luc Mélenchon, Discours · Meeting de Saint-Denis, 7 juin 2026 · <a href="https://linsoumission.fr/2026/06/09/melenchon-discours-saint-denis/">source</a></div>
+      </div>
+      
+      <div class="declaration">
+        <blockquote>« Une Assemblée constituante réorganisera les pouvoirs publics autour de ce principe. »</blockquote>
+        
+        
+        <div class="src">— Jean-Luc Mélenchon, Discours · Meeting de Saint-Denis, 7 juin 2026 · <a href="https://linsoumission.fr/2026/06/09/melenchon-discours-saint-denis/">source</a></div>
+      </div>
+      
+    </div>
+    
 
     <div class="chiffre-cle">En janvier 2026, seuls 20 % des Français déclarent faire confiance à l'Assemblée nationale — le niveau le plus bas mesuré depuis la création du Baromètre de la confiance politique du CEVIPOF en 2009.</div>
 
@@ -252,7 +313,7 @@
         <strong>Limites méthodologiques :</strong>
         <ul>
         
-          <li>Le point 2023 (~28,5 %) provient de deux lectures automatiques légèrement divergentes du même graphique — à revérifier visuellement sur le PDF source avant publication finale.</li>
+          <li>Le point 2023 (~28,5 %) provient de deux lectures automatiques légèrement divergentes du même graphique — valeur à confirmer sur le PDF source.</li>
         
           <li>L'enquête porte sur la population française inscrite sur les listes électorales (18 ans et plus), pas l'ensemble de la population.</li>
         
@@ -270,8 +331,7 @@
     </div>
 
     <div class="footer">
-      Magnitude — newsletter data &amp; politique, apartisane. Généré le
-      2026-09-20.
+      Magnitude — newsletter data &amp; politique, apartisane. Newsletter confectionnée le 24 septembre 2026.
     </div>
   </div>
 </body>

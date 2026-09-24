@@ -133,7 +133,8 @@ body {
 .mg-card a { font-size: 13px; font-weight: 700; color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent); padding-bottom: 1px; }
 .mg-empty { color: var(--ink-muted); font-size: 14px; padding: 24px 0; }
 
-.mg-numero-link { text-align: center; margin-top: 28px; }
+.mg-numero-link { margin: 4px 0 24px; }
+.mg-numero-link .mg-cta-ghost { margin-left: 0; }
 
 .mg-offer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 24px; }
 .mg-offer { border: 1px solid var(--border); border-radius: 8px; padding: 24px 24px; background: var(--surface); }
@@ -221,6 +222,9 @@ body {
     ci-dessous) : il ne reflète donc pas un classement ou une
     priorité, seulement l'ordre de tirage du numéro.
   </p>
+  <div class="mg-numero-link">
+    <a class="mg-cta-ghost" href="/numeros/0/numero-0.html">Voir le dernier numéro complet →</a>
+  </div>
   <div class="mg-filters">
     <select id="mg-filter-theme" aria-label="Filtrer par thème">
       <option value="">Tous les thèmes</option>
@@ -280,9 +284,6 @@ body {
     </div>
   </div>
   <p class="mg-empty" id="mg-empty" style="display:none;">Aucune carte ne correspond à ce filtre.</p>
-  <div class="mg-numero-link">
-    <a class="mg-cta-ghost" href="/numeros/0/numero-0.html">Voir le numéro #0 complet →</a>
-  </div>
 </section>
 
 <!-- ============ 5. QUI SOMMES-NOUS ============ -->

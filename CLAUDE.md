@@ -4,6 +4,21 @@ Ce fichier est lu par l'agent (Claude Code ou équivalent) en début de session
 sur ce repo. Il fixe les règles à respecter sans qu'une review humaine soit
 nécessaire pour les faire appliquer à chaque fois.
 
+## Workflow git — branche + pull request obligatoire
+- Ne jamais pousser directement sur `main`. Toujours créer une branche
+  dédiée (`git checkout -b <slug-du-changement>`), y commiter, puis la
+  pousser (`git push -u origin <branche>`).
+- Ouvrir une pull request vers `main` (ou dire explicitement à Guilhem
+  de l'ouvrir) pour qu'il relise le diff sur GitHub avant de merger —
+  ne jamais merger soi-même, même après un `npm run build`/tests
+  verts.
+- Authentification GitHub déjà configurée en local sur ce repo
+  (`git config credential.helper`, token fine-grained stocké hors du
+  repo dans `~/Documents/.magnitude-git-credentials-token`, chmod
+  600) : ne pas redemander de token à Guilhem sauf message d'erreur
+  d'authentification explicite (dans ce cas, probable expiration —
+  lui signaler).
+
 ## Périmètre technique
 - Ce repo utilise Observable Framework (Node.js / Markdown / JS). C'est le
   seul repo de Magnitude où du JS est légitime — c'est le framework qui

@@ -136,13 +136,11 @@ body {
 .mg-numero-link { margin: 4px 0 24px; }
 .mg-numero-link .mg-cta-ghost { margin-left: 0; }
 
-.mg-offer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 24px; }
+.mg-offer-grid { display: grid; grid-template-columns: 1fr; max-width: 420px; margin: 24px auto 0; gap: 20px; }
 .mg-offer { border: 1px solid var(--border); border-radius: 8px; padding: 24px 24px; background: var(--surface); }
-.mg-offer.mg-offer-premium { border-color: var(--accent); }
 .mg-offer h3 { font-family: Georgia, serif; font-size: 18px; margin: 0 0 6px; color: var(--ink); }
 .mg-offer .mg-price { font-size: 13px; color: var(--ink-muted); margin: 0 0 14px; }
 .mg-offer ul { padding-left: 18px; margin: 0; font-size: 14px; color: var(--ink-secondary); line-height: 1.7; }
-.mg-offer .mg-soon { display:inline-block; margin-top:14px; font-size:12px; color: var(--ink-muted); font-style: italic; }
 
 .mg-footer { background: #0F172A; color: #E7E5E1; }
 .mg-footer .mg-h2 { color: #fff; }
@@ -152,7 +150,6 @@ body {
 @media (max-width: 720px) {
   .mg-h1 { font-size: 32px; }
   .mg-example { grid-template-columns: 1fr; }
-  .mg-offer-grid { grid-template-columns: 1fr; }
 }
 </style>
 
@@ -323,7 +320,7 @@ body {
     </div>
     <div class="mg-pillar">
       <h3>Financement privé et transparent</h3>
-      <p>Publicité non partisane et abonnements lecteurs uniquement — jamais de subvention publique, jamais d'annonceur lié à un parti ou un candidat.</p>
+      <p>Publicité non partisane uniquement — jamais de subvention publique. Magnitude est gratuite : aucun contenu payant.</p>
     </div>
   </div>
 </section>
@@ -335,21 +332,12 @@ body {
   <div class="mg-offer-grid">
     <div class="mg-offer">
       <h3>Gratuit</h3>
-      <p class="mg-price">Pour tout le monde, dès le premier numéro</p>
+      <p class="mg-price">Pour tout le monde, sans exception, dès le premier numéro</p>
       <ul>
         <li>Toutes les cartes (graphique + message)</li>
-        <li>Le deep dive synthétique de chaque carte</li>
+        <li>Le deep dive complet de chaque carte, synthèse et récit approfondi</li>
         <li>L'historique complet des numéros</li>
       </ul>
-    </div>
-    <div class="mg-offer mg-offer-premium">
-      <h3>Premium</h3>
-      <p class="mg-price">Le deep dive approfondi — le récit complet derrière l'insight</p>
-      <ul>
-        <li>Packs de crédits (dès 5 €) ou abonnement illimité</li>
-        <li>Accès à l'intégralité du récit et de ses sources</li>
-      </ul>
-      <span class="mg-soon">En cours de construction — sera bientôt disponible. Magnitude démarre 100 % gratuite le temps que l'offre premium soit prête.</span>
     </div>
   </div>
 </section>
@@ -361,10 +349,9 @@ body {
   <a class="mg-cta" href="https://buttondown.com/magnitude-publication">S'abonner gratuitement →</a>
   <p style="margin-top:28px;">Suivez Magnitude sur <a href="https://x.com/magnitudefrance" target="_blank" rel="noopener">X (@magnitudefrance)</a>.</p>
   <p class="mg-legal">
-    Magnitude — publication indépendante, magnitude.pub.
-    Financement privé uniquement (publicité non partisane et
-    abonnements lecteurs) — aucune subvention publique ni partisane.
-    © 2026.
+    Magnitude — publication indépendante, magnitude.pub. Gratuite,
+    sans contenu payant. Financement privé uniquement (publicité non
+    partisane) — aucune subvention publique ni partisane. © 2026.
   </p>
 </section>
 

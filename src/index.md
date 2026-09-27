@@ -193,18 +193,18 @@ body {
     qui fait l'actualité. Une carte, c'est toujours la même anatomie :
     une mesure annoncée — citée mot pour mot, avec la source et la date
     de la déclaration du candidat —, un graphique qui remet le chiffre en contexte,
-    et un deep dive qui raconte la donnée derrière — sourcée, datée, avec
+    et une analyse complète qui raconte la donnée derrière — sourcée, datée, avec
     son niveau de confiance affiché.
   </p>
   <div class="mg-example">
-    <img src="/numeros/0/charts/carte_03_philippe_fiscalite.png" alt="Impôts sur la production en % du PIB, France, UE à 27 et Allemagne, 2010-2024" loading="lazy">
+    <a href="/numeros/0/reports/carte_03_philippe_fiscalite.html" style="display:block;" aria-label="Lire l'analyse complète : Philippe propose un « deal fiscal » aux entreprises — où en sont les impôts de production ?"><img src="/numeros/0/charts/carte_03_philippe_fiscalite.png" alt="Impôts sur la production en % du PIB, France, UE à 27 et Allemagne, 2010-2024" loading="lazy"></a>
     <div>
       <div class="mg-tag">Centre-droit — Horizons</div>
-      <h3>Philippe propose un « deal fiscal » aux entreprises — où en sont les impôts de production ?</h3>
+      <h3><a href="/numeros/0/reports/carte_03_philippe_fiscalite.html" style="color:inherit; text-decoration:none;">Philippe propose un « deal fiscal » aux entreprises — où en sont les impôts de production ?</a></h3>
       <p>Édouard Philippe propose de baisser les impôts de production en
       échange d'une baisse des aides aux entreprises. Ces impôts pèsent
       4,4 % du PIB en France, près de deux fois la moyenne européenne.</p>
-      <a href="/numeros/0/reports/carte_03_philippe_fiscalite.html">Lire le deep dive complet →</a>
+      <a href="/numeros/0/reports/carte_03_philippe_fiscalite.html">Lire l'analyse complète →</a>
     </div>
   </div>
 </section>
@@ -232,51 +232,51 @@ body {
   </div>
   <div class="mg-grid" id="mg-grid">
     <div class="mg-card" data-theme="Fiscalité des entreprises" data-famille="Centre-droit — Horizons">
-      <a class="mg-card-link" href="/numeros/0/reports/carte_03_philippe_fiscalite.html" aria-label="Lire le deep dive : Philippe propose un « deal fiscal » aux entreprises — où en sont les impôts de production ?"><img src="/numeros/0/charts/carte_03_philippe_fiscalite.png" alt="Philippe propose un « deal fiscal » aux entreprises — où en sont les impôts de production ?" loading="lazy"></a>
+      <a class="mg-card-link" href="/numeros/0/reports/carte_03_philippe_fiscalite.html" aria-label="Lire l'analyse complète : Philippe propose un « deal fiscal » aux entreprises — où en sont les impôts de production ?"><img src="/numeros/0/charts/carte_03_philippe_fiscalite.png" alt="Philippe propose un « deal fiscal » aux entreprises — où en sont les impôts de production ?" loading="lazy"></a>
       <div class="mg-body">
         <span class="mg-tag">Centre-droit — Horizons</span><span class="mg-theme">Fiscalité des entreprises</span>
         <h4><a class="mg-card-link" href="/numeros/0/reports/carte_03_philippe_fiscalite.html">Philippe propose un « deal fiscal » aux entreprises — où en sont les impôts de production ?</a></h4>
-        <a href="/numeros/0/reports/carte_03_philippe_fiscalite.html">Lire le deep dive →</a>
+        <a href="/numeros/0/reports/carte_03_philippe_fiscalite.html">Lire l'analyse complète →</a>
       </div>
     </div>
     <div class="mg-card" data-theme="Fiscalité &amp; patrimoine" data-famille="Centre-gauche — Place Publique">
-      <a class="mg-card-link" href="/numeros/0/reports/carte_04_glucksmann_patrimoine.html" aria-label="Lire le deep dive : Glucksmann veut taxer les « méga-héritages » — la concentration du patrimoine en 3 chiffres"><img src="/numeros/0/charts/carte_04_glucksmann_patrimoine.png" alt="Glucksmann veut taxer les « méga-héritages » — la concentration du patrimoine en 3 chiffres" loading="lazy"></a>
+      <a class="mg-card-link" href="/numeros/0/reports/carte_04_glucksmann_patrimoine.html" aria-label="Lire l'analyse complète : Glucksmann veut taxer les « méga-héritages » — la concentration du patrimoine en 3 chiffres"><img src="/numeros/0/charts/carte_04_glucksmann_patrimoine.png" alt="Glucksmann veut taxer les « méga-héritages » — la concentration du patrimoine en 3 chiffres" loading="lazy"></a>
       <div class="mg-body">
         <span class="mg-tag">Centre-gauche — Place Publique</span><span class="mg-theme">Fiscalité & patrimoine</span>
         <h4><a class="mg-card-link" href="/numeros/0/reports/carte_04_glucksmann_patrimoine.html">Glucksmann veut taxer les « méga-héritages » — la concentration du patrimoine en 3 chiffres</a></h4>
-        <a href="/numeros/0/reports/carte_04_glucksmann_patrimoine.html">Lire le deep dive →</a>
+        <a href="/numeros/0/reports/carte_04_glucksmann_patrimoine.html">Lire l'analyse complète →</a>
       </div>
     </div>
     <div class="mg-card" data-theme="Institutions" data-famille="Droite — LR">
-      <a class="mg-card-link" href="/numeros/0/reports/carte_02_retailleau_referendum.html" aria-label="Lire le deep dive : Retailleau veut élargir le référendum — la France n'en a pas organisé depuis 21 ans"><img src="/numeros/0/charts/carte_02_retailleau_referendum.png" alt="Retailleau veut élargir le référendum — la France n'en a pas organisé depuis 21 ans" loading="lazy"></a>
+      <a class="mg-card-link" href="/numeros/0/reports/carte_02_retailleau_referendum.html" aria-label="Lire l'analyse complète : Retailleau veut élargir le référendum — la France n'en a pas organisé depuis 21 ans"><img src="/numeros/0/charts/carte_02_retailleau_referendum.png" alt="Retailleau veut élargir le référendum — la France n'en a pas organisé depuis 21 ans" loading="lazy"></a>
       <div class="mg-body">
         <span class="mg-tag">Droite — LR</span><span class="mg-theme">Institutions</span>
         <h4><a class="mg-card-link" href="/numeros/0/reports/carte_02_retailleau_referendum.html">Retailleau veut élargir le référendum — la France n'en a pas organisé depuis 21 ans</a></h4>
-        <a href="/numeros/0/reports/carte_02_retailleau_referendum.html">Lire le deep dive →</a>
+        <a href="/numeros/0/reports/carte_02_retailleau_referendum.html">Lire l'analyse complète →</a>
       </div>
     </div>
     <div class="mg-card" data-theme="Climat" data-famille="Gauche écologiste — Les Écologistes">
-      <a class="mg-card-link" href="/numeros/0/reports/carte_05_tondelier_climat.html" aria-label="Lire le deep dive : Tondelier veut surtaxer les plus gros héritages pour la transition — l'ampleur du décrochage de rythme"><img src="/numeros/0/charts/carte_05_tondelier_climat.png" alt="Tondelier veut surtaxer les plus gros héritages pour la transition — l'ampleur du décrochage de rythme" loading="lazy"></a>
+      <a class="mg-card-link" href="/numeros/0/reports/carte_05_tondelier_climat.html" aria-label="Lire l'analyse complète : Tondelier veut surtaxer les plus gros héritages pour la transition — l'ampleur du décrochage de rythme"><img src="/numeros/0/charts/carte_05_tondelier_climat.png" alt="Tondelier veut surtaxer les plus gros héritages pour la transition — l'ampleur du décrochage de rythme" loading="lazy"></a>
       <div class="mg-body">
         <span class="mg-tag">Gauche écologiste — Les Écologistes</span><span class="mg-theme">Climat</span>
         <h4><a class="mg-card-link" href="/numeros/0/reports/carte_05_tondelier_climat.html">Tondelier veut surtaxer les plus gros héritages pour la transition — l'ampleur du décrochage de rythme</a></h4>
-        <a href="/numeros/0/reports/carte_05_tondelier_climat.html">Lire le deep dive →</a>
+        <a href="/numeros/0/reports/carte_05_tondelier_climat.html">Lire l'analyse complète →</a>
       </div>
     </div>
     <div class="mg-card" data-theme="Logement" data-famille="Extrême-droite — RN">
-      <a class="mg-card-link" href="/numeros/0/reports/carte_01_le_pen_logement.html" aria-label="Lire le deep dive : Le Pen veut faciliter l'achat d'un premier logement — le vrai décrochage est ailleurs"><img src="/numeros/0/charts/carte_01_le_pen_logement.png" alt="Le Pen veut faciliter l'achat d'un premier logement — le vrai décrochage est ailleurs" loading="lazy"></a>
+      <a class="mg-card-link" href="/numeros/0/reports/carte_01_le_pen_logement.html" aria-label="Lire l'analyse complète : Le Pen veut faciliter l'achat d'un premier logement — le vrai décrochage est ailleurs"><img src="/numeros/0/charts/carte_01_le_pen_logement.png" alt="Le Pen veut faciliter l'achat d'un premier logement — le vrai décrochage est ailleurs" loading="lazy"></a>
       <div class="mg-body">
         <span class="mg-tag">Extrême-droite — RN</span><span class="mg-theme">Logement</span>
         <h4><a class="mg-card-link" href="/numeros/0/reports/carte_01_le_pen_logement.html">Le Pen veut faciliter l'achat d'un premier logement — le vrai décrochage est ailleurs</a></h4>
-        <a href="/numeros/0/reports/carte_01_le_pen_logement.html">Lire le deep dive →</a>
+        <a href="/numeros/0/reports/carte_01_le_pen_logement.html">Lire l'analyse complète →</a>
       </div>
     </div>
     <div class="mg-card" data-theme="Institutions" data-famille="Extrême-gauche — LFI">
-      <a class="mg-card-link" href="/numeros/0/reports/carte_06_melenchon_confiance.html" aria-label="Lire le deep dive : Mélenchon veut une VIe République — la confiance dans les institutions au plus bas"><img src="/numeros/0/charts/carte_06_melenchon_confiance.png" alt="Mélenchon veut une VIe République — la confiance dans les institutions au plus bas" loading="lazy"></a>
+      <a class="mg-card-link" href="/numeros/0/reports/carte_06_melenchon_confiance.html" aria-label="Lire l'analyse complète : Mélenchon veut une VIe République — la confiance dans les institutions au plus bas"><img src="/numeros/0/charts/carte_06_melenchon_confiance.png" alt="Mélenchon veut une VIe République — la confiance dans les institutions au plus bas" loading="lazy"></a>
       <div class="mg-body">
         <span class="mg-tag">Extrême-gauche — LFI</span><span class="mg-theme">Institutions</span>
         <h4><a class="mg-card-link" href="/numeros/0/reports/carte_06_melenchon_confiance.html">Mélenchon veut une VIe République — la confiance dans les institutions au plus bas</a></h4>
-        <a href="/numeros/0/reports/carte_06_melenchon_confiance.html">Lire le deep dive →</a>
+        <a href="/numeros/0/reports/carte_06_melenchon_confiance.html">Lire l'analyse complète →</a>
       </div>
     </div>
   </div>
@@ -335,7 +335,7 @@ body {
       <p class="mg-price">Pour tout le monde, sans exception, dès le premier numéro</p>
       <ul>
         <li>Toutes les cartes (graphique + message)</li>
-        <li>Le deep dive complet de chaque carte, synthèse et récit approfondi</li>
+        <li>L'analyse complète de chaque carte, synthèse et récit approfondi</li>
         <li>L'historique complet des numéros</li>
       </ul>
     </div>

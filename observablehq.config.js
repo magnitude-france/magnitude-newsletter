@@ -4,7 +4,7 @@ export default {
   title: "Magnitude",
   // Site vitrine = one-pager (Version A, voir 05-Design/Plan-site-vitrine
   // dans le second brain) : pas de page annexe dans la nav, tout tient
-  // sur la home. Les pages de numéro/deep dive restent accessibles par
+  // sur la home. Les pages de numéro/analyse complète restent accessibles par
   // lien direct depuis la grille "historique" de la home, mais ne sont
   // pas listées dans le menu.
   pages: [],

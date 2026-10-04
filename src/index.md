@@ -117,6 +117,10 @@ body { background: var(--page); color: var(--ink); }
 /* ===== Historique ===== */
 .mg-filters { display: flex; gap: 12px; flex-wrap: wrap; margin: 8px 0 28px; }
 .mg-filters select { font-family: inherit; font-size: 13.5px; padding: 9px 12px; border-radius: 8px; border: 1px solid var(--border); background: #fff; color: var(--ink); }
+.mg-gauge { display: flex; flex-direction: column; gap: 6px; min-width: 260px; font-size: 13.5px; color: var(--ink-secondary); }
+.mg-gauge input[type=range] { width: 100%; accent-color: var(--accent); }
+.mg-filters { align-items: end; }
+.mg-card .mg-count { display:inline-block; font-size:10.5px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; padding:2px 8px; border-radius:3px; background:var(--amber-pale); color:var(--accent-dark); margin-left:6px; margin-bottom:9px; }
 .mg-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 22px; }
 .mg-card { background: #fff; border: 1px solid var(--border); border-top: 6px solid var(--accent); border-radius: 14px; overflow: hidden; display: flex; flex-direction: column; transition: box-shadow .15s ease, transform .15s ease; }
 .mg-card:nth-child(3n+2) { border-top-color: var(--reference); }
@@ -316,9 +320,23 @@ body { background: var(--page); color: var(--ink); }
     <select id="mg-filter-famille" aria-label="Filtrer par famille politique">
       <option value="">Toutes les familles politiques</option>
     </select>
+    <label class="mg-gauge" for="mg-filter-n">
+      <span class="mg-gauge-label">Candidats ayant une position documentée : au moins <strong id="mg-n-value">0</strong></span>
+      <input type="range" id="mg-filter-n" min="0" max="7" step="1" value="0" aria-label="Nombre minimum de candidats ayant une déclaration sur le sujet">
+    </label>
+    <select id="mg-filter-niveau" aria-label="Niveau de confiance pris en compte">
+      <option value="ab">Niveaux A et B (publiables)</option>
+      <option value="a">Niveau A seulement</option>
+      <option value="abc">Niveaux A, B et C</option>
+    </select>
+    <select id="mg-sort" aria-label="Ordre d'affichage">
+      <option value="desc">Plus de candidats d'abord</option>
+      <option value="asc">Moins de candidats d'abord</option>
+      <option value="tirage">Ordre de publication</option>
+    </select>
   </div>
   <div class="mg-grid" id="mg-grid">
-    <div class="mg-card" data-theme="Finances publiques" data-famille="Centre — Renaissance">
+    <div class="mg-card" data-n-a="1" data-n-ab="5" data-n-abc="7" data-theme="Finances publiques" data-famille="Centre — Renaissance">
       <a class="mg-card-link" href="/numeros/1/reports/carte_07_attal_dette.html" aria-label="Lire l'analyse complète : Attal veut le zéro déficit en 2037 — la France affiche 5,1 % de déficit public en 2025"><img src="/numeros/1/charts/carte_07_attal_dette.png" alt="Attal veut le zéro déficit en 2037 — la France affiche 5,1 % de déficit public en 2025" loading="lazy"></a>
       <div class="mg-body">
         <div class="mg-who"><img src="/candidats/attal.png" width="44" height="44" alt="Portrait stylisé de Gabriel Attal" loading="lazy"><span>Gabriel Attal</span></div>
@@ -327,7 +345,7 @@ body { background: var(--page); color: var(--ink); }
         <a href="/numeros/1/reports/carte_07_attal_dette.html">Lire l'analyse complète →</a>
       </div>
     </div>
-    <div class="mg-card" data-theme="Salaires" data-famille="Gauche — PS">
+    <div class="mg-card" data-n-a="0" data-n-ab="3" data-n-abc="6" data-theme="Salaires" data-famille="Gauche — PS">
       <a class="mg-card-link" href="/numeros/1/reports/carte_08_faure_smic.html" aria-label="Lire l'analyse complète : Faure veut porter le Smic à 1 700 € net — il est aujourd'hui de 1 478 € net"><img src="/numeros/1/charts/carte_08_faure_smic.png" alt="Faure veut porter le Smic à 1 700 € net — il est aujourd'hui de 1 478 € net" loading="lazy"></a>
       <div class="mg-body">
         <div class="mg-who"><img src="/candidats/faure.png" width="44" height="44" alt="Portrait stylisé de Olivier Faure" loading="lazy"><span>Olivier Faure</span></div>
@@ -336,7 +354,7 @@ body { background: var(--page); color: var(--ink); }
         <a href="/numeros/1/reports/carte_08_faure_smic.html">Lire l'analyse complète →</a>
       </div>
     </div>
-    <div class="mg-card" data-theme="Sécurité" data-famille="Gauche — PCF">
+    <div class="mg-card" data-n-a="1" data-n-ab="3" data-n-abc="5" data-theme="Sécurité" data-famille="Gauche — PCF">
       <a class="mg-card-link" href="/numeros/1/reports/carte_09_roussel_securite.html" aria-label="Lire l'analyse complète : Roussel veut embaucher 60 000 agents contre le narcotrafic — l'équivalent de 22 % des effectifs actuels"><img src="/numeros/1/charts/carte_09_roussel_securite.png" alt="Roussel veut embaucher 60 000 agents contre le narcotrafic — l'équivalent de 22 % des effectifs actuels" loading="lazy"></a>
       <div class="mg-body">
         <div class="mg-who"><img src="/candidats/roussel.png" width="44" height="44" alt="Portrait stylisé de Fabien Roussel" loading="lazy"><span>Fabien Roussel</span></div>
@@ -345,7 +363,7 @@ body { background: var(--page); color: var(--ink); }
         <a href="/numeros/1/reports/carte_09_roussel_securite.html">Lire l'analyse complète →</a>
       </div>
     </div>
-    <div class="mg-card" data-theme="Vie associative" data-famille="Gauche — Debout !">
+    <div class="mg-card" data-n-a="1" data-n-ab="3" data-n-abc="3" data-theme="Vie associative" data-famille="Gauche — Debout !">
       <a class="mg-card-link" href="/numeros/1/reports/carte_10_ruffin_loisirs.html" aria-label="Lire l'analyse complète : Ruffin veut 1 Md€ par an pour les salles des fêtes — 81 % des crédits de la mission Sport, jeunesse et vie associative"><img src="/numeros/1/charts/carte_10_ruffin_loisirs.png" alt="Ruffin veut 1 Md€ par an pour les salles des fêtes — 81 % des crédits de la mission Sport, jeunesse et vie associative" loading="lazy"></a>
       <div class="mg-body">
         <div class="mg-who"><img src="/candidats/ruffin.png" width="44" height="44" alt="Portrait stylisé de François Ruffin" loading="lazy"><span>François Ruffin</span></div>
@@ -354,7 +372,7 @@ body { background: var(--page); color: var(--ink); }
         <a href="/numeros/1/reports/carte_10_ruffin_loisirs.html">Lire l'analyse complète →</a>
       </div>
     </div>
-    <div class="mg-card" data-theme="Innovation &amp; souveraineté" data-famille="Centre — La France humaniste">
+    <div class="mg-card" data-n-a="1" data-n-ab="3" data-n-abc="3" data-theme="Innovation &amp; souveraineté" data-famille="Centre — La France humaniste">
       <a class="mg-card-link" href="/numeros/1/reports/carte_11_villepin_darpa.html" aria-label="Lire l'analyse complète : Villepin veut une DARPA européenne à 4 milliards de dollars par an — l'agence américaine en reçoit environ 4,3"><img src="/numeros/1/charts/carte_11_villepin_darpa.png" alt="Villepin veut une DARPA européenne à 4 milliards de dollars par an — l'agence américaine en reçoit environ 4,3" loading="lazy"></a>
       <div class="mg-body">
         <div class="mg-who"><img src="/candidats/villepin.png" width="44" height="44" alt="Portrait stylisé de Dominique de Villepin" loading="lazy"><span>Dominique de Villepin</span></div>
@@ -363,7 +381,7 @@ body { background: var(--page); color: var(--ink); }
         <a href="/numeros/1/reports/carte_11_villepin_darpa.html">Lire l'analyse complète →</a>
       </div>
     </div>
-    <div class="mg-card" data-theme="Immigration" data-famille="Extrême-droite — Reconquête">
+    <div class="mg-card" data-n-a="0" data-n-ab="2" data-n-abc="2" data-theme="Immigration" data-famille="Extrême-droite — Reconquête">
       <a class="mg-card-link" href="/numeros/1/reports/carte_12_zemmour_immigration.html" aria-label="Lire l'analyse complète : Zemmour veut expulser les étrangers au chômage depuis un an — le chômage touche 12,4 % des immigrés, 7,7 % de la population"><img src="/numeros/1/charts/carte_12_zemmour_immigration.png" alt="Zemmour veut expulser les étrangers au chômage depuis un an — le chômage touche 12,4 % des immigrés, 7,7 % de la population" loading="lazy"></a>
       <div class="mg-body">
         <div class="mg-who"><img src="/candidats/zemmour.png" width="44" height="44" alt="Portrait stylisé de Éric Zemmour" loading="lazy"><span>Éric Zemmour</span></div>
@@ -372,7 +390,7 @@ body { background: var(--page); color: var(--ink); }
         <a href="/numeros/1/reports/carte_12_zemmour_immigration.html">Lire l'analyse complète →</a>
       </div>
     </div>
-    <div class="mg-card" data-theme="Fiscalité des entreprises" data-famille="Centre-droit — Horizons">
+    <div class="mg-card" data-n-a="1" data-n-ab="4" data-n-abc="5" data-theme="Fiscalité des entreprises" data-famille="Centre-droit — Horizons">
       <a class="mg-card-link" href="/numeros/0/reports/carte_03_philippe_fiscalite.html" aria-label="Lire l'analyse complète : Philippe propose un « deal fiscal » aux entreprises — où en sont les impôts de production ?"><img src="/numeros/0/charts/carte_03_philippe_fiscalite.png" alt="Philippe propose un « deal fiscal » aux entreprises — où en sont les impôts de production ?" loading="lazy"></a>
       <div class="mg-body">
         <div class="mg-who"><img src="/candidats/philippe.png" width="44" height="44" alt="Portrait stylisé de Édouard Philippe" loading="lazy"><span>Édouard Philippe</span></div>
@@ -381,7 +399,7 @@ body { background: var(--page); color: var(--ink); }
         <a href="/numeros/0/reports/carte_03_philippe_fiscalite.html">Lire l'analyse complète →</a>
       </div>
     </div>
-    <div class="mg-card" data-theme="Fiscalité &amp; patrimoine" data-famille="Centre-gauche — Place Publique">
+    <div class="mg-card" data-n-a="2" data-n-ab="5" data-n-abc="6" data-theme="Fiscalité &amp; patrimoine" data-famille="Centre-gauche — Place Publique">
       <a class="mg-card-link" href="/numeros/0/reports/carte_04_glucksmann_patrimoine.html" aria-label="Lire l'analyse complète : Glucksmann veut taxer les « méga-héritages » — la concentration du patrimoine en 3 chiffres"><img src="/numeros/0/charts/carte_04_glucksmann_patrimoine.png" alt="Glucksmann veut taxer les « méga-héritages » — la concentration du patrimoine en 3 chiffres" loading="lazy"></a>
       <div class="mg-body">
         <div class="mg-who"><img src="/candidats/glucksmann.png" width="44" height="44" alt="Portrait stylisé de Raphaël Glucksmann" loading="lazy"><span>Raphaël Glucksmann</span></div>
@@ -390,7 +408,7 @@ body { background: var(--page); color: var(--ink); }
         <a href="/numeros/0/reports/carte_04_glucksmann_patrimoine.html">Lire l'analyse complète →</a>
       </div>
     </div>
-    <div class="mg-card" data-theme="Institutions" data-famille="Droite — LR">
+    <div class="mg-card" data-n-a="4" data-n-ab="6" data-n-abc="6" data-theme="Institutions" data-famille="Droite — LR">
       <a class="mg-card-link" href="/numeros/0/reports/carte_02_retailleau_referendum.html" aria-label="Lire l'analyse complète : Retailleau veut élargir le référendum — la France n'en a pas organisé depuis 21 ans"><img src="/numeros/0/charts/carte_02_retailleau_referendum.png" alt="Retailleau veut élargir le référendum — la France n'en a pas organisé depuis 21 ans" loading="lazy"></a>
       <div class="mg-body">
         <div class="mg-who"><img src="/candidats/retailleau.png" width="44" height="44" alt="Portrait stylisé de Bruno Retailleau" loading="lazy"><span>Bruno Retailleau</span></div>
@@ -399,7 +417,7 @@ body { background: var(--page); color: var(--ink); }
         <a href="/numeros/0/reports/carte_02_retailleau_referendum.html">Lire l'analyse complète →</a>
       </div>
     </div>
-    <div class="mg-card" data-theme="Climat" data-famille="Gauche écologiste — Les Écologistes">
+    <div class="mg-card" data-n-a="0" data-n-ab="5" data-n-abc="5" data-theme="Climat" data-famille="Gauche écologiste — Les Écologistes">
       <a class="mg-card-link" href="/numeros/0/reports/carte_05_tondelier_climat.html" aria-label="Lire l'analyse complète : Tondelier veut surtaxer les plus gros héritages pour la transition — l'ampleur du décrochage de rythme"><img src="/numeros/0/charts/carte_05_tondelier_climat.png" alt="Tondelier veut surtaxer les plus gros héritages pour la transition — l'ampleur du décrochage de rythme" loading="lazy"></a>
       <div class="mg-body">
         <div class="mg-who"><img src="/candidats/tondelier.png" width="44" height="44" alt="Portrait stylisé de Marine Tondelier" loading="lazy"><span>Marine Tondelier</span></div>
@@ -408,7 +426,7 @@ body { background: var(--page); color: var(--ink); }
         <a href="/numeros/0/reports/carte_05_tondelier_climat.html">Lire l'analyse complète →</a>
       </div>
     </div>
-    <div class="mg-card" data-theme="Logement" data-famille="Extrême-droite — RN">
+    <div class="mg-card" data-n-a="3" data-n-ab="5" data-n-abc="5" data-theme="Logement" data-famille="Extrême-droite — RN">
       <a class="mg-card-link" href="/numeros/0/reports/carte_01_le_pen_logement.html" aria-label="Lire l'analyse complète : Le Pen veut faciliter l'achat d'un premier logement — le vrai décrochage est ailleurs"><img src="/numeros/0/charts/carte_01_le_pen_logement.png" alt="Le Pen veut faciliter l'achat d'un premier logement — le vrai décrochage est ailleurs" loading="lazy"></a>
       <div class="mg-body">
         <div class="mg-who"><img src="/candidats/le-pen.png" width="44" height="44" alt="Portrait stylisé de Marine Le Pen" loading="lazy"><span>Marine Le Pen</span></div>
@@ -417,7 +435,7 @@ body { background: var(--page); color: var(--ink); }
         <a href="/numeros/0/reports/carte_01_le_pen_logement.html">Lire l'analyse complète →</a>
       </div>
     </div>
-    <div class="mg-card" data-theme="Institutions" data-famille="Extrême-gauche — LFI">
+    <div class="mg-card" data-n-a="4" data-n-ab="6" data-n-abc="6" data-theme="Institutions" data-famille="Extrême-gauche — LFI">
       <a class="mg-card-link" href="/numeros/0/reports/carte_06_melenchon_confiance.html" aria-label="Lire l'analyse complète : Mélenchon veut une VIe République — la confiance dans les institutions au plus bas"><img src="/numeros/0/charts/carte_06_melenchon_confiance.png" alt="Mélenchon veut une VIe République — la confiance dans les institutions au plus bas" loading="lazy"></a>
       <div class="mg-body">
         <div class="mg-who"><img src="/candidats/melenchon.png" width="44" height="44" alt="Portrait stylisé de Jean-Luc Mélenchon" loading="lazy"><span>Jean-Luc Mélenchon</span></div>
@@ -539,18 +557,44 @@ uniq(cards.map(c => c.dataset.famille)).sort().forEach(famille => {
   familleSelect.appendChild(opt);
 });
 
+const nRange = document.getElementById("mg-filter-n");
+const nValue = document.getElementById("mg-n-value");
+const niveauSelect = document.getElementById("mg-filter-niveau");
+const sortSelect = document.getElementById("mg-sort");
+cards.forEach((c, i) => { c.dataset.ordre = i; });
+const niveauLabel = { a: "A", ab: "A ou B", abc: "A, B ou C" };
 function render() {
   const theme = themeSelect.value;
   const famille = familleSelect.value;
+  const key = "data-n-" + niveauSelect.value;
+  nRange.max = Math.max(...cards.map(c => Number(c.getAttribute(key))));
+  const nMin = Math.min(Number(nRange.value), Number(nRange.max));
+  nRange.value = nMin;
+  nValue.textContent = nMin;
   let visible = 0;
   cards.forEach(card => {
-    const match = (!theme || card.dataset.theme === theme) && (!famille || card.dataset.famille === famille);
+    const n = Number(card.getAttribute(key));
+    card.querySelector(".mg-count")?.remove();
+    const badge = document.createElement("span");
+    badge.className = "mg-count";
+    badge.textContent = n + " candidat" + (n > 1 ? "s" : "") + " · niveau " + niveauLabel[niveauSelect.value];
+    card.querySelector(".mg-theme").after(badge);
+    const match = (!theme || card.dataset.theme === theme) && (!famille || card.dataset.famille === famille) && n >= nMin;
     card.style.display = match ? "" : "none";
     if (match) visible++;
   });
+  const mode = sortSelect.value;
+  const sorted = [...cards].sort((a, b) => {
+    if (mode === "tirage") return a.dataset.ordre - b.dataset.ordre;
+    const d = Number(a.getAttribute(key)) - Number(b.getAttribute(key));
+    return (mode === "desc" ? -d : d) || a.dataset.ordre - b.dataset.ordre;
+  });
+  sorted.forEach(c => grid.appendChild(c));
   empty.style.display = visible ? "none" : "block";
 }
-
+nRange.addEventListener("input", render);
+niveauSelect.addEventListener("change", render);
+sortSelect.addEventListener("change", render);
 themeSelect.addEventListener("change", render);
 familleSelect.addEventListener("change", render);
 render();

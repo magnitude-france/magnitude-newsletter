@@ -4,13 +4,21 @@ sidebar: false
 ---
 
 <style>
-/* Magnitude — site vitrine, one-pager (Version A)
+/* Magnitude — site vitrine, one-pager (Version « Constellation »)
    Palette et typographie reprises du design system des cartes/emails
-   (voir 06-Tech/Design-system-graphiques dans le second brain) pour
-   une cohérence visuelle entre le site, le front clickable et l'email. */
+   (voir 05-Design/Guide-memorisation-visuelle dans le second brain).
+   Jamais de couleurs de partis : les couleurs des icônes de candidats
+   sont purement décoratives et ne codent aucune famille politique. */
 :root {
   --accent: #D97706;
-  --reference: #3D5A6C;
+  --accent-dark: #B45309;
+  --amber-soft: #FBBF24;
+  --amber-pale: #FEF3C7;
+  --reference: #0E659B;
+  --sky: #38BDF8;
+  --blue-pale: #DCEBF5;
+  --navy: #0F172A;
+  --navy-2: #1E293B;
   --ink: #0B0B0B;
   --ink-secondary: #52514E;
   --ink-muted: #898781;
@@ -20,106 +28,100 @@ sidebar: false
   --border: rgba(11,11,11,0.10);
 }
 
-/* Reprend toute la largeur de la page — le thème par défaut d'Observable
-   Framework contraint la largeur de lecture (~640px), adapté à de la
-   documentation mais pas à un one-pager marketing scrollable. */
-.observablehq main {
-  max-width: none !important;
-  padding: 0 !important;
-  margin: 0 !important;
-}
+.observablehq main { max-width: none !important; padding: 0 !important; margin: 0 !important; }
 .observablehq-header, .observablehq-footer { display: none !important; }
+body { background: var(--page); color: var(--ink); }
 
-body {
-  background: var(--page);
-  color: var(--ink);
-}
+/* Bandes pleine largeur */
+.mg-band { width: 100%; }
+.mg-band.mg-surface { background: var(--surface); }
+.mg-band.mg-dark { background: var(--navy); color: #E2E8F0; }
+.mg-band.mg-dark-deep { background: #0B1120; color: #E2E8F0; }
+.mg-band + .mg-band { border-top: 1px solid var(--border); }
+.mg-band.mg-dark + .mg-band.mg-dark, .mg-band.mg-dark + .mg-band { border-top: 0; }
 
-.mg-section {
-  max-width: 880px;
-  margin: 0 auto;
-  padding: 72px 24px;
-}
-.mg-section + .mg-section { border-top: 1px solid var(--border); }
-.mg-section.mg-surface { background: var(--surface); }
+.mg-section { max-width: 1040px; margin: 0 auto; padding: 72px 24px; }
 
 .mg-brand {
+  display: inline-flex; align-items: center; gap: 12px;
   font-family: Georgia, "Times New Roman", serif;
-  font-size: 15px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--accent);
-  font-weight: 700;
-  margin-bottom: 22px;
+  font-size: 18px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: #fff; font-weight: 700; margin-bottom: 26px;
+}
+.mg-brand img { width: 40px; height: 40px; border-radius: 9px; display: block; }
+.mg-pill {
+  display: inline-block; border: 1px solid var(--amber-soft); color: var(--amber-soft);
+  font-size: 12.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+  padding: 6px 14px; border-radius: 999px; margin-bottom: 20px;
 }
 .mg-h1 {
   font-family: Georgia, "Times New Roman", serif;
-  font-size: 42px;
-  line-height: 1.2;
-  margin: 0 0 20px;
-  max-width: 18ch;
-  color: var(--ink);
+  font-size: 54px; line-height: 1.07; margin: 0 0 20px; max-width: 14ch; color: #fff;
 }
-.mg-lede {
-  font-size: 18px;
-  line-height: 1.6;
-  color: var(--ink-secondary);
-  max-width: 58ch;
-  margin: 0 0 28px;
-}
-.mg-h2 {
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 28px;
-  margin: 0 0 24px;
-  color: var(--ink);
-}
+.mg-h1 em { font-style: normal; color: var(--amber-soft); }
+.mg-lede { font-size: 18px; line-height: 1.6; color: var(--ink-secondary); max-width: 58ch; margin: 0 0 28px; }
+.mg-dark .mg-lede { color: #CBD5E1; }
+.mg-h2 { font-family: Georgia, "Times New Roman", serif; font-size: 32px; margin: 0 0 24px; color: var(--ink); }
+.mg-dark .mg-h2, .mg-dark-deep .mg-h2 { color: #fff; }
+
 .mg-cta {
-  display: inline-block;
-  background: var(--accent);
-  color: #fff !important;
-  text-decoration: none;
-  font-weight: 700;
-  font-size: 15px;
-  padding: 13px 26px;
-  border-radius: 6px;
+  display: inline-block; background: var(--accent); color: #fff !important; text-decoration: none;
+  font-weight: 700; font-size: 16px; padding: 15px 28px; border-radius: 10px;
 }
 .mg-cta:hover { opacity: 0.9; }
 .mg-cta-ghost {
-  display: inline-block;
-  border: 1px solid var(--accent);
-  color: var(--accent) !important;
-  text-decoration: none;
-  font-weight: 700;
-  font-size: 14px;
-  padding: 11px 22px;
-  border-radius: 6px;
-  margin-left: 12px;
+  display: inline-block; border: 1px solid var(--accent); color: var(--accent) !important;
+  text-decoration: none; font-weight: 700; font-size: 14px; padding: 11px 22px; border-radius: 10px; margin-left: 12px;
 }
+.mg-dark .mg-cta-ghost { border-color: var(--amber-soft); color: var(--amber-soft) !important; }
 
-.mg-pillars { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; margin-top: 8px; }
-.mg-pillar { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 22px 22px; }
-.mg-pillar h3 { font-size: 15px; margin: 0 0 8px; color: var(--ink); }
-.mg-pillar p { font-size: 14px; color: var(--ink-secondary); margin: 0; line-height: 1.55; }
+/* ===== Hero + constellation ===== */
+.mg-hero { display: flex; flex-wrap: wrap; align-items: center; gap: 40px; padding-top: 40px; padding-bottom: 80px; }
+.mg-hero-text { flex: 1 1 440px; max-width: 560px; }
+.mg-hero-art { flex: 1 1 420px; display: flex; justify-content: center; }
+.mg-orbit { position: relative; width: 100%; max-width: 500px; aspect-ratio: 1 / 1; margin-bottom: 52px; }
+.mg-orbit svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.mg-node, .mg-core {
+  position: absolute; transform: translate(-50%, -50%); border-radius: 50%; display: block;
+  box-shadow: 0 0 0 4px var(--navy), 0 6px 18px rgba(0,0,0,.35);
+}
+.mg-node { width: 17%; height: auto; aspect-ratio: 1/1; transition: transform .2s ease; }
+.mg-node:hover { transform: translate(-50%, -50%) scale(1.08); }
+.mg-core { left: 50%; top: 50%; width: 22%; border-radius: 22%; background: var(--navy-2); }
+.mg-orbit-caption { text-align: center; font-size: 12.5px; color: #94A3B8; margin: 14px 0 0; }
 
+/* ===== Mission ===== */
+.mg-quote { font-family: Georgia, serif; font-size: 22px; line-height: 1.5; font-style: italic; color: var(--ink); max-width: 60ch; margin: 0; position: relative; padding-top: 64px; }
+.mg-quote:before { content: "«"; position: absolute; top: -14px; left: -4px; font-size: 90px; color: var(--accent); line-height: 1; font-style: normal; }
 .mg-not-list { list-style: none; padding: 0; margin: 24px 0 0; }
 .mg-not-list li { padding: 10px 0 10px 28px; position: relative; font-size: 15px; color: var(--ink-secondary); border-top: 1px solid var(--border); }
-.mg-not-list li:before { content: "✕"; position: absolute; left: 0; color: var(--ink-muted); font-size: 12px; top: 13px; }
+.mg-not-list li:before { content: "✕"; position: absolute; left: 0; color: var(--accent); font-size: 12px; top: 13px; }
 
-.mg-example { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: center; margin-top: 28px; }
-.mg-example img { width: 100%; border-radius: 6px; border: 1px solid var(--border); display: block; }
+/* ===== Comment ça marche ===== */
+.mg-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin: 8px 0 40px; }
+.mg-step { background: var(--navy-2); border-top: 6px solid var(--accent); border-radius: 16px; padding: 26px; }
+.mg-step:nth-child(2) { border-top-color: var(--sky); }
+.mg-step:nth-child(3) { border-top-color: #FDE68A; }
+.mg-step h3 { font-family: Georgia, serif; font-size: 22px; margin: 0 0 8px; color: var(--amber-soft); }
+.mg-step:nth-child(2) h3 { color: var(--sky); }
+.mg-step:nth-child(3) h3 { color: #FDE68A; }
+.mg-step p { margin: 0; font-size: 15px; line-height: 1.55; color: #CBD5E1; }
+
+.mg-example { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: center; background: #fff; border-radius: 18px; padding: 24px; color: var(--ink); }
+.mg-example img { width: 100%; border-radius: 8px; border: 1px solid var(--border); display: block; }
 .mg-example .mg-tag { display:inline-block; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.04em; padding:3px 9px; border-radius:3px; background:#f3ede2; color:#92610a; margin-bottom:12px; }
 .mg-example h3 { font-family: Georgia, serif; font-size: 19px; margin: 0 0 10px; color: var(--ink); }
 .mg-example p { font-size: 14.5px; color: var(--ink-secondary); line-height:1.6; margin: 0 0 14px; }
-.mg-example a { font-size: 14px; font-weight: 700; color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent); padding-bottom: 1px; }
+.mg-example a.mg-more { font-size: 14px; font-weight: 700; color: var(--accent-dark); text-decoration: none; border-bottom: 1px solid var(--accent); padding-bottom: 1px; }
 
+/* ===== Historique ===== */
 .mg-filters { display: flex; gap: 12px; flex-wrap: wrap; margin: 8px 0 28px; }
-.mg-filters select {
-  font-family: inherit; font-size: 13.5px; padding: 8px 12px; border-radius: 6px;
-  border: 1px solid var(--border); background: #fff; color: var(--ink);
-}
-.mg-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
-.mg-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; transition: box-shadow .15s ease, transform .15s ease; }
-.mg-card:hover { box-shadow: 0 6px 18px rgba(11,11,11,0.08); transform: translateY(-1px); }
+.mg-filters select { font-family: inherit; font-size: 13.5px; padding: 9px 12px; border-radius: 8px; border: 1px solid var(--border); background: #fff; color: var(--ink); }
+.mg-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 22px; }
+.mg-card { background: #fff; border: 1px solid var(--border); border-top: 6px solid var(--accent); border-radius: 14px; overflow: hidden; display: flex; flex-direction: column; transition: box-shadow .15s ease, transform .15s ease; }
+.mg-card:nth-child(3n+2) { border-top-color: var(--reference); }
+.mg-card:nth-child(3n) { border-top-color: var(--navy); }
+.mg-card:hover { box-shadow: 0 8px 22px rgba(11,11,11,0.10); transform: translateY(-2px); }
 .mg-card img { width: 100%; height: auto; display: block; border-bottom: 1px solid var(--border); }
 .mg-card > a.mg-card-link { display: block; }
 .mg-card > a.mg-card-link img { transition: opacity .15s ease; }
@@ -128,74 +130,121 @@ body {
 .mg-card h4 a.mg-card-link:hover { color: var(--accent); }
 .mg-card .mg-body { padding: 16px 18px 18px; }
 .mg-card .mg-tag { display:inline-block; font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.04em; padding:2px 8px; border-radius:3px; background:#f3ede2; color:#92610a; margin-bottom:9px; }
-.mg-card .mg-theme { display:inline-block; font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.04em; padding:2px 8px; border-radius:3px; background:#E7EEF0; color:var(--reference); margin-bottom:9px; margin-left:6px; }
+.mg-card .mg-theme { display:inline-block; font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.04em; padding:2px 8px; border-radius:3px; background:var(--blue-pale); color:var(--reference); margin-bottom:9px; margin-left:6px; }
 .mg-card h4 { font-family: Georgia, serif; font-size: 15.5px; line-height:1.35; margin: 0 0 12px; color: var(--ink); }
-.mg-card a { font-size: 13px; font-weight: 700; color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent); padding-bottom: 1px; }
+.mg-card a { font-size: 13px; font-weight: 700; color: var(--accent-dark); text-decoration: none; border-bottom: 1px solid var(--accent); padding-bottom: 1px; }
 .mg-empty { color: var(--ink-muted); font-size: 14px; padding: 24px 0; }
-
 .mg-numero-link { margin: 4px 0 24px; }
 .mg-numero-link .mg-cta-ghost { margin-left: 0; }
 
-.mg-offer-grid { display: grid; grid-template-columns: 1fr; max-width: 420px; margin: 24px auto 0; gap: 20px; }
-.mg-offer { border: 1px solid var(--border); border-radius: 8px; padding: 24px 24px; background: var(--surface); }
-.mg-offer h3 { font-family: Georgia, serif; font-size: 18px; margin: 0 0 6px; color: var(--ink); }
-.mg-offer .mg-price { font-size: 13px; color: var(--ink-muted); margin: 0 0 14px; }
-.mg-offer ul { padding-left: 18px; margin: 0; font-size: 14px; color: var(--ink-secondary); line-height: 1.7; }
+/* ===== Piliers ===== */
+.mg-pillars { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; margin-top: 8px; }
+.mg-pillar { border-radius: 16px; padding: 24px; background: var(--amber-pale); }
+.mg-pillar:nth-child(2) { background: var(--blue-pale); }
+.mg-pillar:nth-child(3) { background: #EFEEE9; }
+.mg-pillar:nth-child(4) { background: #FDE68A; }
+.mg-pillar h3 { font-family: Georgia, serif; font-size: 18px; margin: 0 0 8px; color: var(--ink); }
+.mg-pillar p { font-size: 14.5px; color: #3a3935; margin: 0; line-height: 1.55; }
 
-.mg-footer { background: #0F172A; color: #E7E5E1; }
-.mg-footer .mg-h2 { color: #fff; }
+/* ===== Offre ===== */
+.mg-offer-grid { display: grid; grid-template-columns: 1fr; max-width: 460px; margin: 24px 0 0; gap: 20px; }
+.mg-offer { border-radius: 18px; padding: 28px; background: linear-gradient(135deg, var(--accent-dark), var(--accent)); color: #fff; }
+.mg-offer h3 { font-family: Georgia, serif; font-size: 22px; margin: 0 0 6px; }
+.mg-offer .mg-price { font-size: 13.5px; color: #FFF1D6; margin: 0 0 14px; }
+.mg-offer ul { padding-left: 18px; margin: 0; font-size: 14.5px; line-height: 1.7; }
+
+/* ===== Footer ===== */
+.mg-footer-icons { display: flex; flex-wrap: wrap; gap: 12px; margin: 0 0 28px; }
+.mg-footer-icons img { width: 52px; height: 52px; border-radius: 50%; display: block; }
 .mg-footer p { color: #B8B6B0; font-size: 13.5px; line-height: 1.7; }
+.mg-footer a:not(.mg-cta) { color: var(--amber-soft); }
 .mg-footer .mg-legal { font-size: 12px; color: #8B8A85; margin-top: 24px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; }
 
 @media (max-width: 720px) {
-  .mg-h1 { font-size: 32px; }
+  .mg-h1 { font-size: 36px; }
   .mg-example { grid-template-columns: 1fr; }
+  .mg-section { padding: 56px 20px; }
+  .mg-cta-ghost { margin: 14px 0 0; }
 }
 </style>
 
-<!-- ============ 1. HERO ============ -->
-<section class="mg-section" style="padding-top:96px;">
-  <div class="mg-brand">Magnitude</div>
-  <h1 class="mg-h1">Un chiffre politique, remis à l'échelle — chaque semaine.</h1>
-  <p class="mg-lede">
-    Magnitude est une publication data qui apprend à lire les chiffres
-    de la vie politique et citoyenne : un graphique, une histoire
-    sourcée, pour chaque mesure qui fait l'actualité. Sans jargon, sans
-    étiquette politique affichée. Angle d'actualité actuel : la
-    présidentielle 2027.
-  </p>
-  <a class="mg-cta" href="https://buttondown.com/magnitude-publication">S'abonner gratuitement →</a>
-  <a class="mg-cta-ghost" href="#historique">Voir les numéros</a>
+<!-- ============ 1. HERO (constellation) ============ -->
+<div class="mg-band mg-dark">
+<section class="mg-section mg-hero">
+  <div class="mg-hero-text">
+    <div class="mg-brand"><img src="/magnitude-icon.png" alt="">Magnitude</div><br>
+    <span class="mg-pill">Apartisan · Présidentielle 2027</span>
+    <h1 class="mg-h1">Un chiffre politique, <em>remis à l'échelle</em> — chaque semaine.</h1>
+    <p class="mg-lede">
+      Magnitude est une publication data qui apprend à lire les chiffres
+      de la vie politique et citoyenne : un graphique, une histoire
+      sourcée, pour chaque mesure qui fait l'actualité. Sans jargon, sans
+      étiquette politique affichée. Angle d'actualité actuel : la
+      présidentielle 2027.
+    </p>
+    <a class="mg-cta" href="https://buttondown.com/magnitude-publication">S'abonner gratuitement →</a>
+    <a class="mg-cta-ghost" href="#historique">Voir les numéros</a>
+  </div>
+  <div class="mg-hero-art">
+    <div>
+      <div class="mg-orbit" role="img" aria-label="Constellation des six candidats déclarés autour du logo Magnitude">
+        <svg viewBox="0 0 520 520" aria-hidden="true">
+          <circle cx="260" cy="260" r="240" fill="none" stroke="#1E293B" stroke-width="2"/>
+          <circle cx="260" cy="260" r="170" fill="none" stroke="#1E293B" stroke-width="2"/>
+          <circle cx="260" cy="260" r="100" fill="none" stroke="#334155" stroke-width="2"/>
+          <g stroke="#475569" stroke-width="1.5">
+            <line x1="260" y1="260" x2="260" y2="20"/><line x1="260" y1="260" x2="468" y2="140"/>
+            <line x1="260" y1="260" x2="468" y2="380"/><line x1="260" y1="260" x2="260" y2="500"/>
+            <line x1="260" y1="260" x2="52" y2="380"/><line x1="260" y1="260" x2="52" y2="140"/>
+          </g>
+        </svg>
+        <!-- Ordre alphabétique, purement décoratif : aucun classement. -->
+        <img class="mg-core" src="/magnitude-icon.png" alt="Logo Magnitude">
+        <img class="mg-node" style="left:50%;top:3.8%" src="/candidats/glucksmann.png" alt="Raphaël Glucksmann">
+        <img class="mg-node" style="left:90%;top:26.9%" src="/candidats/le-pen.png" alt="Marine Le Pen">
+        <img class="mg-node" style="left:90%;top:73.1%" src="/candidats/melenchon.png" alt="Jean-Luc Mélenchon">
+        <img class="mg-node" style="left:50%;top:96.2%" src="/candidats/philippe.png" alt="Édouard Philippe">
+        <img class="mg-node" style="left:10%;top:73.1%" src="/candidats/retailleau.png" alt="Bruno Retailleau">
+        <img class="mg-node" style="left:10%;top:26.9%" src="/candidats/tondelier.png" alt="Marine Tondelier">
+      </div>
+      <p class="mg-orbit-caption">Les six candidats déclarés, par ordre alphabétique — dessins stylisés, sans lien avec les couleurs des partis.</p>
+    </div>
+  </div>
 </section>
+</div>
 
 <!-- ============ 2. VISION / MANIFESTE ============ -->
-<section class="mg-section mg-surface">
+<div class="mg-band mg-surface">
+<section class="mg-section">
   <h2 class="mg-h2">Notre mission</h2>
-  <p class="mg-lede" style="font-size:19px; font-style:italic; color:var(--ink);">
-    « Magnitude est une communauté apartisane qui a pour but de
+  <p class="mg-quote">
+    Magnitude est une communauté apartisane qui a pour but de
     démocratiser la pédagogie autour de l'analyse de données et de la
     compréhension des données par les citoyens, pour permettre à chacun
     de prendre des décisions éclairées en fonction de ses sensibilités. »
   </p>
-  <h3 style="font-family:Georgia,serif; font-size:16px; margin:36px 0 4px;">Ce que Magnitude n'est pas</h3>
+  <h3 style="font-family:Georgia,serif; font-size:17px; margin:40px 0 4px;">Ce que Magnitude n'est pas</h3>
   <ul class="mg-not-list">
     <li>Un fact-checker de plus — on ne vérifie pas une déclaration isolée, on donne les clés pour la lire.</li>
     <li>Un agrégateur de sondages — on ne fait pas la course aux intentions de vote.</li>
     <li>Un média d'opinion — on ne dit jamais pour qui voter, ni ce qu'il faut penser d'une mesure.</li>
   </ul>
 </section>
+</div>
 
 <!-- ============ 3. COMMENT ÇA MARCHE ============ -->
+<div class="mg-band mg-dark">
 <section class="mg-section">
   <h2 class="mg-h2">Comment ça marche</h2>
   <p class="mg-lede">
     Chaque numéro assemble jusqu'à 6 cartes, une par mesure de campagne
-    qui fait l'actualité. Une carte, c'est toujours la même anatomie :
-    une mesure annoncée — citée mot pour mot, avec la source et la date
-    de la déclaration du candidat —, un graphique qui remet le chiffre en contexte,
-    et une analyse complète qui raconte la donnée derrière — sourcée, datée, avec
-    son niveau de confiance affiché.
+    qui fait l'actualité. Une carte, c'est toujours la même anatomie.
   </p>
+  <div class="mg-steps">
+    <div class="mg-step"><h3>La mesure</h3><p>Une mesure annoncée, citée mot pour mot, avec la source et la date de la déclaration du candidat.</p></div>
+    <div class="mg-step"><h3>Le contexte</h3><p>Un graphique qui remet le chiffre en contexte, à la bonne échelle.</p></div>
+    <div class="mg-step"><h3>L'analyse complète</h3><p>Le récit de la donnée derrière : sourcé, daté, avec son niveau de confiance affiché.</p></div>
+  </div>
   <div class="mg-example">
     <a href="/numeros/0/reports/carte_03_philippe_fiscalite.html" style="display:block;" aria-label="Lire l'analyse complète : Philippe propose un « deal fiscal » aux entreprises — où en sont les impôts de production ?"><img src="/numeros/0/charts/carte_03_philippe_fiscalite.png" alt="Impôts sur la production en % du PIB, France, UE à 27 et Allemagne, 2010-2024" loading="lazy"></a>
     <div>
@@ -204,13 +253,15 @@ body {
       <p>Édouard Philippe propose de baisser les impôts de production en
       échange d'une baisse des aides aux entreprises. Ces impôts pèsent
       4,4 % du PIB en France, près de deux fois la moyenne européenne.</p>
-      <a href="/numeros/0/reports/carte_03_philippe_fiscalite.html">Lire l'analyse complète →</a>
+      <a class="mg-more" href="/numeros/0/reports/carte_03_philippe_fiscalite.html">Lire l'analyse complète →</a>
     </div>
   </div>
 </section>
+</div>
 
 <!-- ============ 4. HISTORIQUE DES NUMÉROS ============ -->
-<section class="mg-section mg-surface" id="historique">
+<div class="mg-band">
+<section class="mg-section" id="historique">
   <h2 class="mg-h2">L'historique des numéros</h2>
   <p class="mg-lede" style="font-size:15px;">
     Toutes les cartes publiées, filtrables par thème et par famille
@@ -282,8 +333,10 @@ body {
   </div>
   <p class="mg-empty" id="mg-empty" style="display:none;">Aucune carte ne correspond à ce filtre.</p>
 </section>
+</div>
 
 <!-- ============ 5. QUI SOMMES-NOUS ============ -->
+<div class="mg-band mg-surface">
 <section class="mg-section">
   <h2 class="mg-h2">Qui sommes-nous</h2>
   <p class="mg-lede">
@@ -301,9 +354,11 @@ body {
     correction de l'erreur après coup.
   </p>
 </section>
+</div>
 
 <!-- ============ 6. CONFIANCE & MÉTHODE ============ -->
-<section class="mg-section mg-surface">
+<div class="mg-band">
+<section class="mg-section">
   <h2 class="mg-h2">Confiance & méthode</h2>
   <div class="mg-pillars">
     <div class="mg-pillar">
@@ -324,8 +379,10 @@ body {
     </div>
   </div>
 </section>
+</div>
 
 <!-- ============ 7. OFFRE ============ -->
+<div class="mg-band mg-surface">
 <section class="mg-section">
   <h2 class="mg-h2">L'offre</h2>
   <p class="mg-lede">Un récap hebdomadaire, complété par des éditions au fil de l'actualité électorale.</p>
@@ -341,9 +398,14 @@ body {
     </div>
   </div>
 </section>
+</div>
 
 <!-- ============ 8. FOOTER ============ -->
-<section class="mg-section mg-footer">
+<div class="mg-band mg-dark-deep mg-footer">
+<section class="mg-section">
+  <div class="mg-footer-icons" aria-hidden="true">
+    <img src="/candidats/glucksmann.png" alt=""><img src="/candidats/le-pen.png" alt=""><img src="/candidats/melenchon.png" alt=""><img src="/candidats/philippe.png" alt=""><img src="/candidats/retailleau.png" alt=""><img src="/candidats/tondelier.png" alt="">
+  </div>
   <h2 class="mg-h2">Rejoindre Magnitude</h2>
   <p>Un email par semaine, pas plus. Désinscription en un clic, à tout moment.</p>
   <a class="mg-cta" href="https://buttondown.com/magnitude-publication">S'abonner gratuitement →</a>
@@ -354,18 +416,14 @@ body {
     partisane) — aucune subvention publique ni partisane. © 2026.
   </p>
 </section>
+</div>
 
 <script type="module">
-// Les cartes du grid "historique des numéros" sont maintenant du HTML
-// statique (voir ci-dessus), pas générées en JS : Observable Framework
-// ne détecte au moment du build que les images/liens présents dans le
-// HTML statique de la page pour les copier au bon endroit -- des <img>
-// injectées dynamiquement via innerHTML passaient inaperçues et
-// pointaient vers un chemin qui n'existait plus une fois le site
-// construit (d'où les images cassées). Ce script ne fait plus que
-// filtrer (afficher/masquer) les cartes déjà présentes dans le DOM.
-// TODO (futur) : générer les cartes statiques automatiquement depuis le
-// pipeline Python plutôt que de les recopier à la main à chaque numéro.
+// Les cartes du grid "historique des numéros" sont du HTML statique
+// (voir ci-dessus), pas générées en JS : Observable Framework ne détecte
+// au build que les images/liens présents dans le HTML statique. Ce script
+// ne fait que filtrer (afficher/masquer) les cartes déjà dans le DOM.
+// TODO (futur) : générer les cartes statiques depuis le pipeline Python.
 const grid = document.getElementById("mg-grid");
 const empty = document.getElementById("mg-empty");
 const themeSelect = document.getElementById("mg-filter-theme");

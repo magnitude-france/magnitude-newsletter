@@ -166,6 +166,24 @@ body { background: var(--page); color: var(--ink); }
   .mg-section { padding: 56px 20px; }
   .mg-cta-ghost { margin: 14px 0 0; }
 }
+
+/* ===== Dernier numéro : porte d'entrée ===== */
+.mg-band.mg-featured { background: var(--amber-pale); }
+.mg-featured .mg-section { padding-top: 56px; padding-bottom: 56px; }
+.mg-feature { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 28px; background: var(--navy); border-radius: 24px; padding: 40px 44px; text-decoration: none; color: #fff !important; box-shadow: 0 14px 40px rgba(15,23,42,.28); border-bottom: 8px solid var(--accent); transition: transform .15s ease, box-shadow .15s ease; }
+.mg-feature:hover { transform: translateY(-3px); box-shadow: 0 20px 48px rgba(15,23,42,.34); }
+.mg-feature-text { flex: 1 1 380px; }
+.mg-feature-label { display: inline-block; background: var(--amber-soft); color: var(--navy); font-size: 12.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding: 6px 14px; border-radius: 999px; margin-bottom: 18px; }
+.mg-feature-title { font-family: Georgia, "Times New Roman", serif; font-size: 34px; line-height: 1.15; margin: 0 0 14px; color: #fff; }
+.mg-feature-lede { color: #CBD5E1; font-size: 17px; line-height: 1.55; margin: 0 0 24px; max-width: 52ch; }
+.mg-feature-cta { display: inline-block; background: var(--accent); color: #fff; font-weight: 700; font-size: 18px; padding: 16px 30px; border-radius: 12px; }
+.mg-feature:hover .mg-feature-cta { background: var(--amber-soft); color: var(--navy); }
+.mg-feature-faces { flex: 0 1 280px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.mg-feature-faces img { width: 100%; height: auto; aspect-ratio: 1/1; border-radius: 50%; display: block; box-shadow: 0 0 0 3px var(--navy-2); }
+.mg-who { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; font-family: Georgia, serif; font-weight: 700; font-size: 15px; color: var(--ink); }
+.mg-who img { width: 44px; height: 44px; border-radius: 50%; display: block; flex: 0 0 auto; }
+@media (max-width: 720px) { .mg-feature { padding: 28px 22px; } .mg-feature-title { font-size: 26px; } .mg-feature-faces { flex-basis: 100%; max-width: 280px; } }
+.mg-dark .mg-cta-ghost.mg-cta-latest { background: var(--amber-soft); border-color: var(--amber-soft); color: var(--navy) !important; font-size: 16px; padding: 14px 26px; }
 </style>
 
 <!-- ============ 1. HERO (constellation) ============ -->
@@ -183,7 +201,7 @@ body { background: var(--page); color: var(--ink); }
       présidentielle 2027.
     </p>
     <a class="mg-cta" href="https://buttondown.com/magnitude-publication">S'abonner gratuitement →</a>
-    <a class="mg-cta-ghost" href="#historique">Voir les numéros</a>
+    <a class="mg-cta-ghost mg-cta-latest" href="/numeros/0/numero-0.html">Lire le dernier numéro →</a>
   </div>
   <div class="mg-hero-art">
     <div>
@@ -210,6 +228,23 @@ body { background: var(--page); color: var(--ink); }
       <p class="mg-orbit-caption">Les six candidats déclarés, par ordre alphabétique — dessins stylisés, sans lien avec les couleurs des partis.</p>
     </div>
   </div>
+</section>
+</div>
+
+<!-- ============ 1bis. DERNIER NUMÉRO (porte d'entrée) ============ -->
+<div class="mg-band mg-featured">
+<section class="mg-section">
+  <a class="mg-feature" href="/numeros/0/numero-0.html" aria-label="Lire le dernier numéro : Numéro #0, six mesures, six familles politiques, un seul chiffre à chaque fois">
+    <div class="mg-feature-text">
+      <span class="mg-feature-label">Dernier numéro · N° 0 · 24 septembre 2026</span>
+      <h2 class="mg-feature-title">Six mesures, six familles politiques, un seul chiffre à chaque fois</h2>
+      <p class="mg-feature-lede">Le numéro complet, prêt à lire : une carte par candidat déclaré, un graphique, une histoire sourcée.</p>
+      <span class="mg-feature-cta">Lire le numéro #0 →</span>
+    </div>
+    <div class="mg-feature-faces" aria-hidden="true">
+      <img src="/candidats/glucksmann.png" alt=""><img src="/candidats/le-pen.png" alt=""><img src="/candidats/melenchon.png" alt=""><img src="/candidats/philippe.png" alt=""><img src="/candidats/retailleau.png" alt=""><img src="/candidats/tondelier.png" alt="">
+    </div>
+  </a>
 </section>
 </div>
 
@@ -262,17 +297,14 @@ body { background: var(--page); color: var(--ink); }
 <!-- ============ 4. HISTORIQUE DES NUMÉROS ============ -->
 <div class="mg-band">
 <section class="mg-section" id="historique">
-  <h2 class="mg-h2">L'historique des numéros</h2>
+  <h2 class="mg-h2">Chercher une mesure précise</h2>
   <p class="mg-lede" style="font-size:15px;">
-    Toutes les cartes publiées, filtrables par thème et par famille
+    Pour lire un numéro entier, commencez par <a href="/numeros/0/numero-0.html">le dernier numéro</a>. Ici, toutes les cartes publiées, filtrables par thème et par famille
     politique. L'ordre d'affichage de chaque numéro est tiré
     aléatoirement (méthode publique — voir « Confiance & méthode »
     ci-dessous) : il ne reflète donc pas un classement ou une
     priorité, seulement l'ordre de tirage du numéro.
   </p>
-  <div class="mg-numero-link">
-    <a class="mg-cta-ghost" href="/numeros/0/numero-0.html">Voir le dernier numéro complet →</a>
-  </div>
   <div class="mg-filters">
     <select id="mg-filter-theme" aria-label="Filtrer par thème">
       <option value="">Tous les thèmes</option>
@@ -285,6 +317,7 @@ body { background: var(--page); color: var(--ink); }
     <div class="mg-card" data-theme="Fiscalité des entreprises" data-famille="Centre-droit — Horizons">
       <a class="mg-card-link" href="/numeros/0/reports/carte_03_philippe_fiscalite.html" aria-label="Lire l'analyse complète : Philippe propose un « deal fiscal » aux entreprises — où en sont les impôts de production ?"><img src="/numeros/0/charts/carte_03_philippe_fiscalite.png" alt="Philippe propose un « deal fiscal » aux entreprises — où en sont les impôts de production ?" loading="lazy"></a>
       <div class="mg-body">
+        <div class="mg-who"><img src="/candidats/philippe.png" width="44" height="44" alt="Portrait stylisé de Édouard Philippe" loading="lazy"><span>Édouard Philippe</span></div>
         <span class="mg-tag">Centre-droit — Horizons</span><span class="mg-theme">Fiscalité des entreprises</span>
         <h4><a class="mg-card-link" href="/numeros/0/reports/carte_03_philippe_fiscalite.html">Philippe propose un « deal fiscal » aux entreprises — où en sont les impôts de production ?</a></h4>
         <a href="/numeros/0/reports/carte_03_philippe_fiscalite.html">Lire l'analyse complète →</a>
@@ -293,6 +326,7 @@ body { background: var(--page); color: var(--ink); }
     <div class="mg-card" data-theme="Fiscalité &amp; patrimoine" data-famille="Centre-gauche — Place Publique">
       <a class="mg-card-link" href="/numeros/0/reports/carte_04_glucksmann_patrimoine.html" aria-label="Lire l'analyse complète : Glucksmann veut taxer les « méga-héritages » — la concentration du patrimoine en 3 chiffres"><img src="/numeros/0/charts/carte_04_glucksmann_patrimoine.png" alt="Glucksmann veut taxer les « méga-héritages » — la concentration du patrimoine en 3 chiffres" loading="lazy"></a>
       <div class="mg-body">
+        <div class="mg-who"><img src="/candidats/glucksmann.png" width="44" height="44" alt="Portrait stylisé de Raphaël Glucksmann" loading="lazy"><span>Raphaël Glucksmann</span></div>
         <span class="mg-tag">Centre-gauche — Place Publique</span><span class="mg-theme">Fiscalité & patrimoine</span>
         <h4><a class="mg-card-link" href="/numeros/0/reports/carte_04_glucksmann_patrimoine.html">Glucksmann veut taxer les « méga-héritages » — la concentration du patrimoine en 3 chiffres</a></h4>
         <a href="/numeros/0/reports/carte_04_glucksmann_patrimoine.html">Lire l'analyse complète →</a>
@@ -301,6 +335,7 @@ body { background: var(--page); color: var(--ink); }
     <div class="mg-card" data-theme="Institutions" data-famille="Droite — LR">
       <a class="mg-card-link" href="/numeros/0/reports/carte_02_retailleau_referendum.html" aria-label="Lire l'analyse complète : Retailleau veut élargir le référendum — la France n'en a pas organisé depuis 21 ans"><img src="/numeros/0/charts/carte_02_retailleau_referendum.png" alt="Retailleau veut élargir le référendum — la France n'en a pas organisé depuis 21 ans" loading="lazy"></a>
       <div class="mg-body">
+        <div class="mg-who"><img src="/candidats/retailleau.png" width="44" height="44" alt="Portrait stylisé de Bruno Retailleau" loading="lazy"><span>Bruno Retailleau</span></div>
         <span class="mg-tag">Droite — LR</span><span class="mg-theme">Institutions</span>
         <h4><a class="mg-card-link" href="/numeros/0/reports/carte_02_retailleau_referendum.html">Retailleau veut élargir le référendum — la France n'en a pas organisé depuis 21 ans</a></h4>
         <a href="/numeros/0/reports/carte_02_retailleau_referendum.html">Lire l'analyse complète →</a>
@@ -309,6 +344,7 @@ body { background: var(--page); color: var(--ink); }
     <div class="mg-card" data-theme="Climat" data-famille="Gauche écologiste — Les Écologistes">
       <a class="mg-card-link" href="/numeros/0/reports/carte_05_tondelier_climat.html" aria-label="Lire l'analyse complète : Tondelier veut surtaxer les plus gros héritages pour la transition — l'ampleur du décrochage de rythme"><img src="/numeros/0/charts/carte_05_tondelier_climat.png" alt="Tondelier veut surtaxer les plus gros héritages pour la transition — l'ampleur du décrochage de rythme" loading="lazy"></a>
       <div class="mg-body">
+        <div class="mg-who"><img src="/candidats/tondelier.png" width="44" height="44" alt="Portrait stylisé de Marine Tondelier" loading="lazy"><span>Marine Tondelier</span></div>
         <span class="mg-tag">Gauche écologiste — Les Écologistes</span><span class="mg-theme">Climat</span>
         <h4><a class="mg-card-link" href="/numeros/0/reports/carte_05_tondelier_climat.html">Tondelier veut surtaxer les plus gros héritages pour la transition — l'ampleur du décrochage de rythme</a></h4>
         <a href="/numeros/0/reports/carte_05_tondelier_climat.html">Lire l'analyse complète →</a>
@@ -317,6 +353,7 @@ body { background: var(--page); color: var(--ink); }
     <div class="mg-card" data-theme="Logement" data-famille="Extrême-droite — RN">
       <a class="mg-card-link" href="/numeros/0/reports/carte_01_le_pen_logement.html" aria-label="Lire l'analyse complète : Le Pen veut faciliter l'achat d'un premier logement — le vrai décrochage est ailleurs"><img src="/numeros/0/charts/carte_01_le_pen_logement.png" alt="Le Pen veut faciliter l'achat d'un premier logement — le vrai décrochage est ailleurs" loading="lazy"></a>
       <div class="mg-body">
+        <div class="mg-who"><img src="/candidats/le-pen.png" width="44" height="44" alt="Portrait stylisé de Marine Le Pen" loading="lazy"><span>Marine Le Pen</span></div>
         <span class="mg-tag">Extrême-droite — RN</span><span class="mg-theme">Logement</span>
         <h4><a class="mg-card-link" href="/numeros/0/reports/carte_01_le_pen_logement.html">Le Pen veut faciliter l'achat d'un premier logement — le vrai décrochage est ailleurs</a></h4>
         <a href="/numeros/0/reports/carte_01_le_pen_logement.html">Lire l'analyse complète →</a>
@@ -325,6 +362,7 @@ body { background: var(--page); color: var(--ink); }
     <div class="mg-card" data-theme="Institutions" data-famille="Extrême-gauche — LFI">
       <a class="mg-card-link" href="/numeros/0/reports/carte_06_melenchon_confiance.html" aria-label="Lire l'analyse complète : Mélenchon veut une VIe République — la confiance dans les institutions au plus bas"><img src="/numeros/0/charts/carte_06_melenchon_confiance.png" alt="Mélenchon veut une VIe République — la confiance dans les institutions au plus bas" loading="lazy"></a>
       <div class="mg-body">
+        <div class="mg-who"><img src="/candidats/melenchon.png" width="44" height="44" alt="Portrait stylisé de Jean-Luc Mélenchon" loading="lazy"><span>Jean-Luc Mélenchon</span></div>
         <span class="mg-tag">Extrême-gauche — LFI</span><span class="mg-theme">Institutions</span>
         <h4><a class="mg-card-link" href="/numeros/0/reports/carte_06_melenchon_confiance.html">Mélenchon veut une VIe République — la confiance dans les institutions au plus bas</a></h4>
         <a href="/numeros/0/reports/carte_06_melenchon_confiance.html">Lire l'analyse complète →</a>

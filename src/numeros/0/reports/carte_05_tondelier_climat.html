@@ -225,6 +225,133 @@
   }
   .mg-back:hover { color: var(--accent); }
   .mg-back svg { width: 14px; height: 14px; flex-shrink: 0; }
+
+  /* ---- Analyse complète : onglets ---------------------------------- */
+  .analyse { margin: 56px 0 8px; }
+  .analyse > h2 { margin: 0 0 6px; font-size: 26px; }
+  .analyse-sub { font-size: 14px; color: var(--ink-muted); margin: 0 0 22px; }
+  .tablist { display: flex; gap: 6px; border-bottom: 2px solid var(--gridline); overflow-x: auto; scrollbar-width: none; position: sticky; top: 0; background: var(--page); z-index: 5; padding-top: 6px; }
+  .tablist::-webkit-scrollbar { display: none; }
+  .tab {
+    appearance: none; border: 0; background: none; cursor: pointer; flex: 0 0 auto;
+    padding: 12px 16px 11px; font: inherit; font-size: 15px; font-weight: 700; color: var(--ink-secondary);
+    border-bottom: 4px solid transparent; margin-bottom: -2px; display: inline-flex; align-items: center; gap: 9px; white-space: nowrap;
+  }
+  .tab:hover { color: var(--ink); }
+  .tab:focus-visible { outline: 3px solid var(--reference); outline-offset: -3px; border-radius: 4px; }
+  .tab-num { display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; font-size: 13px; background: var(--gridline); color: var(--ink-secondary); }
+  .tab[aria-selected="true"] { color: var(--ink); font-size: 16px; }
+  .tab[aria-selected="true"] .tab-num { color: #fff; }
+  .tab-accent[aria-selected="true"] { border-bottom-color: var(--accent); }
+  .tab-accent[aria-selected="true"] .tab-num { background: var(--accent); }
+  .tab-reference[aria-selected="true"] { border-bottom-color: var(--reference); }
+  .tab-reference[aria-selected="true"] .tab-num { background: var(--reference); }
+  .tab-ink[aria-selected="true"] { border-bottom-color: var(--ink); }
+  .tab-ink[aria-selected="true"] .tab-num { background: var(--ink); }
+  .tab-muted[aria-selected="true"] { border-bottom-color: var(--ink-muted); }
+  .tab-muted[aria-selected="true"] .tab-num { background: var(--ink-muted); }
+  .tablist { display: none; }
+  .js .tablist { display: flex; }
+  .js .tabpanel[hidden] { display: none; }
+  .tabpanel { padding-top: 26px; }
+  .panel-head { margin-bottom: 18px; border-left: 6px solid var(--ink-muted); padding-left: 16px; }
+  .panel-accent .panel-head { border-left-color: var(--accent); }
+  .panel-reference .panel-head { border-left-color: var(--reference); }
+  .panel-ink .panel-head { border-left-color: var(--ink); }
+  .panel-head h3 { font-family: Georgia, "Times New Roman", serif; font-size: 28px; line-height: 1.2; margin: 0 0 6px; }
+  .panel-resume { font-size: 17px; color: var(--ink-secondary); margin: 0; }
+  .panel-resume strong, .em { font-weight: 700; color: var(--ink); background: linear-gradient(transparent 62%, rgba(217,119,6,0.30) 0); }
+  .panel-reference .panel-resume strong, .panel-reference .em { background: linear-gradient(transparent 62%, rgba(14,101,155,0.22) 0); }
+  .tabpanel h3 { font-family: Georgia, "Times New Roman", serif; }
+  .tabpanel .panel-body h3 { font-size: 19px; margin: 28px 0 10px; }
+  .tabpanel .panel-body p > strong:first-child { color: var(--ink); font-size: 17px; }
+  .panel-reference .panel-body p > strong:first-child { color: var(--reference); }
+  .panel-body .label { margin-top: 24px !important; }
+
+  /* Grands chiffres */
+  .hero-row { display: flex; gap: 14px; flex-wrap: wrap; margin: 6px 0 26px; }
+  .hero-tile { flex: 1 1 190px; background: var(--surface); border: 1px solid var(--border); border-top: 6px solid var(--ink-muted); border-radius: 6px; padding: 16px 18px 14px; }
+  .hero-accent { border-top-color: var(--accent); }
+  .hero-reference { border-top-color: var(--reference); }
+  .hero-ink { border-top-color: var(--ink); }
+  .hero-val { font-family: Georgia, "Times New Roman", serif; font-size: 44px; line-height: 1.05; font-weight: 700; letter-spacing: -0.01em; }
+  .hero-accent .hero-val { color: var(--accent); }
+  .hero-reference .hero-val { color: var(--reference); }
+  .hero-label { font-size: 13.5px; line-height: 1.4; color: var(--ink-secondary); margin-top: 8px; }
+
+  /* Niveaux de confiance */
+  .lvl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; padding: 1px 7px; border-radius: 3px; margin: 0 2px; white-space: nowrap; vertical-align: 1px; }
+  .lvl-a { background: #e6f4ea; color: #1b6b34; }
+  .lvl-b { background: #fef3e0; color: #92610a; }
+  .lvl-c { background: #fbe7e5; color: #a3352c; }
+  .lvl-x { background: #ececea; color: #52514E; }
+
+  /* Visuels */
+  .viz { margin: 0 0 28px; padding: 18px 20px; background: var(--surface); border: 1px solid var(--border); border-radius: 6px; }
+  .viz > figcaption { font-family: Georgia, "Times New Roman", serif; font-size: 18px; font-weight: 700; margin-bottom: 14px; }
+  .viz-legend { font-size: 12.5px; color: var(--ink-muted); margin: 12px 0 0; }
+  .viz-rank ol { list-style: none; margin: 0; padding: 0; }
+  .rank-row { display: grid; grid-template-columns: 24px 96px 1fr 120px; align-items: center; gap: 10px; padding: 7px 0; }
+  .rank-pos { font-size: 12px; font-weight: 700; color: var(--ink-muted); text-align: center; }
+  .rank-label { font-weight: 700; font-size: 15px; }
+  .rank-track { position: relative; height: 22px; background: var(--page); border-radius: 3px; }
+  .rank-fill { position: absolute; left: 0; top: 0; bottom: 0; background: var(--ink-muted); border-radius: 3px 0 0 3px; }
+  .kind-focus .rank-fill { background: var(--accent); }
+  .kind-focus .rank-label, .kind-focus .rank-val { color: var(--accent); }
+  .rank-range { position: absolute; top: 0; bottom: 0; background: repeating-linear-gradient(135deg, var(--ink-muted) 0 3px, transparent 3px 6px); opacity: 0.7; }
+  .kind-focus .rank-range { background: repeating-linear-gradient(135deg, var(--accent) 0 3px, transparent 3px 6px); }
+  .rank-ref { position: absolute; top: -5px; bottom: -5px; width: 3px; margin-left: -1px; background: var(--reference); }
+  .rank-val { font-weight: 700; font-size: 15px; font-variant-numeric: tabular-nums; }
+  .rank-note { grid-column: 2 / -1; font-size: 12.5px; color: var(--ink-muted); margin-top: -4px; }
+  .legend-ref { display: inline-block; width: 3px; height: 12px; background: var(--reference); margin-right: 6px; vertical-align: -2px; }
+  .legend-range { display: inline-block; width: 18px; height: 10px; margin: 0 6px 0 16px; vertical-align: -1px; background: repeating-linear-gradient(135deg, var(--ink-muted) 0 3px, transparent 3px 6px); }
+  .radial { width: 100%; max-width: 580px; height: auto; display: block; margin: 0 auto; }
+  .radial .ring { fill: none; stroke: var(--gridline); stroke-width: 1.2; }
+  .radial .ring-out { stroke: var(--ink-muted); stroke-dasharray: 5 5; }
+  .radial .ring-label { font-size: 10.5px; fill: var(--ink-muted); font-style: italic; }
+  .radial .spoke { stroke: var(--gridline); stroke-width: 1.5; }
+  .radial .pt-ring { fill: none; stroke: var(--ink); stroke-width: 2.5; }
+  .radial .pt-none { opacity: 0.6; }
+  .radial .pt-none .pt-ring { stroke: var(--ink-muted); stroke-dasharray: 4 3; }
+  .radial .pt-name, .radial .centre-name { font-size: 13px; font-weight: 700; fill: var(--ink); font-family: Georgia, serif; }
+  .radial .centre-name { font-size: 15px; fill: var(--accent); }
+  .radial .centre-ring { fill: none; stroke: var(--accent); stroke-width: 4; }
+  .radial .pt-sub { font-size: 10.5px; fill: var(--ink-secondary); }
+  .prox-rank { list-style: none; margin: 14px 0 0; padding: 0; display: grid; gap: 6px; }
+  .prox-rank li { display: flex; align-items: baseline; gap: 10px; }
+  .pr-name { font-weight: 700; min-width: 110px; }
+  .pr-val { font-family: Georgia, serif; font-size: 22px; font-weight: 700; color: var(--accent); }
+  .pr-n { font-size: 12.5px; color: var(--ink-muted); }
+  .matrix-scroll { overflow-x: auto; }
+  .viz-matrix table { border-collapse: separate; border-spacing: 4px; width: 100%; min-width: 560px; table-layout: fixed; }
+  .viz-matrix table col.c-dim { width: 112px; }
+  .m-cand { text-align: center; font-size: 12.5px; font-weight: 700; vertical-align: bottom; }
+  .m-cand span { display: block; margin-top: 4px; }
+  .m-dim { text-align: left; font-size: 12.5px; font-weight: 700; padding-right: 8px; }
+  .m-cell { text-align: center; vertical-align: top; padding: 8px 3px; border-radius: 5px; font-size: 11px; overflow-wrap: anywhere; line-height: 1.3; }
+  .m-glyph { display: block; font-size: 20px; line-height: 1; margin-bottom: 4px; }
+  .m-a { background: rgba(217,119,6,0.14); color: #8a4a02; }
+  .m-b { background: rgba(14,101,155,0.12); color: #0b4f7a; }
+  .m-none { background: repeating-linear-gradient(135deg, #f1f0eb 0 6px, #f9f9f7 6px 12px); color: var(--ink-muted); }
+  .m-weak { outline: 2px dashed var(--ink-muted); outline-offset: -3px; }
+  .m-cell .lvl { display: block; width: fit-content; margin: 5px auto 0; }
+  .key { display: inline-block; width: 18px; text-align: center; font-weight: 700; }
+  .key-a { color: var(--accent); } .key-b { color: var(--reference); }
+  .cand-icon { border-radius: 50%; display: block; border: 2px solid var(--ink); object-fit: cover; background: var(--gridline); }
+  .cand-card { display: flex; gap: 14px; align-items: flex-start; padding: 14px 0; border-top: 1px solid var(--border); }
+  .cand-card .cand-icon { flex: 0 0 auto; }
+  .cand-card .cand-body p { margin: 0; font-size: 15px; }
+  .detail { margin-top: 8px; }
+  .detail > summary { cursor: pointer; font-weight: 700; font-size: 14.5px; color: var(--reference); padding: 10px 0; }
+  .detail[open] > summary { margin-bottom: 8px; }
+  .credits { font-size: 11.5px; color: var(--ink-muted); margin-top: 8px; }
+  @media (max-width: 560px) {
+    .rank-row { grid-template-columns: 20px 78px 1fr; }
+    .rank-val { grid-column: 2 / -1; }
+    .hero-val { font-size: 36px; }
+    .panel-head h3 { font-size: 23px; }
+  }
+  @media print { .tablist { display: none !important; } .tabpanel[hidden] { display: block !important; } }
 </style>
 </head>
 <body>
@@ -283,25 +410,111 @@
       <p>Les émissions de <a href="https://www.citepa.org/wp-content/uploads/2024/12/Citepa_Secten-2024.pdf">gaz à effet de serre françaises</a> ont baissé d'environ <span class="stat">33 %</span> depuis 1990, et la France a respecté son deuxième budget carbone légal (2019-2023). Mais le rythme de baisse a nettement ralenti en 2024 et 2025 (<span class="stat">-1,5 à -1,8 %</span> par an) par rapport à 2023 (<span class="stat">-6,8 %</span>). Le <a href="https://www.hautconseilclimat.fr/wp-content/uploads/2026/03/HCC_2026_Avis-SNBC-3_web.pdf">Haut Conseil pour le Climat</a>, organisme officiel chargé d'évaluer la trajectoire française, estime qu'il faudrait désormais réduire les émissions d'environ <span class="stat stat-reference">-4,5 %</span> par an jusqu'en 2028 pour rester sur la trajectoire fixée par la loi — soit un rythme environ trois fois supérieur à celui observé récemment.</p>
     </div>
 
-    <h2>Le récit complet</h2>
-    <div class="deep-dive">
-      <p>La France s'est dotée d'une trajectoire légale de réduction des émissions, la Stratégie Nationale Bas-Carbone (SNBC), découpée en "budgets carbone" pluriannuels contraignants. Le deuxième budget (2019-2023, plafond moyen d'environ <span class="stat">425 Mt/an</span>) a été respecté, avec une marge de sécurité. La nouvelle version, la <a href="https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000054440907">SNBC3 (décret de juillet 2026)</a>, resserre nettement la trajectoire pour 2024-2028 (plafond autour de <span class="stat">342 Mt/an</span>) et fixe un objectif de <span class="stat stat-reference">274 MtCO2eq</span> brut en 2030, soit environ <span class="stat">-50 %</span> par rapport à 1990.</p><p>Le ralentissement du rythme de baisse observé en 2024-2025 inquiète le Haut Conseil pour le Climat, qui a explicitement posé la question de la "crédibilité" de la trajectoire dans son avis de mars 2026 sur le projet de SNBC3. Le gouvernement lui-même évoque un besoin de financement de l'ordre de plusieurs dizaines de milliards d'euros par an d'ici 2030 pour tenir cet objectif — un ordre de grandeur cohérent avec les estimations indépendantes de France Stratégie (environ <span class="stat">2 points de PIB</span> par an) et de I4CE (besoin de progression d'environ <span class="stat">87 Md€/an</span> par rapport au niveau d'investissement climat de 2024).</p><p>Ce que la mesure de Marine Tondelier peut changer : une surtaxe sur les plus gros héritages pourrait dégager des ressources supplémentaires pour financer cet effort. Ce qu'elle ne change pas mécaniquement : l'écart de rythme constaté porte aussi sur la mise en œuvre concrète des mesures (bâtiment, transports, industrie), pas uniquement sur le financement disponible.</p>
-<div class="label" style="margin-top:32px;">Volet 2 — Repositionnement vs autres candidats</div>
-<p><strong>Marine Le Pen (RN)</strong> — Niveau B Le RN n'a pas publié, à ce stade de la campagne 2027, de mécanisme de financement dédié à la transition climatique. Sa position constante depuis 2013 est le refus de toute fiscalité verte : « une nouvelle taxe que le gouvernement va mettre en place, qui frappera durement les ménages et les petites entreprises » (communiqué RN sur la taxe carbone, 23 août 2013 — niveau A, source primaire mais ancienne). Lors de la présidentielle 2022, sa mesure la plus concrète en matière de fiscalité énergétique était une <strong>baisse de la TVA de 20 % à 5,5 % sur les produits énergétiques</strong> (fioul, gaz, carburants, électricité) — une mesure qui *réduit* des recettes plutôt qu'elle n'en crée pour financer la transition (Réseau Action Climat, analyse du 20 mars 2022). Aucune annonce de financement positif (fonds, taxe ciblée, emprunt) n'a été retrouvée pour la campagne 2027 → <strong>niveau X</strong> sur ce point précis.</p>
-<p><strong>Bruno Retailleau (LR)</strong> — Niveau B, avec un X partiel Dans une tribune au Figaro du 2 juillet 2025 (cosignée avec F.-X. Bellamy et J. Aubert), Retailleau appelle à « rebâtir un parc nucléaire et [de] stopper le financement des renouvelables » (citation rapportée par vert.eco). C'est une position de <strong>redéploiement/arrêt de financement</strong> (couper les subventions aux renouvelables) plutôt qu'un mécanisme positif de financement de la transition. Aucun montant, aucune taxe ou fonds dédié n'a été identifié dans son programme 2027 tel qu'il a pu être vérifié → <strong>niveau X</strong> pour un mécanisme de financement chiffré.</p>
-<p><strong>Édouard Philippe (Horizons)</strong> — Niveau B Lors d'un discours aux Ponts-de-Cé (Maine-et-Loire) le 17 septembre 2026, Philippe a annoncé vouloir créer « un fonds unique d'adaptation au changement climatique de 2 milliards d'euros par an », en regroupant des financements existants (Fonds Barnier, Fonds vert). L'information est corroborée par plusieurs médias (AFP relayée par franceinfo, France 24, Boursorama, parlons-politique.fr) mais les sources exactes des 2 Md€ et les critères d'attribution restaient non précisés au moment de l'annonce.</p>
-<p><strong>Raphaël Glucksmann (Place Publique)</strong> — Niveau B Dans une interview au JDD (relayée par Europe1, fin novembre 2024, dans le contexte des élections européennes 2024), Glucksmann propose : un « impôt de 1 à 5 % sur les bénéfices des sociétés (hors PME) » et une taxe sur le kérosène des vols intra-européens, pour lever « 1 000 milliards d'euros sur cinq ans pour l'écologie », fléchés notamment vers un plan de rénovation thermique des bâtiments. Il évoque aussi une <strong>dette commune européenne</strong> dédiée à la transition (source secondaire moins fiable, makeamove.fr — <strong>niveau C</strong>). Ces propositions ont été formulées à l'échelle européenne (élections de 2024) ; leur reprise telle quelle dans le programme présidentiel 2027 n'a pas pu être confirmée.</p>
-<p><strong>Jean-Luc Mélenchon (LFI)</strong> — Niveau B, avec réserve de datation Le programme « L'Avenir en commun » (2022, doctrine de la « règle verte ») prévoit un <strong>ISF climatique</strong> (proposition également portée à l'époque par A. Hidalgo et Y. Jadot — franceinfo) et un <strong>plan d'investissement massif de 200 milliards d'euros</strong> « écologiquement et socialement utiles », financé notamment par la suppression des niches fiscales nuisibles à l'environnement (Réseau Action Climat, analyse du 20 mars 2022). Aucune source primaire à jour n'a permis de vérifier que ces chiffres précis (200 Md€, ISF climatique) sont formellement reconduits dans le programme 2027 — les pages officielles testées ont été réorganisées/indisponibles. À prendre comme la doctrine historique et probablement toujours en vigueur, mais <strong>non confirmée verbatim pour 2027</strong>.</p>
-<div class="label" style="margin-top:32px;">Volet 3 — Repositionnement vs voisins européens</div>
+    
+    <section class="analyse" id="analyse-complete" aria-labelledby="analyse-titre">
+      <h2 id="analyse-titre">L'analyse complète</h2>
+      <p class="analyse-sub">Quatre volets, un onglet chacun : le récit, puis la comparaison européenne, puis la comparaison entre candidats.</p>
+      <div class="tablist" role="tablist" aria-label="Volets de l'analyse complète">
+        
+        <button class="tab tab-accent" role="tab" id="tab-recit" aria-controls="panel-recit" aria-selected="true" tabindex="0"><span class="tab-num">1</span>Le récit</button>
+        
+        <button class="tab tab-reference" role="tab" id="tab-europe" aria-controls="panel-europe" aria-selected="false" tabindex="-1"><span class="tab-num">2</span>Europe</button>
+        
+        <button class="tab tab-ink" role="tab" id="tab-candidats" aria-controls="panel-candidats" aria-selected="false" tabindex="-1"><span class="tab-num">3</span>Candidats</button>
+        
+        <button class="tab tab-muted" role="tab" id="tab-sources" aria-controls="panel-sources" aria-selected="false" tabindex="-1"><span class="tab-num">4</span>Sources & limites</button>
+        
+      </div>
+      
+      <div class="tabpanel panel-accent" role="tabpanel" id="panel-recit" aria-labelledby="tab-recit">
+        <div class="panel-head">
+          <h3>Volet 1 — Le récit complet</h3>
+          
+        </div>
+        
+        
+        <div class="panel-body"><p>La France s'est dotée d'une trajectoire légale de réduction des émissions, la Stratégie Nationale Bas-Carbone (SNBC), découpée en "budgets carbone" pluriannuels contraignants. Le deuxième budget (2019-2023, plafond moyen d'environ <span class="stat">425 Mt/an</span>) a été respecté, avec une marge de sécurité. La nouvelle version, la <a href="https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000054440907">SNBC3 (décret de juillet 2026)</a>, resserre nettement la trajectoire pour 2024-2028 (plafond autour de <span class="stat">342 Mt/an</span>) et fixe un objectif de <span class="stat stat-reference">274 MtCO2eq</span> brut en 2030, soit environ <span class="stat">-50 %</span> par rapport à 1990.</p><p>Le ralentissement du rythme de baisse observé en 2024-2025 inquiète le Haut Conseil pour le Climat, qui a explicitement posé la question de la "crédibilité" de la trajectoire dans son avis de mars 2026 sur le projet de SNBC3. Le gouvernement lui-même évoque un besoin de financement de l'ordre de plusieurs dizaines de milliards d'euros par an d'ici 2030 pour tenir cet objectif — un ordre de grandeur cohérent avec les estimations indépendantes de France Stratégie (environ <span class="stat">2 points de PIB</span> par an) et de I4CE (besoin de progression d'environ <span class="stat">87 Md€/an</span> par rapport au niveau d'investissement climat de 2024).</p><p>Ce que la mesure de Marine Tondelier peut changer : une surtaxe sur les plus gros héritages pourrait dégager des ressources supplémentaires pour financer cet effort. Ce qu'elle ne change pas mécaniquement : l'écart de rythme constaté porte aussi sur la mise en œuvre concrète des mesures (bâtiment, transports, industrie), pas uniquement sur le financement disponible.</p></div>
+      </div>
+      
+      <div class="tabpanel panel-reference" role="tabpanel" id="panel-europe" aria-labelledby="tab-europe" data-later>
+        <div class="panel-head">
+          <h3>Volet 2 — Comparaison européenne</h3>
+          
+        </div>
+        
+        
+        <div class="panel-body">
 <p><strong>Allemagne</strong> — rythme récent et mécanisme de financement Selon l'Umweltbundesamt (agence fédérale de l'environnement), les émissions de GES allemandes ont baissé de <strong>3 % en 2024</strong> par rapport à 2023 (environ -20 Mt, total ~650 Mt), et le CO₂ a reculé de <strong>45,6 % depuis 1990</strong> (données finalisées, publiées le 15 janvier 2026). Le financement de la transition passe par le <strong>Klima- und Transformationsfonds (KTF)</strong>, un fonds spécial budgétaire : son plan de dépenses 2025 s'élève à <strong>25,47 milliards d'euros</strong>, en forte baisse par rapport aux 58,22 milliards prévus pour 2024 (Bundestag, 19 août 2024) — signe de tensions budgétaires sur cet instrument.</p>
 <p><strong>Suède</strong> — rythme récent, trajectoire et fiscalité carbone D'après la fiche pays de la Commission européenne (Climate Action Progress Report, factsheet janvier 2024), les émissions suédoises ont baissé de <strong>2,3 % en 2023</strong> vs 2022 (44,2 Mt CO₂-eq). Fait notable : malgré cette baisse, les projections à politiques existantes situent la Suède sur une trajectoire de <strong>-41 % d'ici 2030</strong> (secteurs hors ETS, vs 2005) contre un objectif réglementaire de <strong>-50 %</strong> — un écart de 9 points (réduit à 6 points avec mesures supplémentaires). Le principal outil de financement/incitation est la <strong>taxe carbone</strong>, historiquement la plus élevée au monde, autour de <strong>120 €/tonne de CO₂</strong> (environ 3 fois le niveau français) — chiffre daté de 2018, aucune mise à jour plus récente trouvée malgré la recherche (voir limites).</p>
 <p><strong>Moyenne / trajectoire UE-27</strong> Selon le rapport annuel de l'Agence européenne pour l'environnement (AEE), *Trends and projections in Europe 2025* (publié le 6 novembre 2025) : les émissions nettes de GES de l'UE ont baissé de <strong>2,5 % en 2024</strong> vs 2023, et de <strong>37 % depuis 1990</strong> (>39 % hors aviation/maritime international). L'objectif 2030 est <strong>-55 %</strong> vs 1990 ; les États membres, sur la base des politiques pleinement mises en œuvre, visent actuellement <strong>-54 %</strong>, soit un rythme requis d'environ <strong>3 %/an</strong> sur la période 2024-2030 pour combler l'écart. À l'horizon 2040, les politiques actuelles ne mèneraient qu'à -69 % contre un objectif recommandé de -90 % (écart ~21 points).</p>
 <p>*Mise en perspective avec la carte* : la France (-1,5 à -1,8 %/an) est donc en retrait du rythme moyen de l'UE (-2,5 %/an en 2024) et très en-deçà de l'Allemagne (-3 %/an en 2024), tout en étant proche du profil suédois qui, malgré une fiscalité carbone bien plus élevée, reste elle aussi en-dessous de sa propre cible 2030.</p>
-<div class="label" style="margin-top:32px;">Sources (volets 2 et 3)</div>
+</div>
+      </div>
+      
+      <div class="tabpanel panel-ink" role="tabpanel" id="panel-candidats" aria-labelledby="tab-candidats" data-later>
+        <div class="panel-head">
+          <h3>Volet 3 — Comparaison entre candidats</h3>
+          
+        </div>
+        
+        
+        <div class="panel-body">
+<article class="cand-card"><img class="cand-icon" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNjAgMTYwIj48cmVjdCB3aWR0aD0iMTYwIiBoZWlnaHQ9IjE2MCIgZmlsbD0iI0UxRTBEOSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTQlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiBmb250LWZhbWlseT0iR2VvcmdpYSwgc2VyaWYiIGZvbnQtd2VpZ2h0PSI3MDAiIGZvbnQtc2l6ZT0iNjQiIGZpbGw9IiM1MjUxNEUiPk1MPC90ZXh0Pjwvc3ZnPg==" width="56" height="56" alt="" loading="lazy"><div class="cand-body"><p><strong>Marine Le Pen (RN)</strong> — Niveau B Le RN n'a pas publié, à ce stade de la campagne 2027, de mécanisme de financement dédié à la transition climatique. Sa position constante depuis 2013 est le refus de toute fiscalité verte : « une nouvelle taxe que le gouvernement va mettre en place, qui frappera durement les ménages et les petites entreprises » (communiqué RN sur la taxe carbone, 23 août 2013 — niveau A, source primaire mais ancienne). Lors de la présidentielle 2022, sa mesure la plus concrète en matière de fiscalité énergétique était une <strong>baisse de la TVA de 20 % à 5,5 % sur les produits énergétiques</strong> (fioul, gaz, carburants, électricité) — une mesure qui *réduit* des recettes plutôt qu'elle n'en crée pour financer la transition (Réseau Action Climat, analyse du 20 mars 2022). Aucune annonce de financement positif (fonds, taxe ciblée, emprunt) n'a été retrouvée pour la campagne 2027 → <strong>niveau X</strong> sur ce point précis.</p></div></article>
+<article class="cand-card"><img class="cand-icon" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNjAgMTYwIj48cmVjdCB3aWR0aD0iMTYwIiBoZWlnaHQ9IjE2MCIgZmlsbD0iI0UxRTBEOSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTQlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiBmb250LWZhbWlseT0iR2VvcmdpYSwgc2VyaWYiIGZvbnQtd2VpZ2h0PSI3MDAiIGZvbnQtc2l6ZT0iNjQiIGZpbGw9IiM1MjUxNEUiPkJSPC90ZXh0Pjwvc3ZnPg==" width="56" height="56" alt="" loading="lazy"><div class="cand-body"><p><strong>Bruno Retailleau (LR)</strong> — Niveau B, avec un X partiel Dans une tribune au Figaro du 2 juillet 2025 (cosignée avec F.-X. Bellamy et J. Aubert), Retailleau appelle à « rebâtir un parc nucléaire et [de] stopper le financement des renouvelables » (citation rapportée par vert.eco). C'est une position de <strong>redéploiement/arrêt de financement</strong> (couper les subventions aux renouvelables) plutôt qu'un mécanisme positif de financement de la transition. Aucun montant, aucune taxe ou fonds dédié n'a été identifié dans son programme 2027 tel qu'il a pu être vérifié → <strong>niveau X</strong> pour un mécanisme de financement chiffré.</p></div></article>
+<article class="cand-card"><img class="cand-icon" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNjAgMTYwIj48cmVjdCB3aWR0aD0iMTYwIiBoZWlnaHQ9IjE2MCIgZmlsbD0iI0UxRTBEOSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTQlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiBmb250LWZhbWlseT0iR2VvcmdpYSwgc2VyaWYiIGZvbnQtd2VpZ2h0PSI3MDAiIGZvbnQtc2l6ZT0iNjQiIGZpbGw9IiM1MjUxNEUiPsOJUDwvdGV4dD48L3N2Zz4=" width="56" height="56" alt="" loading="lazy"><div class="cand-body"><p><strong>Édouard Philippe (Horizons)</strong> — Niveau B Lors d'un discours aux Ponts-de-Cé (Maine-et-Loire) le 17 septembre 2026, Philippe a annoncé vouloir créer « un fonds unique d'adaptation au changement climatique de 2 milliards d'euros par an », en regroupant des financements existants (Fonds Barnier, Fonds vert). L'information est corroborée par plusieurs médias (AFP relayée par franceinfo, France 24, Boursorama, parlons-politique.fr) mais les sources exactes des 2 Md€ et les critères d'attribution restaient non précisés au moment de l'annonce.</p></div></article>
+<article class="cand-card"><img class="cand-icon" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNjAgMTYwIj48cmVjdCB3aWR0aD0iMTYwIiBoZWlnaHQ9IjE2MCIgZmlsbD0iI0UxRTBEOSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTQlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiBmb250LWZhbWlseT0iR2VvcmdpYSwgc2VyaWYiIGZvbnQtd2VpZ2h0PSI3MDAiIGZvbnQtc2l6ZT0iNjQiIGZpbGw9IiM1MjUxNEUiPlJHPC90ZXh0Pjwvc3ZnPg==" width="56" height="56" alt="" loading="lazy"><div class="cand-body"><p><strong>Raphaël Glucksmann (Place Publique)</strong> — Niveau B Dans une interview au JDD (relayée par Europe1, fin novembre 2024, dans le contexte des élections européennes 2024), Glucksmann propose : un « impôt de 1 à 5 % sur les bénéfices des sociétés (hors PME) » et une taxe sur le kérosène des vols intra-européens, pour lever « 1 000 milliards d'euros sur cinq ans pour l'écologie », fléchés notamment vers un plan de rénovation thermique des bâtiments. Il évoque aussi une <strong>dette commune européenne</strong> dédiée à la transition (source secondaire moins fiable, makeamove.fr — <strong>niveau C</strong>). Ces propositions ont été formulées à l'échelle européenne (élections de 2024) ; leur reprise telle quelle dans le programme présidentiel 2027 n'a pas pu être confirmée.</p></div></article>
+<article class="cand-card"><img class="cand-icon" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNjAgMTYwIj48cmVjdCB3aWR0aD0iMTYwIiBoZWlnaHQ9IjE2MCIgZmlsbD0iI0UxRTBEOSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTQlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiBmb250LWZhbWlseT0iR2VvcmdpYSwgc2VyaWYiIGZvbnQtd2VpZ2h0PSI3MDAiIGZvbnQtc2l6ZT0iNjQiIGZpbGw9IiM1MjUxNEUiPkpNPC90ZXh0Pjwvc3ZnPg==" width="56" height="56" alt="" loading="lazy"><div class="cand-body"><p><strong>Jean-Luc Mélenchon (LFI)</strong> — Niveau B, avec réserve de datation Le programme « L'Avenir en commun » (2022, doctrine de la « règle verte ») prévoit un <strong>ISF climatique</strong> (proposition également portée à l'époque par A. Hidalgo et Y. Jadot — franceinfo) et un <strong>plan d'investissement massif de 200 milliards d'euros</strong> « écologiquement et socialement utiles », financé notamment par la suppression des niches fiscales nuisibles à l'environnement (Réseau Action Climat, analyse du 20 mars 2022). Aucune source primaire à jour n'a permis de vérifier que ces chiffres précis (200 Md€, ISF climatique) sont formellement reconduits dans le programme 2027 — les pages officielles testées ont été réorganisées/indisponibles. À prendre comme la doctrine historique et probablement toujours en vigueur, mais <strong>non confirmée verbatim pour 2027</strong>.</p></div></article>
+</div>
+      </div>
+      
+      <div class="tabpanel panel-muted" role="tabpanel" id="panel-sources" aria-labelledby="tab-sources" data-later>
+        <div class="panel-head">
+          <h3>Sources & limites</h3>
+          
+        </div>
+        
+        
+        <div class="panel-body"><h3>Sources des volets 2 et 3</h3>
 <p>Consultées le 2026-09-29 : - <a href="https://vert.eco/articles/stopper-le-financement-des-renouvelables-dans-une-tribune-bruno-retailleau-presente-un-plan-pour-lenergie-au-parfum-de-deni-climatique">Vert.eco — tribune Retailleau, Figaro 2/07/2025</a> - <a href="https://rassemblementnational.fr/communiques/taxe-carbone-une-inacceptable-mesure-fiscale-deguisee-en-vert">Rassemblement National — communiqué taxe carbone, 23/08/2013</a> - <a href="https://reseauactionclimat.org/presidentielle-que-vaut-marine-le-pen-pour-le-climat/">Réseau Action Climat — Marine Le Pen et le climat, 20/03/2022</a> - <a href="https://reseauactionclimat.org/presidentielle-que-vaut-jean-luc-melenchon-pour-le-climat/">Réseau Action Climat — Jean-Luc Mélenchon et le climat, 20/03/2022</a> - <a href="https://www.franceinfo.fr/elections/presidentielle/presidentielle-on-vous-explique-la-proposition-d-isf-climatique-portee-par-hidalgo-jadot-et-melenchon_4921023.html">France Info — ISF climatique (Hidalgo, Jadot, Mélenchon)</a> - <a href="https://www.parlons-politique.fr/elections/comment-la-france-pourrait-se-preparer-aux-crises-avec-la-securite-climatique-proposee-par-edouard-philippe_27357/">Parlons Politique — Édouard Philippe, sécurité climatique, 17/09/2026</a> - <a href="https://my-angers.info/09/17/edouard-philippe-aux-ponts-de-ce-le-candidat-veut-faire-du-climat-une-question-de-securite-nationale/195965">My Angers Info — Édouard Philippe aux Ponts-de-Cé</a> - <a href="https://www.europe1.fr/politique/glucksmann-demande-un-nouvel-impot-europeen-pour-financer-la-transition-ecologique-3895494">Europe1 — Glucksmann, impôt européen pour la transition</a> - <a href="https://makeamove.fr/populaires/raphael-glucksmann-nous-voulons-apporter-grand-plan-financement-pour-transition/">Makeamove.fr — Glucksmann, plan de financement transition</a> - <a href="https://www.eea.europa.eu/en/newsroom/news/trends-and-projections-greenhouse-gas-emissions-largely-on-track-to-2030-targets">AEE — Trends and projections in Europe 2025, communiqué</a> - <a href="https://www.eea.europa.eu/en/analysis/indicators/total-greenhouse-gas-emission-trends/">AEE — indicateur émissions GES totales</a> - <a href="https://www.umweltbundesamt.de/themen/finale-daten-fuer-2024-emissionen-um-drei-prozent">Umweltbundesamt — données finales 2024, Allemagne</a> - <a href="https://www.bundestag.de/presse/hib/kurzmeldungen-1015396">Bundestag — budget KTF 2025, 19/08/2024</a> - <a href="https://climate.ec.europa.eu/document/download/9c4a108a-ece4-4151-9af3-b1237d90c2e3_en?filename=se_2024_factsheet_en.pdf">Commission européenne — fiche pays Suède, Climate Action Progress Report, janv. 2024</a> - <a href="https://www.publicsenat.fr/actualites/non-classe/en-suede-la-taxe-carbone-est-trois-fois-plus-elevee-qu-en-france-et-ca-ne-pose-pas">Public Sénat — taxe carbone Suède vs France, 2018</a></p>
-<div class="label" style="margin-top:32px;">Limites / incertitudes</div>
-<ul><li><strong>RN et LR</strong> : aucun mécanisme de financement positif et chiffré n'a été trouvé pour 2027 (Le Pen : uniquement une baisse de TVA, donc une perte de recettes ; Retailleau : position de définancement des renouvelables, pas de plan de substitution chiffré). Marqué niveau X sur ces points précis plutôt que d'extrapoler.</li><li><strong>Mélenchon</strong> : les chiffres (ISF climatique, 200 Md€) proviennent du programme 2022 ; les pages actuelles de melenchon2027.fr n'ont pas pu être consultées (site réorganisé, redirections en boucle) pour confirmer leur reconduction exacte en 2027. À traiter comme position historique probable, non verbatim confirmée pour 2027.</li><li><strong>Glucksmann</strong> : propositions formulées dans le cadre des élections européennes de 2024 (échelle UE), pas explicitement réénoncées comme plateforme présidentielle 2027 dans les sources trouvées.</li><li><strong>Philippe</strong> : le fonds de 2 Md€/an consolide des enveloppes existantes (Fonds Barnier, Fonds vert) plus qu'il ne crée un financement nouveau ; le détail du montage n'était pas public au moment du discours.</li><li><strong>Suède</strong> : le chiffre de taxe carbone (~120 €/t) date de 2018 ; aucune source récente (2023-2025) donnant le montant actualisé n'a été trouvée malgré plusieurs recherches — à traiter comme approximatif/à rafraîchir.</li><li>Les données d'émissions 2024 (AEE, UBA) sont des estimations préliminaires/finalisées à un stade donné de l'inventaire ; de légers ajustements sont possibles lors des révisions ultérieures.</li></ul>
-    </div>
+<h3>Limites et incertitudes</h3>
+<ul><li><strong>RN et LR</strong> : aucun mécanisme de financement positif et chiffré n'a été trouvé pour 2027 (Le Pen : uniquement une baisse de TVA, donc une perte de recettes ; Retailleau : position de définancement des renouvelables, pas de plan de substitution chiffré). Marqué niveau X sur ces points précis plutôt que d'extrapoler.</li><li><strong>Mélenchon</strong> : les chiffres (ISF climatique, 200 Md€) proviennent du programme 2022 ; les pages actuelles de melenchon2027.fr n'ont pas pu être consultées (site réorganisé, redirections en boucle) pour confirmer leur reconduction exacte en 2027. À traiter comme position historique probable, non verbatim confirmée pour 2027.</li><li><strong>Glucksmann</strong> : propositions formulées dans le cadre des élections européennes de 2024 (échelle UE), pas explicitement réénoncées comme plateforme présidentielle 2027 dans les sources trouvées.</li><li><strong>Philippe</strong> : le fonds de 2 Md€/an consolide des enveloppes existantes (Fonds Barnier, Fonds vert) plus qu'il ne crée un financement nouveau ; le détail du montage n'était pas public au moment du discours.</li><li><strong>Suède</strong> : le chiffre de taxe carbone (~120 €/t) date de 2018 ; aucune source récente (2023-2025) donnant le montant actualisé n'a été trouvée malgré plusieurs recherches — à traiter comme approximatif/à rafraîchir.</li><li>Les données d'émissions 2024 (AEE, UBA) sont des estimations préliminaires/finalisées à un stade donné de l'inventaire ; de légers ajustements sont possibles lors des révisions ultérieures.</li></ul></div>
+      </div>
+      
+    </section>
+    <script>
+    (function () {
+      var root = document.getElementById('analyse-complete');
+      if (!root) return;
+      var tabs = Array.prototype.slice.call(root.querySelectorAll('[role=tab]'));
+      var panels = tabs.map(function (t) { return document.getElementById(t.getAttribute('aria-controls')); });
+      document.documentElement.classList.add('js');
+      function show(i, focus, push) {
+        tabs.forEach(function (t, j) {
+          var on = i === j;
+          t.setAttribute('aria-selected', on ? 'true' : 'false');
+          t.tabIndex = on ? 0 : -1;
+          panels[j].hidden = !on;
+        });
+        if (focus) tabs[i].focus();
+        if (push && history.replaceState) history.replaceState(null, '', '#' + tabs[i].id.replace('tab-', 'volet-'));
+      }
+      tabs.forEach(function (t, i) {
+        t.addEventListener('click', function () { show(i, false, true); });
+        t.addEventListener('keydown', function (e) {
+          var k = e.key, n = tabs.length;
+          if (k === 'ArrowRight') { e.preventDefault(); show((i + 1) % n, true, true); }
+          else if (k === 'ArrowLeft') { e.preventDefault(); show((i - 1 + n) % n, true, true); }
+          else if (k === 'Home') { e.preventDefault(); show(0, true, true); }
+          else if (k === 'End') { e.preventDefault(); show(n - 1, true, true); }
+        });
+      });
+      var start = 0, h = (location.hash || '').replace('#volet-', '');
+      tabs.forEach(function (t, i) { if (t.id === 'tab-' + h) start = i; });
+      show(start, false, false);
+      if (start > 0) root.scrollIntoView();
+    })();
+    </script>
+    
 
     <div class="sourcing-box">
       <h3>Sources &amp; méthodologie</h3>
@@ -356,6 +569,7 @@
 
     <div class="footer">
       Magnitude — newsletter data &amp; politique, apartisane. Publié le 24 septembre 2026.
+      
     </div>
   </div>
 </body>

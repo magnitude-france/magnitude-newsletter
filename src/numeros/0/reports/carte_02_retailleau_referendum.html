@@ -225,6 +225,133 @@
   }
   .mg-back:hover { color: var(--accent); }
   .mg-back svg { width: 14px; height: 14px; flex-shrink: 0; }
+
+  /* ---- Analyse complète : onglets ---------------------------------- */
+  .analyse { margin: 56px 0 8px; }
+  .analyse > h2 { margin: 0 0 6px; font-size: 26px; }
+  .analyse-sub { font-size: 14px; color: var(--ink-muted); margin: 0 0 22px; }
+  .tablist { display: flex; gap: 6px; border-bottom: 2px solid var(--gridline); overflow-x: auto; scrollbar-width: none; position: sticky; top: 0; background: var(--page); z-index: 5; padding-top: 6px; }
+  .tablist::-webkit-scrollbar { display: none; }
+  .tab {
+    appearance: none; border: 0; background: none; cursor: pointer; flex: 0 0 auto;
+    padding: 12px 16px 11px; font: inherit; font-size: 15px; font-weight: 700; color: var(--ink-secondary);
+    border-bottom: 4px solid transparent; margin-bottom: -2px; display: inline-flex; align-items: center; gap: 9px; white-space: nowrap;
+  }
+  .tab:hover { color: var(--ink); }
+  .tab:focus-visible { outline: 3px solid var(--reference); outline-offset: -3px; border-radius: 4px; }
+  .tab-num { display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; font-size: 13px; background: var(--gridline); color: var(--ink-secondary); }
+  .tab[aria-selected="true"] { color: var(--ink); font-size: 16px; }
+  .tab[aria-selected="true"] .tab-num { color: #fff; }
+  .tab-accent[aria-selected="true"] { border-bottom-color: var(--accent); }
+  .tab-accent[aria-selected="true"] .tab-num { background: var(--accent); }
+  .tab-reference[aria-selected="true"] { border-bottom-color: var(--reference); }
+  .tab-reference[aria-selected="true"] .tab-num { background: var(--reference); }
+  .tab-ink[aria-selected="true"] { border-bottom-color: var(--ink); }
+  .tab-ink[aria-selected="true"] .tab-num { background: var(--ink); }
+  .tab-muted[aria-selected="true"] { border-bottom-color: var(--ink-muted); }
+  .tab-muted[aria-selected="true"] .tab-num { background: var(--ink-muted); }
+  .tablist { display: none; }
+  .js .tablist { display: flex; }
+  .js .tabpanel[hidden] { display: none; }
+  .tabpanel { padding-top: 26px; }
+  .panel-head { margin-bottom: 18px; border-left: 6px solid var(--ink-muted); padding-left: 16px; }
+  .panel-accent .panel-head { border-left-color: var(--accent); }
+  .panel-reference .panel-head { border-left-color: var(--reference); }
+  .panel-ink .panel-head { border-left-color: var(--ink); }
+  .panel-head h3 { font-family: Georgia, "Times New Roman", serif; font-size: 28px; line-height: 1.2; margin: 0 0 6px; }
+  .panel-resume { font-size: 17px; color: var(--ink-secondary); margin: 0; }
+  .panel-resume strong, .em { font-weight: 700; color: var(--ink); background: linear-gradient(transparent 62%, rgba(217,119,6,0.30) 0); }
+  .panel-reference .panel-resume strong, .panel-reference .em { background: linear-gradient(transparent 62%, rgba(14,101,155,0.22) 0); }
+  .tabpanel h3 { font-family: Georgia, "Times New Roman", serif; }
+  .tabpanel .panel-body h3 { font-size: 19px; margin: 28px 0 10px; }
+  .tabpanel .panel-body p > strong:first-child { color: var(--ink); font-size: 17px; }
+  .panel-reference .panel-body p > strong:first-child { color: var(--reference); }
+  .panel-body .label { margin-top: 24px !important; }
+
+  /* Grands chiffres */
+  .hero-row { display: flex; gap: 14px; flex-wrap: wrap; margin: 6px 0 26px; }
+  .hero-tile { flex: 1 1 190px; background: var(--surface); border: 1px solid var(--border); border-top: 6px solid var(--ink-muted); border-radius: 6px; padding: 16px 18px 14px; }
+  .hero-accent { border-top-color: var(--accent); }
+  .hero-reference { border-top-color: var(--reference); }
+  .hero-ink { border-top-color: var(--ink); }
+  .hero-val { font-family: Georgia, "Times New Roman", serif; font-size: 44px; line-height: 1.05; font-weight: 700; letter-spacing: -0.01em; }
+  .hero-accent .hero-val { color: var(--accent); }
+  .hero-reference .hero-val { color: var(--reference); }
+  .hero-label { font-size: 13.5px; line-height: 1.4; color: var(--ink-secondary); margin-top: 8px; }
+
+  /* Niveaux de confiance */
+  .lvl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; padding: 1px 7px; border-radius: 3px; margin: 0 2px; white-space: nowrap; vertical-align: 1px; }
+  .lvl-a { background: #e6f4ea; color: #1b6b34; }
+  .lvl-b { background: #fef3e0; color: #92610a; }
+  .lvl-c { background: #fbe7e5; color: #a3352c; }
+  .lvl-x { background: #ececea; color: #52514E; }
+
+  /* Visuels */
+  .viz { margin: 0 0 28px; padding: 18px 20px; background: var(--surface); border: 1px solid var(--border); border-radius: 6px; }
+  .viz > figcaption { font-family: Georgia, "Times New Roman", serif; font-size: 18px; font-weight: 700; margin-bottom: 14px; }
+  .viz-legend { font-size: 12.5px; color: var(--ink-muted); margin: 12px 0 0; }
+  .viz-rank ol { list-style: none; margin: 0; padding: 0; }
+  .rank-row { display: grid; grid-template-columns: 24px 96px 1fr 120px; align-items: center; gap: 10px; padding: 7px 0; }
+  .rank-pos { font-size: 12px; font-weight: 700; color: var(--ink-muted); text-align: center; }
+  .rank-label { font-weight: 700; font-size: 15px; }
+  .rank-track { position: relative; height: 22px; background: var(--page); border-radius: 3px; }
+  .rank-fill { position: absolute; left: 0; top: 0; bottom: 0; background: var(--ink-muted); border-radius: 3px 0 0 3px; }
+  .kind-focus .rank-fill { background: var(--accent); }
+  .kind-focus .rank-label, .kind-focus .rank-val { color: var(--accent); }
+  .rank-range { position: absolute; top: 0; bottom: 0; background: repeating-linear-gradient(135deg, var(--ink-muted) 0 3px, transparent 3px 6px); opacity: 0.7; }
+  .kind-focus .rank-range { background: repeating-linear-gradient(135deg, var(--accent) 0 3px, transparent 3px 6px); }
+  .rank-ref { position: absolute; top: -5px; bottom: -5px; width: 3px; margin-left: -1px; background: var(--reference); }
+  .rank-val { font-weight: 700; font-size: 15px; font-variant-numeric: tabular-nums; }
+  .rank-note { grid-column: 2 / -1; font-size: 12.5px; color: var(--ink-muted); margin-top: -4px; }
+  .legend-ref { display: inline-block; width: 3px; height: 12px; background: var(--reference); margin-right: 6px; vertical-align: -2px; }
+  .legend-range { display: inline-block; width: 18px; height: 10px; margin: 0 6px 0 16px; vertical-align: -1px; background: repeating-linear-gradient(135deg, var(--ink-muted) 0 3px, transparent 3px 6px); }
+  .radial { width: 100%; max-width: 580px; height: auto; display: block; margin: 0 auto; }
+  .radial .ring { fill: none; stroke: var(--gridline); stroke-width: 1.2; }
+  .radial .ring-out { stroke: var(--ink-muted); stroke-dasharray: 5 5; }
+  .radial .ring-label { font-size: 10.5px; fill: var(--ink-muted); font-style: italic; }
+  .radial .spoke { stroke: var(--gridline); stroke-width: 1.5; }
+  .radial .pt-ring { fill: none; stroke: var(--ink); stroke-width: 2.5; }
+  .radial .pt-none { opacity: 0.6; }
+  .radial .pt-none .pt-ring { stroke: var(--ink-muted); stroke-dasharray: 4 3; }
+  .radial .pt-name, .radial .centre-name { font-size: 13px; font-weight: 700; fill: var(--ink); font-family: Georgia, serif; }
+  .radial .centre-name { font-size: 15px; fill: var(--accent); }
+  .radial .centre-ring { fill: none; stroke: var(--accent); stroke-width: 4; }
+  .radial .pt-sub { font-size: 10.5px; fill: var(--ink-secondary); }
+  .prox-rank { list-style: none; margin: 14px 0 0; padding: 0; display: grid; gap: 6px; }
+  .prox-rank li { display: flex; align-items: baseline; gap: 10px; }
+  .pr-name { font-weight: 700; min-width: 110px; }
+  .pr-val { font-family: Georgia, serif; font-size: 22px; font-weight: 700; color: var(--accent); }
+  .pr-n { font-size: 12.5px; color: var(--ink-muted); }
+  .matrix-scroll { overflow-x: auto; }
+  .viz-matrix table { border-collapse: separate; border-spacing: 4px; width: 100%; min-width: 560px; table-layout: fixed; }
+  .viz-matrix table col.c-dim { width: 112px; }
+  .m-cand { text-align: center; font-size: 12.5px; font-weight: 700; vertical-align: bottom; }
+  .m-cand span { display: block; margin-top: 4px; }
+  .m-dim { text-align: left; font-size: 12.5px; font-weight: 700; padding-right: 8px; }
+  .m-cell { text-align: center; vertical-align: top; padding: 8px 3px; border-radius: 5px; font-size: 11px; overflow-wrap: anywhere; line-height: 1.3; }
+  .m-glyph { display: block; font-size: 20px; line-height: 1; margin-bottom: 4px; }
+  .m-a { background: rgba(217,119,6,0.14); color: #8a4a02; }
+  .m-b { background: rgba(14,101,155,0.12); color: #0b4f7a; }
+  .m-none { background: repeating-linear-gradient(135deg, #f1f0eb 0 6px, #f9f9f7 6px 12px); color: var(--ink-muted); }
+  .m-weak { outline: 2px dashed var(--ink-muted); outline-offset: -3px; }
+  .m-cell .lvl { display: block; width: fit-content; margin: 5px auto 0; }
+  .key { display: inline-block; width: 18px; text-align: center; font-weight: 700; }
+  .key-a { color: var(--accent); } .key-b { color: var(--reference); }
+  .cand-icon { border-radius: 50%; display: block; border: 2px solid var(--ink); object-fit: cover; background: var(--gridline); }
+  .cand-card { display: flex; gap: 14px; align-items: flex-start; padding: 14px 0; border-top: 1px solid var(--border); }
+  .cand-card .cand-icon { flex: 0 0 auto; }
+  .cand-card .cand-body p { margin: 0; font-size: 15px; }
+  .detail { margin-top: 8px; }
+  .detail > summary { cursor: pointer; font-weight: 700; font-size: 14.5px; color: var(--reference); padding: 10px 0; }
+  .detail[open] > summary { margin-bottom: 8px; }
+  .credits { font-size: 11.5px; color: var(--ink-muted); margin-top: 8px; }
+  @media (max-width: 560px) {
+    .rank-row { grid-template-columns: 20px 78px 1fr; }
+    .rank-val { grid-column: 2 / -1; }
+    .hero-val { font-size: 36px; }
+    .panel-head h3 { font-size: 23px; }
+  }
+  @media print { .tablist { display: none !important; } .tabpanel[hidden] { display: block !important; } }
 </style>
 </head>
 <body>
@@ -297,25 +424,111 @@
       <p>Depuis 1958, la France a organisé <span class="stat">10 référendums nationaux</span> — le dernier en 2005, sur le traité établissant une Constitution pour l'Europe (rejeté). Depuis, aucun sujet n'a été soumis à référendum national, malgré plusieurs débats publics qui auraient pu s'y prêter. À titre de comparaison, <a href="https://researchbriefings.files.parliament.uk/documents/CBP-7692/CBP-7692.pdf">d'autres démocraties</a> y recourent beaucoup plus souvent — <a href="https://www.bfs.admin.ch/asset/fr/36460847">la Suisse</a> en tête, mais aussi l'Italie ou l'Irlande — même si les mécanismes juridiques ne sont pas strictement comparables (référendum obligatoire vs facultatif, notamment).</p>
     </div>
 
-    <h2>Le récit complet</h2>
-    <div class="deep-dive">
-      <p>L'article 11 de la Constitution permet au président de la République de soumettre au référendum certains projets de loi (organisation des pouvoirs publics, réformes relatives à la politique économique, sociale ou environnementale, ratification de traités). L'article 89 encadre le référendum de révision constitutionnelle. Sur les 10 référendums nationaux organisés depuis 1958, la plupart concernaient soit la construction européenne (1972, 1992, 2005), soit l'organisation des pouvoirs (1962, 1969, 2000), soit la décolonisation (1961, 1962).</p><p>La comparaison internationale doit être maniée avec précaution : en Suisse, le référendum est un mécanisme institutionnalisé et quasi-systématique (obligatoire pour toute révision constitutionnelle, facultatif par pétition pour les lois ordinaires), ce qui explique un volume incomparable (environ <span class="stat">300</span> référendums fédéraux entre 1991 et 2022). En Irlande, tout amendement constitutionnel *doit* passer par référendum — ce n'est pas un choix politique mais une contrainte constitutionnelle. À l'inverse, l'Allemagne n'a jamais organisé de référendum fédéral depuis 1949, la Loi fondamentale n'en prévoyant qu'un cas (réorganisation territoriale des Länder), jamais utilisé.</p><p>Ce que la mesure de Bruno Retailleau peut changer : elle élargirait le champ des sujets soumis au vote direct des Français, en s'inspirant potentiellement de mécanismes plus fréquents ailleurs en Europe. Ce qu'elle ne change pas mécaniquement : le fait que le déclenchement d'un référendum reste, dans le système français actuel, une décision politique (présidentielle ou parlementaire), pas un droit d'initiative populaire automatique comme en Suisse.</p>
-<div class="label" style="margin-top:32px;">Volet 2 — Repositionnement vs autres candidats</div>
-<p><strong>Marine Le Pen (RN)</strong> Position : un RIC « limité » — les citoyens pourraient proposer ou abroger des lois par référendum, mais pas modifier directement la Constitution (qui resterait soumise à référendum obligatoire, à l'initiative des pouvoirs publics). Citation verbatim (entretien 2022, doctrine reconduite selon revue 2026) : « [Le Pen propose d'] abaisser à 500 000 électeurs la barre de déclenchement d'un référendum d'initiative citoyenne », avec « la supériorité de la décision référendaire sur les actes des pouvoirs publics » et un référendum obligatoire pour toute révision constitutionnelle ou tout traité « portant limitation de souveraineté ». Source : Public Sénat, « Marine Le Pen détaille sa "révolution référendaire" », 12/04/2022 (maj 20/04/2022) — https://www.publicsenat.fr/actualites/politique/marine-le-pen-detaille-sa-revolution-referendaire-202358 Corroboration récente (positionnement inchangé sur le fond, mais sans nouveau texte de loi ni calendrier annoncés pour 2027) : Solution Démocratique, avril 2026 — https://solutiondemocratique.fr/marine-le-pen-programme-2027/ Niveau de confiance : B (citation d'origine 2022 rapportée par un média national fiable ; pas de déclaration primaire datée 2026-2027 retrouvée reprenant les mêmes termes).</p>
-<p><strong>Jean-Luc Mélenchon (LFI / Avenir en commun)</strong> Position : le RIC est au cœur du projet institutionnel, hérité des Gilets jaunes, avec 4 volets (législatif, abrogatoire, constituant, révocatoire). Citation verbatim : « Le Référendum d'initiative citoyenne (RIC), comme demandé par les Gilets jaunes, permet à des citoyen·nes réunissant suffisamment de signatures de proposer, d'abroger une loi, de modifier la Constitution ou de révoquer des élu·es. » Le processus vers la 6e République passerait lui-même par un référendum initial (« Voulez-vous une nouvelle Constitution, élaborée par une Assemblée constituante… ? ») puis un référendum d'approbation du texte final avant son entrée en vigueur. Source : document officiel La France insoumise, « Plan UP — 6e République » (PDF) — https://lafranceinsoumise.fr/wp-content/uploads/2023/05/Plan_UP_6e-REPUBLIQUE_web.pdf Niveau de confiance : A (citation verbatim, document primaire du mouvement). Limite : le seuil précis de signatures pour déclencher le RIC n'est pas chiffré dans ce document.</p>
-<p><strong>Édouard Philippe (Horizons)</strong> Position ambivalente selon la période. En 2019 (Premier ministre), il exprimait une franche hostilité au RIC — citation verbatim : « Si je devais le dire en une formule, je dirais que le RIC, ça me hérisse » — et cherchait au contraire à durcir le référendum d'initiative partagée (RIP) déjà existant (rallonger d'1 à 3-4 ans la période de "protection" d'une loi nouvelle contre un RIP, empêcher qu'un texte non promulgué y soit soumis) : « Ce n'est pas sain quand la représentation parlementaire corrige ce qu'a voté le peuple, et inversement. » Depuis 2025, en vue de 2027, il défend au contraire un usage plus fréquent du référendum descendant (à l'initiative de l'exécutif, via l'article 11) : convoquer un référendum sur les retraites, sur l'inscription d'une « règle d'or » budgétaire dans la Constitution, et sur l'habilitation du gouvernement à légiférer par ordonnances, en le couplant au calendrier d'élections législatives de juin 2027 — citation verbatim : « Nous prendrons une série d'ordonnances dont l'habilitation pourra être confiée au gouvernement par référendum. » Aucune de ces déclarations ne porte sur un droit d'initiative citoyenne (RIC) : il s'agit de référendums initiés par l'exécutif, pas par les citoyens. Sources : Europe 1, « "Le référendum d'initiative citoyenne, ça me hérisse" », 26/01/2019 (maj 27/11/2024) — https://www.europe1.fr/politique/le-referendum-dinitiative-citoyenne-ca-me-herisse-declare-edouard-philippe-3845711 ; Le JDD, « Edouard Philippe veut imposer des garde-fous au référendum d'initiative populaire », 23/05/2019 — https://www.lejdd.fr/Politique/edouard-philippe-veut-imposer-des-garde-fous-au-referendum-dinitiative-populaire-3900243 ; Europe 1, « Dissolution, référendum sur les retraites et sur une "règle d'or" budgétaire : Philippe dévoile sa méthode », 16/03/2025 — https://www.europe1.fr/politique/dissolution-referendum-sur-les-retraites-et-sur-une-regle-dor-budgetaire-philippe-devoile-sa-methode-668233 ; Planet.fr, « Stratégie "Flash" d'Édouard Philippe : référendums et ordonnances dès l'été 2027 », 21/05/2026 — https://www.planet.fr/politique-strategie-flash-dedouard-philippe-referendums-et-ordonnances-des-lete-2027.2996997.29334.html Niveau de confiance : A pour les citations 2019 (verbatim, médias multiples) ; B pour le volet 2025-2026 (citation verbatim et sujets confirmés par deux médias indépendants — Europe 1 et Planet.fr — mais article constitutionnel précis et calendrier exact non confirmés dans le détail).</p>
-<p><strong>Raphaël Glucksmann (Place Publique)</strong> Position : instaurer un droit d'initiative citoyenne pour déclencher des référendums locaux et nationaux, et une grande convention citoyenne posant les bases d'une assemblée constituante. Citations verbatim : « Instaurer un droit d'initiative citoyenne, permettant de déclencher des séquences démocratiques avec des référendums à l'échelle locale et nationale » ; « Lancer en parallèle une grande convention citoyenne qui jettera les bases d'une assemblée constituante pour changer la Constitution. » Source : document officiel Place Publique, « Acte un — notre vision pour la France », 23/06/2025 (PDF) — https://place-publique.eu/wp-content/uploads/2025/06/20250623_Projet_placepublique_acte1_BAT_BaDef.pdf Niveau de confiance : A (citation verbatim, document primaire daté). Limite : aucun seuil de signatures, aucun calendrier ni mécanisme contraignant ne sont précisés dans ce document — la proposition reste, à ce stade, un principe général plutôt qu'un dispositif détaillé.</p>
-<p><strong>Marine Tondelier (Les Écologistes)</strong> Position : un référendum pour instaurer une assemblée constituante chargée de rédiger une nouvelle Constitution, avec une question unique soumise aux Français. Citation verbatim (rapportée) : « La seule question qu'il doit leur poser, c'est : "Êtes-vous d'accord ou non pour la mise en place d'une (assemblée) constituante chargée de proposer une nouvelle Constitution pour notre pays ?" » Source : Marine & Océans (dépêche), 08/02/2025 — https://marine-oceans.com/actualites/tondelier-ecologistes-appelle-a-un-referendum-pour-mettre-en-place-une-constituante/ Niveau de confiance : B (citation rapportée, via un support de presse secondaire peu consulté, non recoupée sur un média national de premier plan). Limite : pas de proposition détaillée retrouvée sur un RIC spécifique ou des seuils de déclenchement ; son parti a déposé une proposition de loi constitutionnelle (PLC n°2081, Assemblée nationale, novembre 2025) mais elle n'est pas personnellement à l'origine de ce texte — niveau X sur ce point précis (source non vérifiée directement).</p>
-<div class="label" style="margin-top:32px;">Volet 3 — Repositionnement vs voisins européens</div>
+    
+    <section class="analyse" id="analyse-complete" aria-labelledby="analyse-titre">
+      <h2 id="analyse-titre">L'analyse complète</h2>
+      <p class="analyse-sub">Quatre volets, un onglet chacun : le récit, puis la comparaison européenne, puis la comparaison entre candidats.</p>
+      <div class="tablist" role="tablist" aria-label="Volets de l'analyse complète">
+        
+        <button class="tab tab-accent" role="tab" id="tab-recit" aria-controls="panel-recit" aria-selected="true" tabindex="0"><span class="tab-num">1</span>Le récit</button>
+        
+        <button class="tab tab-reference" role="tab" id="tab-europe" aria-controls="panel-europe" aria-selected="false" tabindex="-1"><span class="tab-num">2</span>Europe</button>
+        
+        <button class="tab tab-ink" role="tab" id="tab-candidats" aria-controls="panel-candidats" aria-selected="false" tabindex="-1"><span class="tab-num">3</span>Candidats</button>
+        
+        <button class="tab tab-muted" role="tab" id="tab-sources" aria-controls="panel-sources" aria-selected="false" tabindex="-1"><span class="tab-num">4</span>Sources & limites</button>
+        
+      </div>
+      
+      <div class="tabpanel panel-accent" role="tabpanel" id="panel-recit" aria-labelledby="tab-recit">
+        <div class="panel-head">
+          <h3>Volet 1 — Le récit complet</h3>
+          
+        </div>
+        
+        
+        <div class="panel-body"><p>L'article 11 de la Constitution permet au président de la République de soumettre au référendum certains projets de loi (organisation des pouvoirs publics, réformes relatives à la politique économique, sociale ou environnementale, ratification de traités). L'article 89 encadre le référendum de révision constitutionnelle. Sur les 10 référendums nationaux organisés depuis 1958, la plupart concernaient soit la construction européenne (1972, 1992, 2005), soit l'organisation des pouvoirs (1962, 1969, 2000), soit la décolonisation (1961, 1962).</p><p>La comparaison internationale doit être maniée avec précaution : en Suisse, le référendum est un mécanisme institutionnalisé et quasi-systématique (obligatoire pour toute révision constitutionnelle, facultatif par pétition pour les lois ordinaires), ce qui explique un volume incomparable (environ <span class="stat">300</span> référendums fédéraux entre 1991 et 2022). En Irlande, tout amendement constitutionnel *doit* passer par référendum — ce n'est pas un choix politique mais une contrainte constitutionnelle. À l'inverse, l'Allemagne n'a jamais organisé de référendum fédéral depuis 1949, la Loi fondamentale n'en prévoyant qu'un cas (réorganisation territoriale des Länder), jamais utilisé.</p><p>Ce que la mesure de Bruno Retailleau peut changer : elle élargirait le champ des sujets soumis au vote direct des Français, en s'inspirant potentiellement de mécanismes plus fréquents ailleurs en Europe. Ce qu'elle ne change pas mécaniquement : le fait que le déclenchement d'un référendum reste, dans le système français actuel, une décision politique (présidentielle ou parlementaire), pas un droit d'initiative populaire automatique comme en Suisse.</p></div>
+      </div>
+      
+      <div class="tabpanel panel-reference" role="tabpanel" id="panel-europe" aria-labelledby="tab-europe" data-later>
+        <div class="panel-head">
+          <h3>Volet 2 — Comparaison européenne</h3>
+          
+        </div>
+        
+        
+        <div class="panel-body">
 <p><strong>Suisse</strong> — référence classique de la démocratie directe. Mécanismes : référendum facultatif (50 000 signatures en 100 jours pour contester une loi votée par le Parlement fédéral) et initiative populaire (100 000 signatures en 18 mois, pour proposer une révision constitutionnelle, avec double majorité peuple + cantons requise pour l'adoption ; environ 10 % des initiatives sont acceptées). Fréquence : jusqu'en 2018, 186 référendums facultatifs organisés au niveau fédéral depuis l'instauration du mécanisme (moyenne de 1,29/an) et 215 votes sur des initiatives populaires (moyenne de 1,69/an) — soit, rien que pour ces deux instruments, environ 3 votes populaires nationaux par an en moyenne historique. Les Suisses votent en général 4 fois par an (dates de votation), et ont été appelés aux urnes 332 fois depuis 1848 sur l'ensemble des objets (lois, initiatives, référendums obligatoires constitutionnels compris). Sources : Wikipédia FR, « Référendum facultatif » — https://fr.wikipedia.org/wiki/R%C3%A9f%C3%A9rendum_facultatif ; Wikipédia FR, « Initiative populaire fédérale » — https://fr.wikipedia.org/wiki/Initiative_populaire_f%C3%A9d%C3%A9rale ; Confédération suisse (admin.ch), « Les votations populaires » — https://www.admin.ch/gov/fr/accueil/documentation/votations.html</p>
 <p><strong>Irlande</strong> — référendum obligatoire pour toute révision constitutionnelle, mais pas d'initiative citoyenne. Mécanisme : la Constitution irlandaise impose un référendum pour toute modification constitutionnelle ; il n'existe pas de seuil de signatures citoyennes pour déclencher un référendum — l'initiative reste parlementaire/gouvernementale, mais le passage par les urnes, lui, est automatique et non contournable pour tout changement constitutionnel. Fréquence récente : 10 référendums constitutionnels organisés entre 2011 et 2018 (rémunération des juges et pouvoirs d'enquête du Parlement en 2011 ; traité budgétaire européen et droits de l'enfant en 2012 ; suppression du Sénat et Cour d'appel en 2013 ; mariage pour tous et âge minimum du président en 2015 ; IVG et blasphème en 2018), auxquels s'ajoutent d'autres scrutins en 2019 et 2024 non détaillés ici faute de liste consolidée vérifiée. Source : ElectionsIreland.org, « Summary of Constitutional Referendums » — https://electionsireland.org/results/referendum/summary.cfm</p>
 <p><strong>Italie</strong> — mécanisme mixte, avec un quorum qui neutralise souvent le résultat. Mécanisme : le référendum abrogatif (art. 75 de la Constitution) peut être déclenché par 500 000 électeurs ou 5 conseils régionaux, mais n'est valide que si le quorum de participation (50 %+1 des inscrits) est atteint ; à cela s'ajoute le référendum confirmatif de révision constitutionnelle (art. 138), sans quorum, déclenchable par 1/5 des membres d'une chambre, 500 000 électeurs ou 5 conseils régionaux. Fréquence récente : sur les 15 dernières années, seulement 3 journées de référendum abrogatif — 2011 (4 questions, quorum atteint, participation 54,8 %), 2016 (1 question sur les forages pétroliers, quorum non atteint, 31,2 %), 2022 (5 questions sur la justice, quorum non atteint, environ 20 %). Depuis 1974, l'Italie a organisé 67 référendums abrogatifs (39 valides, 28 invalidés faute de quorum) selon un décompte arrêté à mai 2022, hors les 5 questions de juin 2022. Sources : YouTrend, « La storia dei referendum abrogativi in Italia », 30/05/2022 — https://www.youtrend.it/2022/05/30/la-storia-dei-referendum-abrogativi-in-italia/ ; TGCOM24 (Mediaset), « Referendum in Italia, 78 volte alle urne dal 1946 », 09/06/2025 — https://www.tgcom24.mediaset.it/elezioni/referendum-2025/referendum-in-italia-78-volte-alle-urne-dal-1946_99403737-202502k.shtml</p>
 <p><strong>Point de comparaison européen</strong> Il n'existe pas d'indicateur Eurostat standard sur la fréquence des référendums nationaux — ce n'est pas un domaine couvert par les statistiques officielles de l'UE. La référence académique la plus reconnue sur le sujet est la Referendum Database (RDB) du Centre for Research on Direct Democracy (C2D, Université de Zurich), qui recense les référendums nationaux depuis 1900. Selon cette base, en excluant la Suisse (« outlier » délibérément exclu des comparaisons, avec près de 300 dates de votation recensées), les pays européens les plus actifs sur la période étudiée restent modestes en comparaison : Irlande (31 référendums cumulés) et Italie (23). La France, avec 10 référendums en 68 ans de Ve République, se situe donc dans la fourchette basse de ce classement, même en excluant la Suisse. Source : Referendum Database (RDB) / C2D — Centre for Research on Direct Democracy, Université de Zurich — https://report.rdb.vote/overall/referendum_regime_type.html</p>
-<div class="label" style="margin-top:32px;">Sources (volets 2 et 3)</div>
+</div>
+      </div>
+      
+      <div class="tabpanel panel-ink" role="tabpanel" id="panel-candidats" aria-labelledby="tab-candidats" data-later>
+        <div class="panel-head">
+          <h3>Volet 3 — Comparaison entre candidats</h3>
+          
+        </div>
+        
+        
+        <div class="panel-body">
+<article class="cand-card"><img class="cand-icon" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNjAgMTYwIj48cmVjdCB3aWR0aD0iMTYwIiBoZWlnaHQ9IjE2MCIgZmlsbD0iI0UxRTBEOSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTQlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiBmb250LWZhbWlseT0iR2VvcmdpYSwgc2VyaWYiIGZvbnQtd2VpZ2h0PSI3MDAiIGZvbnQtc2l6ZT0iNjQiIGZpbGw9IiM1MjUxNEUiPk1MPC90ZXh0Pjwvc3ZnPg==" width="56" height="56" alt="" loading="lazy"><div class="cand-body"><p><strong>Marine Le Pen (RN)</strong> Position : un RIC « limité » — les citoyens pourraient proposer ou abroger des lois par référendum, mais pas modifier directement la Constitution (qui resterait soumise à référendum obligatoire, à l'initiative des pouvoirs publics). Citation verbatim (entretien 2022, doctrine reconduite selon revue 2026) : « [Le Pen propose d'] abaisser à 500 000 électeurs la barre de déclenchement d'un référendum d'initiative citoyenne », avec « la supériorité de la décision référendaire sur les actes des pouvoirs publics » et un référendum obligatoire pour toute révision constitutionnelle ou tout traité « portant limitation de souveraineté ». Source : Public Sénat, « Marine Le Pen détaille sa "révolution référendaire" », 12/04/2022 (maj 20/04/2022) — https://www.publicsenat.fr/actualites/politique/marine-le-pen-detaille-sa-revolution-referendaire-202358 Corroboration récente (positionnement inchangé sur le fond, mais sans nouveau texte de loi ni calendrier annoncés pour 2027) : Solution Démocratique, avril 2026 — https://solutiondemocratique.fr/marine-le-pen-programme-2027/ Niveau de confiance : B (citation d'origine 2022 rapportée par un média national fiable ; pas de déclaration primaire datée 2026-2027 retrouvée reprenant les mêmes termes).</p></div></article>
+<article class="cand-card"><img class="cand-icon" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNjAgMTYwIj48cmVjdCB3aWR0aD0iMTYwIiBoZWlnaHQ9IjE2MCIgZmlsbD0iI0UxRTBEOSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTQlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiBmb250LWZhbWlseT0iR2VvcmdpYSwgc2VyaWYiIGZvbnQtd2VpZ2h0PSI3MDAiIGZvbnQtc2l6ZT0iNjQiIGZpbGw9IiM1MjUxNEUiPkpNPC90ZXh0Pjwvc3ZnPg==" width="56" height="56" alt="" loading="lazy"><div class="cand-body"><p><strong>Jean-Luc Mélenchon (LFI / Avenir en commun)</strong> Position : le RIC est au cœur du projet institutionnel, hérité des Gilets jaunes, avec 4 volets (législatif, abrogatoire, constituant, révocatoire). Citation verbatim : « Le Référendum d'initiative citoyenne (RIC), comme demandé par les Gilets jaunes, permet à des citoyen·nes réunissant suffisamment de signatures de proposer, d'abroger une loi, de modifier la Constitution ou de révoquer des élu·es. » Le processus vers la 6e République passerait lui-même par un référendum initial (« Voulez-vous une nouvelle Constitution, élaborée par une Assemblée constituante… ? ») puis un référendum d'approbation du texte final avant son entrée en vigueur. Source : document officiel La France insoumise, « Plan UP — 6e République » (PDF) — https://lafranceinsoumise.fr/wp-content/uploads/2023/05/Plan_UP_6e-REPUBLIQUE_web.pdf Niveau de confiance : A (citation verbatim, document primaire du mouvement). Limite : le seuil précis de signatures pour déclencher le RIC n'est pas chiffré dans ce document.</p></div></article>
+<article class="cand-card"><img class="cand-icon" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNjAgMTYwIj48cmVjdCB3aWR0aD0iMTYwIiBoZWlnaHQ9IjE2MCIgZmlsbD0iI0UxRTBEOSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTQlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiBmb250LWZhbWlseT0iR2VvcmdpYSwgc2VyaWYiIGZvbnQtd2VpZ2h0PSI3MDAiIGZvbnQtc2l6ZT0iNjQiIGZpbGw9IiM1MjUxNEUiPsOJUDwvdGV4dD48L3N2Zz4=" width="56" height="56" alt="" loading="lazy"><div class="cand-body"><p><strong>Édouard Philippe (Horizons)</strong> Position ambivalente selon la période. En 2019 (Premier ministre), il exprimait une franche hostilité au RIC — citation verbatim : « Si je devais le dire en une formule, je dirais que le RIC, ça me hérisse » — et cherchait au contraire à durcir le référendum d'initiative partagée (RIP) déjà existant (rallonger d'1 à 3-4 ans la période de "protection" d'une loi nouvelle contre un RIP, empêcher qu'un texte non promulgué y soit soumis) : « Ce n'est pas sain quand la représentation parlementaire corrige ce qu'a voté le peuple, et inversement. » Depuis 2025, en vue de 2027, il défend au contraire un usage plus fréquent du référendum descendant (à l'initiative de l'exécutif, via l'article 11) : convoquer un référendum sur les retraites, sur l'inscription d'une « règle d'or » budgétaire dans la Constitution, et sur l'habilitation du gouvernement à légiférer par ordonnances, en le couplant au calendrier d'élections législatives de juin 2027 — citation verbatim : « Nous prendrons une série d'ordonnances dont l'habilitation pourra être confiée au gouvernement par référendum. » Aucune de ces déclarations ne porte sur un droit d'initiative citoyenne (RIC) : il s'agit de référendums initiés par l'exécutif, pas par les citoyens. Sources : Europe 1, « "Le référendum d'initiative citoyenne, ça me hérisse" », 26/01/2019 (maj 27/11/2024) — https://www.europe1.fr/politique/le-referendum-dinitiative-citoyenne-ca-me-herisse-declare-edouard-philippe-3845711 ; Le JDD, « Edouard Philippe veut imposer des garde-fous au référendum d'initiative populaire », 23/05/2019 — https://www.lejdd.fr/Politique/edouard-philippe-veut-imposer-des-garde-fous-au-referendum-dinitiative-populaire-3900243 ; Europe 1, « Dissolution, référendum sur les retraites et sur une "règle d'or" budgétaire : Philippe dévoile sa méthode », 16/03/2025 — https://www.europe1.fr/politique/dissolution-referendum-sur-les-retraites-et-sur-une-regle-dor-budgetaire-philippe-devoile-sa-methode-668233 ; Planet.fr, « Stratégie "Flash" d'Édouard Philippe : référendums et ordonnances dès l'été 2027 », 21/05/2026 — https://www.planet.fr/politique-strategie-flash-dedouard-philippe-referendums-et-ordonnances-des-lete-2027.2996997.29334.html Niveau de confiance : A pour les citations 2019 (verbatim, médias multiples) ; B pour le volet 2025-2026 (citation verbatim et sujets confirmés par deux médias indépendants — Europe 1 et Planet.fr — mais article constitutionnel précis et calendrier exact non confirmés dans le détail).</p></div></article>
+<article class="cand-card"><img class="cand-icon" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNjAgMTYwIj48cmVjdCB3aWR0aD0iMTYwIiBoZWlnaHQ9IjE2MCIgZmlsbD0iI0UxRTBEOSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTQlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiBmb250LWZhbWlseT0iR2VvcmdpYSwgc2VyaWYiIGZvbnQtd2VpZ2h0PSI3MDAiIGZvbnQtc2l6ZT0iNjQiIGZpbGw9IiM1MjUxNEUiPlJHPC90ZXh0Pjwvc3ZnPg==" width="56" height="56" alt="" loading="lazy"><div class="cand-body"><p><strong>Raphaël Glucksmann (Place Publique)</strong> Position : instaurer un droit d'initiative citoyenne pour déclencher des référendums locaux et nationaux, et une grande convention citoyenne posant les bases d'une assemblée constituante. Citations verbatim : « Instaurer un droit d'initiative citoyenne, permettant de déclencher des séquences démocratiques avec des référendums à l'échelle locale et nationale » ; « Lancer en parallèle une grande convention citoyenne qui jettera les bases d'une assemblée constituante pour changer la Constitution. » Source : document officiel Place Publique, « Acte un — notre vision pour la France », 23/06/2025 (PDF) — https://place-publique.eu/wp-content/uploads/2025/06/20250623_Projet_placepublique_acte1_BAT_BaDef.pdf Niveau de confiance : A (citation verbatim, document primaire daté). Limite : aucun seuil de signatures, aucun calendrier ni mécanisme contraignant ne sont précisés dans ce document — la proposition reste, à ce stade, un principe général plutôt qu'un dispositif détaillé.</p></div></article>
+<article class="cand-card"><img class="cand-icon" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNjAgMTYwIj48cmVjdCB3aWR0aD0iMTYwIiBoZWlnaHQ9IjE2MCIgZmlsbD0iI0UxRTBEOSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTQlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiBmb250LWZhbWlseT0iR2VvcmdpYSwgc2VyaWYiIGZvbnQtd2VpZ2h0PSI3MDAiIGZvbnQtc2l6ZT0iNjQiIGZpbGw9IiM1MjUxNEUiPk1UPC90ZXh0Pjwvc3ZnPg==" width="56" height="56" alt="" loading="lazy"><div class="cand-body"><p><strong>Marine Tondelier (Les Écologistes)</strong> Position : un référendum pour instaurer une assemblée constituante chargée de rédiger une nouvelle Constitution, avec une question unique soumise aux Français. Citation verbatim (rapportée) : « La seule question qu'il doit leur poser, c'est : "Êtes-vous d'accord ou non pour la mise en place d'une (assemblée) constituante chargée de proposer une nouvelle Constitution pour notre pays ?" » Source : Marine & Océans (dépêche), 08/02/2025 — https://marine-oceans.com/actualites/tondelier-ecologistes-appelle-a-un-referendum-pour-mettre-en-place-une-constituante/ Niveau de confiance : B (citation rapportée, via un support de presse secondaire peu consulté, non recoupée sur un média national de premier plan). Limite : pas de proposition détaillée retrouvée sur un RIC spécifique ou des seuils de déclenchement ; son parti a déposé une proposition de loi constitutionnelle (PLC n°2081, Assemblée nationale, novembre 2025) mais elle n'est pas personnellement à l'origine de ce texte — niveau X sur ce point précis (source non vérifiée directement).</p></div></article>
+</div>
+      </div>
+      
+      <div class="tabpanel panel-muted" role="tabpanel" id="panel-sources" aria-labelledby="tab-sources" data-later>
+        <div class="panel-head">
+          <h3>Sources & limites</h3>
+          
+        </div>
+        
+        
+        <div class="panel-body"><h3>Sources des volets 2 et 3</h3>
 <p>(consultées le 29/09/2026) - https://www.publicsenat.fr/actualites/politique/marine-le-pen-detaille-sa-revolution-referendaire-202358 - https://solutiondemocratique.fr/marine-le-pen-programme-2027/ - https://lafranceinsoumise.fr/wp-content/uploads/2023/05/Plan_UP_6e-REPUBLIQUE_web.pdf - https://www.europe1.fr/politique/le-referendum-dinitiative-citoyenne-ca-me-herisse-declare-edouard-philippe-3845711 - https://www.lejdd.fr/Politique/edouard-philippe-veut-imposer-des-garde-fous-au-referendum-dinitiative-populaire-3900243 - https://www.europe1.fr/politique/dissolution-referendum-sur-les-retraites-et-sur-une-regle-dor-budgetaire-philippe-devoile-sa-methode-668233 - https://www.planet.fr/politique-strategie-flash-dedouard-philippe-referendums-et-ordonnances-des-lete-2027.2996997.29334.html - https://place-publique.eu/wp-content/uploads/2025/06/20250623_Projet_placepublique_acte1_BAT_BaDef.pdf - https://marine-oceans.com/actualites/tondelier-ecologistes-appelle-a-un-referendum-pour-mettre-en-place-une-constituante/ - https://solutiondemocratique.fr/marine-tondelier-programme-2027/ - https://solutiondemocratique.fr/edouard-philippe-presidentielle-2027-programme/ - https://fr.wikipedia.org/wiki/R%C3%A9f%C3%A9rendum_facultatif - https://fr.wikipedia.org/wiki/Initiative_populaire_f%C3%A9d%C3%A9rale - https://www.admin.ch/gov/fr/accueil/documentation/votations.html - https://electionsireland.org/results/referendum/summary.cfm - https://www.youtrend.it/2022/05/30/la-storia-dei-referendum-abrogativi-in-italia/ - https://www.tgcom24.mediaset.it/elezioni/referendum-2025/referendum-in-italia-78-volte-alle-urne-dal-1946_99403737-202502k.shtml - https://report.rdb.vote/overall/referendum_regime_type.html</p>
-<div class="label" style="margin-top:32px;">Limites / incertitudes</div>
-<ul><li>Le Pen : citation de référence datée de 2022 ; aucune déclaration primaire datée 2026-2027 reformulant précisément les mêmes seuils n'a été retrouvée.</li><li>Philippe : deux positions distinctes selon la période (hostile au RIC et au RIP facilité en 2019 ; promoteur d'un référendum descendant sur retraites/budget/ordonnances depuis 2025-2026) — à traiter comme une évolution, pas une contradiction à trancher.</li><li>Glucksmann : proposition confirmée par un document primaire daté, mais sans seuils ni calendrier — reste au niveau des principes.</li><li>Tondelier : citation rapportée par un support de presse secondaire non recoupé sur un média national de premier plan ; le lien entre elle personnellement et la proposition de loi constitutionnelle de son parti (PLC n°2081, nov. 2025) n'a pas pu être vérifié.</li><li>Irlande : liste 2011-2018 vérifiée ; les référendums de 2019 et 2024 sont mentionnés dans les résultats de recherche mais n'ont pas été confirmés en détail faute de source consolidée fiable.</li><li>Italie : le décompte "67 référendums abrogatifs depuis 1974" est arrêté à mai 2022 (avant le scrutin de juin 2022, qui ajoute 5 questions) — ordre de grandeur (autour de 70) fiable, total non recalculé précisément.</li><li>Comparaison européenne : les chiffres de la Referendum Database (Irlande 31, Italie 23, Suisse ~300) proviennent d'un extrait de page consulté sans confirmation explicite de la période de référence exacte — à traiter comme un ordre de grandeur, pas une statistique définitive.</li></ul>
-    </div>
+<h3>Limites et incertitudes</h3>
+<ul><li>Le Pen : citation de référence datée de 2022 ; aucune déclaration primaire datée 2026-2027 reformulant précisément les mêmes seuils n'a été retrouvée.</li><li>Philippe : deux positions distinctes selon la période (hostile au RIC et au RIP facilité en 2019 ; promoteur d'un référendum descendant sur retraites/budget/ordonnances depuis 2025-2026) — à traiter comme une évolution, pas une contradiction à trancher.</li><li>Glucksmann : proposition confirmée par un document primaire daté, mais sans seuils ni calendrier — reste au niveau des principes.</li><li>Tondelier : citation rapportée par un support de presse secondaire non recoupé sur un média national de premier plan ; le lien entre elle personnellement et la proposition de loi constitutionnelle de son parti (PLC n°2081, nov. 2025) n'a pas pu être vérifié.</li><li>Irlande : liste 2011-2018 vérifiée ; les référendums de 2019 et 2024 sont mentionnés dans les résultats de recherche mais n'ont pas été confirmés en détail faute de source consolidée fiable.</li><li>Italie : le décompte "67 référendums abrogatifs depuis 1974" est arrêté à mai 2022 (avant le scrutin de juin 2022, qui ajoute 5 questions) — ordre de grandeur (autour de 70) fiable, total non recalculé précisément.</li><li>Comparaison européenne : les chiffres de la Referendum Database (Irlande 31, Italie 23, Suisse ~300) proviennent d'un extrait de page consulté sans confirmation explicite de la période de référence exacte — à traiter comme un ordre de grandeur, pas une statistique définitive.</li></ul></div>
+      </div>
+      
+    </section>
+    <script>
+    (function () {
+      var root = document.getElementById('analyse-complete');
+      if (!root) return;
+      var tabs = Array.prototype.slice.call(root.querySelectorAll('[role=tab]'));
+      var panels = tabs.map(function (t) { return document.getElementById(t.getAttribute('aria-controls')); });
+      document.documentElement.classList.add('js');
+      function show(i, focus, push) {
+        tabs.forEach(function (t, j) {
+          var on = i === j;
+          t.setAttribute('aria-selected', on ? 'true' : 'false');
+          t.tabIndex = on ? 0 : -1;
+          panels[j].hidden = !on;
+        });
+        if (focus) tabs[i].focus();
+        if (push && history.replaceState) history.replaceState(null, '', '#' + tabs[i].id.replace('tab-', 'volet-'));
+      }
+      tabs.forEach(function (t, i) {
+        t.addEventListener('click', function () { show(i, false, true); });
+        t.addEventListener('keydown', function (e) {
+          var k = e.key, n = tabs.length;
+          if (k === 'ArrowRight') { e.preventDefault(); show((i + 1) % n, true, true); }
+          else if (k === 'ArrowLeft') { e.preventDefault(); show((i - 1 + n) % n, true, true); }
+          else if (k === 'Home') { e.preventDefault(); show(0, true, true); }
+          else if (k === 'End') { e.preventDefault(); show(n - 1, true, true); }
+        });
+      });
+      var start = 0, h = (location.hash || '').replace('#volet-', '');
+      tabs.forEach(function (t, i) { if (t.id === 'tab-' + h) start = i; });
+      show(start, false, false);
+      if (start > 0) root.scrollIntoView();
+    })();
+    </script>
+    
 
     <div class="sourcing-box">
       <h3>Sources &amp; méthodologie</h3>
@@ -368,6 +581,7 @@
 
     <div class="footer">
       Magnitude — newsletter data &amp; politique, apartisane. Publié le 24 septembre 2026.
+      
     </div>
   </div>
 </body>

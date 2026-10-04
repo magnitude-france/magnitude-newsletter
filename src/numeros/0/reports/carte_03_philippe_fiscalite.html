@@ -225,6 +225,133 @@
   }
   .mg-back:hover { color: var(--accent); }
   .mg-back svg { width: 14px; height: 14px; flex-shrink: 0; }
+
+  /* ---- Analyse complète : onglets ---------------------------------- */
+  .analyse { margin: 56px 0 8px; }
+  .analyse > h2 { margin: 0 0 6px; font-size: 26px; }
+  .analyse-sub { font-size: 14px; color: var(--ink-muted); margin: 0 0 22px; }
+  .tablist { display: flex; gap: 6px; border-bottom: 2px solid var(--gridline); overflow-x: auto; scrollbar-width: none; position: sticky; top: 0; background: var(--page); z-index: 5; padding-top: 6px; }
+  .tablist::-webkit-scrollbar { display: none; }
+  .tab {
+    appearance: none; border: 0; background: none; cursor: pointer; flex: 0 0 auto;
+    padding: 12px 16px 11px; font: inherit; font-size: 15px; font-weight: 700; color: var(--ink-secondary);
+    border-bottom: 4px solid transparent; margin-bottom: -2px; display: inline-flex; align-items: center; gap: 9px; white-space: nowrap;
+  }
+  .tab:hover { color: var(--ink); }
+  .tab:focus-visible { outline: 3px solid var(--reference); outline-offset: -3px; border-radius: 4px; }
+  .tab-num { display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; font-size: 13px; background: var(--gridline); color: var(--ink-secondary); }
+  .tab[aria-selected="true"] { color: var(--ink); font-size: 16px; }
+  .tab[aria-selected="true"] .tab-num { color: #fff; }
+  .tab-accent[aria-selected="true"] { border-bottom-color: var(--accent); }
+  .tab-accent[aria-selected="true"] .tab-num { background: var(--accent); }
+  .tab-reference[aria-selected="true"] { border-bottom-color: var(--reference); }
+  .tab-reference[aria-selected="true"] .tab-num { background: var(--reference); }
+  .tab-ink[aria-selected="true"] { border-bottom-color: var(--ink); }
+  .tab-ink[aria-selected="true"] .tab-num { background: var(--ink); }
+  .tab-muted[aria-selected="true"] { border-bottom-color: var(--ink-muted); }
+  .tab-muted[aria-selected="true"] .tab-num { background: var(--ink-muted); }
+  .tablist { display: none; }
+  .js .tablist { display: flex; }
+  .js .tabpanel[hidden] { display: none; }
+  .tabpanel { padding-top: 26px; }
+  .panel-head { margin-bottom: 18px; border-left: 6px solid var(--ink-muted); padding-left: 16px; }
+  .panel-accent .panel-head { border-left-color: var(--accent); }
+  .panel-reference .panel-head { border-left-color: var(--reference); }
+  .panel-ink .panel-head { border-left-color: var(--ink); }
+  .panel-head h3 { font-family: Georgia, "Times New Roman", serif; font-size: 28px; line-height: 1.2; margin: 0 0 6px; }
+  .panel-resume { font-size: 17px; color: var(--ink-secondary); margin: 0; }
+  .panel-resume strong, .em { font-weight: 700; color: var(--ink); background: linear-gradient(transparent 62%, rgba(217,119,6,0.30) 0); }
+  .panel-reference .panel-resume strong, .panel-reference .em { background: linear-gradient(transparent 62%, rgba(14,101,155,0.22) 0); }
+  .tabpanel h3 { font-family: Georgia, "Times New Roman", serif; }
+  .tabpanel .panel-body h3 { font-size: 19px; margin: 28px 0 10px; }
+  .tabpanel .panel-body p > strong:first-child { color: var(--ink); font-size: 17px; }
+  .panel-reference .panel-body p > strong:first-child { color: var(--reference); }
+  .panel-body .label { margin-top: 24px !important; }
+
+  /* Grands chiffres */
+  .hero-row { display: flex; gap: 14px; flex-wrap: wrap; margin: 6px 0 26px; }
+  .hero-tile { flex: 1 1 190px; background: var(--surface); border: 1px solid var(--border); border-top: 6px solid var(--ink-muted); border-radius: 6px; padding: 16px 18px 14px; }
+  .hero-accent { border-top-color: var(--accent); }
+  .hero-reference { border-top-color: var(--reference); }
+  .hero-ink { border-top-color: var(--ink); }
+  .hero-val { font-family: Georgia, "Times New Roman", serif; font-size: 44px; line-height: 1.05; font-weight: 700; letter-spacing: -0.01em; }
+  .hero-accent .hero-val { color: var(--accent); }
+  .hero-reference .hero-val { color: var(--reference); }
+  .hero-label { font-size: 13.5px; line-height: 1.4; color: var(--ink-secondary); margin-top: 8px; }
+
+  /* Niveaux de confiance */
+  .lvl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; padding: 1px 7px; border-radius: 3px; margin: 0 2px; white-space: nowrap; vertical-align: 1px; }
+  .lvl-a { background: #e6f4ea; color: #1b6b34; }
+  .lvl-b { background: #fef3e0; color: #92610a; }
+  .lvl-c { background: #fbe7e5; color: #a3352c; }
+  .lvl-x { background: #ececea; color: #52514E; }
+
+  /* Visuels */
+  .viz { margin: 0 0 28px; padding: 18px 20px; background: var(--surface); border: 1px solid var(--border); border-radius: 6px; }
+  .viz > figcaption { font-family: Georgia, "Times New Roman", serif; font-size: 18px; font-weight: 700; margin-bottom: 14px; }
+  .viz-legend { font-size: 12.5px; color: var(--ink-muted); margin: 12px 0 0; }
+  .viz-rank ol { list-style: none; margin: 0; padding: 0; }
+  .rank-row { display: grid; grid-template-columns: 24px 96px 1fr 120px; align-items: center; gap: 10px; padding: 7px 0; }
+  .rank-pos { font-size: 12px; font-weight: 700; color: var(--ink-muted); text-align: center; }
+  .rank-label { font-weight: 700; font-size: 15px; }
+  .rank-track { position: relative; height: 22px; background: var(--page); border-radius: 3px; }
+  .rank-fill { position: absolute; left: 0; top: 0; bottom: 0; background: var(--ink-muted); border-radius: 3px 0 0 3px; }
+  .kind-focus .rank-fill { background: var(--accent); }
+  .kind-focus .rank-label, .kind-focus .rank-val { color: var(--accent); }
+  .rank-range { position: absolute; top: 0; bottom: 0; background: repeating-linear-gradient(135deg, var(--ink-muted) 0 3px, transparent 3px 6px); opacity: 0.7; }
+  .kind-focus .rank-range { background: repeating-linear-gradient(135deg, var(--accent) 0 3px, transparent 3px 6px); }
+  .rank-ref { position: absolute; top: -5px; bottom: -5px; width: 3px; margin-left: -1px; background: var(--reference); }
+  .rank-val { font-weight: 700; font-size: 15px; font-variant-numeric: tabular-nums; }
+  .rank-note { grid-column: 2 / -1; font-size: 12.5px; color: var(--ink-muted); margin-top: -4px; }
+  .legend-ref { display: inline-block; width: 3px; height: 12px; background: var(--reference); margin-right: 6px; vertical-align: -2px; }
+  .legend-range { display: inline-block; width: 18px; height: 10px; margin: 0 6px 0 16px; vertical-align: -1px; background: repeating-linear-gradient(135deg, var(--ink-muted) 0 3px, transparent 3px 6px); }
+  .radial { width: 100%; max-width: 580px; height: auto; display: block; margin: 0 auto; }
+  .radial .ring { fill: none; stroke: var(--gridline); stroke-width: 1.2; }
+  .radial .ring-out { stroke: var(--ink-muted); stroke-dasharray: 5 5; }
+  .radial .ring-label { font-size: 10.5px; fill: var(--ink-muted); font-style: italic; }
+  .radial .spoke { stroke: var(--gridline); stroke-width: 1.5; }
+  .radial .pt-ring { fill: none; stroke: var(--ink); stroke-width: 2.5; }
+  .radial .pt-none { opacity: 0.6; }
+  .radial .pt-none .pt-ring { stroke: var(--ink-muted); stroke-dasharray: 4 3; }
+  .radial .pt-name, .radial .centre-name { font-size: 13px; font-weight: 700; fill: var(--ink); font-family: Georgia, serif; }
+  .radial .centre-name { font-size: 15px; fill: var(--accent); }
+  .radial .centre-ring { fill: none; stroke: var(--accent); stroke-width: 4; }
+  .radial .pt-sub { font-size: 10.5px; fill: var(--ink-secondary); }
+  .prox-rank { list-style: none; margin: 14px 0 0; padding: 0; display: grid; gap: 6px; }
+  .prox-rank li { display: flex; align-items: baseline; gap: 10px; }
+  .pr-name { font-weight: 700; min-width: 110px; }
+  .pr-val { font-family: Georgia, serif; font-size: 22px; font-weight: 700; color: var(--accent); }
+  .pr-n { font-size: 12.5px; color: var(--ink-muted); }
+  .matrix-scroll { overflow-x: auto; }
+  .viz-matrix table { border-collapse: separate; border-spacing: 4px; width: 100%; min-width: 560px; table-layout: fixed; }
+  .viz-matrix table col.c-dim { width: 112px; }
+  .m-cand { text-align: center; font-size: 12.5px; font-weight: 700; vertical-align: bottom; }
+  .m-cand span { display: block; margin-top: 4px; }
+  .m-dim { text-align: left; font-size: 12.5px; font-weight: 700; padding-right: 8px; }
+  .m-cell { text-align: center; vertical-align: top; padding: 8px 3px; border-radius: 5px; font-size: 11px; overflow-wrap: anywhere; line-height: 1.3; }
+  .m-glyph { display: block; font-size: 20px; line-height: 1; margin-bottom: 4px; }
+  .m-a { background: rgba(217,119,6,0.14); color: #8a4a02; }
+  .m-b { background: rgba(14,101,155,0.12); color: #0b4f7a; }
+  .m-none { background: repeating-linear-gradient(135deg, #f1f0eb 0 6px, #f9f9f7 6px 12px); color: var(--ink-muted); }
+  .m-weak { outline: 2px dashed var(--ink-muted); outline-offset: -3px; }
+  .m-cell .lvl { display: block; width: fit-content; margin: 5px auto 0; }
+  .key { display: inline-block; width: 18px; text-align: center; font-weight: 700; }
+  .key-a { color: var(--accent); } .key-b { color: var(--reference); }
+  .cand-icon { border-radius: 50%; display: block; border: 2px solid var(--ink); object-fit: cover; background: var(--gridline); }
+  .cand-card { display: flex; gap: 14px; align-items: flex-start; padding: 14px 0; border-top: 1px solid var(--border); }
+  .cand-card .cand-icon { flex: 0 0 auto; }
+  .cand-card .cand-body p { margin: 0; font-size: 15px; }
+  .detail { margin-top: 8px; }
+  .detail > summary { cursor: pointer; font-weight: 700; font-size: 14.5px; color: var(--reference); padding: 10px 0; }
+  .detail[open] > summary { margin-bottom: 8px; }
+  .credits { font-size: 11.5px; color: var(--ink-muted); margin-top: 8px; }
+  @media (max-width: 560px) {
+    .rank-row { grid-template-columns: 20px 78px 1fr; }
+    .rank-val { grid-column: 2 / -1; }
+    .hero-val { font-size: 36px; }
+    .panel-head h3 { font-size: 23px; }
+  }
+  @media print { .tablist { display: none !important; } .tabpanel[hidden] { display: block !important; } }
 </style>
 </head>
 <body>
@@ -290,26 +417,112 @@
       <p>Les « impôts de production » sont payés par les entreprises <strong>avant même qu'elles fassent du bénéfice</strong> : ils portent sur leur chiffre d'affaires, leur valeur ajoutée, leurs locaux ou leur masse salariale. Selon Eurostat, ils représentent <span class="stat">4,4 % du PIB</span> en France en 2024, près de <span class="stat">1,8 fois</span> la moyenne européenne (<span class="stat stat-reference">2,4 %</span>). Leur poids a atteint 5,2 % en 2020 — une année où le PIB s'est effondré — puis a baissé après la réduction de moitié de la CVAE et des impôts fonciers des sites industriels décidée en 2021. La proposition d'Édouard Philippe vise une nouvelle baisse, financée par la suppression d'aides aux entreprises.</p>
     </div>
 
-    <h2>Le récit complet</h2>
-    <div class="deep-dive">
-      <p><strong>De quoi parle-t-on ?</strong> La proposition cible trois impôts : la CVAE (cotisation sur la valeur ajoutée des entreprises, en cours de suppression progressive), la C3S (contribution sociale de solidarité des sociétés, assise sur le chiffre d'affaires) et la CFE (cotisation foncière des entreprises). La série Eurostat utilisée ici (« autres impôts sur la production », code D29) est <strong>plus large</strong> : elle inclut aussi des prélèvements assis sur la masse salariale (versement mobilité, taxe sur les salaires…) et la taxe foncière payée par les entreprises. C'est la seule définition harmonisée qui permet de comparer les pays entre eux — mais elle ne mesure pas exactement le périmètre visé par la mesure.</p><p><strong>Pourquoi la Suède est-elle devant ?</strong> Elle classe une grande partie de ses prélèvements sur les salaires en impôts sur la production (plus de <span class="stat stat-reference">10 % du PIB</span>), là où d'autres pays les comptent en cotisations sociales. Le classement européen dépend donc en partie de conventions comptables : c'est un bon exemple de chiffre qu'il faut lire avec sa définition.</p><p><strong>Ce que la mesure changerait.</strong> Selon Public Sénat, le « deal » porte sur 50 milliards d'euros de baisse d'impôts d'un côté et de baisse de dépenses de l'autre, soit 250 milliards sur un quinquennat. Le même article évalue les impôts de production à environ 75 milliards d'euros en France, contre 23 milliards en Allemagne. Ces montants, rapportés par la presse, n'ont pas été recalculés ici.</p><p><strong>Ce qu'elle ne dit pas encore.</strong> Le calendrier, la liste précise des aides supprimées et l'effet sur les collectivités locales, dont la CFE est une ressource, ne sont pas détaillés dans les éléments publiés à ce jour.</p>
-<div class="label" style="margin-top:32px;">Volet 2 — Repositionnement vs autres candidats</div>
-<p><strong>Marine Le Pen (RN)</strong> — Niveau B Le programme officiel du RN prévoit la suppression de deux impôts de production, mais pas explicitement en échange d'une baisse des aides publiques : > « Le premier impôt de production que nous supprimerons sera la CFE, payée par 3,7 millions d'entreprises. » Suppression bénéficiant « prioritairement aux indépendants, TPE et PME ». > « En plus de la CFE, nous proposerons la suppression d'un autre impôt de production, la C3S, dans des zones déterminées par l'État » (logique de revitalisation territoriale, pas de contrepartie via les aides). Objectif affiché : « ramener les impôts de production au niveau moyen européen, dès le premier quinquennat. » Source : Livret « Projet entreprises » du RN (document officiel, non daté précisément), rassemblementnational.fr/documents/WEB-GRN-LIVRET-ENTREPRISE.pdf — consulté le 29/09/2026. Contrairement à É. Philippe, le levier de compensation mis en avant par le RN est un fonds souverain (réorientation de l'épargne), pas une réduction équivalente des aides publiques existantes — niveau X sur ce point précis de la « contrepartie ».</p>
-<p><strong>Bruno Retailleau (LR)</strong> — Niveau B Position la plus proche, mais chiffrée différemment et explicitement sceptique sur un « deal » symétrique à grande échelle : > « 15 milliards d'euros d'impôts de production restitués, avec la suppression intégrale de la C3S, la suppression définitive de la CVAE, l'exonération de la composante industrielle de la CFE. » Sur les aides publiques, il conteste le chiffrage maximaliste souvent cité (120-150 Md€) : > « les vraies aides aux entreprises… ne représentent pas plus de 35 à 40 milliards d'euros. » Il distingue les vraies subventions des mécanismes fiscaux correcteurs (TVA réduite, anti-double imposition) et rejette une suppression simultanée et non conditionnée de plus de 100 Md€ d'aides et d'impôts — une réserve implicite vis-à-vis de l'ampleur du « deal » à 50 Md€ d'E. Philippe. Source : interview Contrepoints, 15/04/2026, contrepoints.org/flat-tax-aides-aux-entreprises-assurances-sociales-calendrier-des-reformes-bruno-retailleau-repond-a-nos-questions/ — consulté le 29/09/2026. (À noter, niveau C, secondaire : un comparateur ifrap lui attribue aussi « réduire de 40 Md€ les cotisations sociales » — mesure différente, sur le coût du travail, pas sur les impôts de production stricto sensu.)</p>
-<p><strong>Raphaël Glucksmann (Place Publique)</strong> — Niveau X sur les impôts de production Aucune prise de position précise trouvée sur la CVAE, la C3S ou la CFE, malgré plusieurs recherches croisées (wikiglucksmann.fr, votons-2027.fr, programme officiel). Le seul élément fiscal identifié est général : > « Lancer un grand chantier fiscal visant à rééquilibrer la répartition de la taxation entre le travail, le capital, l'héritage et les retraites. » (place-publique.eu, non daté) Sur les aides publiques, un comparateur (ifrap) lui attribue : « Rediriger 211 Md€ d'exonérations et aides aux entreprises » — niveau C : ce chiffre de 211 Md€ vient en réalité d'un rapport de la commission d'enquête du Sénat (9 juillet 2025, approche maximaliste incluant Bpifrance, niches fiscales et baisses de cotisations) ; aucune citation verbatim confirmant que Glucksmann l'a formulé lui-même en ces termes n'a été trouvée. À vérifier avant publication. Sources : wikiglucksmann.fr/themes/glucksmann-fiscalite.html, votons-2027.fr/candidats/glucksmann/programme, ifrap.org/comparateurs/presidentielles-2027, ifrap.org/budget-et-fiscalite/aides-aux-entreprises-211-milliards-deuros-par-ou-185-milliards — consultés le 29/09/2026.</p>
-<p><strong>Marine Tondelier (Les Écologistes)</strong> — Niveau B (sur la philosophie générale), Niveau X (sur les impôts de production spécifiquement) Pas de proposition trouvée sur la CVAE/C3S/CFE. En revanche, position claire et récurrente contre une baisse des aides sans contrepartie : > « L'argent public est rare pour tout le monde sauf pour les aides aux entreprises. » (rapporté par Yahoo Finance, date non précisée) Elle défend une interdiction de délocalisation pendant 10 ans pour les entreprises ayant reçu des fonds publics. Le programme du Nouveau Front Populaire (contrat de législature, juin 2024 — plateforme collective, pas seulement la sienne) prévoit de : > « conditionner les aides aux entreprises au respect de critères environnementaux, sociaux » et « au maintien de l'emploi en France. » Sa logique va donc à l'opposé d'un « deal » non conditionné : conditionnalité renforcée plutôt que réduction symétrique des aides. Source : monvote2027.fr/candidat/tondelier (agrégateur citant Yahoo Finance et le contrat NFP 2024-06) — consulté le 29/09/2026.</p>
-<p><strong>Jean-Luc Mélenchon (LFI/France insoumise)</strong> — Niveau A pour le programme officiel 2025, pas de position récente trouvée sur les impôts de production spécifiquement Le programme officiel 2025 (« l'Avenir en commun ») met l'accent sur la conditionnalité stricte plutôt que sur la baisse des impôts de production : > Mesure 134 : « Conditionner toute aide d'État aux grandes entreprises à des objectifs sociaux, écologiques et fiscaux contraignants et exiger le remboursement des aides en cas de non-respect des contreparties. » > Mesure 133 : « Établir des critères de localisation de l'activité pour la commande publique nationale et locale et pour l'accord des aides aux entreprises. » > Mesure 47 : « Refonder l'impôt sur les sociétés pour établir l'égalité devant l'impôt entre PME et grands groupes. » > Mesure 35 : « Moduler l'impôt sur les sociétés selon l'usage des bénéfices pour encourager l'investissement en France et pénaliser le versement de dividendes. » Aucune position 2027 trouvée sur la CVAE, la C3S ou la CFE elles-mêmes (niveau X sur ce point précis). Pour mémoire (niveau B, contexte 2022, non confirmé pour 2027) : lors de la présidentielle 2022, sa plateforme prévoyait l'annulation du CICE — logique historiquement opposée aux baisses d'impôts de production non conditionnées. Sources : melenchon2027.fr/programme2025/livre/ (via votons-2027.fr/candidats/melenchon/programme/economie), institutmontaigne.org/presidentielle-2022/jean-luc-melenchon/annuler-le-cice/ — consultés le 29/09/2026.</p>
-<div class="label" style="margin-top:32px;">Volet 3 — Repositionnement vs voisins européens</div>
+    
+    <section class="analyse" id="analyse-complete" aria-labelledby="analyse-titre">
+      <h2 id="analyse-titre">L'analyse complète</h2>
+      <p class="analyse-sub">Quatre volets, un onglet chacun : le récit, puis la comparaison européenne, puis la comparaison entre candidats.</p>
+      <div class="tablist" role="tablist" aria-label="Volets de l'analyse complète">
+        
+        <button class="tab tab-accent" role="tab" id="tab-recit" aria-controls="panel-recit" aria-selected="true" tabindex="0"><span class="tab-num">1</span>Le récit</button>
+        
+        <button class="tab tab-reference" role="tab" id="tab-europe" aria-controls="panel-europe" aria-selected="false" tabindex="-1"><span class="tab-num">2</span>Europe</button>
+        
+        <button class="tab tab-ink" role="tab" id="tab-candidats" aria-controls="panel-candidats" aria-selected="false" tabindex="-1"><span class="tab-num">3</span>Candidats</button>
+        
+        <button class="tab tab-muted" role="tab" id="tab-sources" aria-controls="panel-sources" aria-selected="false" tabindex="-1"><span class="tab-num">4</span>Sources & limites</button>
+        
+      </div>
+      
+      <div class="tabpanel panel-accent" role="tabpanel" id="panel-recit" aria-labelledby="tab-recit">
+        <div class="panel-head">
+          <h3>Volet 1 — Le récit complet</h3>
+          
+        </div>
+        
+        
+        <div class="panel-body"><p><strong>De quoi parle-t-on ?</strong> La proposition cible trois impôts : la CVAE (cotisation sur la valeur ajoutée des entreprises, en cours de suppression progressive), la C3S (contribution sociale de solidarité des sociétés, assise sur le chiffre d'affaires) et la CFE (cotisation foncière des entreprises). La série Eurostat utilisée ici (« autres impôts sur la production », code D29) est <strong>plus large</strong> : elle inclut aussi des prélèvements assis sur la masse salariale (versement mobilité, taxe sur les salaires…) et la taxe foncière payée par les entreprises. C'est la seule définition harmonisée qui permet de comparer les pays entre eux — mais elle ne mesure pas exactement le périmètre visé par la mesure.</p><p><strong>Pourquoi la Suède est-elle devant ?</strong> Elle classe une grande partie de ses prélèvements sur les salaires en impôts sur la production (plus de <span class="stat stat-reference">10 % du PIB</span>), là où d'autres pays les comptent en cotisations sociales. Le classement européen dépend donc en partie de conventions comptables : c'est un bon exemple de chiffre qu'il faut lire avec sa définition.</p><p><strong>Ce que la mesure changerait.</strong> Selon Public Sénat, le « deal » porte sur 50 milliards d'euros de baisse d'impôts d'un côté et de baisse de dépenses de l'autre, soit 250 milliards sur un quinquennat. Le même article évalue les impôts de production à environ 75 milliards d'euros en France, contre 23 milliards en Allemagne. Ces montants, rapportés par la presse, n'ont pas été recalculés ici.</p><p><strong>Ce qu'elle ne dit pas encore.</strong> Le calendrier, la liste précise des aides supprimées et l'effet sur les collectivités locales, dont la CFE est une ressource, ne sont pas détaillés dans les éléments publiés à ce jour.</p></div>
+      </div>
+      
+      <div class="tabpanel panel-reference" role="tabpanel" id="panel-europe" aria-labelledby="tab-europe" data-later>
+        <div class="panel-head">
+          <h3>Volet 2 — Comparaison européenne</h3>
+          
+        </div>
+        
+        
+        <div class="panel-body">
 <p><strong>Précision importante avant les chiffres</strong> : deux séries de sources coexistent avec des méthodologies différentes — le DGFiP/Eurostat (périmètre comptable strict, catégorie D29) et le baromètre Institut Montaigne/Forvis Mazars (périmètre retravaillé, plus large). Elles ne donnent pas exactement les mêmes pourcentages, mais convergent sur le classement de la France (2ᵉ rang UE, derrière la Suède).</p>
 <p><strong>France — vérification du chiffre de la carte</strong> - Source officielle la plus récente : Bulletin DGFiP Statistiques n°47, « Les impôts de production en 2024 », publié le 19/05/2026 : les impôts de production représentaient en 2024 <strong>3,3 % du PIB en valeur et 4,4 % de la valeur ajoutée des entreprises</strong>. → Le chiffre « 4,4 % » existe bien dans la source officielle, mais il correspond à la valeur ajoutée des entreprises, pas au PIB. - Baromètre Institut Montaigne / Forvis Mazars, 4ᵉ édition (avril 2025, données 2023, 13 pays étudiés) : France 3,8 % du PIB (106 Md€), 2ᵉ rang UE derrière la Suède. - Le même baromètre, 3ᵉ édition (février 2024, données 2022, 12 pays) : France 4,01 % du PIB (105 Md€), 2ᵉ rang, médiane européenne 2,0 % du PIB. - Édition 2022 du même baromètre (données 2020) : France 4,4 % du PIB — c'est probablement l'origine historique du chiffre de « 4,4 % du PIB » encore cité aujourd'hui, mais il correspond à des données 2020, pas 2024.</p>
 <p><strong>Allemagne</strong> - Recettes d'impôts de production ~29 Md€ en 2023 (baromètre Institut Montaigne/Mazars, avril 2025), soit environ 3,6 fois moins qu'en France en valeur absolue malgré un PIB environ 1,5 fois plus élevé. - Édition 2022 du baromètre (données 2020) : Allemagne à 0,7 % du PIB, contre 4,4 % pour la France la même année — l'écart le plus spectaculaire de l'échantillon.</p>
 <p><strong>Italie</strong> - 1,8 % du PIB en 2023 (57 Md€), baromètre Institut Montaigne/Mazars, avril 2025 — nettement au-dessus de la médiane européenne mais très en dessous du niveau français.</p>
 <p><strong>Moyenne/médiane européenne — chiffre de la carte (2,4 %) à confirmer</strong> Aucun tableau Eurostat brut donnant exactement « 2,4 % » pour une moyenne UE-27 n'a été retrouvé. Les valeurs vérifiées les plus proches sont : 2,0 % (médiane, 12 pays, données 2022, baromètre 2024) et 2,54 % (moyenne, 13 pays, données 2023, baromètre 2025). « 2,4 % » se situe dans cette fourchette mais n'a pas pu être confirmé sur une source primaire précise — voir Limites.</p>
-<div class="label" style="margin-top:32px;">Sources (volets 2 et 3)</div>
+</div>
+      </div>
+      
+      <div class="tabpanel panel-ink" role="tabpanel" id="panel-candidats" aria-labelledby="tab-candidats" data-later>
+        <div class="panel-head">
+          <h3>Volet 3 — Comparaison entre candidats</h3>
+          
+        </div>
+        
+        
+        <div class="panel-body">
+<article class="cand-card"><img class="cand-icon" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNjAgMTYwIj48cmVjdCB3aWR0aD0iMTYwIiBoZWlnaHQ9IjE2MCIgZmlsbD0iI0UxRTBEOSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTQlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiBmb250LWZhbWlseT0iR2VvcmdpYSwgc2VyaWYiIGZvbnQtd2VpZ2h0PSI3MDAiIGZvbnQtc2l6ZT0iNjQiIGZpbGw9IiM1MjUxNEUiPk1MPC90ZXh0Pjwvc3ZnPg==" width="56" height="56" alt="" loading="lazy"><div class="cand-body"><p><strong>Marine Le Pen (RN)</strong> — Niveau B Le programme officiel du RN prévoit la suppression de deux impôts de production, mais pas explicitement en échange d'une baisse des aides publiques : > « Le premier impôt de production que nous supprimerons sera la CFE, payée par 3,7 millions d'entreprises. » Suppression bénéficiant « prioritairement aux indépendants, TPE et PME ». > « En plus de la CFE, nous proposerons la suppression d'un autre impôt de production, la C3S, dans des zones déterminées par l'État » (logique de revitalisation territoriale, pas de contrepartie via les aides). Objectif affiché : « ramener les impôts de production au niveau moyen européen, dès le premier quinquennat. » Source : Livret « Projet entreprises » du RN (document officiel, non daté précisément), rassemblementnational.fr/documents/WEB-GRN-LIVRET-ENTREPRISE.pdf — consulté le 29/09/2026. Contrairement à É. Philippe, le levier de compensation mis en avant par le RN est un fonds souverain (réorientation de l'épargne), pas une réduction équivalente des aides publiques existantes — niveau X sur ce point précis de la « contrepartie ».</p></div></article>
+<article class="cand-card"><img class="cand-icon" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNjAgMTYwIj48cmVjdCB3aWR0aD0iMTYwIiBoZWlnaHQ9IjE2MCIgZmlsbD0iI0UxRTBEOSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTQlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiBmb250LWZhbWlseT0iR2VvcmdpYSwgc2VyaWYiIGZvbnQtd2VpZ2h0PSI3MDAiIGZvbnQtc2l6ZT0iNjQiIGZpbGw9IiM1MjUxNEUiPkJSPC90ZXh0Pjwvc3ZnPg==" width="56" height="56" alt="" loading="lazy"><div class="cand-body"><p><strong>Bruno Retailleau (LR)</strong> — Niveau B Position la plus proche, mais chiffrée différemment et explicitement sceptique sur un « deal » symétrique à grande échelle : > « 15 milliards d'euros d'impôts de production restitués, avec la suppression intégrale de la C3S, la suppression définitive de la CVAE, l'exonération de la composante industrielle de la CFE. » Sur les aides publiques, il conteste le chiffrage maximaliste souvent cité (120-150 Md€) : > « les vraies aides aux entreprises… ne représentent pas plus de 35 à 40 milliards d'euros. » Il distingue les vraies subventions des mécanismes fiscaux correcteurs (TVA réduite, anti-double imposition) et rejette une suppression simultanée et non conditionnée de plus de 100 Md€ d'aides et d'impôts — une réserve implicite vis-à-vis de l'ampleur du « deal » à 50 Md€ d'E. Philippe. Source : interview Contrepoints, 15/04/2026, contrepoints.org/flat-tax-aides-aux-entreprises-assurances-sociales-calendrier-des-reformes-bruno-retailleau-repond-a-nos-questions/ — consulté le 29/09/2026. (À noter, niveau C, secondaire : un comparateur ifrap lui attribue aussi « réduire de 40 Md€ les cotisations sociales » — mesure différente, sur le coût du travail, pas sur les impôts de production stricto sensu.)</p></div></article>
+<article class="cand-card"><img class="cand-icon" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNjAgMTYwIj48cmVjdCB3aWR0aD0iMTYwIiBoZWlnaHQ9IjE2MCIgZmlsbD0iI0UxRTBEOSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTQlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiBmb250LWZhbWlseT0iR2VvcmdpYSwgc2VyaWYiIGZvbnQtd2VpZ2h0PSI3MDAiIGZvbnQtc2l6ZT0iNjQiIGZpbGw9IiM1MjUxNEUiPlJHPC90ZXh0Pjwvc3ZnPg==" width="56" height="56" alt="" loading="lazy"><div class="cand-body"><p><strong>Raphaël Glucksmann (Place Publique)</strong> — Niveau X sur les impôts de production Aucune prise de position précise trouvée sur la CVAE, la C3S ou la CFE, malgré plusieurs recherches croisées (wikiglucksmann.fr, votons-2027.fr, programme officiel). Le seul élément fiscal identifié est général : > « Lancer un grand chantier fiscal visant à rééquilibrer la répartition de la taxation entre le travail, le capital, l'héritage et les retraites. » (place-publique.eu, non daté) Sur les aides publiques, un comparateur (ifrap) lui attribue : « Rediriger 211 Md€ d'exonérations et aides aux entreprises » — niveau C : ce chiffre de 211 Md€ vient en réalité d'un rapport de la commission d'enquête du Sénat (9 juillet 2025, approche maximaliste incluant Bpifrance, niches fiscales et baisses de cotisations) ; aucune citation verbatim confirmant que Glucksmann l'a formulé lui-même en ces termes n'a été trouvée. À vérifier avant publication. Sources : wikiglucksmann.fr/themes/glucksmann-fiscalite.html, votons-2027.fr/candidats/glucksmann/programme, ifrap.org/comparateurs/presidentielles-2027, ifrap.org/budget-et-fiscalite/aides-aux-entreprises-211-milliards-deuros-par-ou-185-milliards — consultés le 29/09/2026.</p></div></article>
+<article class="cand-card"><img class="cand-icon" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNjAgMTYwIj48cmVjdCB3aWR0aD0iMTYwIiBoZWlnaHQ9IjE2MCIgZmlsbD0iI0UxRTBEOSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTQlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiBmb250LWZhbWlseT0iR2VvcmdpYSwgc2VyaWYiIGZvbnQtd2VpZ2h0PSI3MDAiIGZvbnQtc2l6ZT0iNjQiIGZpbGw9IiM1MjUxNEUiPk1UPC90ZXh0Pjwvc3ZnPg==" width="56" height="56" alt="" loading="lazy"><div class="cand-body"><p><strong>Marine Tondelier (Les Écologistes)</strong> — Niveau B (sur la philosophie générale), Niveau X (sur les impôts de production spécifiquement) Pas de proposition trouvée sur la CVAE/C3S/CFE. En revanche, position claire et récurrente contre une baisse des aides sans contrepartie : > « L'argent public est rare pour tout le monde sauf pour les aides aux entreprises. » (rapporté par Yahoo Finance, date non précisée) Elle défend une interdiction de délocalisation pendant 10 ans pour les entreprises ayant reçu des fonds publics. Le programme du Nouveau Front Populaire (contrat de législature, juin 2024 — plateforme collective, pas seulement la sienne) prévoit de : > « conditionner les aides aux entreprises au respect de critères environnementaux, sociaux » et « au maintien de l'emploi en France. » Sa logique va donc à l'opposé d'un « deal » non conditionné : conditionnalité renforcée plutôt que réduction symétrique des aides. Source : monvote2027.fr/candidat/tondelier (agrégateur citant Yahoo Finance et le contrat NFP 2024-06) — consulté le 29/09/2026.</p></div></article>
+<article class="cand-card"><img class="cand-icon" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNjAgMTYwIj48cmVjdCB3aWR0aD0iMTYwIiBoZWlnaHQ9IjE2MCIgZmlsbD0iI0UxRTBEOSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTQlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiBmb250LWZhbWlseT0iR2VvcmdpYSwgc2VyaWYiIGZvbnQtd2VpZ2h0PSI3MDAiIGZvbnQtc2l6ZT0iNjQiIGZpbGw9IiM1MjUxNEUiPkpNPC90ZXh0Pjwvc3ZnPg==" width="56" height="56" alt="" loading="lazy"><div class="cand-body"><p><strong>Jean-Luc Mélenchon (LFI/France insoumise)</strong> — Niveau A pour le programme officiel 2025, pas de position récente trouvée sur les impôts de production spécifiquement Le programme officiel 2025 (« l'Avenir en commun ») met l'accent sur la conditionnalité stricte plutôt que sur la baisse des impôts de production : > Mesure 134 : « Conditionner toute aide d'État aux grandes entreprises à des objectifs sociaux, écologiques et fiscaux contraignants et exiger le remboursement des aides en cas de non-respect des contreparties. » > Mesure 133 : « Établir des critères de localisation de l'activité pour la commande publique nationale et locale et pour l'accord des aides aux entreprises. » > Mesure 47 : « Refonder l'impôt sur les sociétés pour établir l'égalité devant l'impôt entre PME et grands groupes. » > Mesure 35 : « Moduler l'impôt sur les sociétés selon l'usage des bénéfices pour encourager l'investissement en France et pénaliser le versement de dividendes. » Aucune position 2027 trouvée sur la CVAE, la C3S ou la CFE elles-mêmes (niveau X sur ce point précis). Pour mémoire (niveau B, contexte 2022, non confirmé pour 2027) : lors de la présidentielle 2022, sa plateforme prévoyait l'annulation du CICE — logique historiquement opposée aux baisses d'impôts de production non conditionnées. Sources : melenchon2027.fr/programme2025/livre/ (via votons-2027.fr/candidats/melenchon/programme/economie), institutmontaigne.org/presidentielle-2022/jean-luc-melenchon/annuler-le-cice/ — consultés le 29/09/2026.</p></div></article>
+</div>
+      </div>
+      
+      <div class="tabpanel panel-muted" role="tabpanel" id="panel-sources" aria-labelledby="tab-sources" data-later>
+        <div class="panel-head">
+          <h3>Sources & limites</h3>
+          
+        </div>
+        
+        
+        <div class="panel-body"><h3>Sources des volets 2 et 3</h3>
 <p>Toutes consultées le 29/09/2026. - Livret entreprises du RN : https://rassemblementnational.fr/documents/WEB-GRN-LIVRET-ENTREPRISE.pdf - Interview Bruno Retailleau, Contrepoints (15/04/2026) : https://contrepoints.org/flat-tax-aides-aux-entreprises-assurances-sociales-calendrier-des-reformes-bruno-retailleau-repond-a-nos-questions/ - Comparateur ifrap présidentielle 2027 : https://www.ifrap.org/comparateurs/presidentielles-2027 - ifrap, « Aides aux entreprises : 211 milliards d'euros par an ou 18,5 milliards » : https://www.ifrap.org/budget-et-fiscalite/aides-aux-entreprises-211-milliards-deuros-par-ou-185-milliards - WikiGlucksmann, fiscalité : https://www.wikiglucksmann.fr/themes/glucksmann-fiscalite.html - Programme Glucksmann via Votons 2027 : https://votons-2027.fr/candidats/glucksmann/programme - Monvote2027, Marine Tondelier : https://monvote2027.fr/candidat/tondelier - Programme Mélenchon (économie) via Votons 2027 : https://votons-2027.fr/candidats/melenchon/programme/economie - Institut Montaigne, positions Mélenchon 2022 (CICE) : https://www.institutmontaigne.org/presidentielle-2022/jean-luc-melenchon/annuler-le-cice/ - DGFiP Statistiques n°47, « Les impôts de production en 2024 » (19/05/2026) : https://www.impots.gouv.fr/actualite/bulletin-dgfip-statistiques-ndeg47-les-impots-de-production-en-2024 et https://www.impots.gouv.fr/dgfip-statistiques-les-impots-de-production-en-2024 - DGFiP Statistiques n°35 (2025), impôts de production 2023 : https://www.impots.gouv.fr/sites/default/files/media/9_statistiques/0_etudes_et_stats/0_publications/dgfip_statistiques/2025/num35_05/dgfip_stat_35_2025.pdf - Institut Montaigne, Baromètre européen des impôts de production 2025 (avril 2025, PDF) : https://institutmontaigne.org/ressources/pdfs/publications/barometre-europeen-des-impots-de-production-2025.pdf - Institut Montaigne, communiqué baromètre 2024 (3ᵉ édition, février 2024) : https://www.institutmontaigne.org/communiques-de-presse/barometre-europeen-des-impots-de-production-2024-troisieme-edition - Rexecode, synthèse baromètre 2022 (édition initiale, données 2020) : https://www.rexecode.fr/conjoncture-previsions/veille-documentaire/document-de-la-semaine/competitivite-la-france-champion-europeen-des-impots-sur-la-production-institut-montaigne-mazars - Contrepoints, « La France reste vice-championne d'Europe des impôts de production » (synthèse baromètre 2025) : https://contrepoints.org/la-france-reste-vice-championne-deurope-des-impots-de-production/ - ifrap, « Impôts de production : 4,4 % du PIB en France contre 2,4 % en moyenne européenne » (à traiter avec prudence, voir Limites) : https://www.ifrap.org/budget-et-fiscalite/impots-de-production-44-du-pib-en-france-contre-24-en-moyenne-europeenne</p>
-<div class="label" style="margin-top:32px;">Limites / incertitudes</div>
-<p>1. <strong>Point le plus important : le chiffre « 4,4 % du PIB » de la carte mérite une double vérification.</strong> La source officielle la plus récente (DGFiP Statistiques n°47, mai 2026, données 2024) donne 3,3 % du PIB et 4,4 % de la valeur ajoutée des entreprises — deux mesures différentes. Le baromètre Institut Montaigne/Mazars (méthodologie différente, plus large) donne 3,8 % du PIB pour 2023 et n'a atteint 4,4 % que sur les données 2020 (édition 2022). À vérifier auprès de la source utilisée à l'origine par Guilhem pour la carte 3 si le 4,4 % renvoie bien au PIB (2024) ou s'il y a eu confusion avec la valeur ajoutée des entreprises ou avec des données plus anciennes (2020). 2. <strong>La moyenne européenne « 2,4 % »</strong> n'a pas pu être retracée jusqu'à un tableau Eurostat brut précis ; les valeurs équivalentes vérifiées vont de 2,0 % à 2,54 % selon l'année et le nombre de pays de l'échantillon (12 ou 13, pas les 27 de l'UE). Le classement « 2ᵉ rang UE derrière la Suède », en revanche, est robuste et confirmé par toutes les sources consultées. 3. Le site ifrap.org n'a pas pu être accédé directement en lecture brute (blocage réseau) ; son contenu a été récupéré via un outil de résumé automatique — traiter ses citations chiffrées avec prudence supplémentaire. 4. Marine Le Pen : aucune date de publication précise trouvée pour le livret entreprises RN utilisé comme source. 5. Raphaël Glucksmann : absence de position spécifique trouvée sur la CVAE/C3S/CFE malgré plusieurs recherches croisées. 6. Marine Tondelier : la citation Yahoo Finance est rapportée par un agrégateur sans date précise ; certaines propositions citées relèvent du programme collectif NFP (juin 2024) plutôt que d'une plateforme individuelle 2027. 7. Jean-Luc Mélenchon : rien de daté 2027 trouvé sur les impôts de production spécifiquement ; le point CICE cité est un contexte 2022. 8. Plusieurs pages n'ont pas pu être consultées (erreurs 403/503/robots.txt) : usinenouvelle.com, candidats-presidentielle-2027.fr, institutmontaigne.org édition 2026 (potentiellement plus récente) — à retenter séparément.</p>
-    </div>
+<h3>Limites et incertitudes</h3>
+<p>1. <strong>Point le plus important : le chiffre « 4,4 % du PIB » de la carte mérite une double vérification.</strong> La source officielle la plus récente (DGFiP Statistiques n°47, mai 2026, données 2024) donne 3,3 % du PIB et 4,4 % de la valeur ajoutée des entreprises — deux mesures différentes. Le baromètre Institut Montaigne/Mazars (méthodologie différente, plus large) donne 3,8 % du PIB pour 2023 et n'a atteint 4,4 % que sur les données 2020 (édition 2022). À vérifier auprès de la source utilisée à l'origine par Guilhem pour la carte 3 si le 4,4 % renvoie bien au PIB (2024) ou s'il y a eu confusion avec la valeur ajoutée des entreprises ou avec des données plus anciennes (2020). 2. <strong>La moyenne européenne « 2,4 % »</strong> n'a pas pu être retracée jusqu'à un tableau Eurostat brut précis ; les valeurs équivalentes vérifiées vont de 2,0 % à 2,54 % selon l'année et le nombre de pays de l'échantillon (12 ou 13, pas les 27 de l'UE). Le classement « 2ᵉ rang UE derrière la Suède », en revanche, est robuste et confirmé par toutes les sources consultées. 3. Le site ifrap.org n'a pas pu être accédé directement en lecture brute (blocage réseau) ; son contenu a été récupéré via un outil de résumé automatique — traiter ses citations chiffrées avec prudence supplémentaire. 4. Marine Le Pen : aucune date de publication précise trouvée pour le livret entreprises RN utilisé comme source. 5. Raphaël Glucksmann : absence de position spécifique trouvée sur la CVAE/C3S/CFE malgré plusieurs recherches croisées. 6. Marine Tondelier : la citation Yahoo Finance est rapportée par un agrégateur sans date précise ; certaines propositions citées relèvent du programme collectif NFP (juin 2024) plutôt que d'une plateforme individuelle 2027. 7. Jean-Luc Mélenchon : rien de daté 2027 trouvé sur les impôts de production spécifiquement ; le point CICE cité est un contexte 2022. 8. Plusieurs pages n'ont pas pu être consultées (erreurs 403/503/robots.txt) : usinenouvelle.com, candidats-presidentielle-2027.fr, institutmontaigne.org édition 2026 (potentiellement plus récente) — à retenter séparément.</p></div>
+      </div>
+      
+    </section>
+    <script>
+    (function () {
+      var root = document.getElementById('analyse-complete');
+      if (!root) return;
+      var tabs = Array.prototype.slice.call(root.querySelectorAll('[role=tab]'));
+      var panels = tabs.map(function (t) { return document.getElementById(t.getAttribute('aria-controls')); });
+      document.documentElement.classList.add('js');
+      function show(i, focus, push) {
+        tabs.forEach(function (t, j) {
+          var on = i === j;
+          t.setAttribute('aria-selected', on ? 'true' : 'false');
+          t.tabIndex = on ? 0 : -1;
+          panels[j].hidden = !on;
+        });
+        if (focus) tabs[i].focus();
+        if (push && history.replaceState) history.replaceState(null, '', '#' + tabs[i].id.replace('tab-', 'volet-'));
+      }
+      tabs.forEach(function (t, i) {
+        t.addEventListener('click', function () { show(i, false, true); });
+        t.addEventListener('keydown', function (e) {
+          var k = e.key, n = tabs.length;
+          if (k === 'ArrowRight') { e.preventDefault(); show((i + 1) % n, true, true); }
+          else if (k === 'ArrowLeft') { e.preventDefault(); show((i - 1 + n) % n, true, true); }
+          else if (k === 'Home') { e.preventDefault(); show(0, true, true); }
+          else if (k === 'End') { e.preventDefault(); show(n - 1, true, true); }
+        });
+      });
+      var start = 0, h = (location.hash || '').replace('#volet-', '');
+      tabs.forEach(function (t, i) { if (t.id === 'tab-' + h) start = i; });
+      show(start, false, false);
+      if (start > 0) root.scrollIntoView();
+    })();
+    </script>
+    
 
     <div class="sourcing-box">
       <h3>Sources &amp; méthodologie</h3>
@@ -356,6 +569,7 @@
 
     <div class="footer">
       Magnitude — newsletter data &amp; politique, apartisane. Publié le 24 septembre 2026.
+      
     </div>
   </div>
 </body>

@@ -85,7 +85,7 @@ body { background: var(--page); color: var(--ink); }
   position: absolute; transform: translate(-50%, -50%); border-radius: 50%; display: block;
   box-shadow: 0 0 0 4px var(--navy), 0 6px 18px rgba(0,0,0,.35);
 }
-.mg-node { width: 17%; height: auto; aspect-ratio: 1/1; transition: transform .2s ease; }
+.mg-node { width: 11.5%; height: auto; aspect-ratio: 1/1; transition: transform .2s ease; }
 .mg-node:hover { transform: translate(-50%, -50%) scale(1.08); }
 .mg-core { left: 50%; top: 50%; width: 22%; border-radius: 22%; background: var(--navy-2); }
 .mg-orbit-caption { text-align: center; font-size: 12.5px; color: #94A3B8; margin: 14px 0 0; }
@@ -201,31 +201,35 @@ body { background: var(--page); color: var(--ink); }
       présidentielle 2027.
     </p>
     <a class="mg-cta" href="https://buttondown.com/magnitude-publication">S'abonner gratuitement →</a>
-    <a class="mg-cta-ghost mg-cta-latest" href="/numeros/0/numero-0.html">Lire le dernier numéro →</a>
+    <a class="mg-cta-ghost mg-cta-latest" href="/numeros/1/numero-1.html">Lire le dernier numéro →</a>
   </div>
   <div class="mg-hero-art">
     <div>
-      <div class="mg-orbit" role="img" aria-label="Constellation des six candidats déclarés autour du logo Magnitude">
+      <div class="mg-orbit" role="img" aria-label="Constellation des douze candidats déclarés autour du logo Magnitude">
         <svg viewBox="0 0 520 520" aria-hidden="true">
           <circle cx="260" cy="260" r="240" fill="none" stroke="#1E293B" stroke-width="2"/>
           <circle cx="260" cy="260" r="170" fill="none" stroke="#1E293B" stroke-width="2"/>
           <circle cx="260" cy="260" r="100" fill="none" stroke="#334155" stroke-width="2"/>
           <g stroke="#475569" stroke-width="1.5">
-            <line x1="260" y1="260" x2="260" y2="20"/><line x1="260" y1="260" x2="468" y2="140"/>
-            <line x1="260" y1="260" x2="468" y2="380"/><line x1="260" y1="260" x2="260" y2="500"/>
-            <line x1="260" y1="260" x2="52" y2="380"/><line x1="260" y1="260" x2="52" y2="140"/>
+            <line x1="260" y1="260" x2="260" y2="20"/><line x1="260" y1="260" x2="380" y2="52"/><line x1="260" y1="260" x2="468" y2="140"/><line x1="260" y1="260" x2="500" y2="260"/><line x1="260" y1="260" x2="468" y2="380"/><line x1="260" y1="260" x2="380" y2="468"/><line x1="260" y1="260" x2="260" y2="500"/><line x1="260" y1="260" x2="140" y2="468"/><line x1="260" y1="260" x2="52" y2="380"/><line x1="260" y1="260" x2="20" y2="260"/><line x1="260" y1="260" x2="52" y2="140"/><line x1="260" y1="260" x2="140" y2="52"/>
           </g>
         </svg>
         <!-- Ordre alphabétique, purement décoratif : aucun classement. -->
         <img class="mg-core" src="/magnitude-icon.png" alt="Logo Magnitude">
-        <img class="mg-node" style="left:50%;top:3.8%" src="/candidats/glucksmann.png" alt="Raphaël Glucksmann">
-        <img class="mg-node" style="left:90%;top:26.9%" src="/candidats/le-pen.png" alt="Marine Le Pen">
-        <img class="mg-node" style="left:90%;top:73.1%" src="/candidats/melenchon.png" alt="Jean-Luc Mélenchon">
-        <img class="mg-node" style="left:50%;top:96.2%" src="/candidats/philippe.png" alt="Édouard Philippe">
-        <img class="mg-node" style="left:10%;top:73.1%" src="/candidats/retailleau.png" alt="Bruno Retailleau">
-        <img class="mg-node" style="left:10%;top:26.9%" src="/candidats/tondelier.png" alt="Marine Tondelier">
+        <img class="mg-node" style="left:50.0%;top:3.8%" src="/candidats/attal.png" alt="Gabriel Attal">
+        <img class="mg-node" style="left:73.1%;top:10.0%" src="/candidats/faure.png" alt="Olivier Faure">
+        <img class="mg-node" style="left:90.0%;top:26.9%" src="/candidats/glucksmann.png" alt="Raphaël Glucksmann">
+        <img class="mg-node" style="left:96.2%;top:50.0%" src="/candidats/le-pen.png" alt="Marine Le Pen">
+        <img class="mg-node" style="left:90.0%;top:73.1%" src="/candidats/melenchon.png" alt="Jean-Luc Mélenchon">
+        <img class="mg-node" style="left:73.1%;top:90.0%" src="/candidats/philippe.png" alt="Édouard Philippe">
+        <img class="mg-node" style="left:50.0%;top:96.2%" src="/candidats/retailleau.png" alt="Bruno Retailleau">
+        <img class="mg-node" style="left:26.9%;top:90.0%" src="/candidats/roussel.png" alt="Fabien Roussel">
+        <img class="mg-node" style="left:10.0%;top:73.1%" src="/candidats/ruffin.png" alt="François Ruffin">
+        <img class="mg-node" style="left:3.8%;top:50.0%" src="/candidats/tondelier.png" alt="Marine Tondelier">
+        <img class="mg-node" style="left:10.0%;top:26.9%" src="/candidats/villepin.png" alt="Dominique de Villepin">
+        <img class="mg-node" style="left:26.9%;top:10.0%" src="/candidats/zemmour.png" alt="Éric Zemmour">
       </div>
-      <p class="mg-orbit-caption">Les six candidats déclarés, par ordre alphabétique — dessins stylisés, sans lien avec les couleurs des partis.</p>
+      <p class="mg-orbit-caption">Les douze candidats déclarés des deux premiers numéros, par ordre alphabétique — dessins stylisés, sans lien avec les couleurs des partis.</p>
     </div>
   </div>
 </section>
@@ -234,15 +238,15 @@ body { background: var(--page); color: var(--ink); }
 <!-- ============ 1bis. DERNIER NUMÉRO (porte d'entrée) ============ -->
 <div class="mg-band mg-featured">
 <section class="mg-section">
-  <a class="mg-feature" href="/numeros/0/numero-0.html" aria-label="Lire le dernier numéro : Numéro #0, six mesures, six familles politiques, un seul chiffre à chaque fois">
+  <a class="mg-feature" href="/numeros/1/numero-1.html" aria-label="Lire le dernier numéro : Numéro #1, six nouveaux candidats, six mesures, un seul chiffre à chaque fois">
     <div class="mg-feature-text">
-      <span class="mg-feature-label">Dernier numéro · N° 0 · 24 septembre 2026</span>
-      <h2 class="mg-feature-title">Six mesures, six familles politiques, un seul chiffre à chaque fois</h2>
-      <p class="mg-feature-lede">Le numéro complet, prêt à lire : une carte par candidat déclaré, un graphique, une histoire sourcée.</p>
-      <span class="mg-feature-cta">Lire le numéro #0 →</span>
+      <span class="mg-feature-label">Dernier numéro · N° 1 · octobre 2026</span>
+      <h2 class="mg-feature-title">Six nouveaux candidats, six mesures, un seul chiffre à chaque fois</h2>
+      <p class="mg-feature-lede">Le numéro complet, prêt à lire : une carte par candidat déclaré, un graphique, une histoire sourcée. Le numéro #0 reste disponible dans l'historique.</p>
+      <span class="mg-feature-cta">Lire le numéro #1 →</span>
     </div>
     <div class="mg-feature-faces" aria-hidden="true">
-      <img src="/candidats/glucksmann.png" alt=""><img src="/candidats/le-pen.png" alt=""><img src="/candidats/melenchon.png" alt=""><img src="/candidats/philippe.png" alt=""><img src="/candidats/retailleau.png" alt=""><img src="/candidats/tondelier.png" alt="">
+      <img src="/candidats/attal.png" alt=""><img src="/candidats/faure.png" alt=""><img src="/candidats/roussel.png" alt=""><img src="/candidats/ruffin.png" alt=""><img src="/candidats/villepin.png" alt=""><img src="/candidats/zemmour.png" alt="">
     </div>
   </a>
 </section>
@@ -299,7 +303,7 @@ body { background: var(--page); color: var(--ink); }
 <section class="mg-section" id="historique">
   <h2 class="mg-h2">Chercher une mesure précise</h2>
   <p class="mg-lede" style="font-size:15px;">
-    Pour lire un numéro entier, commencez par <a href="/numeros/0/numero-0.html">le dernier numéro</a>. Ici, toutes les cartes publiées, filtrables par thème et par famille
+    Pour lire un numéro entier, commencez par <a href="/numeros/1/numero-1.html">le dernier numéro</a> (le <a href="/numeros/0/numero-0.html">numéro #0</a> reste disponible). Ici, toutes les cartes publiées, filtrables par thème et par famille
     politique. L'ordre d'affichage de chaque numéro est tiré
     aléatoirement (méthode publique — voir « Confiance & méthode »
     ci-dessous) : il ne reflète donc pas un classement ou une
@@ -314,6 +318,60 @@ body { background: var(--page); color: var(--ink); }
     </select>
   </div>
   <div class="mg-grid" id="mg-grid">
+    <div class="mg-card" data-theme="Finances publiques" data-famille="Centre — Renaissance">
+      <a class="mg-card-link" href="/numeros/1/reports/carte_07_attal_dette.html" aria-label="Lire l'analyse complète : Attal veut le zéro déficit en 2037 — la France affiche 5,1 % de déficit public en 2025"><img src="/numeros/1/charts/carte_07_attal_dette.png" alt="Attal veut le zéro déficit en 2037 — la France affiche 5,1 % de déficit public en 2025" loading="lazy"></a>
+      <div class="mg-body">
+        <div class="mg-who"><img src="/candidats/attal.png" width="44" height="44" alt="Portrait stylisé de Gabriel Attal" loading="lazy"><span>Gabriel Attal</span></div>
+        <span class="mg-tag">Centre — Renaissance</span><span class="mg-theme">Finances publiques</span>
+        <h4><a class="mg-card-link" href="/numeros/1/reports/carte_07_attal_dette.html">Attal veut le zéro déficit en 2037 — la France affiche 5,1 % de déficit public en 2025</a></h4>
+        <a href="/numeros/1/reports/carte_07_attal_dette.html">Lire l'analyse complète →</a>
+      </div>
+    </div>
+    <div class="mg-card" data-theme="Salaires" data-famille="Gauche — PS">
+      <a class="mg-card-link" href="/numeros/1/reports/carte_08_faure_smic.html" aria-label="Lire l'analyse complète : Faure veut porter le Smic à 1 700 € net — il est aujourd'hui de 1 478 € net"><img src="/numeros/1/charts/carte_08_faure_smic.png" alt="Faure veut porter le Smic à 1 700 € net — il est aujourd'hui de 1 478 € net" loading="lazy"></a>
+      <div class="mg-body">
+        <div class="mg-who"><img src="/candidats/faure.png" width="44" height="44" alt="Portrait stylisé de Olivier Faure" loading="lazy"><span>Olivier Faure</span></div>
+        <span class="mg-tag">Gauche — PS</span><span class="mg-theme">Salaires</span>
+        <h4><a class="mg-card-link" href="/numeros/1/reports/carte_08_faure_smic.html">Faure veut porter le Smic à 1 700 € net — il est aujourd'hui de 1 478 € net</a></h4>
+        <a href="/numeros/1/reports/carte_08_faure_smic.html">Lire l'analyse complète →</a>
+      </div>
+    </div>
+    <div class="mg-card" data-theme="Sécurité" data-famille="Gauche — PCF">
+      <a class="mg-card-link" href="/numeros/1/reports/carte_09_roussel_securite.html" aria-label="Lire l'analyse complète : Roussel veut embaucher 60 000 agents contre le narcotrafic — l'équivalent de 22 % des effectifs actuels"><img src="/numeros/1/charts/carte_09_roussel_securite.png" alt="Roussel veut embaucher 60 000 agents contre le narcotrafic — l'équivalent de 22 % des effectifs actuels" loading="lazy"></a>
+      <div class="mg-body">
+        <div class="mg-who"><img src="/candidats/roussel.png" width="44" height="44" alt="Portrait stylisé de Fabien Roussel" loading="lazy"><span>Fabien Roussel</span></div>
+        <span class="mg-tag">Gauche — PCF</span><span class="mg-theme">Sécurité</span>
+        <h4><a class="mg-card-link" href="/numeros/1/reports/carte_09_roussel_securite.html">Roussel veut embaucher 60 000 agents contre le narcotrafic — l'équivalent de 22 % des effectifs actuels</a></h4>
+        <a href="/numeros/1/reports/carte_09_roussel_securite.html">Lire l'analyse complète →</a>
+      </div>
+    </div>
+    <div class="mg-card" data-theme="Vie associative" data-famille="Gauche — Debout !">
+      <a class="mg-card-link" href="/numeros/1/reports/carte_10_ruffin_loisirs.html" aria-label="Lire l'analyse complète : Ruffin veut 1 Md€ par an pour les salles des fêtes — 81 % des crédits de la mission Sport, jeunesse et vie associative"><img src="/numeros/1/charts/carte_10_ruffin_loisirs.png" alt="Ruffin veut 1 Md€ par an pour les salles des fêtes — 81 % des crédits de la mission Sport, jeunesse et vie associative" loading="lazy"></a>
+      <div class="mg-body">
+        <div class="mg-who"><img src="/candidats/ruffin.png" width="44" height="44" alt="Portrait stylisé de François Ruffin" loading="lazy"><span>François Ruffin</span></div>
+        <span class="mg-tag">Gauche — Debout !</span><span class="mg-theme">Vie associative</span>
+        <h4><a class="mg-card-link" href="/numeros/1/reports/carte_10_ruffin_loisirs.html">Ruffin veut 1 Md€ par an pour les salles des fêtes — 81 % des crédits de la mission Sport, jeunesse et vie associative</a></h4>
+        <a href="/numeros/1/reports/carte_10_ruffin_loisirs.html">Lire l'analyse complète →</a>
+      </div>
+    </div>
+    <div class="mg-card" data-theme="Innovation &amp; souveraineté" data-famille="Centre — La France humaniste">
+      <a class="mg-card-link" href="/numeros/1/reports/carte_11_villepin_darpa.html" aria-label="Lire l'analyse complète : Villepin veut une DARPA européenne à 4 milliards de dollars par an — l'agence américaine en reçoit environ 4,3"><img src="/numeros/1/charts/carte_11_villepin_darpa.png" alt="Villepin veut une DARPA européenne à 4 milliards de dollars par an — l'agence américaine en reçoit environ 4,3" loading="lazy"></a>
+      <div class="mg-body">
+        <div class="mg-who"><img src="/candidats/villepin.png" width="44" height="44" alt="Portrait stylisé de Dominique de Villepin" loading="lazy"><span>Dominique de Villepin</span></div>
+        <span class="mg-tag">Centre — La France humaniste</span><span class="mg-theme">Innovation &amp; souveraineté</span>
+        <h4><a class="mg-card-link" href="/numeros/1/reports/carte_11_villepin_darpa.html">Villepin veut une DARPA européenne à 4 milliards de dollars par an — l'agence américaine en reçoit environ 4,3</a></h4>
+        <a href="/numeros/1/reports/carte_11_villepin_darpa.html">Lire l'analyse complète →</a>
+      </div>
+    </div>
+    <div class="mg-card" data-theme="Immigration" data-famille="Extrême-droite — Reconquête">
+      <a class="mg-card-link" href="/numeros/1/reports/carte_12_zemmour_immigration.html" aria-label="Lire l'analyse complète : Zemmour veut expulser les étrangers au chômage depuis un an — le chômage touche 12,4 % des immigrés, 7,7 % de la population"><img src="/numeros/1/charts/carte_12_zemmour_immigration.png" alt="Zemmour veut expulser les étrangers au chômage depuis un an — le chômage touche 12,4 % des immigrés, 7,7 % de la population" loading="lazy"></a>
+      <div class="mg-body">
+        <div class="mg-who"><img src="/candidats/zemmour.png" width="44" height="44" alt="Portrait stylisé de Éric Zemmour" loading="lazy"><span>Éric Zemmour</span></div>
+        <span class="mg-tag">Extrême-droite — Reconquête</span><span class="mg-theme">Immigration</span>
+        <h4><a class="mg-card-link" href="/numeros/1/reports/carte_12_zemmour_immigration.html">Zemmour veut expulser les étrangers au chômage depuis un an — le chômage touche 12,4 % des immigrés, 7,7 % de la population</a></h4>
+        <a href="/numeros/1/reports/carte_12_zemmour_immigration.html">Lire l'analyse complète →</a>
+      </div>
+    </div>
     <div class="mg-card" data-theme="Fiscalité des entreprises" data-famille="Centre-droit — Horizons">
       <a class="mg-card-link" href="/numeros/0/reports/carte_03_philippe_fiscalite.html" aria-label="Lire l'analyse complète : Philippe propose un « deal fiscal » aux entreprises — où en sont les impôts de production ?"><img src="/numeros/0/charts/carte_03_philippe_fiscalite.png" alt="Philippe propose un « deal fiscal » aux entreprises — où en sont les impôts de production ?" loading="lazy"></a>
       <div class="mg-body">
@@ -442,7 +500,7 @@ body { background: var(--page); color: var(--ink); }
 <div class="mg-band mg-dark-deep mg-footer">
 <section class="mg-section">
   <div class="mg-footer-icons" aria-hidden="true">
-    <img src="/candidats/glucksmann.png" alt=""><img src="/candidats/le-pen.png" alt=""><img src="/candidats/melenchon.png" alt=""><img src="/candidats/philippe.png" alt=""><img src="/candidats/retailleau.png" alt=""><img src="/candidats/tondelier.png" alt="">
+    <img src="/candidats/attal.png" alt=""><img src="/candidats/faure.png" alt=""><img src="/candidats/glucksmann.png" alt=""><img src="/candidats/le-pen.png" alt=""><img src="/candidats/melenchon.png" alt=""><img src="/candidats/philippe.png" alt=""><img src="/candidats/retailleau.png" alt=""><img src="/candidats/roussel.png" alt=""><img src="/candidats/ruffin.png" alt=""><img src="/candidats/tondelier.png" alt=""><img src="/candidats/villepin.png" alt=""><img src="/candidats/zemmour.png" alt="">
   </div>
   <h2 class="mg-h2">Rejoindre Magnitude</h2>
   <p>Un email par semaine, pas plus. Désinscription en un clic, à tout moment.</p>

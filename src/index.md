@@ -204,7 +204,7 @@ body { background: var(--page); color: var(--ink); }
       étiquette politique affichée. Angle d'actualité actuel : la
       présidentielle 2027.
     </p>
-    <a class="mg-cta" href="https://buttondown.com/magnitude-publication">S'abonner gratuitement →</a>
+    <a class="mg-cta" href="https://lists.magnitude.pub/subscription/form">S'abonner gratuitement →</a>
     <a class="mg-cta-ghost mg-cta-latest" href="/numeros/1/numero-1.html">Lire le dernier numéro →</a>
   </div>
   <div class="mg-hero-art">
@@ -522,7 +522,7 @@ body { background: var(--page); color: var(--ink); }
   </div>
   <h2 class="mg-h2">Rejoindre Magnitude</h2>
   <p>Un email par semaine, pas plus. Désinscription en un clic, à tout moment.</p>
-  <a class="mg-cta" href="https://buttondown.com/magnitude-publication">S'abonner gratuitement →</a>
+  <a class="mg-cta" href="https://lists.magnitude.pub/subscription/form">S'abonner gratuitement →</a>
   <p style="margin-top:28px;">Suivez Magnitude sur <a href="https://x.com/magnitudefrance" target="_blank" rel="noopener">X (@magnitudefrance)</a>.</p>
   <p class="mg-legal">
     Magnitude — publication indépendante, magnitude.pub. Gratuite,

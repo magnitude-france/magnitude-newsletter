@@ -197,6 +197,10 @@
   .card-quote { background: var(--amber-pale); border-left: 0; border-radius: 12px; padding: 14px 16px; }
   .decl-badge { border-radius: 999px; padding: 2px 9px; }
   a.deep-dive-link { color: #B45309; }
+  .card-who { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; }
+  .card-who .card-index, .card-who .card-tag { margin-bottom: 0; }
+  .card-icon { width: 64px; height: 64px; border-radius: 50%; flex: 0 0 auto; display: block; box-shadow: 0 0 0 3px var(--amber-pale); }
+  .card-name { font-family: Georgia, "Times New Roman", serif; font-size: 17px; font-weight: 700; margin: 2px 0 6px; color: var(--ink); }
 </style>
 </head>
 <body>
@@ -216,8 +220,14 @@
   <main>
     
     <section class="card " id="carte-philippe-fiscalite">
-      <div class="card-index">Carte 1 / 6</div>
-      <div class="card-tag">Centre-droit — Horizons</div>
+      <div class="card-who">
+        <img class="card-icon" src="/candidats/philippe.png" width="64" height="64" alt="Portrait stylisé de Édouard Philippe">
+        <div>
+          <div class="card-index">Carte 1 / 6</div>
+          <div class="card-name">Édouard Philippe</div>
+          <div class="card-tag">Centre-droit — Horizons</div>
+        </div>
+      </div>
       <a href="reports/carte_03_philippe_fiscalite.html" style="color:inherit; text-decoration:none;"><h2>Philippe propose un « deal fiscal » aux entreprises — où en sont les impôts de production ?</h2></a>
       <p class="message">Édouard Philippe (Horizons) propose de baisser les impôts de production en échange d'une baisse des aides aux entreprises. Ces impôts pèsent 4,4 % du PIB en France, près de deux fois la moyenne européenne (2,4 %).</p>
       
@@ -236,8 +246,14 @@
     </section>
     
     <section class="card " id="carte-glucksmann-patrimoine">
-      <div class="card-index">Carte 2 / 6</div>
-      <div class="card-tag">Centre-gauche — Place Publique</div>
+      <div class="card-who">
+        <img class="card-icon" src="/candidats/glucksmann.png" width="64" height="64" alt="Portrait stylisé de Raphaël Glucksmann">
+        <div>
+          <div class="card-index">Carte 2 / 6</div>
+          <div class="card-name">Raphaël Glucksmann</div>
+          <div class="card-tag">Centre-gauche — Place Publique</div>
+        </div>
+      </div>
       <a href="reports/carte_04_glucksmann_patrimoine.html" style="color:inherit; text-decoration:none;"><h2>Glucksmann veut taxer les « méga-héritages » — la concentration du patrimoine en 3 chiffres</h2></a>
       <p class="message">Raphaël Glucksmann (Place Publique) veut taxer davantage les « méga-héritages » pour augmenter le salaire net. Combien de patrimoine le 1 % le plus riche détient-il ? Deux méthodes de mesure, deux trajectoires — la carte assume la divergence.</p>
       
@@ -256,8 +272,14 @@
     </section>
     
     <section class="card " id="carte-retailleau-referendum">
-      <div class="card-index">Carte 3 / 6</div>
-      <div class="card-tag">Droite — LR</div>
+      <div class="card-who">
+        <img class="card-icon" src="/candidats/retailleau.png" width="64" height="64" alt="Portrait stylisé de Bruno Retailleau">
+        <div>
+          <div class="card-index">Carte 3 / 6</div>
+          <div class="card-name">Bruno Retailleau</div>
+          <div class="card-tag">Droite — LR</div>
+        </div>
+      </div>
       <a href="reports/carte_02_retailleau_referendum.html" style="color:inherit; text-decoration:none;"><h2>Retailleau veut élargir le référendum — la France n'en a pas organisé depuis 21 ans</h2></a>
       <p class="message">Bruno Retailleau (LR) veut élargir le champ du référendum. La France a organisé 10 référendums nationaux en 68 ans de Ve République — aucun depuis 2005.</p>
       
@@ -276,8 +298,14 @@
     </section>
     
     <section class="card " id="carte-tondelier-climat">
-      <div class="card-index">Carte 4 / 6</div>
-      <div class="card-tag">Gauche écologiste — Les Écologistes</div>
+      <div class="card-who">
+        <img class="card-icon" src="/candidats/tondelier.png" width="64" height="64" alt="Portrait stylisé de Marine Tondelier">
+        <div>
+          <div class="card-index">Carte 4 / 6</div>
+          <div class="card-name">Marine Tondelier</div>
+          <div class="card-tag">Gauche écologiste — Les Écologistes</div>
+        </div>
+      </div>
       <a href="reports/carte_05_tondelier_climat.html" style="color:inherit; text-decoration:none;"><h2>Tondelier veut surtaxer les plus gros héritages pour la transition — l'ampleur du décrochage de rythme</h2></a>
       <p class="message">Marine Tondelier (Les Écologistes) veut financer la transition climatique par une surtaxe sur les 1 % d'héritages les plus élevés. Les émissions françaises baissent, mais plus assez vite pour 2030.</p>
       
@@ -296,8 +324,14 @@
     </section>
     
     <section class="card " id="carte-le-pen-logement">
-      <div class="card-index">Carte 5 / 6</div>
-      <div class="card-tag">Extrême-droite — RN</div>
+      <div class="card-who">
+        <img class="card-icon" src="/candidats/le-pen.png" width="64" height="64" alt="Portrait stylisé de Marine Le Pen">
+        <div>
+          <div class="card-index">Carte 5 / 6</div>
+          <div class="card-name">Marine Le Pen</div>
+          <div class="card-tag">Extrême-droite — RN</div>
+        </div>
+      </div>
       <a href="reports/carte_01_le_pen_logement.html" style="color:inherit; text-decoration:none;"><h2>Le Pen veut faciliter l'achat d'un premier logement — le vrai décrochage est ailleurs</h2></a>
       <p class="message">Marine Le Pen (RN) veut relancer l'accession à la propriété — mais le vrai obstacle des 20 dernières années, c'est l'écart entre les prix et les revenus, pas l'accès au crédit.</p>
       
@@ -316,8 +350,14 @@
     </section>
     
     <section class="card " id="carte-melenchon-confiance">
-      <div class="card-index">Carte 6 / 6</div>
-      <div class="card-tag">Extrême-gauche — LFI</div>
+      <div class="card-who">
+        <img class="card-icon" src="/candidats/melenchon.png" width="64" height="64" alt="Portrait stylisé de Jean-Luc Mélenchon">
+        <div>
+          <div class="card-index">Carte 6 / 6</div>
+          <div class="card-name">Jean-Luc Mélenchon</div>
+          <div class="card-tag">Extrême-gauche — LFI</div>
+        </div>
+      </div>
       <a href="reports/carte_06_melenchon_confiance.html" style="color:inherit; text-decoration:none;"><h2>Mélenchon veut une VIe République — la confiance dans les institutions au plus bas</h2></a>
       <p class="message">Jean-Luc Mélenchon (LFI) veut une VIe République. La confiance dans l'Assemblée nationale est tombée à son plus bas niveau depuis 2009 (CEVIPOF).</p>
       

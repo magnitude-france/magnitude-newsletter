@@ -225,6 +225,133 @@
   }
   .mg-back:hover { color: var(--accent); }
   .mg-back svg { width: 14px; height: 14px; flex-shrink: 0; }
+
+  /* ---- Analyse complète : onglets ---------------------------------- */
+  .analyse { margin: 56px 0 8px; }
+  .analyse > h2 { margin: 0 0 6px; font-size: 26px; }
+  .analyse-sub { font-size: 14px; color: var(--ink-muted); margin: 0 0 22px; }
+  .tablist { display: flex; gap: 6px; border-bottom: 2px solid var(--gridline); overflow-x: auto; scrollbar-width: none; position: sticky; top: 0; background: var(--page); z-index: 5; padding-top: 6px; }
+  .tablist::-webkit-scrollbar { display: none; }
+  .tab {
+    appearance: none; border: 0; background: none; cursor: pointer; flex: 0 0 auto;
+    padding: 12px 16px 11px; font: inherit; font-size: 15px; font-weight: 700; color: var(--ink-secondary);
+    border-bottom: 4px solid transparent; margin-bottom: -2px; display: inline-flex; align-items: center; gap: 9px; white-space: nowrap;
+  }
+  .tab:hover { color: var(--ink); }
+  .tab:focus-visible { outline: 3px solid var(--reference); outline-offset: -3px; border-radius: 4px; }
+  .tab-num { display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; font-size: 13px; background: var(--gridline); color: var(--ink-secondary); }
+  .tab[aria-selected="true"] { color: var(--ink); font-size: 16px; }
+  .tab[aria-selected="true"] .tab-num { color: #fff; }
+  .tab-accent[aria-selected="true"] { border-bottom-color: var(--accent); }
+  .tab-accent[aria-selected="true"] .tab-num { background: var(--accent); }
+  .tab-reference[aria-selected="true"] { border-bottom-color: var(--reference); }
+  .tab-reference[aria-selected="true"] .tab-num { background: var(--reference); }
+  .tab-ink[aria-selected="true"] { border-bottom-color: var(--ink); }
+  .tab-ink[aria-selected="true"] .tab-num { background: var(--ink); }
+  .tab-muted[aria-selected="true"] { border-bottom-color: var(--ink-muted); }
+  .tab-muted[aria-selected="true"] .tab-num { background: var(--ink-muted); }
+  .tablist { display: none; }
+  .js .tablist { display: flex; }
+  .js .tabpanel[hidden] { display: none; }
+  .tabpanel { padding-top: 26px; }
+  .panel-head { margin-bottom: 18px; border-left: 6px solid var(--ink-muted); padding-left: 16px; }
+  .panel-accent .panel-head { border-left-color: var(--accent); }
+  .panel-reference .panel-head { border-left-color: var(--reference); }
+  .panel-ink .panel-head { border-left-color: var(--ink); }
+  .panel-head h3 { font-family: Georgia, "Times New Roman", serif; font-size: 28px; line-height: 1.2; margin: 0 0 6px; }
+  .panel-resume { font-size: 17px; color: var(--ink-secondary); margin: 0; }
+  .panel-resume strong, .em { font-weight: 700; color: var(--ink); background: linear-gradient(transparent 62%, rgba(217,119,6,0.30) 0); }
+  .panel-reference .panel-resume strong, .panel-reference .em { background: linear-gradient(transparent 62%, rgba(14,101,155,0.22) 0); }
+  .tabpanel h3 { font-family: Georgia, "Times New Roman", serif; }
+  .tabpanel .panel-body h3 { font-size: 19px; margin: 28px 0 10px; }
+  .tabpanel .panel-body p > strong:first-child { color: var(--ink); font-size: 17px; }
+  .panel-reference .panel-body p > strong:first-child { color: var(--reference); }
+  .panel-body .label { margin-top: 24px !important; }
+
+  /* Grands chiffres */
+  .hero-row { display: flex; gap: 14px; flex-wrap: wrap; margin: 6px 0 26px; }
+  .hero-tile { flex: 1 1 190px; background: var(--surface); border: 1px solid var(--border); border-top: 6px solid var(--ink-muted); border-radius: 6px; padding: 16px 18px 14px; }
+  .hero-accent { border-top-color: var(--accent); }
+  .hero-reference { border-top-color: var(--reference); }
+  .hero-ink { border-top-color: var(--ink); }
+  .hero-val { font-family: Georgia, "Times New Roman", serif; font-size: 44px; line-height: 1.05; font-weight: 700; letter-spacing: -0.01em; }
+  .hero-accent .hero-val { color: var(--accent); }
+  .hero-reference .hero-val { color: var(--reference); }
+  .hero-label { font-size: 13.5px; line-height: 1.4; color: var(--ink-secondary); margin-top: 8px; }
+
+  /* Niveaux de confiance */
+  .lvl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; padding: 1px 7px; border-radius: 3px; margin: 0 2px; white-space: nowrap; vertical-align: 1px; }
+  .lvl-a { background: #e6f4ea; color: #1b6b34; }
+  .lvl-b { background: #fef3e0; color: #92610a; }
+  .lvl-c { background: #fbe7e5; color: #a3352c; }
+  .lvl-x { background: #ececea; color: #52514E; }
+
+  /* Visuels */
+  .viz { margin: 0 0 28px; padding: 18px 20px; background: var(--surface); border: 1px solid var(--border); border-radius: 6px; }
+  .viz > figcaption { font-family: Georgia, "Times New Roman", serif; font-size: 18px; font-weight: 700; margin-bottom: 14px; }
+  .viz-legend { font-size: 12.5px; color: var(--ink-muted); margin: 12px 0 0; }
+  .viz-rank ol { list-style: none; margin: 0; padding: 0; }
+  .rank-row { display: grid; grid-template-columns: 24px 96px 1fr 120px; align-items: center; gap: 10px; padding: 7px 0; }
+  .rank-pos { font-size: 12px; font-weight: 700; color: var(--ink-muted); text-align: center; }
+  .rank-label { font-weight: 700; font-size: 15px; }
+  .rank-track { position: relative; height: 22px; background: var(--page); border-radius: 3px; }
+  .rank-fill { position: absolute; left: 0; top: 0; bottom: 0; background: var(--ink-muted); border-radius: 3px 0 0 3px; }
+  .kind-focus .rank-fill { background: var(--accent); }
+  .kind-focus .rank-label, .kind-focus .rank-val { color: var(--accent); }
+  .rank-range { position: absolute; top: 0; bottom: 0; background: repeating-linear-gradient(135deg, var(--ink-muted) 0 3px, transparent 3px 6px); opacity: 0.7; }
+  .kind-focus .rank-range { background: repeating-linear-gradient(135deg, var(--accent) 0 3px, transparent 3px 6px); }
+  .rank-ref { position: absolute; top: -5px; bottom: -5px; width: 3px; margin-left: -1px; background: var(--reference); }
+  .rank-val { font-weight: 700; font-size: 15px; font-variant-numeric: tabular-nums; }
+  .rank-note { grid-column: 2 / -1; font-size: 12.5px; color: var(--ink-muted); margin-top: -4px; }
+  .legend-ref { display: inline-block; width: 3px; height: 12px; background: var(--reference); margin-right: 6px; vertical-align: -2px; }
+  .legend-range { display: inline-block; width: 18px; height: 10px; margin: 0 6px 0 16px; vertical-align: -1px; background: repeating-linear-gradient(135deg, var(--ink-muted) 0 3px, transparent 3px 6px); }
+  .radial { width: 100%; max-width: 580px; height: auto; display: block; margin: 0 auto; }
+  .radial .ring { fill: none; stroke: var(--gridline); stroke-width: 1.2; }
+  .radial .ring-out { stroke: var(--ink-muted); stroke-dasharray: 5 5; }
+  .radial .ring-label { font-size: 10.5px; fill: var(--ink-muted); font-style: italic; }
+  .radial .spoke { stroke: var(--gridline); stroke-width: 1.5; }
+  .radial .pt-ring { fill: none; stroke: var(--ink); stroke-width: 2.5; }
+  .radial .pt-none { opacity: 0.6; }
+  .radial .pt-none .pt-ring { stroke: var(--ink-muted); stroke-dasharray: 4 3; }
+  .radial .pt-name, .radial .centre-name { font-size: 13px; font-weight: 700; fill: var(--ink); font-family: Georgia, serif; }
+  .radial .centre-name { font-size: 15px; fill: var(--accent); }
+  .radial .centre-ring { fill: none; stroke: var(--accent); stroke-width: 4; }
+  .radial .pt-sub { font-size: 10.5px; fill: var(--ink-secondary); }
+  .prox-rank { list-style: none; margin: 14px 0 0; padding: 0; display: grid; gap: 6px; }
+  .prox-rank li { display: flex; align-items: baseline; gap: 10px; }
+  .pr-name { font-weight: 700; min-width: 110px; }
+  .pr-val { font-family: Georgia, serif; font-size: 22px; font-weight: 700; color: var(--accent); }
+  .pr-n { font-size: 12.5px; color: var(--ink-muted); }
+  .matrix-scroll { overflow-x: auto; }
+  .viz-matrix table { border-collapse: separate; border-spacing: 4px; width: 100%; min-width: 560px; table-layout: fixed; }
+  .viz-matrix table col.c-dim { width: 112px; }
+  .m-cand { text-align: center; font-size: 12.5px; font-weight: 700; vertical-align: bottom; }
+  .m-cand span { display: block; margin-top: 4px; }
+  .m-dim { text-align: left; font-size: 12.5px; font-weight: 700; padding-right: 8px; }
+  .m-cell { text-align: center; vertical-align: top; padding: 8px 3px; border-radius: 5px; font-size: 11px; overflow-wrap: anywhere; line-height: 1.3; }
+  .m-glyph { display: block; font-size: 20px; line-height: 1; margin-bottom: 4px; }
+  .m-a { background: rgba(217,119,6,0.14); color: #8a4a02; }
+  .m-b { background: rgba(14,101,155,0.12); color: #0b4f7a; }
+  .m-none { background: repeating-linear-gradient(135deg, #f1f0eb 0 6px, #f9f9f7 6px 12px); color: var(--ink-muted); }
+  .m-weak { outline: 2px dashed var(--ink-muted); outline-offset: -3px; }
+  .m-cell .lvl { display: block; width: fit-content; margin: 5px auto 0; }
+  .key { display: inline-block; width: 18px; text-align: center; font-weight: 700; }
+  .key-a { color: var(--accent); } .key-b { color: var(--reference); }
+  .cand-icon { border-radius: 50%; display: block; border: 2px solid var(--ink); object-fit: cover; background: var(--gridline); }
+  .cand-card { display: flex; gap: 14px; align-items: flex-start; padding: 14px 0; border-top: 1px solid var(--border); }
+  .cand-card .cand-icon { flex: 0 0 auto; }
+  .cand-card .cand-body p { margin: 0; font-size: 15px; }
+  .detail { margin-top: 8px; }
+  .detail > summary { cursor: pointer; font-weight: 700; font-size: 14.5px; color: var(--reference); padding: 10px 0; }
+  .detail[open] > summary { margin-bottom: 8px; }
+  .credits { font-size: 11.5px; color: var(--ink-muted); margin-top: 8px; }
+  @media (max-width: 560px) {
+    .rank-row { grid-template-columns: 20px 78px 1fr; }
+    .rank-val { grid-column: 2 / -1; }
+    .hero-val { font-size: 36px; }
+    .panel-head h3 { font-size: 23px; }
+  }
+  @media print { .tablist { display: none !important; } .tabpanel[hidden] { display: block !important; } }
 </style>
 </head>
 <body>
@@ -290,25 +417,111 @@
       <p>Deux méthodologies sérieuses mesurent la concentration du patrimoine en France et arrivent à des résultats différents. La première, développée par les économistes <a href="https://publications.banque-france.fr/sites/default/files/medias/documents/dt-633.pdf">Thomas Piketty et collègues</a> (Banque de France, World Inequality Database), reprise récemment par le <a href="https://www.ccomptes.fr/sites/default/files/2025-12/20251201-Corriger-les-principales-distorsions-de-l-imposition-du-patrimoine.pdf">Conseil des prélèvements obligatoires</a>, estime la part du 1 % le plus riche à environ <span class="stat">27 %</span> du patrimoine nationale en 2025, en nette hausse depuis le creux du début des années 1980 (environ <span class="stat">16 %</span>). La seconde, l'<a href="https://www.insee.fr/fr/statistiques/2502915">Enquête Patrimoine de l'INSEE</a>, mesure une part plus faible et plus stable, autour de <span class="stat stat-reference">15-16 %</span> depuis 2015. L'écart s'explique par la méthode : l'enquête déclarative de l'INSEE tend à sous-représenter les très hauts patrimoines, difficiles à capter par sondage.</p>
     </div>
 
-    <h2>Le récit complet</h2>
-    <div class="deep-dive">
-      <p>La méthode Piketty et al. (reprise par WID.world et la Banque de France) combine données fiscales, successorales et de comptabilité nationale pour estimer la distribution du patrimoine, y compris dans sa partie la plus haute — une population difficile à observer directement par enquête classique. Cette approche montre une hausse marquée de la concentration depuis le début des années 1980 (creux historique du XXe siècle), avec une augmentation citée à <span class="stat">+50 %</span> entre 1984 et 2014 par les auteurs eux-mêmes.</p><p>L'Enquête Patrimoine de l'INSEE, à l'inverse, interroge un échantillon de ménages sur la composition déclarée de leur patrimoine. Cette méthode est robuste pour la grande majorité de la population, mais structurellement moins fiable pour capter les patrimoines extrêmes (trop peu de très hauts patrimoines dans l'échantillon, sous-déclaration possible). Elle mesure donc une concentration plus faible et plus stable.</p><p><strong>Ce que cela signifie pour la mesure de Glucksmann</strong> : l'ampleur du problème que la mesure prétend adresser dépend largement de la méthode retenue — un écart du simple au double entre les deux sources. Ce n'est pas une contradiction à trancher arbitrairement mais une divergence méthodologique documentée, qu'il faut assumer explicitement plutôt que de choisir silencieusement la source qui arrange le récit voulu.</p><p>Pour contextualiser la fiscalité actuelle : l'ISF rapportait <span class="stat">4,2 Md€</span> en 2017 (sa dernière année pleine) ; son remplaçant, l'IFI (limité au patrimoine immobilier), rapporte <span class="stat">2,2 Md€</span> en 2024. Les chiffrages du rendement potentiel d'un nouvel impôt ciblant les grandes fortunes (type "taxe Zucman", distinct de la mesure sur les héritages mais souvent débattu avec elle) varient très largement selon la source et les hypothèses retenues — de <span class="stat">2,7 Md€</span> (scénario du Conseil des prélèvements obligatoires) à <span class="stat">20-25 Md€</span> (estimation de Gabriel Zucman et rapport parlementaire de février 2025) — signe que ce chiffrage reste, lui aussi, disputé.</p>
-<div class="label" style="margin-top:32px;">Volet 2 — Repositionnement vs autres candidats</div>
-<p><strong>Marine Le Pen (RN)</strong> Sur les droits de succession : suppression des droits pour les successions modestes/moyennes en ligne directe, sortie de 300 000 € de biens immobiliers de l'assiette de calcul, alignement de l'abattement grands-parents/petits-enfants sur celui parents/enfants, réduction du délai de rappel fiscal de 15 à 10 ans (coût chiffré à 3,8 Md€/an). — Niveau B (synthèse média convergente, pas de citation verbatim datée obtenue ; ces mesures documentées ne portent pas de date récente confirmée pour 2027). Sur le patrimoine : propose un nouvel « impôt sur la fortune financière », distinct de l'IFI actuel qu'elle veut supprimer. Préserve résidence principale et biens professionnels, exonère 75 % des parts de PME/ETI, rendement estimé à ~3 Md€/an. Citation verbatim (interview Europe 1-CNews, Sonia Mabrouk, 16 septembre 2025) : « Avoir une très grosse fortune n'est pas un totem d'immunité » ; « Je pense qu'il n'est pas anormal que ceux qui sont les plus riches participent ». — Niveau A (verbatim, source primaire média, datée).</p>
-<p><strong>Bruno Retailleau (LR)</strong> Position opposée à toute hausse des droits de succession. Citations verbatim (interview officielle, republicains.fr, 26 août 2026) : « Je ne serai pas le président qui augmentera les droits de succession mais celui qui les baissera » ; « Au-delà d'1,8 million, le barème est déjà à 45 %, l'un des taux les plus élevés du monde ! » ; « La transmission est une aspiration profondément humaine (…) c'est l'espérance de toute une vie ». Proposition chiffrée : « choc de transmission » sur 3 ans — donations exonérées jusqu'à 150 000 € pour les moins de 30 ans, jusqu'à 100 000 € pour les moins de 40 ans, délai de rappel fiscal ramené de 15 à 10 ans, extension aux donations immobilières. — Niveau A (verbatim, source primaire officielle, datée).</p>
-<p><strong>Édouard Philippe (Horizons)</strong> Position de « désaccord frontal » avec les propositions de taxation des méga-héritages. Souhaite permettre de transmettre « plus vite et plus tôt », via une hausse « très sensible » des plafonds de donation, défend le maintien du pacte Dutreil pour les entreprises familiales, et refuse explicitement toute nouvelle taxe sur les successions ou le patrimoine. — Niveau B (synthèse convergente de deux médias fiables — LCP, Le JDD —, mais aucune citation verbatim directe et datée trouvée ; à vérifier).</p>
-<p><strong>Marine Tondelier (Les Écologistes)</strong> Propose une contribution supplémentaire de 10 % sur la part des successions dépassant 4 millions d'euros, avec une surtaxe additionnelle de 10 % (soit 20 % cumulés) au-delà de 13 millions d'euros. Prévoit aussi de réduire l'exonération Dutreil de 75 % à 50 % et de supprimer les avantages du démembrement de propriété utilisés en optimisation successorale. Objectif de recettes annoncé : 15 milliards d'euros par an, pour financer la transition écologique. Annonce datée de fin août 2026. — Niveau B (chiffres convergents entre deux sources médias indépendantes, mais pas de citation verbatim de Marine Tondelier elle-même obtenue ; à vérifier).</p>
-<p><strong>Jean-Luc Mélenchon (LFI)</strong> Déclaration historique (Le Grand Jury RTL-Le Figaro-LCI, 9 janvier 2022) : plafond de 12 millions d'euros de patrimoine reçu (cumul de tous les héritages et donations reçus dans une vie), au-delà duquel taxation à 100 % ; la tranche actuelle à 45 % (au-delà de 1 805 678 €) devient une tranche intermédiaire jusqu'à 12 M€. Citation verbatim : « au-delà de 12 millions [d'héritage], je prends tout ». Produit destiné, à l'époque, à financer une allocation d'autonomie de 1 063 €/mois pour étudiants et apprentis. — Niveau A pour cette déclaration (verbatim, datée, source primaire média). Programme 2027 (melenchon2027.fr, via synthèse secondaire) : reconduction d'un plafond d'héritage à 12 M€, rétablissement et renforcement de l'ISF avec un volet climatique, instauration d'une « taxe Zucman » garantissant un taux plancher de 2 % sur le patrimoine des milliardaires. — Niveau B (le texte intégral du programme officiel n'a pas pu être consulté directement — redirection technique — ; ces éléments proviennent d'un site agrégateur tiers résumant le programme).</p>
-<div class="label" style="margin-top:32px;">Volet 3 — Repositionnement vs voisins européens</div>
+    
+    <section class="analyse" id="analyse-complete" aria-labelledby="analyse-titre">
+      <h2 id="analyse-titre">L'analyse complète</h2>
+      <p class="analyse-sub">Quatre volets, un onglet chacun : le récit, puis la comparaison européenne, puis la comparaison entre candidats.</p>
+      <div class="tablist" role="tablist" aria-label="Volets de l'analyse complète">
+        
+        <button class="tab tab-accent" role="tab" id="tab-recit" aria-controls="panel-recit" aria-selected="true" tabindex="0"><span class="tab-num">1</span>Le récit</button>
+        
+        <button class="tab tab-reference" role="tab" id="tab-europe" aria-controls="panel-europe" aria-selected="false" tabindex="-1"><span class="tab-num">2</span>Europe</button>
+        
+        <button class="tab tab-ink" role="tab" id="tab-candidats" aria-controls="panel-candidats" aria-selected="false" tabindex="-1"><span class="tab-num">3</span>Candidats</button>
+        
+        <button class="tab tab-muted" role="tab" id="tab-sources" aria-controls="panel-sources" aria-selected="false" tabindex="-1"><span class="tab-num">4</span>Sources & limites</button>
+        
+      </div>
+      
+      <div class="tabpanel panel-accent" role="tabpanel" id="panel-recit" aria-labelledby="tab-recit">
+        <div class="panel-head">
+          <h3>Volet 1 — Le récit complet</h3>
+          
+        </div>
+        
+        
+        <div class="panel-body"><p>La méthode Piketty et al. (reprise par WID.world et la Banque de France) combine données fiscales, successorales et de comptabilité nationale pour estimer la distribution du patrimoine, y compris dans sa partie la plus haute — une population difficile à observer directement par enquête classique. Cette approche montre une hausse marquée de la concentration depuis le début des années 1980 (creux historique du XXe siècle), avec une augmentation citée à <span class="stat">+50 %</span> entre 1984 et 2014 par les auteurs eux-mêmes.</p><p>L'Enquête Patrimoine de l'INSEE, à l'inverse, interroge un échantillon de ménages sur la composition déclarée de leur patrimoine. Cette méthode est robuste pour la grande majorité de la population, mais structurellement moins fiable pour capter les patrimoines extrêmes (trop peu de très hauts patrimoines dans l'échantillon, sous-déclaration possible). Elle mesure donc une concentration plus faible et plus stable.</p><p><strong>Ce que cela signifie pour la mesure de Glucksmann</strong> : l'ampleur du problème que la mesure prétend adresser dépend largement de la méthode retenue — un écart du simple au double entre les deux sources. Ce n'est pas une contradiction à trancher arbitrairement mais une divergence méthodologique documentée, qu'il faut assumer explicitement plutôt que de choisir silencieusement la source qui arrange le récit voulu.</p><p>Pour contextualiser la fiscalité actuelle : l'ISF rapportait <span class="stat">4,2 Md€</span> en 2017 (sa dernière année pleine) ; son remplaçant, l'IFI (limité au patrimoine immobilier), rapporte <span class="stat">2,2 Md€</span> en 2024. Les chiffrages du rendement potentiel d'un nouvel impôt ciblant les grandes fortunes (type "taxe Zucman", distinct de la mesure sur les héritages mais souvent débattu avec elle) varient très largement selon la source et les hypothèses retenues — de <span class="stat">2,7 Md€</span> (scénario du Conseil des prélèvements obligatoires) à <span class="stat">20-25 Md€</span> (estimation de Gabriel Zucman et rapport parlementaire de février 2025) — signe que ce chiffrage reste, lui aussi, disputé.</p></div>
+      </div>
+      
+      <div class="tabpanel panel-reference" role="tabpanel" id="panel-europe" aria-labelledby="tab-europe" data-later>
+        <div class="panel-head">
+          <h3>Volet 2 — Comparaison européenne</h3>
+          
+        </div>
+        
+        
+        <div class="panel-body">
 <p><strong>Allemagne</strong> — Droits de succession (Erbschaftsteuer), barème par classe d'héritier (art. 16 et 19 ErbStG) : conjoint (abattement 500 000 €), enfants (400 000 €), petits-enfants (200 000 €), avec un barème progressif de 7 % (jusqu'à 75 000 €) à 30 % (au-delà de 26 M€) en classe I. Taux maximal donc nettement inférieur au taux français (45 %). — Niveau B (cabinet d'avocats spécialisé, chiffres corroborés par une seconde source indépendante — La Finance pour Tous — qui confirme abattements et plafond à 30 %).</p>
 <p><strong>Espagne</strong> — Système régionalisé et à deux étages : - Droits de succession (Impuesto sobre Sucesiones y Donaciones) : taux marginal national maximal de 34 % au-delà de 797 555 €, mais les communautés autonomes appliquent leurs propres réductions — à Madrid, bonification pouvant atteindre 99 % pour conjoint et enfants, ce qui ramène l'impôt effectif proche de zéro pour les héritiers directs dans cette région. - Impôt sur la fortune (Impuesto sobre el Patrimonio) : seuil national d'exonération de 700 000 € par personne (+300 000 € pour la résidence principale), barème progressif d'environ 0,2 % à 3,5 %, mais fortement modulé par région (bonification de 100 % à Madrid ; seuil abaissé à 500 000 € en Catalogne). Depuis 2022, un impôt national de rattrapage — l'Impuesto Temporal de Solidaridad a las Grandes Fortunas — cible les patrimoines nets supérieurs à ~3,7 M€ avec des taux de 1,7 %, 2,1 % et 3,5 %, précisément pour empêcher les grandes fortunes d'échapper totalement à l'impôt via les régions les plus clémentes. — Niveau B (sites spécialisés en fiscalité des expatriés, chiffres convergents entre deux sources).</p>
 <p><strong>Suède (contre-exemple)</strong> — A aboli ses droits de succession et de donation en 2004-2005, puis son impôt annuel sur la fortune en 2007. Juste avant sa suppression, cet impôt sur la fortune ne rapportait que 0,16 % du PIB (soit 0,3 % des recettes fiscales totales) en 2006. L'abolition des droits de succession avait été votée à l'unanimité, portée à l'origine par une coalition de gauche (sociaux-démocrates, écologistes, socialistes). — Niveau B pour les dates et le chiffre de rendement (deux sources indépendantes convergentes) ; Niveau C pour les interprétations causales sur les effets économiques positifs de la suppression (attribuées principalement à une source à ligne éditoriale libertarienne, à recouper).</p>
 <p><strong>Point de comparaison européen/OCDE</strong> — Selon le rapport de l'OCDE « Inheritance Taxation in OECD Countries » (2021, données 2019, relayées par un document officiel du Conseil d'orientation des retraites), les droits de succession représentent en moyenne environ 0,5 % des recettes fiscales totales dans les pays de l'OCDE-24. Seuls quatre pays dépassent 1 % des recettes fiscales totales : la Belgique, la Corée du Sud, la France et le Japon — la France se classant ainsi au 3ᵉ rang mondial. Neuf pays se situent sous 0,25 %. Plusieurs pays ont purement et simplement aboli leurs droits de succession : Suède, Norvège, Autriche, Israël, Canada, Australie. — Niveau B (chiffre OCDE relayé par une institution publique française et corroboré par un second média spécialisé). Note méthodologique importante : ces données OCDE mesurent la part des droits de succession dans les recettes fiscales totales, et non un pourcentage du PIB — aucune donnée fiable en % du PIB par pays n'a pu être obtenue pour cette comparaison.</p>
-<div class="label" style="margin-top:32px;">Sources (volets 2 et 3)</div>
+</div>
+      </div>
+      
+      <div class="tabpanel panel-ink" role="tabpanel" id="panel-candidats" aria-labelledby="tab-candidats" data-later>
+        <div class="panel-head">
+          <h3>Volet 3 — Comparaison entre candidats</h3>
+          
+        </div>
+        
+        
+        <div class="panel-body">
+<article class="cand-card"><img class="cand-icon" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNjAgMTYwIj48cmVjdCB3aWR0aD0iMTYwIiBoZWlnaHQ9IjE2MCIgZmlsbD0iI0UxRTBEOSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTQlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiBmb250LWZhbWlseT0iR2VvcmdpYSwgc2VyaWYiIGZvbnQtd2VpZ2h0PSI3MDAiIGZvbnQtc2l6ZT0iNjQiIGZpbGw9IiM1MjUxNEUiPk1MPC90ZXh0Pjwvc3ZnPg==" width="56" height="56" alt="" loading="lazy"><div class="cand-body"><p><strong>Marine Le Pen (RN)</strong> Sur les droits de succession : suppression des droits pour les successions modestes/moyennes en ligne directe, sortie de 300 000 € de biens immobiliers de l'assiette de calcul, alignement de l'abattement grands-parents/petits-enfants sur celui parents/enfants, réduction du délai de rappel fiscal de 15 à 10 ans (coût chiffré à 3,8 Md€/an). — Niveau B (synthèse média convergente, pas de citation verbatim datée obtenue ; ces mesures documentées ne portent pas de date récente confirmée pour 2027). Sur le patrimoine : propose un nouvel « impôt sur la fortune financière », distinct de l'IFI actuel qu'elle veut supprimer. Préserve résidence principale et biens professionnels, exonère 75 % des parts de PME/ETI, rendement estimé à ~3 Md€/an. Citation verbatim (interview Europe 1-CNews, Sonia Mabrouk, 16 septembre 2025) : « Avoir une très grosse fortune n'est pas un totem d'immunité » ; « Je pense qu'il n'est pas anormal que ceux qui sont les plus riches participent ». — Niveau A (verbatim, source primaire média, datée).</p></div></article>
+<article class="cand-card"><img class="cand-icon" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNjAgMTYwIj48cmVjdCB3aWR0aD0iMTYwIiBoZWlnaHQ9IjE2MCIgZmlsbD0iI0UxRTBEOSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTQlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiBmb250LWZhbWlseT0iR2VvcmdpYSwgc2VyaWYiIGZvbnQtd2VpZ2h0PSI3MDAiIGZvbnQtc2l6ZT0iNjQiIGZpbGw9IiM1MjUxNEUiPkJSPC90ZXh0Pjwvc3ZnPg==" width="56" height="56" alt="" loading="lazy"><div class="cand-body"><p><strong>Bruno Retailleau (LR)</strong> Position opposée à toute hausse des droits de succession. Citations verbatim (interview officielle, republicains.fr, 26 août 2026) : « Je ne serai pas le président qui augmentera les droits de succession mais celui qui les baissera » ; « Au-delà d'1,8 million, le barème est déjà à 45 %, l'un des taux les plus élevés du monde ! » ; « La transmission est une aspiration profondément humaine (…) c'est l'espérance de toute une vie ». Proposition chiffrée : « choc de transmission » sur 3 ans — donations exonérées jusqu'à 150 000 € pour les moins de 30 ans, jusqu'à 100 000 € pour les moins de 40 ans, délai de rappel fiscal ramené de 15 à 10 ans, extension aux donations immobilières. — Niveau A (verbatim, source primaire officielle, datée).</p></div></article>
+<article class="cand-card"><img class="cand-icon" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNjAgMTYwIj48cmVjdCB3aWR0aD0iMTYwIiBoZWlnaHQ9IjE2MCIgZmlsbD0iI0UxRTBEOSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTQlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiBmb250LWZhbWlseT0iR2VvcmdpYSwgc2VyaWYiIGZvbnQtd2VpZ2h0PSI3MDAiIGZvbnQtc2l6ZT0iNjQiIGZpbGw9IiM1MjUxNEUiPsOJUDwvdGV4dD48L3N2Zz4=" width="56" height="56" alt="" loading="lazy"><div class="cand-body"><p><strong>Édouard Philippe (Horizons)</strong> Position de « désaccord frontal » avec les propositions de taxation des méga-héritages. Souhaite permettre de transmettre « plus vite et plus tôt », via une hausse « très sensible » des plafonds de donation, défend le maintien du pacte Dutreil pour les entreprises familiales, et refuse explicitement toute nouvelle taxe sur les successions ou le patrimoine. — Niveau B (synthèse convergente de deux médias fiables — LCP, Le JDD —, mais aucune citation verbatim directe et datée trouvée ; à vérifier).</p></div></article>
+<article class="cand-card"><img class="cand-icon" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNjAgMTYwIj48cmVjdCB3aWR0aD0iMTYwIiBoZWlnaHQ9IjE2MCIgZmlsbD0iI0UxRTBEOSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTQlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiBmb250LWZhbWlseT0iR2VvcmdpYSwgc2VyaWYiIGZvbnQtd2VpZ2h0PSI3MDAiIGZvbnQtc2l6ZT0iNjQiIGZpbGw9IiM1MjUxNEUiPk1UPC90ZXh0Pjwvc3ZnPg==" width="56" height="56" alt="" loading="lazy"><div class="cand-body"><p><strong>Marine Tondelier (Les Écologistes)</strong> Propose une contribution supplémentaire de 10 % sur la part des successions dépassant 4 millions d'euros, avec une surtaxe additionnelle de 10 % (soit 20 % cumulés) au-delà de 13 millions d'euros. Prévoit aussi de réduire l'exonération Dutreil de 75 % à 50 % et de supprimer les avantages du démembrement de propriété utilisés en optimisation successorale. Objectif de recettes annoncé : 15 milliards d'euros par an, pour financer la transition écologique. Annonce datée de fin août 2026. — Niveau B (chiffres convergents entre deux sources médias indépendantes, mais pas de citation verbatim de Marine Tondelier elle-même obtenue ; à vérifier).</p></div></article>
+<article class="cand-card"><img class="cand-icon" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNjAgMTYwIj48cmVjdCB3aWR0aD0iMTYwIiBoZWlnaHQ9IjE2MCIgZmlsbD0iI0UxRTBEOSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTQlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiBmb250LWZhbWlseT0iR2VvcmdpYSwgc2VyaWYiIGZvbnQtd2VpZ2h0PSI3MDAiIGZvbnQtc2l6ZT0iNjQiIGZpbGw9IiM1MjUxNEUiPkpNPC90ZXh0Pjwvc3ZnPg==" width="56" height="56" alt="" loading="lazy"><div class="cand-body"><p><strong>Jean-Luc Mélenchon (LFI)</strong> Déclaration historique (Le Grand Jury RTL-Le Figaro-LCI, 9 janvier 2022) : plafond de 12 millions d'euros de patrimoine reçu (cumul de tous les héritages et donations reçus dans une vie), au-delà duquel taxation à 100 % ; la tranche actuelle à 45 % (au-delà de 1 805 678 €) devient une tranche intermédiaire jusqu'à 12 M€. Citation verbatim : « au-delà de 12 millions [d'héritage], je prends tout ». Produit destiné, à l'époque, à financer une allocation d'autonomie de 1 063 €/mois pour étudiants et apprentis. — Niveau A pour cette déclaration (verbatim, datée, source primaire média). Programme 2027 (melenchon2027.fr, via synthèse secondaire) : reconduction d'un plafond d'héritage à 12 M€, rétablissement et renforcement de l'ISF avec un volet climatique, instauration d'une « taxe Zucman » garantissant un taux plancher de 2 % sur le patrimoine des milliardaires. — Niveau B (le texte intégral du programme officiel n'a pas pu être consulté directement — redirection technique — ; ces éléments proviennent d'un site agrégateur tiers résumant le programme).</p></div></article>
+</div>
+      </div>
+      
+      <div class="tabpanel panel-muted" role="tabpanel" id="panel-sources" aria-labelledby="tab-sources" data-later>
+        <div class="panel-head">
+          <h3>Sources & limites</h3>
+          
+        </div>
+        
+        
+        <div class="panel-body"><h3>Sources des volets 2 et 3</h3>
 <p>(Toutes consultées le 29 septembre 2026) - <a href="https://www.lejdd.fr/politique/heritage-ce-que-proposent-les-candidats-a-la-presidentielle-183564">Le JDD — Héritage : ce que proposent les candidats à la présidentielle</a> - <a href="https://lcp.fr/actualites/heritages-et-droits-de-succession-que-proposent-les-candidats-a-l-election">LCP — Héritages et droits de succession : que proposent les candidats</a> - <a href="https://republicains.fr/actualites/2026/08/26/je-serai-le-president-qui-baissera-les-impots-de-succession/">Les Républicains — « Je serai le président qui baissera les impôts de succession » (Bruno Retailleau, 26/08/2026)</a> - <a href="https://contrepoints.org/impot-sur-les-successions-bruno-retailleau-releve-le-niveau/">Contrepoints — Impôt sur les successions : Bruno Retailleau relève le niveau</a> - <a href="https://lessurligneurs.eu/jean-luc-melenchon-et-son-impot-sur-les-successions-au-dela-de-12-millions-de-patrimoine-herite-je-prends-tout/">Les Surligneurs — Jean-Luc Mélenchon et son impôt sur les successions : « au-delà de 12 millions, je prends tout »</a> - <a href="https://votons-2027.fr/candidats/melenchon/programme/economie">Votons 2027 — Programme de Jean-Luc Mélenchon (LFI) sur l'économie</a> - <a href="https://www.europe1.fr/politique/avoir-une-tres-grosse-fortune-nest-pas-un-totem-dimmunite-marine-le-pen-plaide-pour-linstauration-dun-impot-sur-la-fortune-financiere-772801">Europe 1 — « Avoir une très grosse fortune n'est pas un totem d'immunité » : Marine Le Pen plaide pour un impôt sur la fortune financière</a> - <a href="https://www.cnews.fr/france/2025-09-21/budget-2026-quest-ce-que-limpot-sur-la-fortune-financiere-que-marine-le-pen">CNews — Budget 2026 : qu'est-ce que l'impôt sur la fortune financière que Marine Le Pen…</a> - <a href="https://www.lafinancepourtous.com/decryptages/finance-perso/revenus-et-fiscalite/panorama-des-regimes-fiscaux-applicables-aux-successions/">La Finance pour Tous — Panorama des régimes fiscaux applicables aux successions en Europe</a> - <a href="https://kohenavocats.com/erbschaftsteuer-heritier-bien-allemagne-calculer-droits-double-imposition/">Kohen Avocats — Erbschaftsteuer : héritier d'un bien en Allemagne, comment calculer les droits</a> - <a href="https://contrepoints.org/le-pays-de-gauche-qui-a-supprime-les-impots-sur-la-fortune-et-sur-les-successions/">Contrepoints — Le pays de gauche qui a supprimé les impôts sur la fortune et sur les successions (Suède)</a> - <a href="https://www.zetik.com/news/article/story_id-p008-172294">Zetik — Sweden Abolished Wealth Tax in 2007 After Revenue Fell to 0.16% of GDP</a> - <a href="https://fr.wikipedia.org/wiki/Imp%C3%B4t_sur_les_successions">Wikipédia FR — Impôt sur les successions</a> - <a href="https://voguimmo.com/conseils-investissement/impot-fortune-espagne-regles-baremes-conseils">Voguimmo — Impôt sur la fortune en Espagne : règles, barèmes et conseils 2025</a> - <a href="https://www.idealista.com/en/news/financial-advice-in-spain/2026/04/07/888877-inheritance-tax-in-spain-2026-guide-for-foreigners-and-expats">Idealista — Inheritance tax in Spain: 2026 guide for foreigners and expats</a> - <a href="https://www.cor-retraites.fr/sites/default/files/2021-12/Doc.09_Imp%C3%B4t%20succession_OCDE.pdf">Conseil d'Orientation des Retraites — L'impôt sur les successions dans les pays de l'OCDE (synthèse du rapport OCDE 2021)</a> - <a href="https://www.selexium.com/actualites/impot-sur-les-successions-la-france-dans-le-top-3-des-pays-les-plus-gourmands/">Selexium — Impôt sur les successions : la France dans le top 3 des pays les plus « gourmands »</a></p>
-<div class="label" style="margin-top:32px;">Limites / incertitudes</div>
-<ul><li><strong>Philippe</strong> : aucune citation verbatim directe et datée trouvée ; position reconstituée à partir de synthèses médiatiques convergentes (LCP, Le JDD).</li><li><strong>Tondelier</strong> : chiffres (10 %/4M€, +10 %/13M€, 15 Md€) convergents entre deux sources médias mais sans citation verbatim de la candidate elle-même ; l'article France Info dédié n'a pas pu être consulté directement (accès robots.txt bloqué).</li><li><strong>Le Pen (succession)</strong> : les chiffres classiques (300 000 €, délai 15→10 ans, coût 3,8 Md€/an) ne portent pas de date récente confirmée et pourraient dater du programme 2022 plutôt que d'une actualisation 2027 ; seule la proposition d'« impôt sur la fortune financière » est fraîchement datée (sept. 2025).</li><li><strong>Mélenchon</strong> : la citation « je prends tout » date de janvier 2022 ; sa reconduction dans le programme 2027 n'a pu être vérifiée que via un site agrégateur tiers.</li><li><strong>Allemagne</strong> : source principale = cabinet d'avocats spécialisé, même si corroborée par une seconde source ; le statut actuel de l'impôt sur la fortune allemand (suspendu depuis 1997) n'a pas été revérifié dans cette recherche.</li><li><strong>Espagne</strong> : sources = sites spécialisés en fiscalité des expatriés, pas de source gouvernementale espagnole (Agencia Tributaria) consultée directement.</li><li><strong>Suède</strong> : les dates d'abolition et le chiffre de rendement (0,16 % du PIB) sont corroborés par deux sources indépendantes ; l'interprétation des effets économiques positifs de la suppression provient essentiellement d'une source à ligne éditoriale libertarienne (Contrepoints) et doit être présentée avec prudence si reprise dans la carte.</li><li><strong>Comparaison OCDE</strong> : les seules données obtenues portent sur la part des droits de succession dans les recettes fiscales totales (pas en % du PIB), les chiffres proviennent d'une synthèse publique française (COR) et d'un média spécialisé, le rapport intégral de l'OCDE n'a pas pu être consulté directement (robots.txt bloqué).</li></ul>
-    </div>
+<h3>Limites et incertitudes</h3>
+<ul><li><strong>Philippe</strong> : aucune citation verbatim directe et datée trouvée ; position reconstituée à partir de synthèses médiatiques convergentes (LCP, Le JDD).</li><li><strong>Tondelier</strong> : chiffres (10 %/4M€, +10 %/13M€, 15 Md€) convergents entre deux sources médias mais sans citation verbatim de la candidate elle-même ; l'article France Info dédié n'a pas pu être consulté directement (accès robots.txt bloqué).</li><li><strong>Le Pen (succession)</strong> : les chiffres classiques (300 000 €, délai 15→10 ans, coût 3,8 Md€/an) ne portent pas de date récente confirmée et pourraient dater du programme 2022 plutôt que d'une actualisation 2027 ; seule la proposition d'« impôt sur la fortune financière » est fraîchement datée (sept. 2025).</li><li><strong>Mélenchon</strong> : la citation « je prends tout » date de janvier 2022 ; sa reconduction dans le programme 2027 n'a pu être vérifiée que via un site agrégateur tiers.</li><li><strong>Allemagne</strong> : source principale = cabinet d'avocats spécialisé, même si corroborée par une seconde source ; le statut actuel de l'impôt sur la fortune allemand (suspendu depuis 1997) n'a pas été revérifié dans cette recherche.</li><li><strong>Espagne</strong> : sources = sites spécialisés en fiscalité des expatriés, pas de source gouvernementale espagnole (Agencia Tributaria) consultée directement.</li><li><strong>Suède</strong> : les dates d'abolition et le chiffre de rendement (0,16 % du PIB) sont corroborés par deux sources indépendantes ; l'interprétation des effets économiques positifs de la suppression provient essentiellement d'une source à ligne éditoriale libertarienne (Contrepoints) et doit être présentée avec prudence si reprise dans la carte.</li><li><strong>Comparaison OCDE</strong> : les seules données obtenues portent sur la part des droits de succession dans les recettes fiscales totales (pas en % du PIB), les chiffres proviennent d'une synthèse publique française (COR) et d'un média spécialisé, le rapport intégral de l'OCDE n'a pas pu être consulté directement (robots.txt bloqué).</li></ul></div>
+      </div>
+      
+    </section>
+    <script>
+    (function () {
+      var root = document.getElementById('analyse-complete');
+      if (!root) return;
+      var tabs = Array.prototype.slice.call(root.querySelectorAll('[role=tab]'));
+      var panels = tabs.map(function (t) { return document.getElementById(t.getAttribute('aria-controls')); });
+      document.documentElement.classList.add('js');
+      function show(i, focus, push) {
+        tabs.forEach(function (t, j) {
+          var on = i === j;
+          t.setAttribute('aria-selected', on ? 'true' : 'false');
+          t.tabIndex = on ? 0 : -1;
+          panels[j].hidden = !on;
+        });
+        if (focus) tabs[i].focus();
+        if (push && history.replaceState) history.replaceState(null, '', '#' + tabs[i].id.replace('tab-', 'volet-'));
+      }
+      tabs.forEach(function (t, i) {
+        t.addEventListener('click', function () { show(i, false, true); });
+        t.addEventListener('keydown', function (e) {
+          var k = e.key, n = tabs.length;
+          if (k === 'ArrowRight') { e.preventDefault(); show((i + 1) % n, true, true); }
+          else if (k === 'ArrowLeft') { e.preventDefault(); show((i - 1 + n) % n, true, true); }
+          else if (k === 'Home') { e.preventDefault(); show(0, true, true); }
+          else if (k === 'End') { e.preventDefault(); show(n - 1, true, true); }
+        });
+      });
+      var start = 0, h = (location.hash || '').replace('#volet-', '');
+      tabs.forEach(function (t, i) { if (t.id === 'tab-' + h) start = i; });
+      show(start, false, false);
+      if (start > 0) root.scrollIntoView();
+    })();
+    </script>
+    
 
     <div class="sourcing-box">
       <h3>Sources &amp; méthodologie</h3>
@@ -361,6 +574,7 @@
 
     <div class="footer">
       Magnitude — newsletter data &amp; politique, apartisane. Publié le 24 septembre 2026.
+      
     </div>
   </div>
 </body>

@@ -52,6 +52,17 @@ jobs:
         # limitation described above and need an explicit copy too.
         run: cp src/charte-ton-style.html src/charte-selection-sujets.html dist/
 
+      - name: Copy stable public assets (candidate icons, logo)
+        # Observable Framework copies the files it detects in .md pages to
+        # hashed paths (/_file/candidats/x.<hash>.png), so /candidats/x.png
+        # would 404. The raw .html pages (numero-0, analyses), the favicon
+        # and the newsletter emails (which cannot know the hash) reference
+        # the stable URLs https://magnitude.pub/candidats/<slug>.png and
+        # /magnitude-icon.png : copy them explicitly, same reason as above.
+        run: |
+          cp -r src/candidats dist/candidats
+          cp src/magnitude-icon.png dist/magnitude-icon.png
+
       - name: Copy CNAME (custom domain magnitude.pub)
         run: cp CNAME dist/CNAME
 

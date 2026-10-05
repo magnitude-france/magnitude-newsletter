@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAEYklEQVR42u2bP4gcVRjAf983b2Zvd2/vkjNBk2AELSIKEhC8gFEsFEljYSMIWkW7dDaS1k7BJk0aJYUKWgUFESw0Imgj2CikPISESMzdXm72dv68z2Jm/9wmJtk7k7vdnQfD7rzHY+b7ff/ev5HFh58yZrgoM14qABWACkAFoAJQAagAzG5xE6s52XpvBjZLAOJMtwjsxIjUxoYwcQAMEOCZ/TGRGt4Ep8aVTsiVTkgo40GYKACBGO004PWjq5w5do04VwQI1bjaCXnvtyOsJQ43BgSdRAs4XE/ITYgzpeuF9VRZjHIWQ09uMxADUpN+IBRABHIDv40oOJFpUO6xrhoHTKoLqMwwAAHiVPAmqBRJz8qBTivKpxuASiH8yUdj3jn+D5kXzKAeen5cafLp7/uRabeAzAtvPn2DU0+sc2NTCQSiwHhyqcvFywusrAf/K4S95wICqRfWusrNRFEBp8ZGKsh9iA17MgsIEEjhEiqD/9V0eFoA9LRpDKawDzL17TqAjUT6D9eRuqkeCKnAza5w5qU2777QplMKXa8Zn/0yz4ff73vglvBAARjgFN56bp1jRxKybiGti4y3l29y7tIC7c0AmVYAvTS3kQg+EeLSAhqlC8i0u8CwK+hQalPZvSB4XwAEWmjabKB177e3aDlxAESgHUOWDU3SDaIImnNTDkAFOl1440XPqROerFsAEQcXvgv4+Q/BBVMKQARyX2j5o9M5jzxm0C1DfwuOLsHL7zvCYAfLN3vdAswgdNBNIVst3MAbRHnxq7r34oDbicb/C4IIuADMgxh7zux3BKAX3dPU+qYsCFEIOZNX3LjCZ5mhKhxYcuANUSHLjOtrOS6Q6QbgDcJQ+OKDQywfr5N2fGEFNeXsx3/zycU1Wo3JmmHrONpPU+PwQ45XlhvsayoH9zuWFgIOHnK8eqJBns3AeoA32OgYPjPS8rLEiLu2p9LbfV0P0HKoO3zpBAq/awsiFYBJHwh5v/XK/WDmd0u7DX6H48hw3ejOrpX3vTo/2j5UJ7sBoNVUmBOCrJR2XqlFAla8/HwdtAG1pHzbJjSi8hyPQSMytO6Zl8IAteZpRtY/51NzRivyZL7YHgsDo5sNRHViNJ0nMSUQvyMI9wzADKJQ+OtaxrkvV3n+2TrppkdE8EGXC9+0masLqxvCua+V1056ss3Sz2pw/ltFtdD2+Z8WOG3QTQQQ5mqez39t0UmVKDC++nORA/WM1Gt/a+yHlSbX44CG81y61uLxVtJ/r1pgXG7XuNoJxz4nJON+L2AG8aYnCmWLyZtBfU7wBvFmMSmSYpyMecg8NGuFhuNEcDqYT5gV7Y3IEKCTSX+VqPdymRfmnEeBxBcbpoEMzgylXqipH3v3SLbzwYTqVp8v5ez76W3by1Wh3rqB9Zy57Lyl/2h7r78NnnW7gdp2TohsOwjeYhl3ax8JgqOdjTu0j/Q37txepcEKQAWgAlABqABUACoAFYAKQAWgAlABuEv5F/eCyZm5KWvfAAAAAElFTkSuQmCC">
 <title>Magnitude — Numéro 0</title>
 <style>
   :root {
@@ -178,6 +179,28 @@
   }
   .mg-back:hover { color: var(--accent); }
   .mg-back svg { width: 14px; height: 14px; flex-shrink: 0; }
+  /* ---- Alignement sur le design system de la page d'accueil -------------- */
+  :root { --reference: #0E659B; --amber-pale: #FEF3C7; --blue-pale: #DCEBF5; --navy: #0F172A; }
+  .mg-back { max-width: none; background: var(--navy); color: #CBD5E1; padding: 20px max(24px, calc((100% - 720px) / 2)) 0; }
+  .mg-back:hover { color: #FBBF24; }
+  header.intro { max-width: none; background: var(--navy); color: #E2E8F0; padding: 28px max(24px, calc((100% - 720px) / 2)) 56px; margin-bottom: 36px; }
+  header.intro h1 { color: #fff; }
+  header.intro p.lede { color: #CBD5E1; }
+  header.intro .scroll-hint { color: #94A3B8; }
+  .brand { color: #fff; display: inline-flex; align-items: center; gap: 10px; }
+  .brand:before { content: ""; width: 34px; height: 34px; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect x='5' y='25' width='4.6' height='9' rx='1.6' fill='%23FDE68A'/%3E%3Crect x='11.6' y='21' width='4.6' height='13' rx='1.6' fill='%23FBBF24'/%3E%3Crect x='18.2' y='16' width='4.6' height='18' rx='1.6' fill='%23F59E0B'/%3E%3Crect x='24.8' y='11' width='4.6' height='23' rx='1.6' fill='%23D97706'/%3E%3Crect x='31.4' y='5' width='4.6' height='29' rx='1.6' fill='%23B45309'/%3E%3C/svg%3E") center/contain no-repeat; }
+  section.card { background: #fff; border-radius: 16px; border-top: 6px solid var(--accent); }
+  section.card:nth-of-type(3n+2) { border-top-color: var(--reference); }
+  section.card:nth-of-type(3n) { border-top-color: var(--navy); }
+  .card-tag { border-radius: 999px; background: var(--amber-pale); color: #B45309; padding: 3px 11px; }
+  section.card img.chart-thumb { border-radius: 12px; }
+  .card-quote { background: var(--amber-pale); border-left: 0; border-radius: 12px; padding: 14px 16px; }
+  .decl-badge { border-radius: 999px; padding: 2px 9px; }
+  a.deep-dive-link { color: #B45309; }
+  .card-who { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; }
+  .card-who .card-index, .card-who .card-tag { margin-bottom: 0; }
+  .card-icon { width: 64px; height: 64px; border-radius: 50%; flex: 0 0 auto; display: block; box-shadow: 0 0 0 3px var(--amber-pale); }
+  .card-name { font-family: Georgia, "Times New Roman", serif; font-size: 17px; font-weight: 700; margin: 2px 0 6px; color: var(--ink); }
 </style>
 </head>
 <body>
@@ -197,8 +220,14 @@
   <main>
     
     <section class="card " id="carte-philippe-fiscalite">
-      <div class="card-index">Carte 1 / 6</div>
-      <div class="card-tag">Centre-droit — Horizons</div>
+      <div class="card-who">
+        <img class="card-icon" src="/candidats/philippe.png" width="64" height="64" alt="Portrait stylisé de Édouard Philippe">
+        <div>
+          <div class="card-index">Carte 1 / 6</div>
+          <div class="card-name">Édouard Philippe</div>
+          <div class="card-tag">Centre-droit — Horizons</div>
+        </div>
+      </div>
       <a href="reports/carte_03_philippe_fiscalite.html" style="color:inherit; text-decoration:none;"><h2>Philippe propose un « deal fiscal » aux entreprises — où en sont les impôts de production ?</h2></a>
       <p class="message">Édouard Philippe (Horizons) propose de baisser les impôts de production en échange d'une baisse des aides aux entreprises. Ces impôts pèsent 4,4 % du PIB en France, près de deux fois la moyenne européenne (2,4 %).</p>
       
@@ -217,8 +246,14 @@
     </section>
     
     <section class="card " id="carte-glucksmann-patrimoine">
-      <div class="card-index">Carte 2 / 6</div>
-      <div class="card-tag">Centre-gauche — Place Publique</div>
+      <div class="card-who">
+        <img class="card-icon" src="/candidats/glucksmann.png" width="64" height="64" alt="Portrait stylisé de Raphaël Glucksmann">
+        <div>
+          <div class="card-index">Carte 2 / 6</div>
+          <div class="card-name">Raphaël Glucksmann</div>
+          <div class="card-tag">Centre-gauche — Place Publique</div>
+        </div>
+      </div>
       <a href="reports/carte_04_glucksmann_patrimoine.html" style="color:inherit; text-decoration:none;"><h2>Glucksmann veut taxer les « méga-héritages » — la concentration du patrimoine en 3 chiffres</h2></a>
       <p class="message">Raphaël Glucksmann (Place Publique) veut taxer davantage les « méga-héritages » pour augmenter le salaire net. Combien de patrimoine le 1 % le plus riche détient-il ? Deux méthodes de mesure, deux trajectoires — la carte assume la divergence.</p>
       
@@ -237,8 +272,14 @@
     </section>
     
     <section class="card " id="carte-retailleau-referendum">
-      <div class="card-index">Carte 3 / 6</div>
-      <div class="card-tag">Droite — LR</div>
+      <div class="card-who">
+        <img class="card-icon" src="/candidats/retailleau.png" width="64" height="64" alt="Portrait stylisé de Bruno Retailleau">
+        <div>
+          <div class="card-index">Carte 3 / 6</div>
+          <div class="card-name">Bruno Retailleau</div>
+          <div class="card-tag">Droite — LR</div>
+        </div>
+      </div>
       <a href="reports/carte_02_retailleau_referendum.html" style="color:inherit; text-decoration:none;"><h2>Retailleau veut élargir le référendum — la France n'en a pas organisé depuis 21 ans</h2></a>
       <p class="message">Bruno Retailleau (LR) veut élargir le champ du référendum. La France a organisé 10 référendums nationaux en 68 ans de Ve République — aucun depuis 2005.</p>
       
@@ -257,8 +298,14 @@
     </section>
     
     <section class="card " id="carte-tondelier-climat">
-      <div class="card-index">Carte 4 / 6</div>
-      <div class="card-tag">Gauche écologiste — Les Écologistes</div>
+      <div class="card-who">
+        <img class="card-icon" src="/candidats/tondelier.png" width="64" height="64" alt="Portrait stylisé de Marine Tondelier">
+        <div>
+          <div class="card-index">Carte 4 / 6</div>
+          <div class="card-name">Marine Tondelier</div>
+          <div class="card-tag">Gauche écologiste — Les Écologistes</div>
+        </div>
+      </div>
       <a href="reports/carte_05_tondelier_climat.html" style="color:inherit; text-decoration:none;"><h2>Tondelier veut surtaxer les plus gros héritages pour la transition — l'ampleur du décrochage de rythme</h2></a>
       <p class="message">Marine Tondelier (Les Écologistes) veut financer la transition climatique par une surtaxe sur les 1 % d'héritages les plus élevés. Les émissions françaises baissent, mais plus assez vite pour 2030.</p>
       
@@ -277,8 +324,14 @@
     </section>
     
     <section class="card " id="carte-le-pen-logement">
-      <div class="card-index">Carte 5 / 6</div>
-      <div class="card-tag">Extrême-droite — RN</div>
+      <div class="card-who">
+        <img class="card-icon" src="/candidats/le-pen.png" width="64" height="64" alt="Portrait stylisé de Marine Le Pen">
+        <div>
+          <div class="card-index">Carte 5 / 6</div>
+          <div class="card-name">Marine Le Pen</div>
+          <div class="card-tag">Extrême-droite — RN</div>
+        </div>
+      </div>
       <a href="reports/carte_01_le_pen_logement.html" style="color:inherit; text-decoration:none;"><h2>Le Pen veut faciliter l'achat d'un premier logement — le vrai décrochage est ailleurs</h2></a>
       <p class="message">Marine Le Pen (RN) veut relancer l'accession à la propriété — mais le vrai obstacle des 20 dernières années, c'est l'écart entre les prix et les revenus, pas l'accès au crédit.</p>
       
@@ -297,8 +350,14 @@
     </section>
     
     <section class="card " id="carte-melenchon-confiance">
-      <div class="card-index">Carte 6 / 6</div>
-      <div class="card-tag">Extrême-gauche — LFI</div>
+      <div class="card-who">
+        <img class="card-icon" src="/candidats/melenchon.png" width="64" height="64" alt="Portrait stylisé de Jean-Luc Mélenchon">
+        <div>
+          <div class="card-index">Carte 6 / 6</div>
+          <div class="card-name">Jean-Luc Mélenchon</div>
+          <div class="card-tag">Extrême-gauche — LFI</div>
+        </div>
+      </div>
       <a href="reports/carte_06_melenchon_confiance.html" style="color:inherit; text-decoration:none;"><h2>Mélenchon veut une VIe République — la confiance dans les institutions au plus bas</h2></a>
       <p class="message">Jean-Luc Mélenchon (LFI) veut une VIe République. La confiance dans l'Assemblée nationale est tombée à son plus bas niveau depuis 2009 (CEVIPOF).</p>
       

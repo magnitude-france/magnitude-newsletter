@@ -256,6 +256,31 @@ body { background: var(--page); color: var(--ink); }
 </section>
 </div>
 
+<!-- ============ 1ter. ÉDITION SPÉCIALE ============ -->
+<div class="mg-band mg-dark">
+<section class="mg-section" id="edition-speciale">
+  <span class="mg-pill">Édition spéciale · octobre 2026</span>
+  <h2 class="mg-h2">La mobilisation lycéenne, replacée parmi d'autres mouvements</h2>
+  <p class="mg-lede">
+    Une carte hors numéro, sans candidat : ce que les ministres de
+    l'Intérieur ont annoncé pour une journée de mobilisation, du
+    mouvement lycéen de 2026 aux Gilets jaunes, aux retraites et à la loi
+    Travail. Sans juger la proportionnalité de la réponse policière.
+  </p>
+  <div class="mg-example">
+    <a href="/editions-speciales/repression-lyceenne/analyse.html" style="display:block;" aria-label="Lire l'analyse complète : Mobilisation lycéenne, 1 747 interpellations annoncées en une journée, du même ordre que l'acte IV des Gilets jaunes"><img src="/editions-speciales/repression-lyceenne/chart.png" alt="Interpellations annoncées en une journée : lycéens 2 octobre 2026 (1 747), Gilets jaunes 8 décembre 2018 (1 723), retraites 23 mars 2023 (457), loi Travail 28 avril 2016 (214)" loading="lazy"></a>
+    <div>
+      <div class="mg-tag">Édition spéciale — Mouvements sociaux</div>
+      <h3><a href="/editions-speciales/repression-lyceenne/analyse.html" style="color:inherit; text-decoration:none;">Mobilisation lycéenne : 1 747 interpellations annoncées en une journée, du même ordre que l'acte IV des Gilets jaunes (1 723)</a></h3>
+      <p>Chiffres annoncés par le ministère de l'Intérieur et relayés par
+      la presse, avec le lien de chaque source. Les limites de la
+      comparaison sont détaillées dans l'analyse complète.</p>
+      <a class="mg-more" href="/editions-speciales/repression-lyceenne/analyse.html">Lire l'analyse complète →</a>
+    </div>
+  </div>
+</section>
+</div>
+
 <!-- ============ 2. VISION / MANIFESTE ============ -->
 <div class="mg-band mg-surface">
 <section class="mg-section">

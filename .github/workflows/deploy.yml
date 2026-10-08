@@ -45,6 +45,12 @@ jobs:
         # <img src>) build correctly on their own.
         run: cp -r src/numeros dist/numeros
 
+      - name: Copy static special editions (same reason as above)
+        # src/editions-speciales/<slug>/analyse.html est une page HTML
+        # autonome liée par un simple <a href> depuis la home : sans cette
+        # copie explicite, elle n'arrive pas dans dist/ et renvoie 404.
+        run: cp -r src/editions-speciales dist/editions-speciales
+
       - name: Copy static charter pages (same reason as above)
         # charte-ton-style.html and charte-selection-sujets.html are only
         # ever linked via plain <a href> (from the deep dive pages and

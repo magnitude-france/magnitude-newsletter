@@ -417,6 +417,47 @@
   .lvl, .confidence, .decl-badge { border-radius: 999px; padding-left: 9px; padding-right: 9px; }
   .m-cell { border-radius: 8px; }
   .footer { margin-top: 56px; }
+  /* ---- Jetons mobile-first partagés (front, analyses complètes) -------------
+     Fond teal/turquoise (apaisement, neutralité — surtout pas de bleu marine,
+     proche de la charte d'un parti), liens cliquables toujours en bleu. */
+  :root {
+    --teal-900: #0B4A52;
+    --teal-800: #0F5F66;
+    --teal-700: #137A7F;
+    --teal-500: #2BB3AE;
+    --teal-200: #BFE6E3;
+    --teal-100: #DDF2F0;
+    --teal-50: #EEF8F7;
+    --link: #0A58CA;
+    --link-hover: #084298;
+    --navy: var(--teal-900);
+    --page: #F1F8F8;
+  }
+  a:not(.btn):not(.tab-btn):not(.mg-brandlink):not(.brand) { color: var(--link); }
+  a:not(.btn):not(.tab-btn):not(.mg-brandlink):not(.brand):hover { color: var(--link-hover); }
+  a.deep-dive-link, .card-quote .src a, .src a { color: var(--link) !important; border-bottom-color: var(--link) !important; }
+  .mg-band a, .mg-band .mg-back, .mg-band .mg-back:hover { color: #CFE9E7 !important; }
+  .mg-band .mg-back:hover { color: #fff !important; }
+  /* ---- Mobile d'abord : graphiques pleine largeur, onglets au pouce ---------- */
+  body { background: var(--page); }
+  .mg-band-in { padding: 12px 16px; }
+  .chart-zoom-hint { display: none; }
+  @media (max-width: 700px) {
+    .wrap { padding: 24px 16px 72px; }
+    h1 { font-size: 29px; line-height: 1.22; }
+    .chart-block { margin: 22px -16px 30px; position: relative; }
+    .chart-block img { border-radius: 0; cursor: zoom-in; }
+    .chart-caption { padding: 0 16px; font-size: 13.5px; }
+    .chart-zoom-hint { display: block; padding: 6px 16px 0; font-size: 12.5px; color: var(--link); font-weight: 600; }
+    .tablist { margin: 0 -16px; padding: 8px 16px 10px; flex-wrap: nowrap; }
+    .tab { flex: none; white-space: nowrap; padding: 11px 16px; font-size: 14.5px; }
+    .chiffre-cle, .declarations, .deep-dive, .viz, .sourcing-box { border-radius: 18px; }
+    body { font-size: 16.5px; }
+  }
+  #zoomov { position: fixed; inset: 0; z-index: 100; background: #fff; display: none; overflow: auto; }
+  #zoomov.open { display: block; }
+  #zoomov img { display: block; width: max(220vw, 900px); max-width: none; height: auto; }
+  #zoomov button { position: fixed; top: calc(10px + env(safe-area-inset-top)); right: 12px; width: 42px; height: 42px; border-radius: 50%; border: 0; background: var(--teal-100); color: var(--teal-900); font-size: 18px; font-weight: 700; box-shadow: 0 2px 8px rgba(0,0,0,.2); }
 </style>
 </head>
 <body>
@@ -669,5 +710,14 @@
       
     </div>
   </div>
+<div id="zoomov" role="dialog" aria-label="Graphique agrandi"><button type="button" aria-label="Fermer">✕</button><img alt=""></div>
+<script>
+(function(){var o=document.getElementById('zoomov'),im=o.querySelector('img');
+document.querySelectorAll('.chart-block img').forEach(function(i){
+  var h=document.createElement('div');h.className='chart-zoom-hint';h.textContent='Toucher le graphique pour l\u2019agrandir';i.parentNode.insertBefore(h,i.nextSibling);
+  i.addEventListener('click',function(){im.src=i.src;im.alt=i.alt;o.classList.add('open');o.scrollLeft=0;o.scrollTop=0;});});
+o.querySelector('button').onclick=function(){o.classList.remove('open');};
+document.addEventListener('keydown',function(e){if(e.key==='Escape')o.classList.remove('open');});})();
+</script>
 </body>
 </html>

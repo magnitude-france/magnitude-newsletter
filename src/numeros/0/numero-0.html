@@ -43,7 +43,7 @@
   .topbar { position: sticky; top: 0; z-index: 20; height: var(--top-h); display: flex; align-items: center; justify-content: space-between; padding: 0 16px; background: var(--teal-900); color: #E6F6F5; }
   .topbar .brand { display: inline-flex; align-items: center; gap: 10px; color: #fff; font: 700 14px var(--serif); letter-spacing: .14em; text-transform: uppercase; text-decoration: none; }
   .topbar .brand:before { content: ""; width: 28px; height: 28px; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect x='5' y='25' width='4.6' height='9' rx='1.6' fill='%23FDE68A'/%3E%3Crect x='11.6' y='21' width='4.6' height='13' rx='1.6' fill='%23FBBF24'/%3E%3Crect x='18.2' y='16' width='4.6' height='18' rx='1.6' fill='%23F59E0B'/%3E%3Crect x='24.8' y='11' width='4.6' height='23' rx='1.6' fill='%23D97706'/%3E%3Crect x='31.4' y='5' width='4.6' height='29' rx='1.6' fill='%23B45309'/%3E%3C/svg%3E") center/contain no-repeat; }
-  .topbar .num { font-size: 13px; color: var(--teal-200); }
+  .topbar .num { font-family: var(--serif); font-weight: 700; font-size: 14px; color: var(--teal-200); }
   main { max-width: 640px; margin: 0 auto; padding: 18px 16px 24px; }
   .view[hidden] { display: none; }
   h1.issue { font: 700 26px/1.2 var(--serif); margin: 4px 0 8px; }
@@ -112,7 +112,8 @@
 
   /* ---- Recherche & à propos ------------------------------------------------- */
   .search { position: sticky; top: var(--top-h); z-index: 5; background: var(--page); padding: 4px 0 12px; }
-  .search input { width: 100%; font: inherit; font-size: 17px; padding: 13px 16px; border-radius: 14px; border: 2px solid var(--teal-200); background: #fff; color: var(--ink); }
+  .search input { width: 100%; font-family: var(--serif); font-size: 17px; font-weight: 700; padding: 13px 16px; border-radius: 14px; border: 2px solid var(--teal-200); background: #fff; color: var(--ink); }
+  .search input::placeholder { font-weight: 400; font-style: italic; color: var(--ink-muted); }
   .search input:focus { outline: none; border-color: var(--teal-700); }
   .results { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
   .results button { width: 100%; text-align: left; display: flex; gap: 12px; align-items: center; background: #fff; border: 0; border-radius: 18px; padding: 12px 14px; box-shadow: 0 1px 4px rgba(11,74,82,.12); font: inherit; cursor: pointer; color: var(--ink); }
@@ -131,7 +132,7 @@
 
   /* ---- Barre d'onglets du bas ---------------------------------------------- */
   .tabbar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 30; height: calc(var(--bar-h) + env(safe-area-inset-bottom)); padding-bottom: env(safe-area-inset-bottom); background: rgba(255,255,255,.94); backdrop-filter: blur(12px); border-top: 1px solid var(--border); display: flex; }
-  .tab-btn { flex: 1; border: 0; background: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; font: 600 11.5px -apple-system, Arial, sans-serif; color: var(--ink-muted); cursor: pointer; text-decoration: none; }
+  .tab-btn { flex: 1; border: 0; background: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; font: 700 12px var(--serif); color: var(--ink-muted); cursor: pointer; text-decoration: none; }
   .tab-btn svg { width: 26px; height: 26px; stroke: currentColor; fill: none; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
   .tab-btn[aria-selected="true"] { color: var(--teal-700); }
   .tab-btn[aria-selected="true"] svg { stroke-width: 2.3; }

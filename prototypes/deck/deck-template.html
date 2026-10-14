@@ -1,0 +1,729 @@
+<title>Find your Candidate</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Layout : appli plein écran — en-tête, scène de carte, pavé de 4 gestes, barre d'onglets.
+   La couleur du deck (--deck) pilote cadre, halo, onglets ; elle glisse d'une maison à l'autre. */
+@property --deck-h { syntax: '<number>'; inherits: true; initial-value: 200; }
+@property --deck-c { syntax: '<number>'; inherits: true; initial-value: 0.085; }
+@property --deck-l { syntax: '<number>'; inherits: true; initial-value: 0.53; }
+:root {
+  /* Design system Magnitude (inchangé) */
+  --page: #F1F8F8; --surface: #FFFFFF; --surface-2: #EEF8F7;
+  --ink: #0B1F22; --ink-2: #3E5558; --muted: #5F7679; --line: rgba(11,74,82,.14);
+  --teal-100: #DDF2F0; --teal-700: #137A7F; --teal-900: #0B4A52;
+  --amber: #D97706; --amber-pale: #FEF3C7; --link: #0A58CA;
+  /* Décisions : jamais rouge/vert (lecture partisane, daltonisme) */
+  --d-ok: #137A7F; --d-no: #B45309; --d-wish: #0A58CA; --d-meh: #6B7F82;
+  --dossier: #FBF3DF; --dossier-edge: #E7D3A6;
+  --lift: 0; --on-deck: #FFFFFF;
+  --deck: oklch(calc(var(--deck-l) + var(--lift)) var(--deck-c) var(--deck-h));
+  --deck-soft: color-mix(in oklab, var(--deck) 14%, var(--surface));
+  --serif: Georgia, "Times New Roman", serif;
+  --sans: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+  --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --top-h: 52px; --tabs-h: 62px;
+  transition: --deck-h 1100ms ease, --deck-c 1100ms ease, --deck-l 1100ms ease;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --page: #071A1D; --surface: #0E2A2E; --surface-2: #12343A;
+    --ink: #E6F2F1; --ink-2: #B9CFD0; --muted: #8DA8AA; --line: rgba(221,242,240,.14);
+    --teal-100: #12343A; --teal-700: #4FC1BC; --teal-900: #DDF2F0;
+    --amber: #F59E0B; --amber-pale: #3A2A0B; --link: #7DB2FF;
+    --d-ok: #4FC1BC; --d-no: #F0A04B; --d-wish: #7DB2FF; --d-meh: #9AB0B2;
+    --dossier: #2A2416; --dossier-edge: #5A4A26;
+    --lift: 0.12; --on-deck: #04191C; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --page: #071A1D; --surface: #0E2A2E; --surface-2: #12343A;
+  --ink: #E6F2F1; --ink-2: #B9CFD0; --muted: #8DA8AA; --line: rgba(221,242,240,.14);
+  --teal-100: #12343A; --teal-700: #4FC1BC; --teal-900: #DDF2F0;
+  --amber: #F59E0B; --amber-pale: #3A2A0B; --link: #7DB2FF;
+  --d-ok: #4FC1BC; --d-no: #F0A04B; --d-wish: #7DB2FF; --d-meh: #9AB0B2;
+  --dossier: #2A2416; --dossier-edge: #5A4A26;
+  --lift: 0.12; --on-deck: #04191C; color-scheme: dark;
+}
+html, body { height: 100%; }
+body { background: var(--page); color: var(--ink); font-family: var(--sans); font-size: 15px; line-height: 1.45; overflow: hidden; -webkit-font-smoothing: antialiased; }
+button { font: inherit; color: inherit; cursor: pointer; }
+a { color: var(--link); }
+:focus-visible { outline: 3px solid var(--link); outline-offset: 2px; border-radius: 6px; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+#app { height: 100%; display: flex; flex-direction: column; }
+.top { flex: none; height: var(--top-h); display: flex; align-items: center; gap: 10px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); border-bottom: 3px solid var(--deck); background: var(--surface); }
+.top svg.logo { width: 26px; height: 26px; flex: none; }
+.brand { display: flex; flex-direction: column; line-height: 1.1; min-width: 0; }
+.brand b { font-family: var(--serif); font-size: 16px; font-weight: 700; letter-spacing: .01em; white-space: nowrap; }
+.brand span { font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
+.week { margin-left: auto; display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--ink-2); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.dots { display: flex; gap: 4px; }
+.dots i { width: 8px; height: 8px; border-radius: 50%; border: 1.5px solid var(--deck); }
+.dots i.on { background: var(--deck); }
+
+main { flex: 1; min-height: 0; position: relative; }
+.view { position: absolute; inset: 0; display: flex; flex-direction: column; }
+.scroll { overflow-y: auto; -webkit-overflow-scrolling: touch; padding-block: 16px 28px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.wrap { max-width: 640px; margin: 0 auto; display: grid; gap: 18px; }
+
+/* Bascule Jouer / Mon deck */
+.seg { flex: none; display: flex; gap: 4px; margin: 10px auto 0; padding: 4px; border-radius: 999px; background: var(--surface-2); border: 1px solid var(--line); }
+.seg button { border: 0; background: transparent; padding: 6px 16px; border-radius: 999px; font-size: 13px; font-weight: 600; color: var(--ink-2); }
+.seg button[aria-selected="true"] { background: var(--surface); color: var(--ink); box-shadow: 0 1px 3px rgba(0,0,0,.12); }
+
+/* Scène */
+#play { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+.stage { flex: 1; min-height: 0; position: relative; container-type: size; margin: 10px max(16px, env(safe-area-inset-right, 0px)) 6px max(16px, env(safe-area-inset-left, 0px)); }
+.halo { position: absolute; inset: 6% 4%; border-radius: 40px; background: radial-gradient(closest-side, color-mix(in oklab, var(--deck) 30%, transparent), transparent); filter: blur(18px); pointer-events: none; }
+.card { position: absolute; left: 50%; top: 50%; width: min(calc(100cqw - 8px), calc((100cqh - 8px) * 0.714)); aspect-ratio: 5 / 7; translate: -50% -50%; container-type: size; touch-action: none; user-select: none; -webkit-user-select: none; will-change: transform; }
+.card.next { transform: scale(.94) translateY(3%); filter: saturate(.8); opacity: .85; pointer-events: none; }
+.card.anim { transition: transform 280ms cubic-bezier(.2,.8,.2,1), opacity 280ms ease; }
+.frame { position: absolute; inset: 0; border-radius: 6cqw; background: var(--deck); padding: 2.4cqw; box-shadow: 0 18px 40px -18px rgba(5,40,44,.55), 0 2px 6px rgba(5,40,44,.18); }
+.inner { height: 100%; border-radius: 4.4cqw; background: var(--surface); display: flex; flex-direction: column; gap: 2.2cqh; padding: 4cqw; overflow: hidden; position: relative; }
+.c-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.chip { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px 3px 6px; border-radius: 999px; background: var(--deck-soft); color: var(--ink); font-size: clamp(10px, 3.4cqw, 13px); font-weight: 600; }
+.chip svg { width: 1.3em; height: 1.3em; }
+.num { font-family: var(--mono); font-size: clamp(10px, 3.2cqw, 12px); color: var(--muted); letter-spacing: .06em; }
+.art { flex: 1; min-height: 14cqh; border-radius: 3cqw; position: relative; overflow: hidden; background: radial-gradient(120% 90% at 30% 20%, color-mix(in oklab, var(--deck) 26%, var(--surface)), color-mix(in oklab, var(--deck) 62%, #06262a)); }
+.art svg.sky { position: absolute; inset: 0; width: 100%; height: 100%; }
+.art .emblem { position: absolute; left: 50%; top: 50%; translate: -50% -50%; width: min(34cqw, 70%); aspect-ratio: 1; border-radius: 50%; background: color-mix(in oklab, var(--surface) 92%, var(--deck)); display: grid; place-items: center; box-shadow: 0 0 0 4px color-mix(in oklab, var(--surface) 35%, transparent); }
+.art .emblem svg { width: 54%; height: 54%; stroke: var(--deck); }
+.fig { display: flex; align-items: baseline; gap: 3cqw; }
+.fig b { font-family: var(--serif); font-size: clamp(22px, 10cqw, 40px); line-height: 1; color: var(--deck); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.fig span { font-size: clamp(10px, 3.3cqw, 13px); color: var(--ink-2); line-height: 1.3; }
+.measure { font-family: var(--serif); font-size: clamp(14px, 5.1cqw, 21px); line-height: 1.25; text-wrap: balance; }
+.c-foot { display: flex; justify-content: space-between; align-items: center; gap: 8px; border-top: 1px solid var(--line); padding-top: 2cqh; font-size: clamp(9px, 2.8cqw, 11px); color: var(--muted); }
+.seal { display: inline-flex; align-items: center; gap: 6px; letter-spacing: .12em; text-transform: uppercase; font-weight: 600; }
+.seal svg { width: 1.6em; height: 1.6em; }
+.stamp { position: absolute; z-index: 3; padding: 4px 12px; border: 3px solid currentColor; border-radius: 8px; font-family: var(--sans); font-weight: 800; letter-spacing: .08em; font-size: clamp(14px, 6cqw, 24px); text-transform: uppercase; opacity: 0; pointer-events: none; background: color-mix(in oklab, var(--surface) 85%, transparent); }
+.stamp.r { top: 9%; left: 7%; color: var(--d-ok); rotate: -12deg; }
+.stamp.l { top: 9%; right: 7%; color: var(--d-no); rotate: 12deg; }
+.stamp.u { bottom: 14%; left: 50%; translate: -50% 0; color: var(--d-wish); }
+.stamp.d { top: 30%; left: 50%; translate: -50% 0; color: var(--d-meh); }
+
+.pad { flex: none; display: flex; justify-content: center; gap: 14px; padding: 4px 16px 12px; }
+.pad button { width: 58px; display: grid; justify-items: center; gap: 3px; border: 0; background: none; font-size: 11px; color: var(--ink-2); font-weight: 600; }
+.pad .b { width: 50px; height: 50px; border-radius: 50%; display: grid; place-items: center; background: var(--surface); border: 2px solid currentColor; box-shadow: 0 4px 12px -6px rgba(0,0,0,.35); transition: transform 120ms ease; }
+.pad button:active .b { transform: scale(.92); }
+.pad .b svg { width: 22px; height: 22px; }
+.pad .no { color: var(--d-no); } .pad .ok { color: var(--d-ok); } .pad .wish { color: var(--d-wish); } .pad .meh { color: var(--d-meh); }
+.pad button span:last-child { color: var(--ink-2); }
+.done { position: absolute; inset: 0; display: grid; place-items: center; text-align: center; padding: 24px; }
+.done h2 { font-family: var(--serif); font-size: 24px; margin: 0 0 6px; }
+
+/* Mon deck */
+.deckhero { display: grid; grid-template-columns: 96px 1fr; gap: 16px; align-items: center; background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 14px; }
+.swatch { width: 96px; aspect-ratio: 5/7; border-radius: 12px; background: linear-gradient(160deg, color-mix(in oklab, var(--deck) 55%, var(--surface)), var(--deck)); display: grid; place-items: center; box-shadow: inset 0 0 0 3px color-mix(in oklab, var(--surface) 40%, transparent); }
+.swatch img { width: 64px; height: 64px; border-radius: 50%; box-shadow: 0 0 0 3px var(--surface); }
+.deckhero h2 { font-family: var(--serif); font-size: 21px; margin: 0; line-height: 1.2; text-wrap: balance; }
+.deckhero p { margin: 4px 0 0; color: var(--ink-2); font-size: 13px; }
+.eyebrow { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); font-weight: 700; }
+h3 { font-family: var(--serif); font-size: 18px; margin: 0; }
+.rank { display: grid; gap: 6px; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 12px; }
+.row { display: grid; grid-template-columns: 22px 28px minmax(0, 1fr) 54px; align-items: center; gap: 8px; font-size: 13px; }
+.row .pos { font-family: var(--mono); color: var(--muted); font-size: 12px; text-align: right; }
+.row img { width: 28px; height: 28px; border-radius: 50%; }
+.row .nm { display: grid; gap: 3px; min-width: 0; }
+.row .nm b { font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.bar { height: 7px; border-radius: 4px; background: var(--surface-2); overflow: hidden; }
+.bar i { display: block; height: 100%; border-radius: 4px; transition: width 600ms ease; }
+.bar.weak i { background: repeating-linear-gradient(135deg, var(--muted) 0 3px, transparent 3px 6px) !important; }
+.row .pct { text-align: right; font-variant-numeric: tabular-nums; font-weight: 700; }
+.row .pct small { display: block; font-weight: 400; color: var(--muted); font-size: 11px; }
+.row.lead .nm b::after { content: " · maison"; color: var(--deck); font-weight: 700; }
+.note { font-size: 12.5px; color: var(--ink-2); background: var(--amber-pale); border-radius: 12px; padding: 10px 12px; border-left: 4px solid var(--amber); }
+.coll { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.mini { border: 0; text-align: left; background: var(--surface); border-radius: 12px; padding: 8px; display: grid; gap: 4px; box-shadow: inset 0 0 0 2px var(--deck-soft); min-width: 0; }
+.mini.todo { box-shadow: inset 0 0 0 1.5px var(--line); background: transparent; border: 1.5px dashed var(--line); }
+.mini svg { width: 20px; height: 20px; stroke: var(--deck); }
+.mini .t { font-size: 11.5px; font-weight: 600; line-height: 1.2; overflow-wrap: anywhere; }
+.badge { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 700; padding: 2px 7px; border-radius: 999px; width: fit-content; }
+.badge.ok { color: var(--d-ok); background: color-mix(in oklab, var(--d-ok) 14%, transparent); }
+.badge.no { color: var(--d-no); background: color-mix(in oklab, var(--d-no) 14%, transparent); }
+.badge.wish { color: var(--d-wish); background: color-mix(in oklab, var(--d-wish) 14%, transparent); }
+.badge.meh { color: var(--d-meh); background: color-mix(in oklab, var(--d-meh) 16%, transparent); }
+.badge.todo { color: var(--muted); border: 1px dashed var(--line); }
+.tools { display: flex; flex-wrap: wrap; gap: 8px; }
+.btn { border: 1px solid var(--line); background: var(--surface); padding: 9px 14px; border-radius: 10px; font-size: 13px; font-weight: 600; }
+.btn.primary { background: var(--deck); color: var(--on-deck); border-color: transparent; }
+.btn.ghost { background: transparent; }
+
+/* Onglets */
+.tabs { flex: none; display: grid; grid-template-columns: repeat(3, 1fr); height: calc(var(--tabs-h) + env(safe-area-inset-bottom, 0px)); padding-bottom: env(safe-area-inset-bottom, 0px); padding-left: env(safe-area-inset-left, 0px); padding-right: env(safe-area-inset-right, 0px); background: var(--surface); border-top: 1px solid var(--line); }
+.tabs button { border: 0; background: none; display: grid; justify-items: center; align-content: center; gap: 3px; font-size: 11px; font-weight: 600; color: var(--muted); position: relative; }
+.tabs button svg { width: 22px; height: 22px; }
+.tabs button[aria-selected="true"] { color: var(--deck); }
+.tabs button[aria-selected="true"]::before { content: ""; position: absolute; top: 0; left: 30%; right: 30%; height: 3px; border-radius: 0 0 3px 3px; background: var(--deck); }
+
+/* Recherche — esthétique bureau d'enquête */
+#view-search .scroll { background: repeating-linear-gradient(0deg, transparent 0 27px, color-mix(in oklab, var(--line) 60%, transparent) 27px 28px), var(--page); }
+.case-head { display: flex; align-items: center; gap: 10px; }
+.case-head svg { width: 34px; height: 34px; stroke: var(--ink); }
+.case-head h2 { font-family: var(--serif); font-size: 24px; margin: 0; }
+.case-head p { margin: 0; font-family: var(--mono); font-size: 11.5px; color: var(--muted); letter-spacing: .04em; }
+.search { display: flex; align-items: center; gap: 8px; background: var(--surface); border: 2px solid var(--ink); border-radius: 12px; padding: 8px 12px; }
+.search input { flex: 1; min-width: 0; border: 0; outline: 0; background: transparent; font: inherit; font-family: var(--mono); font-size: 14px; color: var(--ink); }
+.search svg { width: 20px; height: 20px; stroke: var(--ink); flex: none; }
+.filters { display: flex; flex-wrap: wrap; gap: 6px; }
+.filters button { border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 4px 10px; font-size: 12px; }
+.filters button[aria-pressed="true"] { background: var(--ink); color: var(--page); border-color: var(--ink); }
+.dossier { position: relative; background: var(--dossier); border: 1px solid var(--dossier-edge); border-radius: 4px 12px 12px 12px; padding: 14px 14px 12px; display: grid; gap: 6px; margin-top: 34px; }
+.dossier::before { content: attr(data-tab); position: absolute; top: -21px; left: -1px; height: 20px; padding: 0 12px; display: flex; align-items: center; background: var(--dossier); border: 1px solid var(--dossier-edge); border-bottom: 0; border-radius: 8px 8px 0 0; font-family: var(--mono); font-size: 10.5px; letter-spacing: .08em; color: var(--ink-2); }
+.dossier h4 { margin: 0; padding-right: 92px; font-family: var(--serif); font-size: 16px; line-height: 1.3; text-wrap: balance; }
+.dossier .meta { font-family: var(--mono); font-size: 11.5px; color: var(--ink-2); }
+.redact { background: var(--ink); color: transparent; border-radius: 2px; padding: 0 .3em; user-select: none; }
+.dossier .stampd { position: absolute; right: 10px; top: 8px; rotate: 8deg; font-family: var(--mono); font-weight: 800; font-size: 10.5px; letter-spacing: .1em; border: 2px solid currentColor; padding: 1px 6px; border-radius: 4px; }
+
+/* La Maison Magnitude — esthétique maison de parfum */
+#view-maison .scroll { background: radial-gradient(120% 60% at 50% 0%, color-mix(in oklab, var(--amber) 10%, var(--page)), var(--page)); }
+.maison { max-width: 520px; margin: 0 auto; text-align: center; display: grid; gap: 22px; padding-top: 8px; }
+.maison .house { font-family: var(--serif); font-size: 13px; letter-spacing: .5em; text-transform: uppercase; padding-left: .5em; }
+.maison h2 { font-family: var(--serif); font-weight: 400; font-style: italic; font-size: 30px; line-height: 1.15; margin: 0; text-wrap: balance; }
+.rule { height: 1px; background: linear-gradient(90deg, transparent, var(--amber), transparent); }
+.flacon { width: 120px; height: 168px; margin: 0 auto; }
+.notes { display: grid; gap: 14px; text-align: center; }
+.notes div { display: grid; gap: 2px; }
+.notes .k { font-size: 10.5px; letter-spacing: .3em; text-transform: uppercase; color: var(--amber); font-weight: 700; padding-left: .3em; }
+.notes .v { font-family: var(--serif); font-size: 18px; }
+.notes .d { font-size: 13px; color: var(--ink-2); max-width: 40ch; margin: 0 auto; }
+.well { position: relative; width: 100%; max-width: 360px; aspect-ratio: 1; margin: 0 auto; border-radius: 50%; overflow: hidden; background: radial-gradient(closest-side, #0b3b42, #04191c); box-shadow: inset 0 0 0 6px color-mix(in oklab, var(--amber) 40%, #04191c), inset 0 0 40px rgba(0,0,0,.6); }
+.well canvas { width: 100%; height: 100%; display: block; }
+.well-cap { font-size: 13px; color: var(--ink-2); }
+.promise { text-align: left; display: grid; gap: 8px; font-size: 14px; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; }
+.promise p { margin: 0; }
+.fine { font-size: 11.5px; color: var(--muted); }
+
+/* Feuilles et superpositions */
+.scrim { position: fixed; inset: 0; background: rgba(4,20,22,.45); z-index: 20; }
+.sheet { position: fixed; left: 0; right: 0; bottom: 0; z-index: 21; max-height: 88%; overflow-y: auto; background: var(--surface); border-radius: 20px 20px 0 0; padding: 10px max(18px, env(safe-area-inset-right, 0px)) calc(20px + env(safe-area-inset-bottom, 0px)) max(18px, env(safe-area-inset-left, 0px)); box-shadow: 0 -10px 40px rgba(0,0,0,.25); animation: up 260ms cubic-bezier(.2,.8,.2,1); }
+.sheet .grab { width: 40px; height: 5px; border-radius: 3px; background: var(--line); margin: 0 auto 12px; }
+.sheet .in { max-width: 600px; margin: 0 auto; display: grid; gap: 14px; }
+@keyframes up { from { transform: translateY(40px); opacity: 0; } }
+.reveal-head { display: grid; grid-template-columns: 72px 1fr; gap: 14px; align-items: center; }
+.reveal-head img { width: 72px; height: 72px; border-radius: 50%; box-shadow: 0 0 0 3px var(--deck); }
+.reveal-head h3 { font-size: 21px; }
+.reveal-head p { margin: 2px 0 0; color: var(--muted); font-size: 13px; }
+blockquote { margin: 0; font-family: var(--serif); font-size: 16px; font-style: italic; border-left: 3px solid var(--deck); padding-left: 12px; }
+.sides { display: grid; gap: 10px; }
+.side { display: grid; gap: 6px; }
+.side .lab { font-size: 12px; font-weight: 700; display: flex; gap: 6px; align-items: center; }
+.people { display: flex; flex-wrap: wrap; gap: 6px; }
+.person { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--line); border-radius: 999px; padding: 2px 9px 2px 2px; font-size: 12.5px; }
+.person img { width: 22px; height: 22px; border-radius: 50%; }
+.person i { font-style: normal; font-family: var(--mono); font-size: 10.5px; color: var(--muted); }
+.person.me { border-color: var(--deck); box-shadow: inset 0 0 0 1px var(--deck); }
+textarea { width: 100%; min-height: 90px; resize: vertical; border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; font: inherit; background: var(--page); color: var(--ink); }
+.row-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+.row-btns .btn { flex: 1; }
+.choice4 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.choice4 button { border: 2px solid currentColor; background: var(--surface); border-radius: 12px; padding: 10px; font-weight: 700; font-size: 13px; }
+.choice4 .ok { color: var(--d-ok); } .choice4 .no { color: var(--d-no); } .choice4 .wish { color: var(--d-wish); } .choice4 .meh { color: var(--d-meh); }
+.choice4 button[aria-pressed="true"] { background: currentColor; }
+.choice4 button[aria-pressed="true"] span { color: var(--surface); }
+
+.overlay { position: fixed; inset: 0; z-index: 30; display: grid; place-items: center; padding: 24px max(20px, env(safe-area-inset-right, 0px)) 24px max(20px, env(safe-area-inset-left, 0px)); background: radial-gradient(120% 80% at 50% 10%, color-mix(in oklab, var(--deck) 45%, #04191c), #031113); color: #EAF6F5; }
+.ob { max-width: 420px; width: 100%; display: grid; gap: 18px; text-align: center; }
+.ob .step { font-family: var(--mono); font-size: 11px; letter-spacing: .2em; color: #9ED7D3; }
+.ob h2 { font-family: var(--serif); font-size: 30px; margin: 0; line-height: 1.15; text-wrap: balance; }
+.ob p { margin: 0; color: #CFE6E4; font-size: 15.5px; }
+.ob .btn { background: #EAF6F5; color: #06262A; border: 0; padding: 12px 18px; font-size: 15px; }
+.ob .btn.ghost { background: transparent; color: #CFE6E4; border: 1px solid rgba(234,246,245,.35); }
+.compass { position: relative; width: 220px; height: 220px; margin: 0 auto; }
+.compass .c { position: absolute; left: 50%; top: 50%; translate: -50% -50%; width: 84px; height: 116px; border-radius: 10px; background: #EAF6F5; box-shadow: 0 0 0 4px var(--deck); }
+.compass span { position: absolute; font-size: 12.5px; font-weight: 700; display: grid; justify-items: center; }
+.compass .n { top: 0; left: 50%; translate: -50% 0; color: #9FC6FF; }
+.compass .s { bottom: 0; left: 50%; translate: -50% 0; color: #C9D6D7; }
+.compass .e { right: 0; top: 50%; translate: 0 -50%; color: #7FD9D3; }
+.compass .w { left: 0; top: 50%; translate: 0 -50%; color: #F8BD7A; }
+.tri .hat { width: 150px; height: 150px; margin: 0 auto; }
+.tri .big { font-family: var(--serif); font-size: 34px; margin: 0; }
+.tri .sub { font-family: var(--serif); font-style: italic; font-size: 19px; color: #F6D9A8; }
+.tri .res { background: rgba(234,246,245,.08); border: 1px solid rgba(234,246,245,.2); border-radius: 16px; padding: 14px; display: grid; gap: 8px; justify-items: center; }
+.tri .res img { width: 76px; height: 76px; border-radius: 50%; box-shadow: 0 0 0 4px var(--deck); }
+.toast { position: fixed; left: 50%; bottom: calc(var(--tabs-h) + env(safe-area-inset-bottom, 0px) + 14px); translate: -50% 0; z-index: 40; background: var(--ink); color: var(--page); padding: 10px 16px; border-radius: 12px; font-size: 13.5px; font-weight: 600; max-width: calc(100% - 32px); box-shadow: 0 10px 30px rgba(0,0,0,.3); }
+.toast b { color: var(--amber-pale); }
+@media (prefers-reduced-motion: reduce) {
+  :root { transition: none; }
+  .card.anim, .bar i { transition: none; }
+  .sheet { animation: none; }
+}
+</style>
+
+<div id="app">
+  <header class="top">
+    <svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="var(--teal-900)"/><rect x="6" y="19" width="3.2" height="5" rx="1" fill="#FCE58C"/><rect x="10.6" y="16" width="3.2" height="8" rx="1" fill="#FBBF24"/><rect x="15.2" y="13" width="3.2" height="11" rx="1" fill="#F59E0B"/><rect x="19.8" y="10" width="3.2" height="14" rx="1" fill="#D97706"/><rect x="24.4" y="7" width="3.2" height="17" rx="1" fill="#B45309"/></svg>
+    <div class="brand"><b>Find your Candidate</b><span>Magnitude</span></div>
+    <div class="week" id="week" aria-live="polite" title="Cartes de la semaine 42 tranchées"></div>
+  </header>
+
+  <main>
+    <section class="view" id="view-deck" aria-label="Deck">
+      <div class="seg" role="tablist" aria-label="Deck">
+        <button role="tab" id="seg-play" aria-selected="true">Jouer</button>
+        <button role="tab" id="seg-mine" aria-selected="false">Mon deck</button>
+      </div>
+      <div id="play">
+        <div class="stage" id="stage"><div class="halo"></div></div>
+        <div class="pad" id="pad">
+          <button class="no" data-dir="l" aria-label="Désaligné (glisser à gauche)"><span class="b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></span><span>Désaligné</span></button>
+          <button class="meh" data-dir="d" aria-label="M'en fous (glisser vers le bas)"><span class="b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="7"/><path d="M7 17 17 7"/></svg></span><span>M'en fous</span></button>
+          <button class="wish" data-dir="u" aria-label="J'aimerais (glisser vers le haut)"><span class="b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M12 3.5l2.6 5.3 5.8.8-4.2 4.1 1 5.8L12 16.8l-5.2 2.7 1-5.8-4.2-4.1 5.8-.8z"/></svg></span><span>J'aimerais</span></button>
+          <button class="ok" data-dir="r" aria-label="Aligné (glisser à droite)"><span class="b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span><span>Aligné</span></button>
+        </div>
+      </div>
+      <div id="mine" class="scroll" hidden style="flex:1;min-height:0"><div class="wrap" id="mine-wrap"></div></div>
+    </section>
+
+    <section class="view" id="view-search" aria-label="Recherche" hidden>
+      <div class="scroll" style="flex:1;min-height:0"><div class="wrap">
+        <div class="case-head">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><circle cx="10" cy="10" r="6"/><path d="M14.5 14.5 20 20"/><path d="M7.5 9a3 3 0 0 1 2.5-2" /></svg>
+          <div><h2>Bureau des enquêtes</h2><p>12 dossiers ouverts · pièces sourcées A/B/C</p></div>
+        </div>
+        <label class="search"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="10" cy="10" r="6"/><path d="M14.5 14.5 20 20"/></svg><span class="sr">Rechercher</span><input id="q" type="search" placeholder="Ouvrir une enquête : smic, dette, héritage…" autocomplete="off"></label>
+        <div class="filters" id="filters"></div>
+        <div id="dossiers"></div>
+      </div></div>
+    </section>
+
+    <section class="view" id="view-maison" aria-label="La Maison Magnitude" hidden>
+      <div class="scroll" style="flex:1;min-height:0"><div class="maison">
+        <div class="house">Maison Magnitude</div>
+        <h2>Ce n'est pas de la magie : c'est la data et vos votes.</h2>
+        <svg class="flacon" viewBox="0 0 120 168" aria-hidden="true">
+          <rect x="48" y="4" width="24" height="18" rx="3" fill="var(--amber)"/>
+          <rect x="44" y="22" width="32" height="10" rx="2" fill="var(--teal-900)"/>
+          <path d="M20 46 Q20 32 34 32 H86 Q100 32 100 46 V150 Q100 164 86 164 H34 Q20 164 20 150Z" fill="var(--surface)" stroke="var(--teal-900)" stroke-width="2"/>
+          <rect x="34" y="112" width="8" height="38" rx="2" fill="#FCE58C"/><rect x="46" y="100" width="8" height="50" rx="2" fill="#FBBF24"/><rect x="58" y="88" width="8" height="62" rx="2" fill="#F59E0B"/><rect x="70" y="76" width="8" height="74" rx="2" fill="#D97706"/><rect x="82" y="64" width="8" height="86" rx="2" fill="#B45309"/>
+          <text x="60" y="56" text-anchor="middle" font-family="Georgia, serif" font-size="9" letter-spacing="2" fill="var(--ink)">MAGNITUDE</text>
+        </svg>
+        <div class="rule"></div>
+        <div class="notes">
+          <div><span class="k">Note de tête</span><span class="v">Les données publiques</span><span class="d">INSEE, Eurostat, data.gouv.fr, documents budgétaires : chaque chiffre porte le lien de sa source.</span></div>
+          <div><span class="k">Note de cœur</span><span class="v">La méthode</span><span class="d">Des niveaux de confiance A, B, C affichés, un calcul du deck publié et reproductible, les mêmes règles pour chaque candidat.</span></div>
+          <div><span class="k">Note de fond</span><span class="v">Vos votes</span><span class="d">Vos choix composent votre deck. Ils restent sur votre appareil.</span></div>
+        </div>
+        <div class="rule"></div>
+        <p class="d" style="margin:0;font-family:var(--serif);font-size:16px">Magnitude est une publication apartisane et gratuite qui aide chacun à lire les chiffres de la vie politique, pour se forger sa propre conviction.</p>
+        <div>
+          <div class="eyebrow" style="margin-bottom:10px">Le Puits aux souhaits</div>
+          <div class="well"><canvas id="well" aria-label="Animation : des souhaits anonymes flottent dans un puits"></canvas></div>
+          <p class="well-cap" id="well-cap"></p>
+        </div>
+        <div class="promise">
+          <b style="font-family:var(--serif);font-size:16px">Notre promesse</b>
+          <p>Vos choix, vos souhaits et votre maison sont calculés et gardés dans ce navigateur. Aucun compte, aucun email, aucun traceur.</p>
+          <p>Le score compare vos choix aux positions documentées des candidats. Les cartes « J'aimerais » et « M'en fous » n'entrent pas dans le calcul.</p>
+          <p>Une consultation de la communauté ne sera jamais présentée comme un sondage.</p>
+        </div>
+        <p class="fine">Prototype interne · 14 octobre 2026 · ne pas diffuser · données des numéros #0 et #1.</p>
+      </div></div>
+    </section>
+  </main>
+
+  <nav class="tabs" role="tablist" aria-label="Navigation">
+    <button role="tab" data-view="deck" aria-selected="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"><rect x="7" y="4" width="12" height="16" rx="2"/><path d="M5 7v12a2 2 0 0 0 2 2h9"/></svg>Deck</button>
+    <button role="tab" data-view="search" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="10" cy="10" r="6"/><path d="M14.5 14.5 20 20"/></svg>Recherche</button>
+    <button role="tab" data-view="maison" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"><rect x="10" y="3" width="4" height="3" rx="1"/><path d="M6 10a3 3 0 0 1 3-3h6a3 3 0 0 1 3 3v9a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2z"/><path d="M9 14h6"/></svg>La Maison</button>
+  </nav>
+</div>
+
+<div id="layer"></div>
+<div class="toast" id="toast" role="status" hidden></div>
+
+<script>
+(function () {
+  "use strict";
+  var DATA = /*__DATA__*/null;
+  var CARDS = DATA.cards, CANDS = DATA.cands;
+  var SLUGS = Object.keys(CANDS).sort();
+  var MIN_N = 4;                       // seuil de preuve (Spec § 4)
+  var KEY = "magnitude-deck-proto-v1";
+  var DIRS = { r: "ok", l: "no", u: "wish", d: "meh" };
+  var LABEL = { ok: "Aligné", no: "Désaligné", wish: "J'aimerais", meh: "M'en fous" };
+  var GLYPH = { ok: "✓", no: "✕", wish: "★", meh: "∅" };
+  var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // Ordre : les 6 nouvelles cartes (numéro #1) d'abord, puis les 6 à réviser (#0) — ordre du tirage publié.
+  var ORDER = CARDS.filter(function (c) { return c.num === "1"; }).concat(CARDS.filter(function (c) { return c.num === "0"; }));
+  var WEEK = ORDER.filter(function (c) { return c.num === "1"; }).map(function (c) { return c.id; });
+  var byId = {}; CARDS.forEach(function (c) { byId[c.id] = c; });
+
+  var S = load();
+  function load() {
+    var s = null;
+    try { s = JSON.parse(localStorage.getItem(KEY) || "null"); } catch (e) { s = null; }
+    return s && s.dec ? s : { dec: {}, onboarded: false, leader: null, triSeen: false };
+  }
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
+  function esc(t) { return String(t == null ? "" : t).replace(/[&<>"]/g, function (ch) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[ch]; }); }
+  function $(s, r) { return (r || document).querySelector(s); }
+  function el(html) { var d = document.createElement("div"); d.innerHTML = html.trim(); return d.firstChild; }
+  function icon(path, sw) { return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="' + (sw || 1.8) + '" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="' + path + '"/></svg>'; }
+
+  // ---------- Score (Spec § 4) ----------
+  function scores() {
+    var res = {};
+    SLUGS.forEach(function (s) { res[s] = { agree: 0, n: 0 }; });
+    Object.keys(S.dec).forEach(function (id) {
+      var d = S.dec[id].d, c = byId[id];
+      if (!c || (d !== "ok" && d !== "no")) return;
+      var mine = d === "ok" ? 1 : -1;
+      Object.keys(c.pos).forEach(function (s) {
+        if (!res[s]) return;
+        res[s].n += 1;
+        if (c.pos[s][0] === mine) res[s].agree += 1;
+      });
+    });
+    var list = SLUGS.map(function (s) { var r = res[s]; return { s: s, agree: r.agree, n: r.n, pct: r.n ? r.agree / r.n : null }; });
+    list.sort(function (a, b) {
+      var ea = a.n >= MIN_N, eb = b.n >= MIN_N;
+      if (ea !== eb) return ea ? -1 : 1;
+      if ((b.pct || 0) !== (a.pct || 0)) return (b.pct || 0) - (a.pct || 0);
+      return CANDS[a.s].name.localeCompare(CANDS[b.s].name, "fr");  // ex æquo : ordre alphabétique, documenté
+    });
+    var elig = list.filter(function (r) { return r.n >= MIN_N; });
+    var leader = null;
+    if (elig.length && (elig.length === 1 || elig[0].pct > elig[1].pct)) leader = elig[0].s;
+    return { list: list, leader: leader };
+  }
+
+  function applyDeck(leader) {
+    var root = document.documentElement.style;
+    if (leader) { root.setProperty("--deck-h", CANDS[leader].hue); root.setProperty("--deck-c", 0.105); root.setProperty("--deck-l", 0.56); }
+    else { root.setProperty("--deck-h", 200); root.setProperty("--deck-c", 0.085); root.setProperty("--deck-l", 0.53); }
+  }
+  function houseLabel(s) { var n = CANDS[s].name; var last = n.indexOf("Le Pen") >= 0 ? "Le Pen" : n.indexOf("de Villepin") >= 0 ? "de Villepin" : n.split(" ").slice(-1)[0]; return "Maison " + last; }
+
+  // ---------- Illustration générée (constellation déterministe, palette du deck) ----------
+  function sky(seed) {
+    var x = 0; for (var i = 0; i < seed.length; i++) x = (x * 31 + seed.charCodeAt(i)) >>> 0;
+    function rnd() { x ^= x << 13; x >>>= 0; x ^= x >> 17; x ^= x << 5; x >>>= 0; return (x % 10000) / 10000; }
+    var pts = [], out = '<svg class="sky" viewBox="0 0 100 70" preserveAspectRatio="xMidYMid slice" aria-hidden="true">';
+    for (var k = 0; k < 26; k++) pts.push([rnd() * 100, rnd() * 70, 0.4 + rnd() * 1.3]);
+    for (var j = 0; j < pts.length - 1; j++) if (rnd() < 0.35) out += '<line x1="' + pts[j][0].toFixed(1) + '" y1="' + pts[j][1].toFixed(1) + '" x2="' + pts[j + 1][0].toFixed(1) + '" y2="' + pts[j + 1][1].toFixed(1) + '" stroke="#ffffff" stroke-opacity=".28" stroke-width=".3"/>';
+    pts.forEach(function (p) { out += '<circle cx="' + p[0].toFixed(1) + '" cy="' + p[1].toFixed(1) + '" r="' + p[2].toFixed(2) + '" fill="#ffffff" fill-opacity="' + (0.35 + p[2] / 3).toFixed(2) + '"/>'; });
+    return out + "</svg>";
+  }
+
+  function cardHTML(c) {
+    return '<div class="card" data-id="' + c.id + '"><div class="frame"><div class="inner">' +
+      '<div class="c-head"><span class="chip">' + icon(c.icon, 2) + esc(c.theme) + '</span><span class="num">N° ' + c.n + ' · #' + c.num + '</span></div>' +
+      '<div class="art">' + sky(c.id) + '<div class="emblem">' + icon(c.icon, 1.6) + '</div></div>' +
+      '<div class="fig"><b>' + esc(c.fig) + '</b><span>' + esc(c.fig_label) + '</span></div>' +
+      '<div class="measure">' + esc(c.mesure) + '</div>' +
+      '<div class="c-foot"><span class="seal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="6" stroke-dasharray="1.5 1.5"/><path d="M9 14v-3M12 14v-5M15 14V8"/></svg>Magnitude · Labo</span><span>Auteur révélé après votre choix</span></div>' +
+      '<span class="stamp r">Aligné</span><span class="stamp l">Désaligné</span><span class="stamp u">J\'aimerais</span><span class="stamp d">M\'en fous</span>' +
+      '</div></div></div>';
+  }
+
+  // ---------- En-tête ----------
+  function renderWeek() {
+    var done = WEEK.filter(function (id) { return S.dec[id]; }).length;
+    var dots = WEEK.map(function (id) { return '<i class="' + (S.dec[id] ? "on" : "") + '"></i>'; }).join("");
+    $("#week").innerHTML = '<span><span class="sr">Semaine 42 : </span>' + done + '/6</span><span class="dots" aria-hidden="true">' + dots + "</span>";
+  }
+
+  // ---------- Pile de cartes ----------
+  var stage = $("#stage"), top = null, busy = false;
+  function queue() { return ORDER.filter(function (c) { return !S.dec[c.id]; }); }
+  function renderStack() {
+    Array.prototype.slice.call(stage.querySelectorAll(".card,.done")).forEach(function (n) { n.remove(); });
+    var q = queue();
+    $("#pad").style.visibility = q.length ? "visible" : "hidden";
+    if (!q.length) {
+      stage.appendChild(el('<div class="done"><div><h2>Votre deck est complet.</h2><p style="color:var(--ink-2);margin:0 0 14px">Vous pouvez changer d\'avis sur chaque carte depuis « Mon deck ».</p><button class="btn primary" id="go-mine">Voir mon deck</button></div></div>'));
+      $("#go-mine").onclick = function () { showSeg("mine"); };
+      top = null; return;
+    }
+    if (q[1]) { var nx = el(cardHTML(q[1])); nx.classList.add("next"); stage.appendChild(nx); }
+    top = el(cardHTML(q[0])); stage.appendChild(top); bindDrag(top);
+  }
+
+  function bindDrag(card) {
+    var sx = 0, sy = 0, dx = 0, dy = 0, t0 = 0, active = false, pid = null;
+    var stamps = { r: card.querySelector(".stamp.r"), l: card.querySelector(".stamp.l"), u: card.querySelector(".stamp.u"), d: card.querySelector(".stamp.d") };
+    function dirOf(x, y) { return Math.abs(x) >= Math.abs(y) ? (x > 0 ? "r" : "l") : (y < 0 ? "u" : "d"); }
+    card.addEventListener("pointerdown", function (e) {
+      if (busy) return; active = true; pid = e.pointerId; sx = e.clientX; sy = e.clientY; dx = dy = 0; t0 = Date.now();
+      card.classList.remove("anim"); try { card.setPointerCapture(pid); } catch (er) {}
+    });
+    card.addEventListener("pointermove", function (e) {
+      if (!active || e.pointerId !== pid) return;
+      dx = e.clientX - sx; dy = e.clientY - sy;
+      card.style.transform = "translate(" + dx + "px," + dy + "px) rotate(" + (dx * 0.06) + "deg)";
+      var dist = Math.hypot(dx, dy), th = threshold(), d = dirOf(dx, dy);
+      Object.keys(stamps).forEach(function (k) { stamps[k].style.opacity = k === d ? Math.min(1, dist / th) : 0; });
+    });
+    function end(e) {
+      if (!active || (e && e.pointerId !== pid)) return; active = false;
+      var dist = Math.hypot(dx, dy), v = dist / Math.max(1, Date.now() - t0);
+      if (dist > threshold() || (dist > 40 && v > 0.6)) commit(dirOf(dx, dy));
+      else { card.classList.add("anim"); card.style.transform = ""; Object.keys(stamps).forEach(function (k) { stamps[k].style.opacity = 0; }); }
+    }
+    card.addEventListener("pointerup", end); card.addEventListener("pointercancel", end);
+  }
+  function threshold() { return Math.min(110, stage.clientWidth * 0.26); }
+
+  function commit(dir) {
+    if (!top || busy) return; busy = true;
+    var card = top, id = card.dataset.id, w = window.innerWidth, h = window.innerHeight;
+    var to = { r: [w, 40, 25], l: [-w, 40, -25], u: [0, -h, 0], d: [0, h, 0] }[dir];
+    var st = card.querySelector(".stamp." + dir); if (st) st.style.opacity = 1;
+    card.classList.add("anim");
+    card.style.transform = "translate(" + to[0] + "px," + to[1] + "px) rotate(" + to[2] + "deg)";
+    card.style.opacity = "0";
+    setTimeout(function () {
+      var d = DIRS[dir];
+      if (d === "wish" || d === "meh") noteSheet(id, d, function (note) { decide(id, d, note); reveal(id); });
+      else { decide(id, d); reveal(id); }
+    }, reduce ? 0 : 260);
+  }
+
+  function decide(id, d, note) {
+    var before = scores().leader;
+    S.dec[id] = { d: d, t: Date.now() };
+    if (note) S.dec[id].note = note;
+    var after = scores().leader;
+    if (after !== before) {
+      if (after && before) toast("Bascule ! Votre deck passe de <b>" + esc(houseLabel(before)) + "</b> à <b>" + esc(houseLabel(after)) + "</b>.");
+      else if (after) toast("Votre deck prend sa couleur : <b>" + esc(houseLabel(after)) + "</b>.");
+      else toast("Votre deck redevient neutre : il hésite entre plusieurs maisons.");
+    }
+    S.leader = after; save(); applyDeck(after); renderWeek();
+  }
+
+  // ---------- Feuilles ----------
+  var layer = $("#layer"), lastFocus = null;
+  function openSheet(inner, onClose) {
+    closeSheet(true); lastFocus = document.activeElement;
+    var scrim = el('<div class="scrim"></div>'), sh = el('<div class="sheet" role="dialog" aria-modal="true"><div class="grab"></div><div class="in"></div></div>');
+    sh.querySelector(".in").innerHTML = inner; layer.appendChild(scrim); layer.appendChild(sh);
+    scrim.onclick = function () { closeSheet(); };
+    layer._onClose = onClose || null;
+    var f = sh.querySelector("textarea") || sh.querySelector(".btn.primary") || sh.querySelector("button, a"); if (f) setTimeout(function () { f.focus(); }, 30);
+    return sh;
+  }
+  function closeSheet(silent) {
+    var cb = layer._onClose; layer._onClose = null; layer.innerHTML = "";
+    if (!silent && lastFocus && lastFocus.focus) try { lastFocus.focus(); } catch (e) {}
+    if (!silent && cb) cb();
+  }
+
+  function noteSheet(id, d, done) {
+    var c = byId[id];
+    var q = d === "wish" ? "Quelle mesure proposeriez-vous à la place ?" : "Quel sujet vous paraît plus important ?";
+    var sh = openSheet('<span class="badge ' + d + '">' + GLYPH[d] + " " + LABEL[d] + '</span><h3>' + esc(c.mesure) + '</h3><label for="note-txt" style="font-weight:600">' + q + ' <span style="color:var(--muted);font-weight:400">(facultatif)</span></label><textarea id="note-txt" maxlength="400" placeholder="Votre idée, en une phrase"></textarea><p class="fine" style="margin:0">Gardé uniquement sur cet appareil. Rien n\'est envoyé.</p><div class="row-btns"><button class="btn ghost" id="n-skip">Passer</button><button class="btn primary" id="n-save">Garder ma réponse</button></div>',
+      function () { done(""); });
+    $("#n-skip", sh).onclick = function () { layer._onClose = null; closeSheet(true); done(""); };
+    $("#n-save", sh).onclick = function () { var v = $("#note-txt", sh).value.trim(); layer._onClose = null; closeSheet(true); done(v); };
+  }
+
+  function people(c, side) {
+    var out = SLUGS.filter(function (s) { return c.pos[s] && c.pos[s][0] === side; });
+    if (!out.length) return '<span class="fine">Aucune position documentée.</span>';
+    return out.map(function (s) { return '<span class="person' + (s === c.centre ? " me" : "") + '"><img src="' + CANDS[s].img + '" alt="">' + esc(CANDS[s].name) + ' <i>' + c.pos[s][1] + "</i></span>"; }).join("");
+  }
+  function reveal(id) {
+    var c = byId[id], k = CANDS[c.centre], d = S.dec[id].d;
+    var undoc = SLUGS.filter(function (s) { return !c.pos[s]; }).length;
+    var sh = openSheet(
+      '<div class="eyebrow">Révélation · votre choix : <span class="badge ' + d + '">' + GLYPH[d] + " " + LABEL[d] + "</span></div>" +
+      '<div class="reveal-head"><img src="' + k.img + '" alt="Portrait stylisé de ' + esc(k.name) + '"><div><h3>' + esc(k.name) + "</h3><p>" + esc(k.tag) + "</p></div></div>" +
+      "<blockquote>" + esc(c.quote) + "</blockquote>" +
+      '<p style="margin:0;color:var(--ink-2);font-size:14px">' + esc(c.message) + "</p>" +
+      '<div class="sides"><div class="side"><span class="lab" style="color:var(--d-ok)">▲ ' + esc(c.pole_a) + '</span><div class="people">' + people(c, 1) + '</div></div>' +
+      '<div class="side"><span class="lab" style="color:var(--d-no)">▼ ' + esc(c.pole_b) + '</span><div class="people">' + people(c, -1) + "</div></div>" +
+      '<span class="fine">' + undoc + " candidat" + (undoc > 1 ? "s" : "") + " sans position documentée sur cette mesure · lettres = niveau de confiance de la source</span></div>" +
+      '<div class="row-btns"><a class="btn" href="' + c.url + '" target="_blank" rel="noopener">Lire l\'analyse complète ↗</a><button class="btn primary" id="r-next">Carte suivante</button></div>',
+      afterReveal);
+    $("#r-next", sh).onclick = function () { closeSheet(); };
+  }
+  function afterReveal() {
+    busy = false; renderStack();
+    var weekDone = WEEK.every(function (id) { return S.dec[id]; });
+    if (weekDone && !S.triSeen) { S.triSeen = true; save(); grandTri(); }
+    if (activeSeg === "mine") renderMine();
+  }
+
+  // ---------- Le Grand Tri ----------
+  function grandTri() {
+    var sc = scores(), L = sc.leader;
+    var res = L ? '<img src="' + CANDS[L].img + '" alt=""><b style="font-family:var(--serif);font-size:22px">' + esc(houseLabel(L)) + '</b><span style="color:#CFE6E4;font-size:13px">teinte ' + esc(CANDS[L].tone) + " · " + Math.round(sc.list[0].pct * 100) + " % d'accord sur " + sc.list[0].n + " cartes documentées</span>"
+      : '<b style="font-family:var(--serif);font-size:20px">Votre deck hésite encore</b><span style="color:#CFE6E4;font-size:13px">Pas assez de cartes communes pour départager les maisons. Tranchez les cartes à réviser.</span>';
+    var ov = el('<div class="overlay tri" role="dialog" aria-modal="true" aria-label="Le Grand Tri"><div class="ob">' +
+      '<svg class="hat" viewBox="0 0 150 150" aria-hidden="true"><path d="M75 14 L112 108 H38 Z" fill="var(--deck)" stroke="#EAF6F5" stroke-width="2"/><path d="M20 110 Q75 92 130 110 Q75 128 20 110Z" fill="#0B4A52" stroke="#EAF6F5" stroke-width="2"/><circle cx="70" cy="62" r="3" fill="#FCE58C"/><circle cx="84" cy="80" r="2.2" fill="#FCE58C"/><circle cx="64" cy="88" r="1.8" fill="#FCE58C"/><rect x="58" y="97" width="5" height="9" rx="1" fill="#FBBF24"/><rect x="66" y="93" width="5" height="13" rx="1" fill="#F59E0B"/><rect x="74" y="89" width="5" height="17" rx="1" fill="#D97706"/><rect x="82" y="85" width="5" height="21" rx="1" fill="#B45309"/></svg>' +
+      '<div class="step">Le Grand Tri · semaine 42</div><p class="big">La magie a parlé ?</p><p class="sub">Non : la data et vos votes.</p>' +
+      '<div class="res">' + res + '</div><div class="row-btns"><button class="btn ghost" id="t-rev">Réviser les anciennes cartes</button><button class="btn" id="t-mine">Voir mon deck</button></div></div></div>');
+    document.body.appendChild(ov);
+    $("#t-rev", ov).onclick = function () { ov.remove(); };
+    $("#t-mine", ov).onclick = function () { ov.remove(); showSeg("mine"); };
+    setTimeout(function () { $("#t-mine", ov).focus(); }, 30);
+  }
+
+  // ---------- Mon deck ----------
+  var activeSeg = "play";
+  function showSeg(s) {
+    activeSeg = s;
+    $("#seg-play").setAttribute("aria-selected", s === "play"); $("#seg-mine").setAttribute("aria-selected", s === "mine");
+    $("#play").hidden = s !== "play"; $("#mine").hidden = s !== "mine";
+    if (s === "mine") renderMine();
+  }
+  function renderMine() {
+    var sc = scores(), L = sc.leader, decided = Object.keys(S.dec).length;
+    var counted = Object.keys(S.dec).filter(function (id) { return S.dec[id].d === "ok" || S.dec[id].d === "no"; }).length;
+    var hero = '<div class="deckhero"><div class="swatch">' + (L ? '<img src="' + CANDS[L].img + '" alt="">' : "") + "</div><div>" +
+      '<div class="eyebrow">Couleur de votre deck</div><h2>' + (L ? esc(houseLabel(L)) + " · teinte " + esc(CANDS[L].tone) : "Deck neutre : il hésite encore") + "</h2>" +
+      "<p>" + decided + " carte" + (decided > 1 ? "s" : "") + " tranchée" + (decided > 1 ? "s" : "") + " sur " + CARDS.length + " · " + counted + " compte" + (counted > 1 ? "nt" : "") + " dans le calcul (Aligné / Désaligné).</p></div></div>";
+    var rank = '<div class="rank"><h3>Vos 12 candidats</h3><p class="fine" style="margin:0 0 4px">% d\'accord avec leurs positions documentées · n = cartes prises en compte · maison à partir de ' + MIN_N + " cartes, sans égalité en tête.</p>";
+    var pos = 0, prev = null;
+    sc.list.forEach(function (r, i) {
+      var weak = r.n < MIN_N;
+      if (!weak) { if (prev === null || r.pct !== prev) pos = i + 1; prev = r.pct; }
+      var tie = !weak && sc.list.some(function (o, j) { return j !== i && o.n >= MIN_N && o.pct === r.pct; });
+      var col = "oklch(calc(0.58 + var(--lift)) 0.11 " + CANDS[r.s].hue + ")";
+      rank += '<div class="row' + (r.s === L ? " lead" : "") + '"><span class="pos">' + (weak ? "–" : (tie ? "=" : "") + pos) + '</span><img src="' + CANDS[r.s].img + '" alt=""><span class="nm"><b>' + esc(CANDS[r.s].name) + '</b><span class="bar' + (weak ? " weak" : "") + '"><i style="width:' + (r.pct == null ? 0 : Math.round(r.pct * 100)) + "%;background:" + col + '"></i></span></span><span class="pct">' + (r.pct == null ? "—" : Math.round(r.pct * 100) + " %") + "<small>n = " + r.n + (weak ? " · trop peu" : "") + "</small></span></div>";
+    });
+    rank += "</div>";
+    var coll = '<h3>Ma collection</h3><div class="coll">' + ORDER.map(function (c) {
+      var d = S.dec[c.id];
+      return '<button class="mini' + (d ? "" : " todo") + '" data-id="' + c.id + '">' + icon(c.icon, 1.8) + '<span class="num">N° ' + c.n + '</span><span class="t">' + esc(c.theme) + "</span>" + (d ? '<span class="badge ' + d.d + '">' + GLYPH[d.d] + " " + LABEL[d.d] + "</span>" : '<span class="badge todo">À trancher</span>') + "</button>";
+    }).join("") + "</div>";
+    var note = '<div class="note"><b>Prototype.</b> Les positions des candidats ne sont documentées que pour 61 cases sur 144 (42 %). Avec ces trous, le calcul avantage mécaniquement certains candidats : il ne sera pas publié avant que la matrice soit complétée (investigation INV-03).</div>';
+    var tools = '<div class="tools"><button class="btn" id="m-copy">Copier mon deck</button><button class="btn" id="m-import">Importer un deck</button><button class="btn ghost" id="m-reset">Tout recommencer</button><button class="btn ghost" id="m-intro">Revoir l\'introduction</button></div>';
+    $("#mine-wrap").innerHTML = hero + rank + note + coll + tools;
+    Array.prototype.forEach.call(document.querySelectorAll(".mini"), function (b) { b.onclick = function () { editSheet(b.dataset.id); }; });
+    $("#m-copy").onclick = copyDeck; $("#m-import").onclick = importSheet; $("#m-reset").onclick = resetSheet;
+    $("#m-intro").onclick = function () { onboarding(0); };
+  }
+  function editSheet(id) {
+    var c = byId[id], d = S.dec[id] ? S.dec[id].d : null;
+    var opts = ["ok", "no", "wish", "meh"].map(function (k) { return '<button class="' + k + '" data-d="' + k + '" aria-pressed="' + (d === k) + '"><span>' + GLYPH[k] + " " + LABEL[k] + "</span></button>"; }).join("");
+    var sh = openSheet('<span class="num">N° ' + c.n + " · " + esc(c.theme) + '</span><h3>' + esc(c.mesure) + '</h3><div class="fig"><b style="font-size:28px">' + esc(c.fig) + '</b><span>' + esc(c.fig_label) + '</span></div><div class="choice4">' + opts + '</div>' + (d ? '<div class="row-btns"><button class="btn ghost" id="e-clear">Retirer ma décision</button>' + '<button class="btn" id="e-see">Voir qui défend quoi</button></div>' : ""));
+    Array.prototype.forEach.call(sh.querySelectorAll(".choice4 button"), function (b) {
+      b.onclick = function () { decide(id, b.dataset.d, S.dec[id] && S.dec[id].note); closeSheet(true); renderMine(); renderStack(); };
+    });
+    if (d) {
+      $("#e-clear", sh).onclick = function () { var before = scores().leader; delete S.dec[id]; var after = scores().leader; S.leader = after; save(); applyDeck(after); renderWeek(); if (before !== after) toast(after ? "Bascule ! Nouvelle maison : <b>" + esc(houseLabel(after)) + "</b>." : "Votre deck redevient neutre."); closeSheet(true); renderMine(); renderStack(); };
+      $("#e-see", sh).onclick = function () { reveal(id); };
+    }
+  }
+  function copyDeck() {
+    var txt = JSON.stringify({ v: 1, dec: S.dec });
+    var done = function () { toast("Deck copié. Collez-le sur un autre appareil via « Importer un deck »."); };
+    try { navigator.clipboard.writeText(txt).then(done, function () { showText(txt); }); } catch (e) { showText(txt); }
+  }
+  function showText(txt) { var sh = openSheet('<h3>Votre deck</h3><p class="fine" style="margin:0">Sélectionnez et copiez ce texte.</p><textarea id="deck-txt" readonly></textarea>'); var t = $("#deck-txt", sh); t.value = txt; t.select(); }
+  function importSheet() {
+    var sh = openSheet('<h3>Importer un deck</h3><label for="imp-txt" class="fine">Collez ici le texte copié depuis un autre appareil.</label><textarea id="imp-txt"></textarea><div class="row-btns"><button class="btn ghost" id="i-cancel">Annuler</button><button class="btn primary" id="i-ok">Importer</button></div><p class="fine" id="i-err" style="margin:0;color:var(--d-no)" hidden>Ce texte n\'est pas un deck Magnitude valide.</p>');
+    $("#i-cancel", sh).onclick = function () { closeSheet(true); };
+    $("#i-ok", sh).onclick = function () {
+      try { var o = JSON.parse($("#imp-txt", sh).value); if (!o || typeof o.dec !== "object") throw 0; var clean = {}; Object.keys(o.dec).forEach(function (k) { if (byId[k] && LABEL[o.dec[k].d]) clean[k] = { d: o.dec[k].d, t: o.dec[k].t || Date.now(), note: typeof o.dec[k].note === "string" ? o.dec[k].note.slice(0, 400) : undefined }; }); S.dec = clean; S.leader = scores().leader; save(); applyDeck(S.leader); renderWeek(); renderStack(); closeSheet(true); renderMine(); toast("Deck importé."); }
+      catch (e) { $("#i-err", sh).hidden = false; }
+    };
+  }
+  function resetSheet() {
+    var sh = openSheet('<h3>Tout recommencer ?</h3><p style="margin:0">Toutes vos décisions et vos souhaits enregistrés sur cet appareil seront effacés.</p><div class="row-btns"><button class="btn ghost" id="x-no">Garder mon deck</button><button class="btn primary" id="x-yes">Effacer et recommencer</button></div>');
+    $("#x-no", sh).onclick = function () { closeSheet(true); };
+    $("#x-yes", sh).onclick = function () { S = { dec: {}, onboarded: true, leader: null, triSeen: false }; save(); applyDeck(null); renderWeek(); renderStack(); closeSheet(true); showSeg("play"); toast("Nouveau deck. Bonne partie !"); };
+  }
+
+  // ---------- Recherche ----------
+  var theme = null;
+  function renderSearch() {
+    var q = ($("#q").value || "").trim().toLowerCase();
+    var themes = ORDER.map(function (c) { return c.theme; });
+    $("#filters").innerHTML = '<button aria-pressed="' + (theme === null) + '" data-t="">Tous</button>' + themes.map(function (t) { return '<button aria-pressed="' + (theme === t) + '" data-t="' + esc(t) + '">' + esc(t) + "</button>"; }).join("");
+    Array.prototype.forEach.call(document.querySelectorAll("#filters button"), function (b) { b.onclick = function () { theme = b.dataset.t || null; renderSearch(); }; });
+    var list = ORDER.filter(function (c) {
+      if (theme && c.theme !== theme) return false;
+      if (!q) return true;
+      var hay = (c.theme + " " + c.mesure + " " + c.fig_label + " " + (S.dec[c.id] ? c.title + " " + CANDS[c.centre].name : "")).toLowerCase();
+      return hay.indexOf(q) >= 0;
+    });
+    $("#dossiers").innerHTML = list.length ? list.map(function (c) {
+      var d = S.dec[c.id], n = Object.keys(c.pos).length;
+      var lv = { A: 0, B: 0, C: 0 }; Object.keys(c.pos).forEach(function (s) { lv[c.pos[s][1]] = (lv[c.pos[s][1]] || 0) + 1; });
+      var who = d ? esc(CANDS[c.centre].name) : '<span class="redact">' + esc(CANDS[c.centre].name) + '</span> <span class="fine">(tranchez la carte pour lever le secret)</span>';
+      return '<article class="dossier" data-tab="DOSSIER N° ' + c.n + " · " + esc(c.theme.toUpperCase()) + '">' +
+        (d ? '<span class="stampd" style="color:var(--d-' + d.d + ')">' + LABEL[d.d].toUpperCase() + "</span>" : '<span class="stampd" style="color:var(--muted)">OUVERT</span>') +
+        "<h4>" + esc(d ? c.title : c.mesure) + "</h4>" +
+        '<div class="meta">Auteur : ' + who + "</div>" +
+        '<div class="meta">Pièces : ' + n + "/12 positions documentées · A " + (lv.A || 0) + " · B " + (lv.B || 0) + " · C " + (lv.C || 0) + "</div>" +
+        '<div class="meta">Indice : <b>' + esc(c.fig) + "</b> " + esc(c.fig_label) + "</div>" +
+        '<a href="' + c.url + '" target="_blank" rel="noopener" style="font-size:13px;font-weight:600">Consulter l\'analyse complète ↗</a></article>';
+    }).join("") : '<p class="fine">Aucun dossier ne correspond. Essayez « dette », « smic » ou « héritage ».</p>';
+  }
+
+  // ---------- Puits aux souhaits ----------
+  var wellRAF = null;
+  function startWell() {
+    var cv = $("#well"); if (!cv) return;
+    var wishes = Object.keys(S.dec).filter(function (id) { return S.dec[id].d === "wish"; }).length;
+    $("#well-cap").textContent = wishes ? "Vos " + wishes + " souhait" + (wishes > 1 ? "s brillent" : " brille") + " en ambre parmi les autres. Ils ne quittent pas votre appareil." : "Chaque « J'aimerais » devient une étoile ambre. Personne ne sait qui l'a souhaitée.";
+    var dpr = Math.min(2, window.devicePixelRatio || 1), W = cv.clientWidth, H = cv.clientHeight;
+    if (!W) return;
+    cv.width = W * dpr; cv.height = H * dpr; var ctx = cv.getContext("2d"); ctx.scale(dpr, dpr);
+    var seed = 7; function r() { seed = (seed * 16807) % 2147483647; return seed / 2147483647; }
+    var P = []; for (var i = 0; i < 140; i++) P.push({ a: r() * Math.PI * 2, rad: Math.sqrt(r()) * W * 0.44, s: 0.6 + r() * 1.6, sp: (0.0006 + r() * 0.0016) * (r() < 0.5 ? 1 : -1), mine: i < wishes });
+    function frame(t) {
+      ctx.clearRect(0, 0, W, H);
+      P.forEach(function (p) {
+        if (!reduce) p.a += p.sp;
+        var x = W / 2 + Math.cos(p.a) * p.rad, y = H / 2 + Math.sin(p.a) * p.rad * 0.92;
+        ctx.beginPath(); ctx.arc(x, y, p.mine ? p.s + 1.6 : p.s, 0, Math.PI * 2);
+        ctx.fillStyle = p.mine ? "rgba(251,191,36,.95)" : "rgba(190,236,232," + (0.25 + p.s / 4) + ")"; ctx.fill();
+      });
+      if (!reduce) wellRAF = requestAnimationFrame(frame);
+    }
+    cancelAnimationFrame(wellRAF); frame(0);
+  }
+
+  // ---------- Navigation ----------
+  function showView(v) {
+    ["deck", "search", "maison"].forEach(function (k) { $("#view-" + k).hidden = k !== v; });
+    Array.prototype.forEach.call(document.querySelectorAll(".tabs button"), function (b) { b.setAttribute("aria-selected", b.dataset.view === v); });
+    cancelAnimationFrame(wellRAF);
+    if (v === "search") renderSearch();
+    if (v === "maison") startWell();
+  }
+  Array.prototype.forEach.call(document.querySelectorAll(".tabs button"), function (b) { b.onclick = function () { showView(b.dataset.view); }; });
+  $("#seg-play").onclick = function () { showSeg("play"); };
+  $("#seg-mine").onclick = function () { showSeg("mine"); };
+  $("#q").addEventListener("input", renderSearch);
+  Array.prototype.forEach.call(document.querySelectorAll("#pad button"), function (b) { b.onclick = function () { commit(b.dataset.dir); }; });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && layer.firstChild) { closeSheet(); return; }
+    if (layer.firstChild || document.querySelector(".overlay") || $("#view-deck").hidden || activeSeg !== "play") return;
+    var k = { ArrowRight: "r", ArrowLeft: "l", ArrowUp: "u", ArrowDown: "d" }[e.key];
+    if (k) { e.preventDefault(); commit(k); }
+  });
+
+  var toastT = null;
+  function toast(html) { var t = $("#toast"); t.innerHTML = html; t.hidden = false; clearTimeout(toastT); toastT = setTimeout(function () { t.hidden = true; }, 3600); }
+
+  // ---------- Introduction (escape game) ----------
+  var STEPS = [
+    { k: "Porte verrouillée", h: "Vous êtes enfermé·e dans la salle des promesses.", p: "Une seule clé ouvre la porte : savoir pour qui voter, en connaissance de cause." },
+    { k: "Les règles", h: "Tranchez chaque mesure d'un geste.", p: "Le nom du candidat reste caché jusqu'à votre choix. Vous pourrez toujours changer d'avis.", compass: true },
+    { k: "La récompense", h: "Votre deck prend la couleur de vos convictions.", p: "Chaque semaine, 6 nouvelles cartes. Le Grand Tri révèle la maison dont vous êtes le plus proche. Vos choix restent sur votre appareil." }
+  ];
+  function onboarding(i) {
+    var old = document.querySelector(".overlay.onb"); if (old) old.remove();
+    var s = STEPS[i];
+    var comp = s.compass ? '<div class="compass" aria-hidden="true"><div class="c"></div><span class="n">↑<br>J\'aimerais</span><span class="e">Aligné<br>→</span><span class="w">←<br>Désaligné</span><span class="s">M\'en fous<br>↓</span></div>' : "";
+    var ov = el('<div class="overlay onb" role="dialog" aria-modal="true" aria-label="Introduction"><div class="ob"><div class="step">' + (i + 1) + " / 3 · " + s.k.toUpperCase() + "</div><h2>" + s.h + "</h2>" + comp + "<p>" + s.p + '</p><div class="row-btns">' + (i < 2 ? '<button class="btn ghost" id="o-skip">Passer</button><button class="btn" id="o-next">Continuer</button>' : '<button class="btn" id="o-next">Entrer dans la salle</button>') + "</div></div></div>");
+    document.body.appendChild(ov);
+    function finish() { ov.remove(); S.onboarded = true; save(); }
+    $("#o-next", ov).onclick = function () { if (i < 2) onboarding(i + 1); else finish(); };
+    if (i < 2) $("#o-skip", ov).onclick = finish;
+    setTimeout(function () { $("#o-next", ov).focus(); }, 30);
+  }
+
+  // ---------- Démarrage ----------
+  S.leader = scores().leader; applyDeck(S.leader);
+  renderWeek(); renderStack();
+  if (!S.onboarded) onboarding(0);
+})();
+</script>

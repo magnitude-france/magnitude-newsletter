@@ -1,0 +1,514 @@
+{
+ "cards": [
+  {
+   "id": "carte_01_le_pen_logement",
+   "n": "01",
+   "num": "0",
+   "theme": "Logement",
+   "centre": "le-pen",
+   "mesure": "Favoriser l'accession à la propriété",
+   "pole_a": "Aide dédiée proposée",
+   "pole_b": "Pas d'aide dédiée",
+   "fig": "56–58 %",
+   "fig_label": "part de propriétaires occupants en France, quasi stable depuis 2001 (selon la source)",
+   "title": "Le Pen veut faciliter l'achat d'un premier logement — le vrai décrochage est ailleurs",
+   "message": "Marine Le Pen (RN) veut relancer l'accession à la propriété — mais le vrai obstacle des 20 dernières années, c'est l'écart entre les prix et les revenus, pas l'accès au crédit.",
+   "quote": "« Libérer la construction, valoriser le parc existant, encourager et protéger la propriété »",
+   "url": "https://magnitude.pub/numeros/0/reports/carte_01_le_pen_logement.html",
+   "pos": {
+    "attal": [
+     1,
+     "B"
+    ],
+    "faure": [
+     1,
+     "B"
+    ],
+    "le-pen": [
+     1,
+     "B"
+    ],
+    "melenchon": [
+     1,
+     "A"
+    ],
+    "retailleau": [
+     1,
+     "A"
+    ],
+    "ruffin": [
+     1,
+     "A"
+    ]
+   }
+  },
+  {
+   "id": "carte_02_retailleau_referendum",
+   "n": "02",
+   "num": "0",
+   "theme": "Démocratie",
+   "centre": "retailleau",
+   "mesure": "Élargir le champ du référendum",
+   "pole_a": "Pour une initiative citoyenne",
+   "pole_b": "Contre / à durcir",
+   "fig": "",
+   "fig_label": "",
+   "title": "Retailleau veut élargir le référendum — la France n'en a pas organisé depuis 21 ans",
+   "message": "Bruno Retailleau (LR) veut élargir le champ du référendum. La France a organisé 10 référendums nationaux en 68 ans de Ve République — aucun depuis 2005.",
+   "quote": "« D'abord, le peuple français doit pouvoir décider, par référendum, de toute question législative. »",
+   "url": "https://magnitude.pub/numeros/0/reports/carte_02_retailleau_referendum.html",
+   "pos": {
+    "glucksmann": [
+     1,
+     "A"
+    ],
+    "le-pen": [
+     1,
+     "B"
+    ],
+    "melenchon": [
+     1,
+     "A"
+    ],
+    "philippe": [
+     -1,
+     "A"
+    ],
+    "retailleau": [
+     1,
+     "A"
+    ],
+    "roussel": [
+     1,
+     "C"
+    ],
+    "ruffin": [
+     1,
+     "C"
+    ],
+    "villepin": [
+     1,
+     "A"
+    ]
+   }
+  },
+  {
+   "id": "carte_03_philippe_fiscalite",
+   "n": "03",
+   "num": "0",
+   "theme": "Fiscalité des entreprises",
+   "centre": "philippe",
+   "mesure": "« Deal fiscal » : baisse des impôts de production compensée par une baisse des aides publiques",
+   "pole_a": "Supprimer / baisser",
+   "pole_b": "Ne pas les baisser",
+   "fig": "",
+   "fig_label": "",
+   "title": "Philippe propose un « deal fiscal » aux entreprises — où en sont les impôts de production ?",
+   "message": "Édouard Philippe (Horizons) propose de baisser les impôts de production en échange d'une baisse des aides aux entreprises. Ces impôts pèsent 4,4 % du PIB en France, près de deux fois la moyenne européenne (2,4 %).",
+   "quote": "« un deal fiscal avec nos entreprises d'une ampleur inédite »",
+   "url": "https://magnitude.pub/numeros/0/reports/carte_03_philippe_fiscalite.html",
+   "pos": {
+    "le-pen": [
+     1,
+     "B"
+    ],
+    "philippe": [
+     1,
+     "C"
+    ],
+    "retailleau": [
+     1,
+     "B"
+    ],
+    "zemmour": [
+     1,
+     "C"
+    ]
+   }
+  },
+  {
+   "id": "carte_04_glucksmann_patrimoine",
+   "n": "04",
+   "num": "0",
+   "theme": "Héritage & patrimoine",
+   "centre": "glucksmann",
+   "mesure": "Taxation accrue des « méga-héritages »",
+   "pole_a": "Taxer davantage",
+   "pole_b": "Ne pas augmenter / baisser",
+   "fig": "",
+   "fig_label": "",
+   "title": "Glucksmann veut taxer les « méga-héritages » — la concentration du patrimoine en 3 chiffres",
+   "message": "Raphaël Glucksmann (Place Publique) veut taxer davantage les « méga-héritages » pour augmenter le salaire net. Combien de patrimoine le 1 % le plus riche détient-il ? Deux méthodes de mesure, deux trajectoires — la carte assume la divergence.",
+   "quote": "« 1 euro pris aux méga-héritages égale 1 euro rendu aux salariés français sur leur fiche de paie »",
+   "url": "https://magnitude.pub/numeros/0/reports/carte_04_glucksmann_patrimoine.html",
+   "pos": {
+    "glucksmann": [
+     1,
+     "C"
+    ],
+    "le-pen": [
+     -1,
+     "B"
+    ],
+    "melenchon": [
+     1,
+     "A"
+    ],
+    "philippe": [
+     -1,
+     "B"
+    ],
+    "retailleau": [
+     -1,
+     "A"
+    ],
+    "tondelier": [
+     1,
+     "B"
+    ],
+    "attal": [
+     -1,
+     "B"
+    ],
+    "faure": [
+     1,
+     "C"
+    ],
+    "roussel": [
+     1,
+     "A"
+    ],
+    "ruffin": [
+     1,
+     "C"
+    ],
+    "villepin": [
+     1,
+     "B"
+    ],
+    "zemmour": [
+     -1,
+     "B"
+    ]
+   }
+  },
+  {
+   "id": "carte_05_tondelier_climat",
+   "n": "05",
+   "num": "0",
+   "theme": "Climat",
+   "centre": "tondelier",
+   "mesure": "Surtaxe de 10 % sur les 1 % d'héritages les plus élevés, pour financer la transition",
+   "pole_a": "Taxe / contribution dédiée",
+   "pole_b": "Pas de nouvel impôt dédié",
+   "fig": "",
+   "fig_label": "",
+   "title": "Tondelier veut surtaxer les plus gros héritages pour la transition — l'ampleur du décrochage de rythme",
+   "message": "Marine Tondelier (Les Écologistes) veut financer la transition climatique par une surtaxe sur les 1 % d'héritages les plus élevés. Les émissions françaises baissent, mais plus assez vite pour 2030.",
+   "quote": "« une surtaxe de 10% […] les 1% des héritages les plus élevés »",
+   "url": "https://magnitude.pub/numeros/0/reports/carte_05_tondelier_climat.html",
+   "pos": {
+    "glucksmann": [
+     1,
+     "B"
+    ],
+    "le-pen": [
+     -1,
+     "B"
+    ],
+    "melenchon": [
+     1,
+     "B"
+    ],
+    "philippe": [
+     -1,
+     "B"
+    ],
+    "tondelier": [
+     1,
+     "C"
+    ],
+    "ruffin": [
+     1,
+     "A"
+    ]
+   }
+  },
+  {
+   "id": "carte_06_melenchon_confiance",
+   "n": "06",
+   "num": "0",
+   "theme": "Institutions",
+   "centre": "melenchon",
+   "mesure": "VIe République (Assemblée constituante)",
+   "pole_a": "Constituante proposée",
+   "pole_b": "Pas de changement de régime",
+   "fig": "",
+   "fig_label": "",
+   "title": "Mélenchon veut une VIe République — la confiance dans les institutions au plus bas",
+   "message": "Jean-Luc Mélenchon (LFI) veut une VIe République. La confiance dans l'Assemblée nationale est tombée à son plus bas niveau depuis 2009 (CEVIPOF).",
+   "quote": "« La nouvelle France appelle sa nouvelle République. En avant vers la sixième République. »",
+   "url": "https://magnitude.pub/numeros/0/reports/carte_06_melenchon_confiance.html",
+   "pos": {
+    "melenchon": [
+     1,
+     "A"
+    ],
+    "philippe": [
+     -1,
+     "C"
+    ],
+    "tondelier": [
+     1,
+     "A"
+    ]
+   }
+  },
+  {
+   "id": "carte_07_attal_dette",
+   "n": "07",
+   "num": "1",
+   "theme": "Dette publique",
+   "centre": "attal",
+   "mesure": "Zéro déficit public en 2037 et réduction des effectifs publics (100 000 postes)",
+   "pole_a": "Réduction forte / retour à l'équilibre",
+   "pole_b": "Pas d'objectif de réduction / priorité à l'investissement",
+   "fig": "",
+   "fig_label": "",
+   "title": "Attal veut le zéro déficit en 2037 — la France affiche 5,1 % de déficit public en 2025",
+   "message": "Gabriel Attal (Renaissance) vise le zéro déficit public en 2037, avec un retour sous 3 % avant 2032, 100 000 postes publics en moins et 120 à 150 Md€ d'économies. En 2025, le déficit français est de 5,1 % du PIB (152,5 Md€) contre 3,1 % en moyenne dans l'UE.",
+   "quote": "« un objectif de 100 000 postes supprimés dans l'État et les collectivités »",
+   "url": "https://magnitude.pub/numeros/1/reports/carte_07_attal_dette.html",
+   "pos": {
+    "attal": [
+     1,
+     "A"
+    ],
+    "le-pen": [
+     1,
+     "B"
+    ],
+    "melenchon": [
+     -1,
+     "C"
+    ],
+    "philippe": [
+     1,
+     "B"
+    ],
+    "retailleau": [
+     1,
+     "C"
+    ],
+    "villepin": [
+     1,
+     "B"
+    ],
+    "zemmour": [
+     1,
+     "C"
+    ]
+   }
+  },
+  {
+   "id": "carte_08_faure_smic",
+   "n": "08",
+   "num": "1",
+   "theme": "Salaires",
+   "centre": "faure",
+   "mesure": "Porter le Smic à 1 700 € net et conditionner les aides publiques aux entreprises aux hausses de salaire (conférence salariale)",
+   "pole_a": "Relever le Smic",
+   "pole_b": "Pas de hausse directe du Smic",
+   "fig": "",
+   "fig_label": "",
+   "title": "Faure veut porter le Smic à 1 700 € net — il est aujourd'hui de 1 478 € net",
+   "message": "Olivier Faure (PS) veut porter le Smic à 1 700 € net par mois et conditionner les aides publiques aux hausses de salaire. Cela représente +222 € par mois, soit +15 %, par rapport aux 1 478 € nets d'aujourd'hui.",
+   "quote": "« d'augmenter le smic, le faire passer à 1.700 euros net et convoquer une conférence salariale où l'Etat »",
+   "url": "https://magnitude.pub/numeros/1/reports/carte_08_faure_smic.html",
+   "pos": {
+    "faure": [
+     1,
+     "B"
+    ],
+    "glucksmann": [
+     1,
+     "C"
+    ],
+    "melenchon": [
+     1,
+     "B"
+    ],
+    "roussel": [
+     1,
+     "C"
+    ],
+    "ruffin": [
+     1,
+     "B"
+    ],
+    "tondelier": [
+     1,
+     "C"
+    ]
+   }
+  },
+  {
+   "id": "carte_09_roussel_securite",
+   "n": "09",
+   "num": "1",
+   "theme": "Sécurité",
+   "centre": "roussel",
+   "mesure": "Embaucher 60 000 agents (police, enquêteurs, douaniers) pour lutter contre le narcotrafic, pour 2,5 milliards d'euros",
+   "pole_a": "Embaucher massivement",
+   "pole_b": "Autre priorité (prévention, procédure, technologie)",
+   "fig": "",
+   "fig_label": "",
+   "title": "Roussel veut embaucher 60 000 agents contre le narcotrafic — l'équivalent de 22 % des effectifs actuels",
+   "message": "Fabien Roussel (PCF) propose d'embaucher 60 000 agents (police, enquêteurs, douaniers) contre le narcotrafic, pour 2,5 milliards d'euros : environ 22 % des 273 000 agents actuels de la police, de la gendarmerie et de la douane. La France compte 361 policiers pour 100 000 habitants (2022), contre 311 en Allemagne et 380 en Espagne.",
+   "quote": "« Il est possible et même indispensable d'embaucher 60.000 agents de police, d'enquêteurs, de douaniers, de magistrats, pour mener ce combat sans merci. »",
+   "url": "https://magnitude.pub/numeros/1/reports/carte_09_roussel_securite.html",
+   "pos": {
+    "faure": [
+     1,
+     "B"
+    ],
+    "le-pen": [
+     1,
+     "C"
+    ],
+    "roussel": [
+     1,
+     "A"
+    ],
+    "ruffin": [
+     1,
+     "B"
+    ],
+    "tondelier": [
+     -1,
+     "C"
+    ]
+   }
+  },
+  {
+   "id": "carte_10_ruffin_loisirs",
+   "n": "10",
+   "num": "1",
+   "theme": "Vie associative",
+   "centre": "ruffin",
+   "mesure": "Plan « Salle des Fêtes et maisons du peuple » : 1 Md€ par an pendant cinq ans, contrats aidés pour les associations, congé bénévole",
+   "pole_a": "Soutien public accru",
+   "pole_b": "Soutien public réduit",
+   "fig": "",
+   "fig_label": "",
+   "title": "Ruffin veut 1 Md€ par an pour les salles des fêtes — 81 % des crédits de la mission Sport, jeunesse et vie associative",
+   "message": "François Ruffin propose un Plan « Salle des Fêtes et maisons du peuple » doté d'un milliard d'euros par an pendant cinq ans. C'est l'équivalent de 81 % des 1 235,9 millions d'euros de crédits de paiement de la mission « Sport, jeunesse et vie associative » au projet de loi de finances 2026.",
+   "quote": "« Nous lancerons un grand Plan « Salle des Fêtes et maisons du peuple » doté d'un milliard d'euros par an pendant cinq ans »",
+   "url": "https://magnitude.pub/numeros/1/reports/carte_10_ruffin_loisirs.html",
+   "pos": {
+    "glucksmann": [
+     1,
+     "C"
+    ],
+    "ruffin": [
+     1,
+     "A"
+    ]
+   }
+  },
+  {
+   "id": "carte_11_villepin_darpa",
+   "n": "11",
+   "num": "1",
+   "theme": "Innovation",
+   "centre": "villepin",
+   "mesure": "Une DARPA européenne dotée d'un budget annuel d'environ 4 milliards de dollars",
+   "pole_a": "Pour une DARPA européenne",
+   "pole_b": "Pas d'agence de ce type",
+   "fig": "",
+   "fig_label": "",
+   "title": "Villepin veut une DARPA européenne à 4 milliards de dollars par an — l'agence américaine en reçoit environ 4,3",
+   "message": "Dominique de Villepin veut une DARPA européenne dotée de 4 milliards de dollars par an, comme son modèle américain. La DARPA dispose d'environ 4,3 Md$ en 2026, contre 1,6 Md$ pour le Conseil européen de l'innovation (EIC) et 1,1 Md$ pour le Fonds européen de la défense.",
+   "quote": "« Une DARPA européenne, dotée de moyens conséquents, à un niveau de financement annuel similaire à celui de la DARPA des États-Unis, 4 milliards de dollars, est plus urgente que jamais. »",
+   "url": "https://magnitude.pub/numeros/1/reports/carte_11_villepin_darpa.html",
+   "pos": {
+    "villepin": [
+     1,
+     "A"
+    ]
+   }
+  },
+  {
+   "id": "carte_12_zemmour_immigration",
+   "n": "12",
+   "num": "1",
+   "theme": "Immigration",
+   "centre": "zemmour",
+   "mesure": "Expulser tout étranger au chômage depuis un an",
+   "pole_a": "Pour l'expulsion",
+   "pole_b": "Contre l'expulsion",
+   "fig": "",
+   "fig_label": "",
+   "title": "Zemmour veut expulser les étrangers au chômage depuis un an — le chômage touche 12,4 % des immigrés, 7,7 % de la population",
+   "message": "Éric Zemmour (Reconquête) propose d'expulser tout étranger au chômage depuis un an. Le taux de chômage des immigrés est de 12,4 % en 2025 contre 7,7 % pour l'ensemble de la population, mais le nombre d'étrangers au chômage depuis un an n'est pas publié.",
+   "quote": "« Un étranger ne doit pas peser sur les finances publiques »",
+   "url": "https://magnitude.pub/numeros/1/reports/carte_12_zemmour_immigration.html",
+   "pos": {
+    "zemmour": [
+     1,
+     "B"
+    ]
+   }
+  }
+ ],
+ "cands": {
+  "philippe": {
+   "name": "Édouard Philippe",
+   "tag": "Centre-droit — Horizons"
+  },
+  "glucksmann": {
+   "name": "Raphaël Glucksmann",
+   "tag": "Centre-gauche — Place Publique"
+  },
+  "retailleau": {
+   "name": "Bruno Retailleau",
+   "tag": "Droite — LR"
+  },
+  "tondelier": {
+   "name": "Marine Tondelier",
+   "tag": "Gauche écologiste — Les Écologistes"
+  },
+  "le-pen": {
+   "name": "Marine Le Pen",
+   "tag": "Extrême-droite — RN"
+  },
+  "melenchon": {
+   "name": "Jean-Luc Mélenchon",
+   "tag": "Extrême-gauche — LFI"
+  },
+  "ruffin": {
+   "name": "François Ruffin",
+   "tag": "Gauche — Debout !"
+  },
+  "zemmour": {
+   "name": "Éric Zemmour",
+   "tag": "Extrême-droite — Reconquête"
+  },
+  "roussel": {
+   "name": "Fabien Roussel",
+   "tag": "Gauche — PCF"
+  },
+  "attal": {
+   "name": "Gabriel Attal",
+   "tag": "Centre — Renaissance"
+  },
+  "villepin": {
+   "name": "Dominique de Villepin",
+   "tag": "Centre — La France humaniste"
+  },
+  "faure": {
+   "name": "Olivier Faure",
+   "tag": "Gauche — PS"
+  }
+ }
+}

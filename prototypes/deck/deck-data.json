@@ -39,6 +39,18 @@
     "ruffin": [
      1,
      "A"
+    ],
+    "tondelier": [
+     1,
+     "A"
+    ],
+    "glucksmann": [
+     1,
+     "A"
+    ],
+    "roussel": [
+     1,
+     "A"
     ]
    }
   },
@@ -89,6 +101,10 @@
     "villepin": [
      1,
      "A"
+    ],
+    "tondelier": [
+     1,
+     "A"
     ]
    }
   },
@@ -123,6 +139,14 @@
     "zemmour": [
      1,
      "C"
+    ],
+    "tondelier": [
+     -1,
+     "A"
+    ],
+    "villepin": [
+     1,
+     "A"
     ]
    }
   },
@@ -231,6 +255,14 @@
     "ruffin": [
      1,
      "A"
+    ],
+    "attal": [
+     -1,
+     "B"
+    ],
+    "retailleau": [
+     -1,
+     "B"
     ]
    }
   },
@@ -259,6 +291,10 @@
      "C"
     ],
     "tondelier": [
+     1,
+     "A"
+    ],
+    "glucksmann": [
      1,
      "A"
     ]
@@ -307,6 +343,10 @@
     "zemmour": [
      1,
      "C"
+    ],
+    "tondelier": [
+     -1,
+     "A"
     ]
    }
   },
@@ -349,8 +389,34 @@
     "tondelier": [
      1,
      "C"
+    ],
+    "attal": [
+     -1,
+     "A",
+     "c"
+    ],
+    "le-pen": [
+     -1,
+     "A",
+     "c"
+    ],
+    "retailleau": [
+     -1,
+     "A",
+     "c"
+    ],
+    "philippe": [
+     -1,
+     "A",
+     "c"
+    ],
+    "villepin": [
+     -1,
+     "A",
+     "c"
     ]
-   }
+   },
+   "pole_c": "Hausse du net par les cotisations, sans hausse du Smic"
   },
   {
    "id": "carte_09_roussel_securite",
@@ -387,6 +453,14 @@
     "tondelier": [
      -1,
      "C"
+    ],
+    "philippe": [
+     -1,
+     "A"
+    ],
+    "melenchon": [
+     1,
+     "A"
     ]
    }
   },
@@ -411,6 +485,18 @@
      "C"
     ],
     "ruffin": [
+     1,
+     "A"
+    ],
+    "tondelier": [
+     1,
+     "A"
+    ],
+    "le-pen": [
+     -1,
+     "A"
+    ],
+    "melenchon": [
      1,
      "A"
     ]
@@ -457,6 +543,10 @@
     "zemmour": [
      1,
      "B"
+    ],
+    "le-pen": [
+     1,
+     "A"
     ]
    }
   }

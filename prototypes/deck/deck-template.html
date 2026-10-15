@@ -289,6 +289,92 @@ textarea { width: 100%; min-height: 90px; resize: vertical; border: 1px solid va
   .card.anim, .bar i { transition: none; }
   .sheet { animation: none; }
 }
+
+/* ---------- Mon deck : « La Banque des Promesses » (registre sur parchemin, écrit à la plume) ---------- */
+/*__FONTS__*/
+#mine.grimoire {
+  --vellum: #EFE3C8; --vellum-2: #E4D3AE; --edge: #C9AE7C; --iron: #3A2817; --iron-2: #6E563B; --rule: #CDB78F; --margin-red: #B5644F; --gilt: #9A6F22;
+  --w-ok: #2E6B5D; --w-no: #8A2F23; --w-wish: #34467E; --w-meh: #6F6656;
+  --fell: "IM Fell English", "Iowan Old Style", Georgia, serif; --plume: "La Belle Aurore", "Snell Roundhand", "Segoe Script", cursive;
+  background: radial-gradient(120% 80% at 50% -10%, #5B4127 0%, #3B2A1A 55%, #2A1D12 100%);
+  color: var(--iron);
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) #mine.grimoire {
+  --vellum: #2E2519; --vellum-2: #3A2F20; --edge: #574530; --iron: #EBDDBF; --iron-2: #BFA884; --rule: #4E3F2C; --margin-red: #C98470; --gilt: #D2A75A;
+  --w-ok: #79C2AE; --w-no: #E38E7C; --w-wish: #9DB0EA; --w-meh: #B8AE9A;
+  background: radial-gradient(120% 80% at 50% -10%, #2A1F14 0%, #17110B 70%); } }
+:root[data-theme="dark"] #mine.grimoire {
+  --vellum: #2E2519; --vellum-2: #3A2F20; --edge: #574530; --iron: #EBDDBF; --iron-2: #BFA884; --rule: #4E3F2C; --margin-red: #C98470; --gilt: #D2A75A;
+  --w-ok: #79C2AE; --w-no: #E38E7C; --w-wish: #9DB0EA; --w-meh: #B8AE9A;
+  background: radial-gradient(120% 80% at 50% -10%, #2A1F14 0%, #17110B 70%); }
+#mine.grimoire .wrap { gap: 22px; padding-top: 22px; padding-bottom: 40px; }
+.parch { position: relative; background:
+    radial-gradient(140% 90% at 50% 40%, transparent 55%, color-mix(in oklab, var(--edge) 55%, transparent) 100%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .25 0 0 0 0 .12 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E"),
+    linear-gradient(175deg, var(--vellum), var(--vellum-2));
+  color: var(--iron); border-radius: 3px 5px 4px 6px / 6px 3px 5px 4px; box-shadow: 0 1px 0 rgba(255,255,255,.25) inset, 0 14px 30px -18px rgba(0,0,0,.75), 0 2px 6px -2px rgba(0,0,0,.4); }
+.fell { font-family: var(--fell); }
+.plume { font-family: var(--plume); font-weight: 400; letter-spacing: .01em; }
+
+.frontis { padding: 26px 22px 22px; text-align: center; display: grid; gap: 10px; justify-items: center; }
+.frontis h2 { font-family: var(--fell); font-weight: 400; font-size: clamp(28px, 8vw, 40px); line-height: 1.05; margin: 0; letter-spacing: .01em; }
+.frontis .sub { font-family: var(--fell); font-style: italic; font-size: 15px; color: var(--iron-2); margin: 0; }
+.frontis .orn { width: 150px; height: 14px; color: var(--gilt); }
+.frontis .house { display: grid; grid-template-columns: 64px auto; gap: 14px; align-items: center; text-align: left; margin-top: 4px; }
+.seal-wax { width: 64px; height: 64px; border-radius: 50%; display: grid; place-items: center; background: radial-gradient(circle at 35% 30%, color-mix(in oklab, var(--deck) 70%, #fff), var(--deck) 55%, color-mix(in oklab, var(--deck) 70%, #000)); box-shadow: 0 0 0 4px color-mix(in oklab, var(--deck) 60%, transparent), 0 6px 10px -4px rgba(0,0,0,.5); }
+.seal-wax img { width: 40px; height: 40px; border-radius: 50%; filter: sepia(.6) contrast(1.05); mix-blend-mode: luminosity; opacity: .9; }
+.frontis .house .plume { font-size: 26px; line-height: 1.1; color: var(--iron); }
+.frontis .house .count { font-family: var(--fell); font-style: italic; font-size: 13.5px; color: var(--iron-2); }
+
+.ledger { padding: 20px 18px 16px 34px; }
+.ledger::before { content: ""; position: absolute; top: 0; bottom: 0; left: 22px; width: 1px; background: var(--margin-red); opacity: .7; }
+.ledger h3, .recueil-h { font-family: var(--fell); font-weight: 400; font-size: 22px; margin: 0 0 2px; }
+.ledger .rubric { font-family: var(--fell); font-style: italic; font-size: 13px; color: var(--iron-2); margin: 0 0 10px; line-height: 1.4; }
+.lrow { display: grid; grid-template-columns: 1.6em 28px 1fr auto; gap: 10px; align-items: center; padding: 7px 0 6px; border-bottom: 1px solid var(--rule); }
+.lrow .pos { font-family: var(--fell); font-size: 15px; color: var(--iron-2); text-align: right; }
+.lrow img { width: 28px; height: 28px; border-radius: 50%; filter: sepia(.75) saturate(.8); }
+.lrow .nm { display: grid; gap: 3px; min-width: 0; }
+.lrow .nm b { font-family: var(--fell); font-weight: 400; font-size: 16px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.lrow .ink { height: 3px; border-radius: 2px; background: currentColor; opacity: .8; transform-origin: left; }
+.lrow .pct { font-family: var(--plume); font-size: 22px; line-height: 1; text-align: right; white-space: nowrap; }
+.lrow .pct small { display: block; font-family: var(--fell); font-style: italic; font-size: 11.5px; color: var(--iron-2); }
+.lrow .maison { font-family: var(--plume); font-size: 16px; line-height: 1; color: var(--deck); }
+.lrow.weak { opacity: .62; }
+.lrow.retire { opacity: .5; }
+.lrow.retire .nm b { text-decoration: line-through; text-decoration-thickness: 1px; }
+.lrow .st-pill { justify-self: start; font-family: var(--fell); font-style: italic; text-transform: none; letter-spacing: 0; font-weight: 400; background: transparent; border: 0; padding: 0; color: var(--iron-2); font-size: 12.5px; }
+
+.recueil-h { color: #F1E4C6; text-align: center; margin-top: 4px; }
+.recueil-sub { margin: -14px 0 0; text-align: center; font-family: var(--fell); font-style: italic; color: #CDB993; font-size: 14px; }
+.pages { display: grid; gap: 18px; }
+@media (min-width: 700px) { .pages { grid-template-columns: 1fr 1fr; } }
+.folio { border: 0; margin: 0; font: inherit; text-align: left; cursor: pointer; display: grid; gap: 10px; padding: 18px 20px 20px; width: 100%; }
+.folio:nth-child(odd) { rotate: -.35deg; } .folio:nth-child(even) { rotate: .3deg; }
+.folio:focus-visible { outline: 3px solid var(--gilt); outline-offset: 3px; }
+.folio .head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; border-bottom: 1px solid var(--rule); padding-bottom: 6px; }
+.folio .no { font-family: var(--fell); font-size: 13px; color: var(--gilt); letter-spacing: .04em; }
+.folio .theme { font-family: var(--fell); font-style: italic; font-size: 14px; color: var(--iron-2); }
+.folio .titre { font-family: var(--fell); font-size: 20px; line-height: 1.22; margin: 0; text-wrap: pretty; }
+.folio .dose { font-family: var(--fell); font-size: 14px; color: var(--iron-2); line-height: 1.4; }
+.folio .dose b { font-weight: 400; color: var(--iron); font-size: 18px; }
+.folio .hand { display: grid; gap: 4px; padding-top: 4px; }
+.folio .verdict { font-family: var(--plume); font-size: 34px; line-height: 1; rotate: -3deg; transform-origin: left center; justify-self: start; }
+.folio .verdict.ok { color: var(--w-ok); } .folio .verdict.no { color: var(--w-no); } .folio .verdict.wish { color: var(--w-wish); } .folio .verdict.meh { color: var(--w-meh); }
+.folio .author { font-family: var(--plume); font-size: 20px; color: var(--iron); }
+.folio .author .st { font-family: var(--fell); font-style: italic; font-size: 12.5px; color: var(--iron-2); }
+.folio .billet { font-family: var(--plume); font-size: 19px; line-height: 1.35; color: var(--iron-2); }
+.folio.blank { opacity: .78; }
+.folio.blank .lines { height: 54px; background: repeating-linear-gradient(transparent 0 17px, var(--rule) 17px 18px); }
+.folio.blank .todo { font-family: var(--fell); font-style: italic; font-size: 14px; color: var(--iron-2); }
+.writing { animation: write 1100ms steps(28, end) both; }
+@keyframes write { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+@media (prefers-reduced-motion: reduce) { .writing { animation: none; } }
+
+.nb { padding: 14px 18px; font-family: var(--fell); font-style: italic; font-size: 13.5px; line-height: 1.5; color: var(--iron-2); }
+.nb b { font-style: normal; font-weight: 400; color: var(--margin-red); }
+.quill-tools { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 18px; }
+.quill-tools button { all: unset; cursor: pointer; font-family: var(--fell); font-style: italic; font-size: 15px; color: #E9D9B4; border-bottom: 1px solid rgba(233,217,180,.45); padding: 2px 0; }
+.quill-tools button:focus-visible { outline: 2px solid var(--gilt); outline-offset: 3px; }
 </style>
 
 <div id="app">
@@ -313,7 +399,7 @@ textarea { width: 100%; min-height: 90px; resize: vertical; border: 1px solid va
           <button class="ok" data-dir="r" aria-label="Aligné (glisser à droite)"><span class="b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span><span>Aligné</span></button>
         </div>
       </div>
-      <div id="mine" class="scroll" hidden style="flex:1;min-height:0"><div class="wrap" id="mine-wrap"></div></div>
+      <div id="mine" class="scroll grimoire" hidden style="flex:1;min-height:0"><div class="wrap" id="mine-wrap"></div></div>
     </section>
 
     <section class="view" id="view-search" aria-label="Recherche" hidden>
@@ -659,30 +745,47 @@ textarea { width: 100%; min-height: 90px; resize: vertical; border: 1px solid va
     $("#play").hidden = s !== "play"; $("#mine").hidden = s !== "mine";
     if (s === "mine") renderMine();
   }
+
+  function roman(n) { var v = [[10, "X"], [9, "IX"], [5, "V"], [4, "IV"], [1, "I"]], o = ""; n = +n; v.forEach(function (p) { while (n >= p[0]) { o += p[1]; n -= p[0]; } }); return o; }
   function renderMine() {
     var sc = scores(), L = sc.leader, decided = Object.keys(S.dec).length;
     var counted = Object.keys(S.dec).filter(function (id) { return S.dec[id].d === "ok" || S.dec[id].d === "no"; }).length;
-    var hero = '<div class="deckhero"><div class="swatch">' + (L ? '<img src="' + CANDS[L].img + '" alt="">' : "") + "</div><div>" +
-      '<div class="eyebrow">Couleur de votre deck</div><h2>' + (L ? esc(houseLabel(L)) + " · teinte " + esc(CANDS[L].tone) : "Deck neutre : il hésite encore") + "</h2>" +
-      "<p>" + decided + " carte" + (decided > 1 ? "s" : "") + " tranchée" + (decided > 1 ? "s" : "") + " sur " + CARDS.length + " · " + counted + " compte" + (counted > 1 ? "nt" : "") + " dans le calcul (Aligné / Désaligné).</p></div></div>";
-    var rank = '<div class="rank"><h3>Vos 12 candidats</h3><p class="fine" style="margin:0 0 4px">% d\'accord avec leurs positions documentées · n = cartes prises en compte · maison à partir de ' + MIN_N + " cartes, sans égalité en tête.</p>";
+    var orn = '<svg class="orn" viewBox="0 0 150 14" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true"><path d="M2 7h52M96 7h52"/><path d="M60 7c4-6 10-6 15 0 5 6 11 6 15 0-4-6-10-6-15 0-5 6-11 6-15 0z"/><circle cx="75" cy="7" r="1.6" fill="currentColor"/></svg>';
+    var front = '<section class="parch frontis" aria-label="Votre registre">' +
+      '<h2>La Banque des Promesses</h2><p class="sub">Registre tenu de votre main, gardé sur cet appareil</p>' + orn +
+      '<div class="house"><div class="seal-wax">' + (L ? '<img src="' + CANDS[L].img + '" alt="">' : "") + "</div><div>" +
+      '<div class="plume">' + (L ? esc(houseLabel(L)) : "Le deck hésite encore") + "</div>" +
+      '<div class="count">' + decided + " promesse" + (decided > 1 ? "s" : "") + " examinée" + (decided > 1 ? "s" : "") + " sur " + CARDS.length + ", dont " + counted + " au calcul (Aligné, Désaligné)" + (L ? ", teinte " + esc(CANDS[L].tone) : "") + ".</div></div></div></section>";
+    var rank = '<section class="parch ledger" aria-label="Grand livre des candidats"><h3>Le grand livre</h3><p class="rubric">Part d\'accord avec les positions documentées de chacun ; n = promesses prises en compte. Une maison se déclare à partir de ' + MIN_N + " promesses, sans égalité en tête.</p>";
     var pos = 0, prev = null;
     sc.list.forEach(function (r, i) {
       var weak = r.n < MIN_N;
       if (!weak) { if (prev === null || r.pct !== prev) pos = i + 1; prev = r.pct; }
       var tie = !weak && sc.list.some(function (o, j) { return j !== i && o.n >= MIN_N && o.pct === r.pct; });
-      var col = "oklch(calc(0.58 + var(--lift)) 0.11 " + CANDS[r.s].hue + ")";
-      rank += '<div class="row' + (r.s === L ? " lead" : "") + (stOf(r.s) && stOf(r.s).kind === "retire" ? " retire" : "") + '"><span class="pos">' + (weak ? "–" : (tie ? "=" : "") + pos) + '</span><img src="' + CANDS[r.s].img + '" alt=""><span class="nm"><b>' + esc(CANDS[r.s].name) + "</b>" + stPill(r.s) + '<span class="bar' + (weak ? " weak" : "") + '"><i style="width:' + (r.pct == null ? 0 : Math.round(r.pct * 100)) + "%;background:" + col + '"></i></span></span><span class="pct">' + (r.pct == null ? "—" : Math.round(r.pct * 100) + " %") + "<small>n = " + r.n + (weak ? " · trop peu" : "") + "</small></span></div>";
+      var col = "oklch(calc(0.5 + var(--lift)) 0.1 " + CANDS[r.s].hue + ")";
+      var ret = stOf(r.s) && stOf(r.s).kind === "retire";
+      rank += '<div class="lrow' + (r.s === L ? " lead" : "") + (weak ? " weak" : "") + (ret ? " retire" : "") + '"><span class="pos">' + (weak ? "–" : (tie ? "=" : "") + roman(pos)) + '</span><img src="' + CANDS[r.s].img + '" alt=""><span class="nm"><b>' + esc(CANDS[r.s].name) + "</b>" + (r.s === L ? '<span class="maison">votre maison</span>' : "") + (stOf(r.s) ? stPill(r.s) : "") +
+        '<span class="ink" style="width:' + (r.pct == null ? 0 : Math.round(r.pct * 100)) + "%;color:" + col + '"></span></span><span class="pct plume">' + (r.pct == null ? "—" : Math.round(r.pct * 100) + " %") + "<small>n = " + r.n + (weak ? ", trop peu" : "") + "</small></span></div>";
     });
-    rank += "</div>";
-    var coll = '<h3>Ma collection</h3><div class="coll">' + ORDER.map(function (c) {
+    rank += "</section>";
+    var last = Object.keys(S.dec).sort(function (a, b) { return S.dec[b].t - S.dec[a].t; })[0];
+    var pages = '<h3 class="recueil-h">Le recueil</h3><p class="recueil-sub">Une page par promesse. Touchez une page pour changer d\'avis.</p><div class="pages">' + ORDER.map(function (c) {
       var d = S.dec[c.id];
-      return '<button class="mini' + (d ? "" : " todo") + '" data-id="' + c.id + '">' + icon(c.icon, 1.8) + '<span class="num">N° ' + c.n + '</span><span class="t">' + esc(c.theme) + "</span>" + (d && stOf(c.centre) ? stShort(c.centre) : "") + (d ? '<span class="badge ' + d.d + '">' + GLYPH[d.d] + " " + LABEL[d.d] + "</span>" : '<span class="badge todo">À trancher</span>') + "</button>";
+      var head = '<span class="head"><span class="no">Folio ' + roman(c.n) + '</span><span class="theme">' + esc(c.theme) + "</span></span>";
+      if (!d) return '<button class="folio parch blank" data-id="' + c.id + '" aria-label="Page blanche : ' + esc(c.mesure) + ', à trancher">' + head + '<span class="titre">' + esc(c.mesure) + '</span><span class="lines" aria-hidden="true"></span><span class="todo">Page encore blanche : promesse à examiner.</span></button>';
+      var w = c.id === last ? " writing" : "";
+      var st = stOf(c.centre);
+      return '<button class="folio parch" data-id="' + c.id + '" aria-label="' + esc(c.mesure) + " : votre avis, " + LABEL[d.d] + '">' + head +
+        '<span class="titre">' + esc(c.mesure) + "</span>" +
+        '<span class="dose"><b>' + esc(c.fig) + "</b> " + esc(c.fig_label) + "</span>" +
+        '<span class="hand"><span class="verdict ' + d.d + w + '">' + LABEL[d.d] + "</span>" +
+        '<span class="author' + w + '">Promesse de ' + esc(CANDS[c.centre].name) + (st ? ' <span class="st">(' + esc(st.label.toLowerCase()) + ")</span>" : "") + "</span>" +
+        (d.note ? '<span class="billet' + w + '">« ' + esc(d.note) + " »</span>" : "") + "</span></button>";
     }).join("") + "</div>";
-    var note = '<div class="note"><b>Prototype.</b> Les positions des candidats sont documentées pour 82 cases sur 144 (57 %). Avec ces trous, le calcul peut avantager certains candidats : il ne sera pas publié avant que 6 cartes réunissent au moins 8 positions documentées et que le test de neutralité passe (INV-03, INV-04).</div>';
-    var tools = '<div class="tools"><button class="btn" id="m-copy">Copier mon deck</button><button class="btn" id="m-import">Importer un deck</button><button class="btn ghost" id="m-reset">Tout recommencer</button><button class="btn ghost" id="m-intro">Revoir l\'introduction</button></div>';
-    $("#mine-wrap").innerHTML = hero + rank + note + coll + tools;
-    Array.prototype.forEach.call(document.querySelectorAll(".mini"), function (b) { b.onclick = function () { editSheet(b.dataset.id); }; });
+    var note = '<aside class="parch nb"><b>Nota bene.</b> Les positions des candidats sont documentées pour 82 cases sur 144 (57 %). Avec ces trous, le calcul peut avantager certains candidats : il ne sera pas publié avant que 6 cartes réunissent au moins 8 positions documentées et que le test de neutralité passe (INV-03, INV-04).</aside>';
+    var tools = '<div class="quill-tools"><button id="m-copy">Copier mon registre</button><button id="m-import">Importer un registre</button><button id="m-reset">Tout recommencer</button><button id="m-intro">Revoir l\'introduction</button></div>';
+    $("#mine-wrap").innerHTML = front + rank + pages + note + tools;
+    Array.prototype.forEach.call(document.querySelectorAll(".folio"), function (b) { b.onclick = function () { editSheet(b.dataset.id); }; });
     $("#m-copy").onclick = copyDeck; $("#m-import").onclick = importSheet; $("#m-reset").onclick = resetSheet;
     $("#m-intro").onclick = function () { onboarding(0); };
   }

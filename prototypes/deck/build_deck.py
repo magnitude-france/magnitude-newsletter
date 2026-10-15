@@ -96,6 +96,14 @@ def main():
         card["fig"], card["fig_label"] = FIGURES[n]
         card["icon"] = ICONS[n]
     tpl = (HERE / "deck-template.html").read_text(encoding="utf-8")
+    # Polices du registre (SIL OFL, voir fonts/) intégrées : aucune requête réseau.
+    faces = []
+    for fam, fichier, style in [("IM Fell English", "im-fell-english-latin-400-normal.woff2", "normal"),
+                                ("IM Fell English", "im-fell-english-latin-400-italic.woff2", "italic"),
+                                ("La Belle Aurore", "la-belle-aurore-latin-400-normal.woff2", "normal")]:
+        b64 = base64.b64encode((HERE / "fonts" / fichier).read_bytes()).decode()
+        faces.append(f'@font-face {{ font-family: "{fam}"; font-style: {style}; font-weight: 400; font-display: swap; src: url(data:font/woff2;base64,{b64}) format("woff2"); }}')
+    tpl = tpl.replace("/*__FONTS__*/", "\n".join(faces))
     out = tpl.replace("/*__DATA__*/null", json.dumps(data, ensure_ascii=False))
     (HERE / "deck.html").write_text(out, encoding="utf-8")
     print(f"deck.html : {len(out) // 1024} Ko, {len(data['cards'])} cartes, {len(cands)} candidats")

@@ -49,6 +49,8 @@ body { background: var(--page); color: var(--ink); font-family: var(--sans); fon
 button { font: inherit; color: inherit; cursor: pointer; }
 a { color: var(--link); }
 :focus-visible { outline: 3px solid var(--link); outline-offset: 2px; border-radius: 6px; }
+[hidden] { display: none !important; }
+:root { --st-win: color-mix(in oklab, var(--amber) 62%, var(--ink)); }  /* sinon .view{display:flex} empile les onglets masqués */
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
 #app { height: 100%; display: flex; flex-direction: column; }
@@ -213,6 +215,16 @@ blockquote { margin: 0; font-family: var(--serif); font-size: 16px; font-style: 
 .person img { width: 22px; height: 22px; border-radius: 50%; }
 .person i { font-style: normal; font-family: var(--mono); font-size: 10.5px; color: var(--muted); }
 .person.me { border-color: var(--deck); box-shadow: inset 0 0 0 1px var(--deck); }
+.person.retire, .row.retire { opacity: .55; }
+.person.retire img, .row.retire img { filter: grayscale(1); }
+.st-pill { display: inline-flex; align-items: center; gap: 4px; font-family: var(--sans); font-size: 10.5px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; border-radius: 999px; padding: 2px 8px; vertical-align: middle; white-space: nowrap; }
+.st-pill.retire { background: color-mix(in oklab, var(--muted) 18%, transparent); color: var(--muted); border: 1px solid color-mix(in oklab, var(--muted) 40%, transparent); }
+.st-pill.vainqueur { background: transparent; color: var(--st-win); border: 1.5px solid currentColor; }
+.nm .st-pill { justify-self: start; }
+.mini .st-pill { white-space: normal; max-width: 100%; justify-self: start; font-size: 9.5px; padding: 1px 6px; }
+.st-stamp { display: inline-block; margin-top: 8px; padding: 3px 10px; border: 3px double var(--st-win); color: var(--st-win); border-radius: 6px; font-family: var(--sans); font-weight: 800; letter-spacing: .08em; font-size: 12px; text-transform: uppercase; rotate: -4deg; }
+.st-stamp.retire { border-color: var(--muted); color: var(--muted); rotate: 3deg; }
+.st-note { display: block; margin-top: 4px; font-size: 12px; color: var(--muted); }
 textarea { width: 100%; min-height: 90px; resize: vertical; border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; font: inherit; background: var(--page); color: var(--ink); }
 .row-btns { display: flex; gap: 8px; flex-wrap: wrap; }
 .row-btns .btn { flex: 1; }
@@ -383,7 +395,7 @@ textarea { width: 100%; min-height: 90px; resize: vertical; border: 1px solid va
       if ((b.pct || 0) !== (a.pct || 0)) return (b.pct || 0) - (a.pct || 0);
       return CANDS[a.s].name.localeCompare(CANDS[b.s].name, "fr");  // ex æquo : ordre alphabétique, documenté
     });
-    var elig = list.filter(function (r) { return r.n >= MIN_N; });
+    var elig = list.filter(function (r) { return r.n >= MIN_N && !(stOf(r.s) && stOf(r.s).kind === "retire"); });  // un candidat qui n'est plus en lice ne donne pas de maison
     var leader = null;
     if (elig.length && (elig.length === 1 || elig[0].pct > elig[1].pct)) leader = elig[0].s;
     return { list: list, leader: leader };
@@ -520,17 +532,23 @@ textarea { width: 100%; min-height: 90px; resize: vertical; border: 1px solid va
     $("#n-save", sh).onclick = function () { var v = $("#note-txt", sh).value.trim(); layer._onClose = null; closeSheet(true); done(v); };
   }
 
+  // Statut de campagne (ex. primaire) : pastille grisée « n'est plus candidat », tampon « vainqueur ».
+  // Montré seulement après le choix (la carte reste anonyme pendant le swipe).
+  function stOf(s) { return CANDS[s] && CANDS[s].statut; }
+  function stPill(s) { var st = stOf(s); return st ? ' <span class="st-pill ' + st.kind + '" title="' + esc(st.detail) + '">' + esc(st.label) + "</span>" : ""; }
+  function stShort(s) { var st = stOf(s); return st ? ' <span class="st-pill ' + st.kind + '" title="' + esc(st.label + " · " + st.detail) + '">' + esc(st.short || st.label) + "</span>" : ""; }
+  function stStamp(s) { var st = stOf(s); return st ? '<span class="st-stamp ' + st.kind + '">' + esc(st.label) + '</span><span class="st-note">' + esc(st.detail) + ' <a href="' + st.url + '" target="_blank" rel="noopener">Source ↗</a></span>' : ""; }
   function people(c, side) {
     var out = SLUGS.filter(function (s) { return c.pos[s] && c.pos[s][0] === side; });
     if (!out.length) return '<span class="fine">Aucune position documentée.</span>';
-    return out.map(function (s) { return '<span class="person' + (s === c.centre ? " me" : "") + '"><img src="' + CANDS[s].img + '" alt="">' + esc(CANDS[s].name) + ' <i>' + c.pos[s][1] + "</i></span>"; }).join("");
+    return out.map(function (s) { return '<span class="person' + (s === c.centre ? " me" : "") + (stOf(s) && stOf(s).kind === "retire" ? " retire" : "") + '" title="' + (stOf(s) ? esc(stOf(s).label) : "") + '"><img src="' + CANDS[s].img + '" alt="">' + esc(CANDS[s].name) + ' <i>' + c.pos[s][1] + "</i></span>"; }).join("");
   }
   function reveal(id) {
     var c = byId[id], k = CANDS[c.centre], d = S.dec[id].d;
     var undoc = SLUGS.filter(function (s) { return !c.pos[s]; }).length;
     var sh = openSheet(
       '<div class="eyebrow">Révélation · votre choix : <span class="badge ' + d + '">' + GLYPH[d] + " " + LABEL[d] + "</span></div>" +
-      '<div class="reveal-head"><img src="' + k.img + '" alt="Portrait stylisé de ' + esc(k.name) + '"><div><h3>' + esc(k.name) + "</h3><p>" + esc(k.tag) + "</p></div></div>" +
+      '<div class="reveal-head"><img src="' + k.img + '" alt="Portrait stylisé de ' + esc(k.name) + '"><div><h3>' + esc(k.name) + "</h3><p>" + esc(k.tag) + "</p>" + stStamp(c.centre) + "</div></div>" +
       "<blockquote>" + esc(c.quote) + "</blockquote>" +
       '<p style="margin:0;color:var(--ink-2);font-size:14px">' + esc(c.message) + "</p>" +
       '<div class="sides"><div class="side"><span class="lab" style="color:var(--d-ok)">▲ ' + esc(c.pole_a) + '</span><div class="people">' + people(c, 1) + '</div></div>' +
@@ -583,12 +601,12 @@ textarea { width: 100%; min-height: 90px; resize: vertical; border: 1px solid va
       if (!weak) { if (prev === null || r.pct !== prev) pos = i + 1; prev = r.pct; }
       var tie = !weak && sc.list.some(function (o, j) { return j !== i && o.n >= MIN_N && o.pct === r.pct; });
       var col = "oklch(calc(0.58 + var(--lift)) 0.11 " + CANDS[r.s].hue + ")";
-      rank += '<div class="row' + (r.s === L ? " lead" : "") + '"><span class="pos">' + (weak ? "–" : (tie ? "=" : "") + pos) + '</span><img src="' + CANDS[r.s].img + '" alt=""><span class="nm"><b>' + esc(CANDS[r.s].name) + '</b><span class="bar' + (weak ? " weak" : "") + '"><i style="width:' + (r.pct == null ? 0 : Math.round(r.pct * 100)) + "%;background:" + col + '"></i></span></span><span class="pct">' + (r.pct == null ? "—" : Math.round(r.pct * 100) + " %") + "<small>n = " + r.n + (weak ? " · trop peu" : "") + "</small></span></div>";
+      rank += '<div class="row' + (r.s === L ? " lead" : "") + (stOf(r.s) && stOf(r.s).kind === "retire" ? " retire" : "") + '"><span class="pos">' + (weak ? "–" : (tie ? "=" : "") + pos) + '</span><img src="' + CANDS[r.s].img + '" alt=""><span class="nm"><b>' + esc(CANDS[r.s].name) + "</b>" + stPill(r.s) + '<span class="bar' + (weak ? " weak" : "") + '"><i style="width:' + (r.pct == null ? 0 : Math.round(r.pct * 100)) + "%;background:" + col + '"></i></span></span><span class="pct">' + (r.pct == null ? "—" : Math.round(r.pct * 100) + " %") + "<small>n = " + r.n + (weak ? " · trop peu" : "") + "</small></span></div>";
     });
     rank += "</div>";
     var coll = '<h3>Ma collection</h3><div class="coll">' + ORDER.map(function (c) {
       var d = S.dec[c.id];
-      return '<button class="mini' + (d ? "" : " todo") + '" data-id="' + c.id + '">' + icon(c.icon, 1.8) + '<span class="num">N° ' + c.n + '</span><span class="t">' + esc(c.theme) + "</span>" + (d ? '<span class="badge ' + d.d + '">' + GLYPH[d.d] + " " + LABEL[d.d] + "</span>" : '<span class="badge todo">À trancher</span>') + "</button>";
+      return '<button class="mini' + (d ? "" : " todo") + '" data-id="' + c.id + '">' + icon(c.icon, 1.8) + '<span class="num">N° ' + c.n + '</span><span class="t">' + esc(c.theme) + "</span>" + (d && stOf(c.centre) ? stShort(c.centre) : "") + (d ? '<span class="badge ' + d.d + '">' + GLYPH[d.d] + " " + LABEL[d.d] + "</span>" : '<span class="badge todo">À trancher</span>') + "</button>";
     }).join("") + "</div>";
     var note = '<div class="note"><b>Prototype.</b> Les positions des candidats ne sont documentées que pour 61 cases sur 144 (42 %). Avec ces trous, le calcul avantage mécaniquement certains candidats : il ne sera pas publié avant que la matrice soit complétée (investigation INV-03).</div>';
     var tools = '<div class="tools"><button class="btn" id="m-copy">Copier mon deck</button><button class="btn" id="m-import">Importer un deck</button><button class="btn ghost" id="m-reset">Tout recommencer</button><button class="btn ghost" id="m-intro">Revoir l\'introduction</button></div>';
@@ -645,7 +663,7 @@ textarea { width: 100%; min-height: 90px; resize: vertical; border: 1px solid va
     $("#dossiers").innerHTML = list.length ? list.map(function (c) {
       var d = S.dec[c.id], n = Object.keys(c.pos).length;
       var lv = { A: 0, B: 0, C: 0 }; Object.keys(c.pos).forEach(function (s) { lv[c.pos[s][1]] = (lv[c.pos[s][1]] || 0) + 1; });
-      var who = d ? esc(CANDS[c.centre].name) : '<span class="redact">' + esc(CANDS[c.centre].name) + '</span> <span class="fine">(tranchez la carte pour lever le secret)</span>';
+      var who = d ? esc(CANDS[c.centre].name) + stPill(c.centre) : '<span class="redact">' + esc(CANDS[c.centre].name) + '</span> <span class="fine">(tranchez la carte pour lever le secret)</span>';
       return '<article class="dossier" data-tab="DOSSIER N° ' + c.n + " · " + esc(c.theme.toUpperCase()) + '">' +
         (d ? '<span class="stampd" style="color:var(--d-' + d.d + ')">' + LABEL[d.d].toUpperCase() + "</span>" : '<span class="stampd" style="color:var(--muted)">OUVERT</span>') +
         "<h4>" + esc(d ? c.title : c.mesure) + "</h4>" +

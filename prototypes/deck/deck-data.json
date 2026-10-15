@@ -468,7 +468,14 @@
   },
   "glucksmann": {
    "name": "Raphaël Glucksmann",
-   "tag": "Centre-gauche — Place Publique"
+   "tag": "Centre-gauche — Place Publique",
+   "statut": {
+    "kind": "vainqueur",
+    "label": "Vainqueur de la primaire",
+    "detail": "Primaire socialiste du 11 octobre 2026, gagnée dès le 1er tour (66,17 %).",
+    "url": "https://lcp.fr/actualites/primaire-socialiste-vainqueur-des-le-1er-tour-raphael-glucksmann-sera-le-candidat-de-la",
+    "short": "Vainqueur"
+   }
   },
   "retailleau": {
    "name": "Bruno Retailleau",
@@ -508,7 +515,14 @@
   },
   "faure": {
    "name": "Olivier Faure",
-   "tag": "Gauche — PS"
+   "tag": "Gauche — PS",
+   "statut": {
+    "kind": "retire",
+    "label": "N'est plus candidat",
+    "detail": "Battu à la primaire socialiste le 11 octobre 2026 (14,46 %).",
+    "url": "https://lcp.fr/actualites/primaire-socialiste-vainqueur-des-le-1er-tour-raphael-glucksmann-sera-le-candidat-de-la",
+    "short": "Plus candidat"
+   }
   }
  }
 }

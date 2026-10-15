@@ -98,6 +98,35 @@ main { flex: 1; min-height: 0; position: relative; }
 .c-foot { display: flex; justify-content: space-between; align-items: center; gap: 8px; border-top: 1px solid var(--line); padding-top: 2cqh; font-size: clamp(9px, 2.8cqw, 11px); color: var(--muted); }
 .seal { display: inline-flex; align-items: center; gap: 6px; letter-spacing: .12em; text-transform: uppercase; font-weight: 600; }
 .seal svg { width: 1.6em; height: 1.6em; }
+.info-btn { display: inline-flex; align-items: center; gap: 5px; border: 1.5px solid var(--deck); color: var(--deck); background: var(--surface); border-radius: 999px; padding: .35em .85em; font: inherit; font-weight: 700; letter-spacing: .02em; cursor: pointer; }
+.info-btn svg { width: 1.25em; height: 1.25em; }
+.fiche .kick { font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.fiche h3 { font-family: var(--serif); font-size: 21px; line-height: 1.25; margin: 2px 0 0; }
+.fiche h3:focus { outline: none; }
+.fiche h4 { margin: 4px 0 0; font-size: 13px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--deck); }
+.fiche p { margin: 0; line-height: 1.5; }
+.fiche .ess { font-size: 15.5px; }
+.fiche .kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 8px; }
+.fiche .kpi { border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; display: grid; gap: 2px; }
+.fiche .kpi b { font-family: var(--serif); font-size: 22px; color: var(--deck); }
+.fiche .kpi span { font-size: 12px; color: var(--ink-2); line-height: 1.35; }
+.eu { display: grid; gap: 9px; }
+.eu .ttl { font-size: 12.5px; color: var(--ink-2); font-weight: 600; }
+.eu .bar-row { display: grid; grid-template-columns: minmax(0, 8.5em) 1fr 5.6em; gap: 8px; align-items: center; font-size: 13px; }
+.eu .bar-row .lb { overflow-wrap: anywhere; line-height: 1.2; }
+.eu .bar-row.focus .lb { font-weight: 700; }
+.eu .track { position: relative; height: 12px; background: var(--surface-2); border-radius: 6px; }
+.eu .fill { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 6px; background: color-mix(in oklab, var(--muted) 55%, var(--surface)); }
+.eu .bar-row.focus .fill { background: var(--deck); }
+.eu .range { position: absolute; top: 0; bottom: 0; border-radius: 6px; background: repeating-linear-gradient(45deg, transparent 0 3px, color-mix(in oklab, var(--muted) 45%, transparent) 3px 5px); }
+.eu .refline { position: absolute; top: -4px; bottom: -4px; width: 2px; background: var(--d-no); }
+.eu .val { font-family: var(--mono); font-size: 12px; white-space: nowrap; text-align: right; }
+.eu .legend { font-size: 12px; color: var(--muted); display: flex; align-items: center; gap: 6px; }
+.eu .legend i { display: inline-block; width: 2px; height: 12px; background: var(--d-no); }
+.eu details { font-size: 12px; color: var(--muted); }
+.eu details li { margin: 3px 0; }
+.fiche .srcs { margin: 0; padding-left: 18px; font-size: 12.5px; display: grid; gap: 4px; }
+.fiche .anon { font-size: 12.5px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 10px; display: flex; gap: 8px; align-items: flex-start; }
 .stamp { position: absolute; z-index: 3; padding: 4px 12px; border: 3px solid currentColor; border-radius: 8px; font-family: var(--sans); font-weight: 800; letter-spacing: .08em; font-size: clamp(14px, 6cqw, 24px); text-transform: uppercase; opacity: 0; pointer-events: none; background: color-mix(in oklab, var(--surface) 85%, transparent); }
 .stamp.r { top: 9%; left: 7%; color: var(--d-ok); rotate: -12deg; }
 .stamp.l { top: 9%; right: 7%; color: var(--d-no); rotate: 12deg; }
@@ -348,7 +377,7 @@ textarea { width: 100%; min-height: 90px; resize: vertical; border: 1px solid va
 (function () {
   "use strict";
   var DATA = /*__DATA__*/null;
-  var CARDS = DATA.cards, CANDS = DATA.cands;
+  var CARDS = DATA.cards, CANDS = DATA.cands, FICHES = DATA.fiches || {};
   var SLUGS = Object.keys(CANDS).sort();
   var MIN_N = 4;                       // seuil de preuve (Spec § 4)
   var KEY = "magnitude-deck-proto-v1";
@@ -425,7 +454,7 @@ textarea { width: 100%; min-height: 90px; resize: vertical; border: 1px solid va
       '<div class="art">' + sky(c.id) + '<div class="emblem">' + icon(c.icon, 1.6) + '</div></div>' +
       '<div class="fig"><b>' + esc(c.fig) + '</b><span>' + esc(c.fig_label) + '</span></div>' +
       '<div class="measure">' + esc(c.mesure) + '</div>' +
-      '<div class="c-foot"><span class="seal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="6" stroke-dasharray="1.5 1.5"/><path d="M9 14v-3M12 14v-5M15 14V8"/></svg>Magnitude · Labo</span><span>Auteur révélé après votre choix</span></div>' +
+      '<div class="c-foot"><span class="seal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="6" stroke-dasharray="1.5 1.5"/><path d="M9 14v-3M12 14v-5M15 14V8"/></svg>Magnitude · Labo</span><button class="info-btn" type="button" aria-label="Comprendre la mesure (fiche sans nom de candidat)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/></svg>Comprendre</button></div>' +
       '<span class="stamp r">Aligné</span><span class="stamp l">Désaligné</span><span class="stamp u">J\'aimerais</span><span class="stamp d">M\'en fous</span>' +
       '</div></div></div>';
   }
@@ -451,6 +480,8 @@ textarea { width: 100%; min-height: 90px; resize: vertical; border: 1px solid va
     }
     if (q[1]) { var nx = el(cardHTML(q[1])); nx.classList.add("next"); stage.appendChild(nx); }
     top = el(cardHTML(q[0])); stage.appendChild(top); bindDrag(top);
+    var ib = top.querySelector(".info-btn"); if (ib) ib.onclick = function (e) { e.stopPropagation(); openFiche(top.dataset.id); };
+    var nb = stage.querySelector(".card.next .info-btn"); if (nb) nb.tabIndex = -1;
   }
 
   function bindDrag(card) {
@@ -458,7 +489,7 @@ textarea { width: 100%; min-height: 90px; resize: vertical; border: 1px solid va
     var stamps = { r: card.querySelector(".stamp.r"), l: card.querySelector(".stamp.l"), u: card.querySelector(".stamp.u"), d: card.querySelector(".stamp.d") };
     function dirOf(x, y) { return Math.abs(x) >= Math.abs(y) ? (x > 0 ? "r" : "l") : (y < 0 ? "u" : "d"); }
     card.addEventListener("pointerdown", function (e) {
-      if (busy) return; active = true; pid = e.pointerId; sx = e.clientX; sy = e.clientY; dx = dy = 0; t0 = Date.now();
+      if (busy || e.target.closest(".info-btn")) return; active = true; pid = e.pointerId; sx = e.clientX; sy = e.clientY; dx = dy = 0; t0 = Date.now();
       card.classList.remove("anim"); try { card.setPointerCapture(pid); } catch (er) {}
     });
     card.addEventListener("pointermove", function (e) {
@@ -472,6 +503,7 @@ textarea { width: 100%; min-height: 90px; resize: vertical; border: 1px solid va
       if (!active || (e && e.pointerId !== pid)) return; active = false;
       var dist = Math.hypot(dx, dy), v = dist / Math.max(1, Date.now() - t0);
       if (dist > threshold() || (dist > 40 && v > 0.6)) commit(dirOf(dx, dy));
+      else if (dist < 8 && Date.now() - t0 < 400) { card.style.transform = ""; openFiche(card.dataset.id); }  // simple toucher
       else { card.classList.add("anim"); card.style.transform = ""; Object.keys(stamps).forEach(function (k) { stamps[k].style.opacity = 0; }); }
     }
     card.addEventListener("pointerup", end); card.addEventListener("pointercancel", end);
@@ -538,6 +570,44 @@ textarea { width: 100%; min-height: 90px; resize: vertical; border: 1px solid va
   function stPill(s) { var st = stOf(s); return st ? ' <span class="st-pill ' + st.kind + '" title="' + esc(st.detail) + '">' + esc(st.label) + "</span>" : ""; }
   function stShort(s) { var st = stOf(s); return st ? ' <span class="st-pill ' + st.kind + '" title="' + esc(st.label + " · " + st.detail) + '">' + esc(st.short || st.label) + "</span>" : ""; }
   function stStamp(s) { var st = stOf(s); return st ? '<span class="st-stamp ' + st.kind + '">' + esc(st.label) + '</span><span class="st-note">' + esc(st.detail) + ' <a href="' + st.url + '" target="_blank" rel="noopener">Source ↗</a></span>' : ""; }
+  // Fiche « Comprendre la mesure » : lue AVANT le choix, donc sans nom de candidat ni de parti
+  // (extraite et vérifiée par prototypes/deck/extract_fiches.py).
+  function fmt(v) { return (Math.round(v * 100) / 100).toLocaleString("fr-FR"); }
+  function euBars(e) {
+    if (!e || !e.lignes || !e.lignes.length) return "";
+    var mx = e.max || Math.max.apply(null, e.lignes.map(function (l) { return l.value_max || l.value; })) * 1.1;
+    if (e.ref) mx = Math.max(mx, e.ref.value * 1.05);
+    var pc = function (v) { return Math.max(0, Math.min(100, v / mx * 100)); };
+    var rows = e.lignes.map(function (l) {
+      var r = '<div class="bar-row' + (l.focus ? " focus" : "") + '"><span class="lb">' + esc(l.label) + '</span><span class="track"><span class="fill" style="width:' + pc(l.value) + '%"></span>' +
+        (l.value_max ? '<span class="range" style="left:' + pc(l.value) + "%;width:" + (pc(l.value_max) - pc(l.value)) + '%"></span>' : "") +
+        (e.ref ? '<span class="refline" style="left:calc(' + pc(e.ref.value) + '% - 1px)"></span>' : "") +
+        '</span><span class="val">' + fmt(l.value) + (l.value_max ? "–" + fmt(l.value_max) : "") + "</span></div>";
+      return r;
+    }).join("");
+    var notes = e.lignes.filter(function (l) { return l.note; }).map(function (l) { return "<li><b>" + esc(l.label) + "</b> : " + esc(l.note) + "</li>"; }).join("");
+    return '<div class="eu" role="figure" aria-label="' + esc(e.titre) + '"><div class="ttl">' + esc(e.titre) + (e.unite ? " (" + esc(e.unite) + ")" : "") + "</div>" + rows +
+      (e.ref ? '<div class="legend"><i></i>' + esc(e.ref.label) + " : " + fmt(e.ref.value) + "</div>" : "") +
+      (notes ? "<details><summary>Notes de lecture</summary><ul>" + notes + "</ul></details>" : "") + "</div>";
+  }
+  function openFiche(id) {
+    var c = byId[id], f = FICHES[c.n];
+    if (!f) { toast("Fiche en préparation pour cette carte."); return; }
+    var kpis = (f.chiffres || []).map(function (k) { return '<div class="kpi"><b>' + esc(k.value) + "</b><span>" + esc(k.label) + "</span></div>"; }).join("");
+    var srcs = (f.sources || []).map(function (s) { return '<li><a href="' + s.url + '" target="_blank" rel="noopener">' + esc(s.nom) + "</a></li>"; }).join("");
+    var sh = openSheet('<div class="fiche" style="display:grid;gap:12px">' +
+      '<div><div class="kick">Comprendre la mesure · N° ' + c.n + " · " + esc(c.theme) + "</div><h3>" + esc(c.mesure) + "</h3></div>" +
+      "<h4>L'essentiel</h4>" + (f.essentiel ? '<p class="ess">' + f.essentiel + "</p>" : "") +
+      '<div class="kpis"><div class="kpi"><b>' + esc(c.fig) + "</b><span>" + esc(c.fig_label) + "</span></div>" + kpis + "</div>" +
+      (f.europe_texte || f.europe ? "<h4>Et chez nos voisins européens ?</h4>" + (f.europe_texte ? "<p>" + f.europe_texte + "</p>" : "") + euBars(f.europe) : "") +
+      (srcs ? "<h4>Sources</h4><ol class=\"srcs\">" + srcs + "</ol>" : "") +
+      '<div class="anon"><span aria-hidden="true">🔒</span><span>Fiche anonyme : ni nom ni position de candidat. L\'auteur de la mesure et les positions des autres candidats sont révélés après votre choix.</span></div>' +
+      '<div class="row-btns"><button class="btn primary" id="f-back">Revenir à la carte</button></div></div>');
+    $("#f-back", sh).onclick = function () { closeSheet(); };
+    var h = $("h3", sh); h.tabIndex = -1;
+    setTimeout(function () { sh.scrollTop = 0; try { h.focus({ preventScroll: true }); } catch (e) {} }, 40);  // lire depuis le haut
+  }
+
   function people(c, side) {
     var out = SLUGS.filter(function (s) { var p = c.pos[s]; return p && (side === "c" ? p[2] === "c" : p[0] === side && p[2] !== "c"); });
     if (!out.length) return '<span class="fine">Aucune position documentée.</span>';

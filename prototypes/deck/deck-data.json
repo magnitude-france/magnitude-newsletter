@@ -614,5 +614,946 @@
     "short": "Plus candidat"
    }
   }
+ },
+ "fiches": {
+  "01": {
+   "essentiel": "Le taux de propriétaires est <strong>quasi stable depuis 2001</strong> alors que le rapport <strong>prix / revenus a décroché</strong> : l'accès au crédit n'est pas, seul, ce qui bloque.",
+   "chiffres": [
+    {
+     "value": "56–58 %",
+     "label": "part de propriétaires occupants en France, quasi stable depuis 2001 (selon la source)"
+    },
+    {
+     "value": "2000 → 2007",
+     "label": "fenêtre du décrochage prix / revenus des ménages (indice Friggit), jamais résorbé depuis"
+    }
+   ],
+   "europe_texte": "Avec <strong>61,2 % de propriétaires</strong>, la France se situe <strong>environ 7 points sous la moyenne UE-27</strong>, entre l'Allemagne (très bas) et l'Espagne (très haut).",
+   "europe_chiffres": [
+    {
+     "value": "61,2 %",
+     "label": "France — propriétaires occupants (Eurostat, 2024)"
+    },
+    {
+     "value": "68 %",
+     "label": "moyenne UE-27 (Eurostat, 2024)"
+    },
+    {
+     "value": "47,2 %",
+     "label": "Allemagne — le taux le plus bas des grands pays d'Europe de l'Ouest"
+    }
+   ],
+   "europe": {
+    "titre": "Part de la population propriétaire de son logement — classement",
+    "unite": "%",
+    "max": 100,
+    "ref": {
+     "label": "Moyenne UE-27",
+     "value": 68
+    },
+    "lignes": [
+     {
+      "label": "Espagne",
+      "value": 72.1,
+      "value_max": 76.5,
+      "focus": false,
+      "note": "72,1 % en 2022 (Banque d'Espagne) à 76,5 % en 2020 (INE) : deux sources nationales, non harmonisées avec Eurostat"
+     },
+     {
+      "label": "France",
+      "value": 61.2,
+      "value_max": null,
+      "focus": true,
+      "note": "Eurostat 2024 ; l'enquête Logement INSEE 2023-2024 donne 57 % (autre méthodologie)"
+     },
+     {
+      "label": "Allemagne",
+      "value": 47.2,
+      "value_max": null,
+      "focus": false,
+      "note": ""
+     }
+    ]
+   },
+   "sources": [
+    {
+     "nom": "INSEE — Enquêtes Logement (ENL), Conditions de logement en France, éd. 2017",
+     "url": "https://www.insee.fr/fr/statistiques/fichier/2586040/LOGFRA17h1_F3.1.pdf"
+    },
+    {
+     "nom": "INSEE — Statut d'occupation des résidences principales (série annuelle SDES, 1982-2025)",
+     "url": "https://www.insee.fr/fr/statistiques/2415555"
+    },
+    {
+     "nom": "Jacques Friggit / IGEDD — Prix immobilier, évolution à long terme (indice prix/revenu)",
+     "url": "https://www.igedd.developpement-durable.gouv.fr/prix-immobilier-evolution-a-long-terme-a1048.html?lang=fr"
+    },
+    {
+     "nom": "Eurostat / Commission européenne",
+     "url": "https://ec.europa.eu/eurostat/web/interactive-publications/housing-2025"
+    },
+    {
+     "nom": "Insee",
+     "url": "https://www.insee.fr/fr/statistiques/8727513"
+    }
+   ]
+  },
+  "02": {
+   "essentiel": "La France n'a organisé que <strong>10 référendums</strong> en 68 ans de Ve République — et <strong>aucun depuis 2005</strong>.",
+   "chiffres": [],
+   "europe_texte": "Hors Suisse, l'<strong>Irlande (31)</strong> et l'<strong>Italie (23)</strong> comptent bien plus de référendums nationaux que la France (<strong>10</strong>) ; la Suisse (<strong>332 votations</strong> depuis 1848) est un cas à part.",
+   "europe_chiffres": [
+    {
+     "value": "10",
+     "label": "France — référendums nationaux en 68 ans de Ve République, le dernier en 2005"
+    },
+    {
+     "value": "31",
+     "label": "Irlande — référendums cumulés (Referendum Database, Univ. de Zurich)"
+    },
+    {
+     "value": "332",
+     "label": "Suisse — votations fédérales depuis 1848 (hors classement, cas à part)"
+    }
+   ],
+   "europe": {
+    "titre": "Référendums nationaux — classement (hors Suisse)",
+    "unite": "réf.",
+    "max": 35,
+    "ref": null,
+    "lignes": [
+     {
+      "label": "Irlande",
+      "value": 31,
+      "value_max": null,
+      "focus": false,
+      "note": "Cumul sur la période couverte par la Referendum Database (C2D)"
+     },
+     {
+      "label": "Italie",
+      "value": 23,
+      "value_max": null,
+      "focus": false,
+      "note": "Cumul sur la période couverte par la Referendum Database (C2D)"
+     },
+     {
+      "label": "France",
+      "value": 10,
+      "value_max": null,
+      "focus": true,
+      "note": "Sur 68 ans de Ve République : les périodes comparées ne sont pas strictement identiques"
+     }
+    ]
+   },
+   "sources": [
+    {
+     "nom": "Conseil constitutionnel — Tableau récapitulatif des référendums de la Ve République",
+     "url": "https://www.conseil-constitutionnel.fr/referendum-sous-la-ve-republique/tableau-recapitulatif-des-referendums-de-la-veme-republique"
+    },
+    {
+     "nom": "House of Commons Library — Referendums (comparaison Royaume-Uni)",
+     "url": "https://researchbriefings.files.parliament.uk/documents/CBP-7692/CBP-7692.pdf"
+    },
+    {
+     "nom": "Office fédéral suisse de la statistique — Votations populaires fédérales 1848-2026",
+     "url": "https://www.bfs.admin.ch/asset/fr/36460847"
+    }
+   ]
+  },
+  "03": {
+   "essentiel": "Un « deal fiscal » : <strong>baisser les impôts de production</strong> en échange d'une <strong>baisse des aides publiques</strong>. La France y pèse parmi les plus lourds de l'UE.",
+   "chiffres": [],
+   "europe_texte": "La France arrive au <strong>2ᵉ rang de l'UE</strong> pour les impôts de production, avec <strong>3,8 % du PIB</strong> (2023), loin devant l'Italie et l'Allemagne.",
+   "europe_chiffres": [
+    {
+     "value": "3,8 %",
+     "label": "France — impôts de production, en % du PIB (2023, baromètre Institut Montaigne / Mazars)"
+    },
+    {
+     "value": "2,54 %",
+     "label": "moyenne des 13 pays du baromètre (2023)"
+    },
+    {
+     "value": "2ᵉ",
+     "label": "rang de la France dans l'UE, derrière la Suède"
+    }
+   ],
+   "europe": {
+    "titre": "Impôts de production — en % du PIB",
+    "unite": "%",
+    "max": 5,
+    "ref": {
+     "label": "Moyenne 13 pays (2023)",
+     "value": 2.54
+    },
+    "lignes": [
+     {
+      "label": "France",
+      "value": 3.8,
+      "value_max": null,
+      "focus": true,
+      "note": "2023. La source officielle DGFiP 2024 donne 3,3 % du PIB (4,4 % de la valeur ajoutée)"
+     },
+     {
+      "label": "Italie",
+      "value": 1.8,
+      "value_max": null,
+      "focus": false,
+      "note": "2023"
+     },
+     {
+      "label": "Allemagne",
+      "value": 0.7,
+      "value_max": null,
+      "focus": false,
+      "note": "Donnée 2020 : seule disponible en % du PIB dans l'édition consultée, année différente"
+     }
+    ]
+   },
+   "sources": [
+    {
+     "nom": "DGFiP Statistiques n°47, « Les impôts de production en 2024 » (19/05/2026)",
+     "url": "https://www.impots.gouv.fr/actualite/bulletin-dgfip-statistiques-ndeg47-les-impots-de-production-en-2024"
+    },
+    {
+     "nom": "DGFiP Statistiques n°35 (2025), impôts de production 2023",
+     "url": "https://www.impots.gouv.fr/sites/default/files/media/9_statistiques/0_etudes_et_stats/0_publications/dgfip_statistiques/2025/num35_05/dgfip_stat_35_2025.pdf"
+    },
+    {
+     "nom": "Institut Montaigne, Baromètre européen des impôts de production 2025 (avril 2025, PDF)",
+     "url": "https://institutmontaigne.org/ressources/pdfs/publications/barometre-europeen-des-impots-de-production-2025.pdf"
+    },
+    {
+     "nom": "Institut Montaigne, communiqué baromètre 2024 (3ᵉ édition, février 2024)",
+     "url": "https://www.institutmontaigne.org/communiques-de-presse/barometre-europeen-des-impots-de-production-2024-troisieme-edition"
+    },
+    {
+     "nom": "Rexecode, synthèse baromètre 2022 (édition initiale, données 2020)",
+     "url": "https://www.rexecode.fr/conjoncture-previsions/veille-documentaire/document-de-la-semaine/competitivite-la-france-champion-europeen-des-impots-sur-la-production-institut-montaigne-mazars"
+    },
+    {
+     "nom": "Eurostat / Commission européenne",
+     "url": "https://ec.europa.eu/eurostat/databrowser/view/gov_10a_taxag/default/table?lang=fr"
+    },
+    {
+     "nom": "DGFiP",
+     "url": "https://www.impots.gouv.fr/dgfip-statistiques-les-impots-de-production-en-2024"
+    }
+   ]
+  },
+  "04": {
+   "essentiel": "Le 1 % le plus riche détient une part croissante du patrimoine national — mais l'<strong>INSEE mesure un chiffre bien plus bas (15-16 %)</strong> : tout dépend de la méthode.",
+   "chiffres": [],
+   "europe_texte": "Avec un taux marginal de <strong>45 %</strong>, la France taxe les successions bien plus que l'<strong>Allemagne (30 %)</strong> ou l'<strong>Espagne (34 %)</strong> ; la <strong>Suède</strong> les a <strong>abolies</strong>.",
+   "europe_chiffres": [
+    {
+     "value": "45 %",
+     "label": "France — taux marginal maximal des droits de succession (au-delà de 1,8 M€ en ligne directe)"
+    },
+    {
+     "value": "3ᵉ",
+     "label": "rang de la France pour le poids des droits de succession dans les recettes fiscales (OCDE, données 2019)"
+    },
+    {
+     "value": "0 %",
+     "label": "Suède — droits de succession abolis en 2004-2005"
+    }
+   ],
+   "europe": {
+    "titre": "Taux marginal maximal des droits de succession",
+    "unite": "%",
+    "max": 50,
+    "ref": null,
+    "lignes": [
+     {
+      "label": "France",
+      "value": 45,
+      "value_max": null,
+      "focus": true,
+      "note": "Au-delà de 1,8 M€ en ligne directe"
+     },
+     {
+      "label": "Espagne",
+      "value": 34,
+      "value_max": null,
+      "focus": false,
+      "note": "Taux national ; réductions régionales pouvant atteindre 99 % à Madrid"
+     },
+     {
+      "label": "Allemagne",
+      "value": 30,
+      "value_max": null,
+      "focus": false,
+      "note": "Classe I (enfants), au-delà de 26 M€"
+     },
+     {
+      "label": "Suède",
+      "value": 0,
+      "value_max": null,
+      "focus": false,
+      "note": "Droits de succession et de donation abolis en 2004-2005"
+     }
+    ]
+   },
+   "sources": [
+    {
+     "nom": "Banque de France — Wealth Concentration in France, 1800-2014 (Garbinti, Goupille-Lebret, Piketty)",
+     "url": "https://publications.banque-france.fr/sites/default/files/medias/documents/dt-633.pdf"
+    },
+    {
+     "nom": "Conseil des prélèvements obligatoires / Cour des comptes — rapport du 1er décembre 2025",
+     "url": "https://www.ccomptes.fr/sites/default/files/2025-12/20251201-Corriger-les-principales-distorsions-de-l-imposition-du-patrimoine.pdf"
+    },
+    {
+     "nom": "INSEE — Répartition de la masse totale de patrimoine brut entre les ménages",
+     "url": "https://www.insee.fr/fr/statistiques/2502915"
+    }
+   ]
+  },
+  "05": {
+   "essentiel": "Pour tenir l'objectif 2030, il faudrait réduire les émissions d'environ <strong>−4,5 %/an</strong> — la France fait <strong>−1,5 à −1,8 %/an</strong>.",
+   "chiffres": [],
+   "europe_texte": "La France (<strong>−1,5 à −1,8 %/an</strong>) réduit ses émissions moins vite que l'<strong>UE-27 (−2,5 %)</strong> et que l'<strong>Allemagne (−3 %)</strong>.",
+   "europe_chiffres": [
+    {
+     "value": "1,5–1,8 %/an",
+     "label": "France — baisse annuelle des émissions ces deux dernières années"
+    },
+    {
+     "value": "2,5 %/an",
+     "label": "UE-27 — baisse des émissions nettes en 2024 (AEE)"
+    },
+    {
+     "value": "3 %/an",
+     "label": "Allemagne — baisse des émissions en 2024 (Umweltbundesamt)"
+    }
+   ],
+   "europe": {
+    "titre": "Baisse annuelle des émissions de gaz à effet de serre",
+    "unite": "%/an",
+    "max": 4,
+    "ref": {
+     "label": "UE-27 (2024)",
+     "value": 2.5
+    },
+    "lignes": [
+     {
+      "label": "Allemagne",
+      "value": 3.0,
+      "value_max": null,
+      "focus": false,
+      "note": "2024 vs 2023"
+     },
+     {
+      "label": "Suède",
+      "value": 2.3,
+      "value_max": null,
+      "focus": false,
+      "note": "2023 vs 2022 : année différente"
+     },
+     {
+      "label": "France",
+      "value": 1.5,
+      "value_max": 1.8,
+      "focus": true,
+      "note": "Fourchette des deux dernières années"
+     }
+    ]
+   },
+   "sources": [
+    {
+     "nom": "CITEPA — Rapport Secten, éd. 2024 (émissions françaises, format Secten)",
+     "url": "https://www.citepa.org/wp-content/uploads/2024/12/Citepa_Secten-2024.pdf"
+    },
+    {
+     "nom": "Haut Conseil pour le Climat — Avis sur le projet de SNBC3 (12 mars 2026)",
+     "url": "https://www.hautconseilclimat.fr/wp-content/uploads/2026/03/HCC_2026_Avis-SNBC-3_web.pdf"
+    },
+    {
+     "nom": "Décret n°2026-636 du 16/07/2026 (budgets carbone SNBC3) — valeurs rapportées par une source technique, non confrontées directement au texte Légifrance",
+     "url": "https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000054440907"
+    },
+    {
+     "nom": "Bundestag",
+     "url": "https://www.bundestag.de/presse/hib/kurzmeldungen-1015396"
+    },
+    {
+     "nom": "Eurostat / Commission européenne",
+     "url": "https://climate.ec.europa.eu/document/download/9c4a108a-ece4-4151-9af3-b1237d90c2e3_en?filename=se_2024_factsheet_en.pdf"
+    }
+   ]
+  },
+  "06": {
+   "essentiel": "Seuls <strong>20 %</strong> des Français font confiance à l'Assemblée nationale (janvier 2026) — le <strong>niveau le plus bas</strong> mesuré depuis 2009.",
+   "chiffres": [],
+   "europe_texte": "<strong>12 %</strong> des Français font confiance à leur Parlement, contre <strong>34 %</strong> en moyenne dans l'UE-27 (Eurobaromètre, automne 2025).",
+   "europe_chiffres": [
+    {
+     "value": "12 %",
+     "label": "France — confiance dans le Parlement national (Eurobaromètre, automne 2025, −12 pts)"
+    },
+    {
+     "value": "34 %",
+     "label": "UE-27 — confiance dans le Parlement national (automne 2025)"
+    },
+    {
+     "value": "37 %",
+     "label": "Italie — confiance dans le Parlement national (printemps 2025)"
+    }
+   ],
+   "europe": {
+    "titre": "Confiance dans le Parlement national",
+    "unite": "%",
+    "max": 50,
+    "ref": {
+     "label": "UE-27 (automne 2025)",
+     "value": 34
+    },
+    "lignes": [
+     {
+      "label": "Italie",
+      "value": 37,
+      "value_max": null,
+      "focus": false,
+      "note": "Eurobaromètre standard 103, printemps 2025 : vague différente"
+     },
+     {
+      "label": "France",
+      "value": 12,
+      "value_max": null,
+      "focus": true,
+      "note": "Eurobaromètre standard 104, automne 2025"
+     }
+    ]
+   },
+   "sources": [
+    {
+     "nom": "CEVIPOF (Sciences Po) / OpinionWay — Baromètre de la confiance politique, vague 17 (janvier 2026)",
+     "url": "https://www.sciencespo.fr/cevipof/sites/sciencespo.fr.cevipof/files/Barometre_confiance_CEVIPOFVague17_fev2026_vd1.pdf"
+    },
+    {
+     "nom": "Bundestag",
+     "url": "https://www.bundestag.de/fr/parlement/histoire/fra_parlementarisme-200680"
+    },
+    {
+     "nom": "Eurostat / Commission européenne",
+     "url": "https://france.representation.ec.europa.eu/informations/la-derniere-enquete-eurobarometre-confirme-le-rapport-ambivalent-des-francais-legard-de-lue-2025-12-15_fr"
+    }
+   ]
+  },
+  "07": {
+   "essentiel": "Un plan de retour à l'équilibre : <strong>zéro déficit public en 2037</strong>, <strong>100 000 postes publics en moins</strong>, 120 à 150 Md€ d'économies et une « année blanche » sur les prestations sociales dès 2028 — sans hausse d'impôts.",
+   "chiffres": [],
+   "europe_texte": "Le déficit français est de <strong>5,1 % du PIB</strong> en 2025, contre <strong>3,1 %</strong> en moyenne dans l'UE : la France compte parmi les <strong>quatre déficits les plus élevés</strong> de l'Union.",
+   "europe_chiffres": [
+    {
+     "value": "5,1 %",
+     "label": "France — déficit public, en % du PIB (2025, Insee / Eurostat)"
+    },
+    {
+     "value": "3,1 %",
+     "label": "moyenne de l'Union européenne à 27 (2025, Eurostat)"
+    },
+    {
+     "value": "4ᵉ",
+     "label": "rang de la France parmi les déficits les plus élevés de l'UE, derrière la Roumanie, la Pologne et la Belgique"
+    }
+   ],
+   "europe": {
+    "titre": "Déficit public — en % du PIB, 2025",
+    "unite": "%",
+    "max": 6,
+    "ref": {
+     "label": "Moyenne UE à 27 (2025)",
+     "value": 3.1
+    },
+    "lignes": [
+     {
+      "label": "France",
+      "value": 5.1,
+      "value_max": null,
+      "focus": true,
+      "note": "2025 (152,5 Md€, Insee). Dette : 115,6 % du PIB"
+     },
+     {
+      "label": "Italie",
+      "value": 3.1,
+      "value_max": null,
+      "focus": false,
+      "note": "2025 ; était à 7,1 % en 2023. Dette : 137,1 % du PIB"
+     },
+     {
+      "label": "Allemagne",
+      "value": 2.7,
+      "value_max": null,
+      "focus": false,
+      "note": "2025 ; excédent de 0,9 à 1,9 % du PIB de 2015 à 2019. Dette : 63,5 % du PIB"
+     },
+     {
+      "label": "Espagne",
+      "value": 2.4,
+      "value_max": null,
+      "focus": false,
+      "note": "2025 ; était à 5,3 % en 2015. Dette : 100,7 % du PIB"
+     }
+    ]
+   },
+   "sources": [
+    {
+     "nom": "Insee — En 2025, le déficit public s'élève à 5,1 % du PIB, la dette publique à 115,6 % du PIB (27 mars 2026)",
+     "url": "https://www.insee.fr/fr/statistiques/8956575"
+    },
+    {
+     "nom": "Eurostat — Net lending/net borrowing, administrations publiques, % du PIB (gov_10dd_edpt1, mise à jour du 22/04/2026)",
+     "url": "https://ec.europa.eu/eurostat/databrowser/view/gov_10dd_edpt1/default/table?lang=fr"
+    },
+    {
+     "nom": "DGAFP — Évolution des effectifs de la fonction publique en 2024 (mai 2026)",
+     "url": "https://www.fonction-publique.gouv.fr/toutes-les-publications/evolution-des-effectifs-de-la-fonction-publique-en-2024"
+    },
+    {
+     "nom": "Insee",
+     "url": "https://www.insee.fr/fr/statistiques/8997691"
+    },
+    {
+     "nom": "Eurostat / Commission européenne",
+     "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/gov_10dd_edpt1"
+    },
+    {
+     "nom": "DGAFP (fonction publique)",
+     "url": "https://www.fonction-publique.gouv.fr/files/files/publications/stats-rapides/evolution-des-effectifs-de-la-fonction-publique-en-2024.pdf"
+    }
+   ]
+  },
+  "08": {
+   "essentiel": "Porter le <strong>Smic à 1 700 € net</strong> par mois, soit <strong>+15 %</strong> par rapport aux 1 478 € nets d'aujourd'hui, avec une conférence salariale qui conditionnerait les aides publiques aux hausses de salaire.",
+   "chiffres": [],
+   "europe_texte": "En <strong>pouvoir d'achat</strong>, le salaire minimum brut français (<strong>1 692 PPS</strong>) est au-dessus de l'espagnol (1 556) mais sous l'allemand (2 164) et le néerlandais (2 023) — comparaison en <strong>brut</strong>, pas en net.",
+   "europe_chiffres": [
+    {
+     "value": "1 692",
+     "label": "France — Smic brut mensuel en standards de pouvoir d'achat (PPS), 2026-S2, Eurostat"
+    },
+    {
+     "value": "2 164",
+     "label": "Allemagne — même mesure (PPS, 2026-S2)"
+    },
+    {
+     "value": "1 556",
+     "label": "Espagne — même mesure (PPS, 2026-S2)"
+    }
+   ],
+   "europe": {
+    "titre": "Salaire minimum brut mensuel — en standards de pouvoir d'achat (PPS)",
+    "unite": "PPS",
+    "max": 2500,
+    "ref": {
+     "label": "France (2026-S2)",
+     "value": 1692
+    },
+    "lignes": [
+     {
+      "label": "France",
+      "value": 1692,
+      "value_max": null,
+      "focus": true,
+      "note": "BRUT : 1 867 € (Smic au 1er juin 2026). Le Smic net est de 1 478 €, mais Eurostat ne publie pas de net"
+     },
+     {
+      "label": "Allemagne",
+      "value": 2164,
+      "value_max": null,
+      "focus": false,
+      "note": "Brut : 2 343 €. Valeur PPS estimée par Eurostat (2026-S2)"
+     },
+     {
+      "label": "Pays-Bas",
+      "value": 2023,
+      "value_max": null,
+      "focus": false,
+      "note": "Brut : 2 338 €. Valeur PPS estimée par Eurostat (2026-S2)"
+     },
+     {
+      "label": "Espagne",
+      "value": 1556,
+      "value_max": null,
+      "focus": false,
+      "note": "Brut : 1 425 €. Valeur PPS estimée par Eurostat (2026-S2)"
+     }
+    ]
+   },
+   "sources": [
+    {
+     "nom": "service-public.gouv.fr — Montant du Smic (fiche F2300) : 12,31 € brut/h, 1 867,02 € brut et 1 477,93 € net par mois",
+     "url": "https://www.service-public.gouv.fr/particuliers/vosdroits/F2300"
+    },
+    {
+     "nom": "info.gouv.fr — « Le Smic revalorisé le 1er juin 2026 » (+2,41 %, 18/05/2026)",
+     "url": "https://www.info.gouv.fr/actualite/le-smic-revalorise-le-1er-juin-2026"
+    },
+    {
+     "nom": "Eurostat — Monthly minimum wages, bi-annual data (earn_mw_cur), 2026-S2, EUR et PPS (montants bruts)",
+     "url": "https://ec.europa.eu/eurostat/databrowser/view/earn_mw_cur/default/table?lang=fr"
+    }
+   ]
+  },
+  "09": {
+   "essentiel": "<strong>60 000 agents</strong> (police, enquêteurs, douaniers) contre le narcotrafic, pour <strong>2,5 milliards d'euros</strong> : c'est <strong>environ 22 %</strong> des effectifs actuels de la police, de la gendarmerie et de la douane.",
+   "chiffres": [],
+   "europe_texte": "La France compte <strong>361 policiers pour 100 000 habitants</strong> (2022, gendarmes inclus), contre <strong>380</strong> en Espagne et <strong>311</strong> en Allemagne.",
+   "europe_chiffres": [
+    {
+     "value": "361",
+     "label": "policiers pour 100 000 habitants en France (2022, Eurostat)"
+    },
+    {
+     "value": "336",
+     "label": "moyenne simple de 5 pays : France, Espagne, Belgique, Allemagne, Pays-Bas (2022)"
+    },
+    {
+     "value": "380",
+     "label": "Espagne, le plus élevé des 5 pays (2022)"
+    }
+   ],
+   "europe": {
+    "titre": "Policiers pour 100 000 habitants",
+    "unite": "pour 100 000 hab.",
+    "max": 400,
+    "ref": {
+     "label": "Moyenne simple des 5 pays (2022)",
+     "value": 336.3
+    },
+    "lignes": [
+     {
+      "label": "France",
+      "value": 361.3,
+      "value_max": null,
+      "focus": true,
+      "note": "2022, Eurostat. Définition nationale : inclut en pratique la gendarmerie (ordre de grandeur cohérent avec police + gendarmerie)"
+     },
+     {
+      "label": "Espagne",
+      "value": 379.8,
+      "value_max": null,
+      "focus": false,
+      "note": "2022, Eurostat"
+     },
+     {
+      "label": "Belgique",
+      "value": 338.3,
+      "value_max": null,
+      "focus": false,
+      "note": "2022, Eurostat"
+     },
+     {
+      "label": "Allemagne",
+      "value": 311.1,
+      "value_max": null,
+      "focus": false,
+      "note": "2022, Eurostat"
+     },
+     {
+      "label": "Pays-Bas",
+      "value": 291.2,
+      "value_max": null,
+      "focus": false,
+      "note": "2022, Eurostat. L'Italie n'a pas de valeur dans la série Eurostat consultée"
+     }
+    ]
+   },
+   "sources": [
+    {
+     "nom": "Assemblée nationale",
+     "url": "https://www.assemblee-nationale.fr/dyn/contenu/visualisation/1088035/file/PAP2026_BG_Securites_SB.pdf"
+    },
+    {
+     "nom": "Sénat",
+     "url": "https://www.senat.fr/rap/l25-139-328-1/l25-139-328-1_mono.html"
+    },
+    {
+     "nom": "Sénat",
+     "url": "https://www.senat.fr/fileadmin/cru-1762483659/Commissions/Finances/2025-2026/PLF_2026/Essentiel/Securites_PN-GN-SR-CAS_PLF_2026_Essentiel_post_commission.pdf"
+    },
+    {
+     "nom": "Douane française",
+     "url": "https://www.douane.gouv.fr/sites/default/files/2025-11/19/Rapport_social_unique_douane_francaise_2023.pdf"
+    },
+    {
+     "nom": "Vie publique",
+     "url": "https://www.vie-publique.fr/files/rapport/pdf/174000149.pdf"
+    },
+    {
+     "nom": "Eurostat / Commission européenne",
+     "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/crim_just_job"
+    },
+    {
+     "nom": "Eurostat / Commission européenne",
+     "url": "https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Police%2C_court_and_prison_personnel_statistics"
+    }
+   ]
+  },
+  "10": {
+   "essentiel": "Un <strong>Plan « Salle des Fêtes et maisons du peuple »</strong> de <strong>1 milliard d'euros par an pendant cinq ans</strong>, avec 60 000 postes de contrats aidés pour les associations et un congé bénévole d'une demi-journée par mois.",
+   "chiffres": [],
+   "europe_texte": "Le bénévolat formel concerne <strong>15,6 %</strong> des Français de 16 ans et plus (2022), contre <strong>12,3 %</strong> en moyenne dans l'UE et <strong>36,0 %</strong> aux Pays-Bas.",
+   "europe_chiffres": [
+    {
+     "value": "15,6 %",
+     "label": "France — part des 16 ans et plus ayant fait du bénévolat formel (2022, Eurostat)"
+    },
+    {
+     "value": "12,3 %",
+     "label": "moyenne de l'UE à 27 (2022, valeur estimée)"
+    },
+    {
+     "value": "36,0 %",
+     "label": "Pays-Bas, le niveau le plus élevé parmi les pays comparés"
+    }
+   ],
+   "europe": {
+    "titre": "Bénévolat formel — % des 16 ans et plus",
+    "unite": "%",
+    "max": 40,
+    "ref": {
+     "label": "Moyenne UE à 27 (2022)",
+     "value": 12.3
+    },
+    "lignes": [
+     {
+      "label": "France",
+      "value": 15.6,
+      "value_max": null,
+      "focus": true,
+      "note": "2022, Eurostat EU-SILC (ilc_scp19)"
+     },
+     {
+      "label": "Pays-Bas",
+      "value": 36.0,
+      "value_max": null,
+      "focus": false,
+      "note": "2022. Eurostat Statistics Explained cite 35,7 % : écart non élucidé"
+     },
+     {
+      "label": "Danemark",
+      "value": 26.0,
+      "value_max": null,
+      "focus": false,
+      "note": "2022"
+     },
+     {
+      "label": "Espagne",
+      "value": 8.9,
+      "value_max": null,
+      "focus": false,
+      "note": "2022"
+     },
+     {
+      "label": "Italie",
+      "value": 5.3,
+      "value_max": null,
+      "focus": false,
+      "note": "2022"
+     }
+    ]
+   },
+   "sources": [
+    {
+     "nom": "Sénat",
+     "url": "https://www.senat.fr/rap/l25-139-330/l25-139-330_mono.html"
+    },
+    {
+     "nom": "Sénat",
+     "url": "https://www.senat.fr/rap/a25-144-62/a25-144-62_mono.html"
+    },
+    {
+     "nom": "Recherches & Solidarités",
+     "url": "https://recherches-solidarites.org/wp-content/uploads/2025/10/La-France-associative-16-10-2025.pdf"
+    },
+    {
+     "nom": "Insee",
+     "url": "https://www.insee.fr/fr/statistiques/8376830"
+    },
+    {
+     "nom": "Assemblée nationale",
+     "url": "https://questions.assemblee-nationale.fr/q17/17-10063QE.htm"
+    },
+    {
+     "nom": "Insee",
+     "url": "https://www.insee.fr/fr/statistiques/8376522"
+    },
+    {
+     "nom": "Observatoire des inégalités",
+     "url": "https://www.inegalites.fr/Les-enfants-sont-inegaux-face-aux-vacances"
+    },
+    {
+     "nom": "Crédoc",
+     "url": "https://www.credoc.fr/download/pdf/4p/CMV325.pdf"
+    }
+   ]
+  },
+  "11": {
+   "essentiel": "Une <strong>DARPA européenne</strong> financée à hauteur de <strong>4 milliards de dollars par an</strong>, comme son modèle américain.",
+   "chiffres": [],
+   "europe_texte": "La DARPA dispose d'environ <strong>4,3 Md$</strong> par an ; en Europe, l'<strong>EIC</strong> en reçoit <strong>1,6</strong> (2026) et le <strong>Fonds européen de la défense 1,1</strong>.",
+   "europe_chiffres": [
+    {
+     "value": "4,3 Md$",
+     "label": "DARPA (États-Unis) — budget annuel, exercice 2026"
+    }
+   ],
+   "europe": {
+    "titre": "Budgets annuels d'innovation de rupture — en milliards de dollars",
+    "unite": "Md$",
+    "max": 5,
+    "ref": {
+     "label": "Montant cité dans la tribune (4 Md$)",
+     "value": 4.0
+    },
+    "lignes": [
+     {
+      "label": "France",
+      "value": 1.57,
+      "value_max": null,
+      "focus": true,
+      "note": "Crédits d'innovation de la Défense (dont AID), PLF 2026 : 1,4 Md€. Le budget propre de l'AID n'est pas isolé"
+     },
+     {
+      "label": "UE — EIC",
+      "value": 1.57,
+      "value_max": null,
+      "focus": false,
+      "note": ""
+     },
+     {
+      "label": "UE — Fonds européen de la défense",
+      "value": 1.12,
+      "value_max": null,
+      "focus": false,
+      "note": ""
+     },
+     {
+      "label": "Royaume-Uni (ARIA)",
+      "value": 0.33,
+      "value_max": null,
+      "focus": false,
+      "note": "Moyenne annuelle dérivée de 1 Md£ sur 4 ans ; 0,44 Md$ si 3 ans"
+     },
+     {
+      "label": "Allemagne (SPRIND)",
+      "value": 0.26,
+      "value_max": null,
+      "focus": false,
+      "note": "Dépenses 2024 : 229 M€ (Bundestag). Année différente des autres"
+     },
+     {
+      "label": "États-Unis (DARPA)",
+      "value": 4.32,
+      "value_max": null,
+      "focus": false,
+      "note": "FY2026, crédits discrétionnaires ; modèle cité par la tribune"
+     }
+    ]
+   },
+   "sources": [
+    {
+     "nom": "DARPA / Département de la Défense des États-Unis — budget FY2026 (4,322 Md$ discrétionnaire) et justification book FY2027",
+     "url": "https://www.darpa.mil/about"
+    },
+    {
+     "nom": "Sénat — avis n° 141 (2025-2026), tome V, crédits d'innovation de la Défense (PLF 2026)",
+     "url": "https://www.senat.fr/rap/a25-141-5/a25-141-5_mono.html"
+    },
+    {
+     "nom": "Bundestag — Drucksache 21/807, dépenses de SPRIND 2022-2024",
+     "url": "https://dserver.bundestag.de/btd/21/008/2100807.pdf"
+    },
+    {
+     "nom": "The Register / Times Higher Education — budget d'ARIA (1 Md£)",
+     "url": "https://www.theregister.com/2025/09/04/aria_spending_review"
+    },
+    {
+     "nom": "Eurostat / Commission européenne",
+     "url": "https://defence-industry-space.ec.europa.eu/commission-continues-strengthen-european-collaborative-defence-research-and-development-additional-2025-12-17_en"
+    },
+    {
+     "nom": "Eurostat / Commission européenne",
+     "url": "https://research-and-innovation.ec.europa.eu/funding/funding-opportunities/funding-programmes-and-open-calls/horizon-europe_en"
+    }
+   ]
+  },
+  "12": {
+   "essentiel": "Les <strong>immigrés</strong> ont un taux de chômage de <strong>12,4 %</strong> (2025), contre <strong>7,7 %</strong> pour l'ensemble de la population.",
+   "chiffres": [],
+   "europe_texte": "En <strong>France</strong>, un titulaire de carte « salarié » privé involontairement d'emploi voit son titre <strong>prolongé d'un an</strong> ; en <strong>Allemagne</strong>, un citoyen de l'UE qui a travaillé moins d'un an garde son droit de séjour <strong>six mois</strong>.",
+   "europe_chiffres": [
+    {
+     "value": "12 mois",
+     "label": "France — durée de prolongation de la carte « salarié » d'un étranger privé involontairement d'emploi (CESEDA L.421-1)"
+    },
+    {
+     "value": "6 mois",
+     "label": "Allemagne — maintien du droit de séjour d'un citoyen de l'UE qui a travaillé moins d'un an (FreizügG/EU § 2)"
+    }
+   ],
+   "europe": {
+    "titre": "Droit de séjour maintenu après une perte d'emploi involontaire — en mois",
+    "unite": "mois",
+    "max": 14,
+    "ref": {
+     "label": "Seuil proposé par la mesure (12 mois de chômage)",
+     "value": 12
+    },
+    "lignes": [
+     {
+      "label": "France (hors UE, carte « salarié »)",
+      "value": 12,
+      "value_max": null,
+      "focus": true,
+      "note": "CESEDA L.421-1 : titre prolongé d'un an si privé involontairement d'emploi (lu via cabinet d'avocats, Légifrance non accessible). Catégorie de séjour différente de l'Allemagne ci-dessous."
+     },
+     {
+      "label": "Allemagne (citoyen UE, < 1 an d'emploi)",
+      "value": 6,
+      "value_max": null,
+      "focus": false,
+      "note": "FreizügG/EU § 2 : six mois ; au-delà d'un an d'activité, le droit est maintenu tant que le chômage involontaire est constaté. Danemark et Pays-Bas : pas de durée fixe comparable (voir texte)."
+     }
+    ]
+   },
+   "sources": [
+    {
+     "nom": "Insee",
+     "url": "https://www.insee.fr/fr/statistiques/4195420"
+    },
+    {
+     "nom": "Insee",
+     "url": "https://www.insee.fr/fr/statistiques/3633212"
+    },
+    {
+     "nom": "Insee",
+     "url": "https://www.insee.fr/fr/statistiques/2417491"
+    },
+    {
+     "nom": "Ministère de l'Intérieur",
+     "url": "https://www.immigration.interieur.gouv.fr/chiffres-de-limmigration-en-france/eloignements-detrangers-en-situation-irreguliere-en-2025-dynamique-ascendante"
+    },
+    {
+     "nom": "Ministère de l'Intérieur",
+     "url": "https://www.immigration.interieur.gouv.fr/documentation/etudes-et-statistiques/activite-emploi-et-chomage-des-immigres-de-2014-a-2024.html"
+    },
+    {
+     "nom": "EUR-Lex (droit de l'UE)",
+     "url": "https://eur-lex.europa.eu/legal-content/FR/TXT/HTML/?uri=CELEX:32004L0038"
+    },
+    {
+     "nom": "Droit allemand (FreizügG/EU)",
+     "url": "https://lxgesetze.de/freiz%C3%BCgg-eu/2"
+    },
+    {
+     "nom": "Droit allemand (AufenthG)",
+     "url": "https://dejure.org/gesetze/AufenthG/5.html"
+    }
+   ]
+  }
  }
 }

@@ -11,6 +11,11 @@ dossier est hors de `src/`, le workflow GitHub Pages ne le publie pas.
 - Swipe « à l'aveugle » : le candidat est révélé après le geste, avec les
   positions documentées des autres candidats.
 - Badge de décision sur chaque carte, décisions modifiables (« Mon deck »).
+- **Fiche « Comprendre la mesure »** (toucher la carte ou bouton « Comprendre ») :
+  l'essentiel, le chiffre clé, la comparaison avec les voisins européens et les
+  sources institutionnelles, **sans nom ni position de candidat** (lue avant le
+  choix). Extraite des analyses de `magnitude-analysis` par `extract_fiches.py`,
+  qui retire toute phrase nommant un candidat ou un parti et échoue s'il en reste.
 - Score par candidat = accords / positions documentées (cartes Aligné ou
   Désaligné uniquement), seuil de 4 cartes, égalités affichées, classement
   des 12 toujours visible.
@@ -31,6 +36,7 @@ dossier est hors de `src/`, le workflow GitHub Pages ne le publie pas.
 
 ## Reconstruire
 ```bash
+python3 prototypes/deck/extract_fiches.py ../magnitude-analysis   # fiches anonymes
 python3 prototypes/deck/build_deck.py
 ```
 Entrées : `deck-data.json` (extrait de `magnitude-analysis/data/analyses/*.json`

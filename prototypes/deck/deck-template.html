@@ -1,4 +1,4 @@
-<title>Find your Candidate</title>
+<title>La Pioche</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <style>
 /* Layout : appli plein écran — en-tête, scène de carte, pavé de 4 gestes, barre d'onglets.
@@ -253,7 +253,7 @@ textarea { width: 100%; min-height: 90px; resize: vertical; border: 1px solid va
 <div id="app">
   <header class="top">
     <svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="var(--teal-900)"/><rect x="6" y="19" width="3.2" height="5" rx="1" fill="#FCE58C"/><rect x="10.6" y="16" width="3.2" height="8" rx="1" fill="#FBBF24"/><rect x="15.2" y="13" width="3.2" height="11" rx="1" fill="#F59E0B"/><rect x="19.8" y="10" width="3.2" height="14" rx="1" fill="#D97706"/><rect x="24.4" y="7" width="3.2" height="17" rx="1" fill="#B45309"/></svg>
-    <div class="brand"><b>Find your Candidate</b><span>Magnitude</span></div>
+    <div class="brand"><b>La Pioche</b><span>Find your Candidate · Magnitude</span></div>
     <div class="week" id="week" aria-live="polite" title="Cartes de la semaine 42 tranchées"></div>
   </header>
 
@@ -555,7 +555,7 @@ textarea { width: 100%; min-height: 90px; resize: vertical; border: 1px solid va
     var ov = el('<div class="overlay tri" role="dialog" aria-modal="true" aria-label="Le Grand Tri"><div class="ob">' +
       '<svg class="hat" viewBox="0 0 150 150" aria-hidden="true"><path d="M75 14 L112 108 H38 Z" fill="var(--deck)" stroke="#EAF6F5" stroke-width="2"/><path d="M20 110 Q75 92 130 110 Q75 128 20 110Z" fill="#0B4A52" stroke="#EAF6F5" stroke-width="2"/><circle cx="70" cy="62" r="3" fill="#FCE58C"/><circle cx="84" cy="80" r="2.2" fill="#FCE58C"/><circle cx="64" cy="88" r="1.8" fill="#FCE58C"/><rect x="58" y="97" width="5" height="9" rx="1" fill="#FBBF24"/><rect x="66" y="93" width="5" height="13" rx="1" fill="#F59E0B"/><rect x="74" y="89" width="5" height="17" rx="1" fill="#D97706"/><rect x="82" y="85" width="5" height="21" rx="1" fill="#B45309"/></svg>' +
       '<div class="step">Le Grand Tri · semaine 42</div><p class="big">La magie a parlé ?</p><p class="sub">Non : la data et vos votes.</p>' +
-      '<div class="res">' + res + '</div><div class="row-btns"><button class="btn ghost" id="t-rev">Réviser les anciennes cartes</button><button class="btn" id="t-mine">Voir mon deck</button></div></div></div>');
+      '<div class="res">' + res + '</div><p style="margin:0;font-size:13px;color:#CFE6E4">Prochaine étape (à venir) : votre email part en fumée, vous recevez l\'avatar commun et votre chapeau.</p><div class="row-btns"><button class="btn ghost" id="t-rev">Réviser les anciennes cartes</button><button class="btn" id="t-mine">Voir mon deck</button></div></div></div>');
     document.body.appendChild(ov);
     $("#t-rev", ov).onclick = function () { ov.remove(); };
     $("#t-mine", ov).onclick = function () { ov.remove(); showSeg("mine"); };
@@ -707,7 +707,7 @@ textarea { width: 100%; min-height: 90px; resize: vertical; border: 1px solid va
   var STEPS = [
     { k: "Porte verrouillée", h: "Vous êtes enfermé·e dans la salle des promesses.", p: "Une seule clé ouvre la porte : savoir pour qui voter, en connaissance de cause." },
     { k: "Les règles", h: "Tranchez chaque mesure d'un geste.", p: "Le nom du candidat reste caché jusqu'à votre choix. Vous pourrez toujours changer d'avis.", compass: true },
-    { k: "La récompense", h: "Votre deck prend la couleur de vos convictions.", p: "Chaque semaine, 6 nouvelles cartes. Le Grand Tri révèle la maison dont vous êtes le plus proche. Vos choix restent sur votre appareil." }
+    { k: "La récompense", h: "Votre deck prend la couleur de vos convictions.", p: "Chaque semaine, piochez 6 nouvelles cartes. Le Grand Tri révèle la maison dont vous êtes le plus proche. Vos choix restent sur votre appareil." }
   ];
   function onboarding(i) {
     var old = document.querySelector(".overlay.onb"); if (old) old.remove();

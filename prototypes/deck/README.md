@@ -1,7 +1,8 @@
-# Prototype — Deck « Find your Candidate »
+# Prototype — La Pioche (« Find your Candidate »)
 
 Prototype interne du repositionnement de Magnitude en jeu de cartes à
-collectionner (comité de direction n°1, 2026-10-14). **Non déployé** : ce
+collectionner (comité de direction n°1, 2026-10-14). Nom retenu le
+2026-10-15 : **La Pioche**, avec « Find your Candidate » en accroche. **Non déployé** : ce
 dossier est hors de `src/`, le workflow GitHub Pages ne le publie pas.
 
 ## Ce que fait le prototype

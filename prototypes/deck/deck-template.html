@@ -292,26 +292,19 @@ textarea { width: 100%; min-height: 90px; resize: vertical; border: 1px solid va
 /* ---------- Mon deck : « La Banque des Promesses » (registre sur parchemin, écrit à la plume) ---------- */
 /*__FONTS__*/
 .grimoire {
-  --vellum: #EFE3C8; --vellum-2: #E4D3AE; --edge: #C9AE7C; --iron: #3A2817; --iron-2: #6E563B; --rule: #CDB78F; --margin-red: #B5644F; --gilt: #9A6F22;
-  --w-ok: #2E6B5D; --w-no: #8A2F23; --w-wish: #34467E; --w-meh: #6F6656;
+  --vellum: var(--surface); --vellum-2: color-mix(in oklab, var(--surface) 90%, var(--deck)); --edge: color-mix(in oklab, var(--deck) 30%, var(--surface));
+  --iron: var(--ink); --iron-2: var(--ink-2); --rule: var(--line); --margin-red: var(--d-no); --gilt: var(--amber);
+  --w-ok: var(--d-ok); --w-no: var(--d-no); --w-wish: var(--d-wish); --w-meh: var(--d-meh);
   --fell: "IM Fell English", "Iowan Old Style", Georgia, serif; --plume: "La Belle Aurore", "Snell Roundhand", "Segoe Script", cursive;
-  background: radial-gradient(120% 80% at 50% -10%, #5B4127 0%, #3B2A1A 55%, #2A1D12 100%);
+  background: var(--page);
   color: var(--iron);
 }
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .grimoire {
-  --vellum: #2E2519; --vellum-2: #3A2F20; --edge: #574530; --iron: #EBDDBF; --iron-2: #BFA884; --rule: #4E3F2C; --margin-red: #C98470; --gilt: #D2A75A;
-  --w-ok: #79C2AE; --w-no: #E38E7C; --w-wish: #9DB0EA; --w-meh: #B8AE9A;
-  background: radial-gradient(120% 80% at 50% -10%, #2A1F14 0%, #17110B 70%); } }
-:root[data-theme="dark"] .grimoire {
-  --vellum: #2E2519; --vellum-2: #3A2F20; --edge: #574530; --iron: #EBDDBF; --iron-2: #BFA884; --rule: #4E3F2C; --margin-red: #C98470; --gilt: #D2A75A;
-  --w-ok: #79C2AE; --w-no: #E38E7C; --w-wish: #9DB0EA; --w-meh: #B8AE9A;
-  background: radial-gradient(120% 80% at 50% -10%, #2A1F14 0%, #17110B 70%); }
 #mine.grimoire .wrap { gap: 22px; padding-top: 22px; padding-bottom: 40px; }
 .parch { position: relative; background:
     radial-gradient(140% 90% at 50% 40%, transparent 55%, color-mix(in oklab, var(--edge) 55%, transparent) 100%),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .25 0 0 0 0 .12 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .04 0 0 0 0 .29 0 0 0 0 .32 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E"),
     linear-gradient(175deg, var(--vellum), var(--vellum-2));
-  color: var(--iron); border-radius: 3px 5px 4px 6px / 6px 3px 5px 4px; box-shadow: 0 1px 0 rgba(255,255,255,.25) inset, 0 14px 30px -18px rgba(0,0,0,.75), 0 2px 6px -2px rgba(0,0,0,.4); }
+  color: var(--iron); border-radius: 3px 5px 4px 6px / 6px 3px 5px 4px; box-shadow: 0 0 0 1px var(--line), 0 12px 26px -18px rgba(11,74,82,.45), 0 2px 6px -3px rgba(11,74,82,.25); }
 .fell { font-family: var(--fell); }
 .plume { font-family: var(--plume); font-weight: 400; letter-spacing: .01em; }
 
@@ -321,7 +314,7 @@ textarea { width: 100%; min-height: 90px; resize: vertical; border: 1px solid va
 .frontis .orn { width: 150px; height: 14px; color: var(--gilt); }
 .frontis .house { display: grid; grid-template-columns: 64px auto; gap: 14px; align-items: center; text-align: left; margin-top: 4px; }
 .seal-wax { width: 64px; height: 64px; border-radius: 50%; display: grid; place-items: center; background: radial-gradient(circle at 35% 30%, color-mix(in oklab, var(--deck) 70%, #fff), var(--deck) 55%, color-mix(in oklab, var(--deck) 70%, #000)); box-shadow: 0 0 0 4px color-mix(in oklab, var(--deck) 60%, transparent), 0 6px 10px -4px rgba(0,0,0,.5); }
-.seal-wax img { width: 40px; height: 40px; border-radius: 50%; filter: sepia(.6) contrast(1.05); mix-blend-mode: luminosity; opacity: .9; }
+.seal-wax img { width: 40px; height: 40px; border-radius: 50%; }
 .frontis .house .plume { font-size: 26px; line-height: 1.1; color: var(--iron); }
 .frontis .house .count { font-family: var(--fell); font-style: italic; font-size: 13.5px; color: var(--iron-2); }
 
@@ -331,7 +324,7 @@ textarea { width: 100%; min-height: 90px; resize: vertical; border: 1px solid va
 .ledger .rubric { font-family: var(--fell); font-style: italic; font-size: 13px; color: var(--iron-2); margin: 0 0 10px; line-height: 1.4; }
 .lrow { display: grid; grid-template-columns: 1.6em 28px 1fr auto; gap: 10px; align-items: center; padding: 7px 0 6px; border-bottom: 1px solid var(--rule); }
 .lrow .pos { font-family: var(--fell); font-size: 15px; color: var(--iron-2); text-align: right; }
-.lrow img { width: 28px; height: 28px; border-radius: 50%; filter: sepia(.75) saturate(.8); }
+.lrow img { width: 28px; height: 28px; border-radius: 50%; }
 .lrow .nm { display: grid; gap: 3px; min-width: 0; }
 .lrow .nm b { font-family: var(--fell); font-weight: 400; font-size: 16px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .lrow .ink { height: 3px; border-radius: 2px; background: currentColor; opacity: .8; transform-origin: left; }
@@ -343,8 +336,8 @@ textarea { width: 100%; min-height: 90px; resize: vertical; border: 1px solid va
 .lrow.retire .nm b { text-decoration: line-through; text-decoration-thickness: 1px; }
 .lrow .st-pill { justify-self: start; font-family: var(--fell); font-style: italic; text-transform: none; letter-spacing: 0; font-weight: 400; background: transparent; border: 0; padding: 0; color: var(--iron-2); font-size: 12.5px; }
 
-.recueil-h { color: #F1E4C6; text-align: center; margin-top: 4px; }
-.recueil-sub { margin: -14px 0 0; text-align: center; font-family: var(--fell); font-style: italic; color: #CDB993; font-size: 14px; }
+.recueil-h { color: var(--ink); text-align: center; margin-top: 4px; }
+.recueil-sub { margin: -14px 0 0; text-align: center; font-family: var(--fell); font-style: italic; color: var(--ink-2); font-size: 14px; }
 .pages { display: grid; gap: 18px; }
 @media (min-width: 700px) { .pages { grid-template-columns: 1fr 1fr; } }
 .folio { border: 0; margin: 0; font: inherit; text-align: left; cursor: pointer; display: grid; gap: 10px; padding: 18px 20px 20px; width: 100%; }
@@ -372,11 +365,10 @@ textarea { width: 100%; min-height: 90px; resize: vertical; border: 1px solid va
 .nb { padding: 14px 18px; font-family: var(--fell); font-style: italic; font-size: 13.5px; line-height: 1.5; color: var(--iron-2); }
 .nb b { font-style: normal; font-weight: 400; color: var(--margin-red); }
 .quill-tools { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 18px; }
-.quill-tools button { all: unset; cursor: pointer; font-family: var(--fell); font-style: italic; font-size: 15px; color: #E9D9B4; border-bottom: 1px solid rgba(233,217,180,.45); padding: 2px 0; }
-.quill-tools button:focus-visible { outline: 2px solid var(--gilt); outline-offset: 3px; }
+.quill-tools button { all: unset; cursor: pointer; font-family: var(--fell); font-style: italic; font-size: 15px; color: var(--ink-2); border-bottom: 1px solid var(--line); padding: 2px 0; }
+.quill-tools button:focus-visible { outline: 2px solid var(--deck); outline-offset: 3px; }
 
 /* ---------- Recherche : « Le Scriptorium » (pages de parchemin, plume magique) ---------- */
-.grimoire { background: radial-gradient(120% 80% at 50% -10%, #5B4127 0%, #3B2A1A 55%, #2A1D12 100%); }
 .scr-wrap { gap: 18px; padding-top: 22px; padding-bottom: 40px; }
 .scr-head { padding: 22px 20px 18px; text-align: center; }
 .scr-head h2 { font-family: var(--fell); font-weight: 400; font-size: clamp(30px, 8.5vw, 42px); margin: 0; line-height: 1.05; }
@@ -394,9 +386,9 @@ textarea { width: 100%; min-height: 90px; resize: vertical; border: 1px solid va
 .scr-search input::placeholder { font-family: var(--fell); font-style: italic; font-size: 16px; color: var(--iron-2); opacity: .85; }
 .scr-search:focus-within { box-shadow: 0 0 0 3px var(--gilt), 0 14px 30px -18px rgba(0,0,0,.75); }
 .scr-filters { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 14px; }
-.scr-filters button { border: 0; background: none; padding: 3px 0; font-family: var(--fell); font-style: italic; font-size: 16px; color: #DCC9A1; border-bottom: 1px solid transparent; cursor: pointer; }
-.scr-filters button[aria-pressed="true"] { color: #F5E9CC; border-bottom-color: #D2A75A; }
-.scr-filters button:focus-visible { outline: 2px solid #D2A75A; outline-offset: 3px; }
+.scr-filters button { border: 0; background: none; padding: 3px 0; font-family: var(--fell); font-style: italic; font-size: 16px; color: var(--ink-2); border-bottom: 1px solid transparent; cursor: pointer; }
+.scr-filters button[aria-pressed="true"] { color: var(--ink); border-bottom: 2px solid var(--deck); }
+.scr-filters button:focus-visible { outline: 2px solid var(--deck); outline-offset: 3px; }
 .scr-pages { display: grid; gap: 18px; }
 @media (min-width: 700px) { .scr-pages { grid-template-columns: 1fr 1fr; } }
 .scr-page { display: grid; gap: 9px; padding: 18px 20px 18px; }
@@ -414,11 +406,11 @@ textarea { width: 100%; min-height: 90px; resize: vertical; border: 1px solid va
 .scr-page dd.hand { font-family: var(--plume); font-size: 20px; line-height: 1.2; }
 .scr-page dd b { font-weight: 400; font-size: 17px; }
 .sceau { display: inline-flex; align-items: center; gap: 7px; font-family: var(--fell); font-style: italic; font-size: 13.5px; color: var(--iron-2); }
-.sceau i { width: 22px; height: 22px; border-radius: 50%; flex: none; background: radial-gradient(circle at 35% 30%, #C4523F, #8A2F23 60%, #5E1F17); box-shadow: 0 2px 3px rgba(0,0,0,.35); }
+.sceau i { width: 22px; height: 22px; border-radius: 50%; flex: none; background: radial-gradient(circle at 35% 30%, color-mix(in oklab, var(--deck) 65%, #fff), var(--deck) 60%, color-mix(in oklab, var(--deck) 65%, #000)); box-shadow: 0 2px 3px rgba(0,0,0,.35); }
 .scr-page .act { display: flex; justify-content: flex-start; padding-top: 2px; }
 .scr-page .act a, .scr-page .act button { border: 0; background: none; padding: 2px 0; cursor: pointer; font-family: var(--fell); font-style: italic; font-size: 16px; color: var(--iron); border-bottom: 1px solid var(--gilt); text-decoration: none; }
 .scr-page .act a:focus-visible, .scr-page .act button:focus-visible { outline: 2px solid var(--gilt); outline-offset: 3px; }
-.scr-empty { text-align: center; font-family: var(--plume); font-size: 22px; color: #E9D9B4; }
+.scr-empty { text-align: center; font-family: var(--plume); font-size: 22px; color: var(--ink-2); }
 </style>
 
 <div id="app">

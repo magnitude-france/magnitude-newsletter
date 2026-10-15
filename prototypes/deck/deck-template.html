@@ -188,7 +188,6 @@ h3 { font-family: var(--serif); font-size: 18px; margin: 0; }
 .tabs button[aria-selected="true"]::before { content: ""; position: absolute; top: 0; left: 30%; right: 30%; height: 3px; border-radius: 0 0 3px 3px; background: var(--deck); }
 
 /* Recherche — esthétique bureau d'enquête */
-#view-search .scroll { background: repeating-linear-gradient(0deg, transparent 0 27px, color-mix(in oklab, var(--line) 60%, transparent) 27px 28px), var(--page); }
 .case-head { display: flex; align-items: center; gap: 10px; }
 .case-head svg { width: 34px; height: 34px; stroke: var(--ink); }
 .case-head h2 { font-family: var(--serif); font-size: 24px; margin: 0; }
@@ -292,18 +291,18 @@ textarea { width: 100%; min-height: 90px; resize: vertical; border: 1px solid va
 
 /* ---------- Mon deck : « La Banque des Promesses » (registre sur parchemin, écrit à la plume) ---------- */
 /*__FONTS__*/
-#mine.grimoire {
+.grimoire {
   --vellum: #EFE3C8; --vellum-2: #E4D3AE; --edge: #C9AE7C; --iron: #3A2817; --iron-2: #6E563B; --rule: #CDB78F; --margin-red: #B5644F; --gilt: #9A6F22;
   --w-ok: #2E6B5D; --w-no: #8A2F23; --w-wish: #34467E; --w-meh: #6F6656;
   --fell: "IM Fell English", "Iowan Old Style", Georgia, serif; --plume: "La Belle Aurore", "Snell Roundhand", "Segoe Script", cursive;
   background: radial-gradient(120% 80% at 50% -10%, #5B4127 0%, #3B2A1A 55%, #2A1D12 100%);
   color: var(--iron);
 }
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) #mine.grimoire {
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .grimoire {
   --vellum: #2E2519; --vellum-2: #3A2F20; --edge: #574530; --iron: #EBDDBF; --iron-2: #BFA884; --rule: #4E3F2C; --margin-red: #C98470; --gilt: #D2A75A;
   --w-ok: #79C2AE; --w-no: #E38E7C; --w-wish: #9DB0EA; --w-meh: #B8AE9A;
   background: radial-gradient(120% 80% at 50% -10%, #2A1F14 0%, #17110B 70%); } }
-:root[data-theme="dark"] #mine.grimoire {
+:root[data-theme="dark"] .grimoire {
   --vellum: #2E2519; --vellum-2: #3A2F20; --edge: #574530; --iron: #EBDDBF; --iron-2: #BFA884; --rule: #4E3F2C; --margin-red: #C98470; --gilt: #D2A75A;
   --w-ok: #79C2AE; --w-no: #E38E7C; --w-wish: #9DB0EA; --w-meh: #B8AE9A;
   background: radial-gradient(120% 80% at 50% -10%, #2A1F14 0%, #17110B 70%); }
@@ -375,6 +374,51 @@ textarea { width: 100%; min-height: 90px; resize: vertical; border: 1px solid va
 .quill-tools { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 18px; }
 .quill-tools button { all: unset; cursor: pointer; font-family: var(--fell); font-style: italic; font-size: 15px; color: #E9D9B4; border-bottom: 1px solid rgba(233,217,180,.45); padding: 2px 0; }
 .quill-tools button:focus-visible { outline: 2px solid var(--gilt); outline-offset: 3px; }
+
+/* ---------- Recherche : « Le Scriptorium » (pages de parchemin, plume magique) ---------- */
+.grimoire { background: radial-gradient(120% 80% at 50% -10%, #5B4127 0%, #3B2A1A 55%, #2A1D12 100%); }
+.scr-wrap { gap: 18px; padding-top: 22px; padding-bottom: 40px; }
+.scr-head { padding: 22px 20px 18px; text-align: center; }
+.scr-head h2 { font-family: var(--fell); font-weight: 400; font-size: clamp(30px, 8.5vw, 42px); margin: 0; line-height: 1.05; }
+.scr-sub { position: relative; margin: 8px auto 0; width: fit-content; max-width: 100%; padding-right: 30px; font-family: var(--plume); font-size: 19px; line-height: 1.45; color: var(--iron-2); }
+.scr-sub .scr-ink { display: inline-block; white-space: nowrap; font-size: clamp(14px, 4.4vw, 19px); }
+.scr-search input::-webkit-search-cancel-button { -webkit-appearance: none; appearance: none; }
+.scr-sub .quill { position: absolute; width: 34px; height: 34px; color: var(--iron); right: -6px; bottom: -6px; pointer-events: none; }
+.scr-head.anim .scr-ink { animation: write 1500ms steps(40, end) both; }
+.scr-head.anim .quill { animation: quill 1500ms ease-in-out both; }
+@keyframes quill { 0% { right: 100%; bottom: 30px; rotate: -8deg; } 45% { right: 45%; bottom: 22px; rotate: 6deg; } 70% { right: 25%; bottom: -2px; rotate: -6deg; } 100% { right: -6px; bottom: -6px; rotate: 0deg; } }
+@media (prefers-reduced-motion: reduce) { .scr-head.anim .scr-ink, .scr-head.anim .quill { animation: none; } }
+.scr-search { display: flex; align-items: center; gap: 10px; padding: 10px 16px 12px; }
+.scr-search .quill-sm { width: 26px; height: 26px; color: var(--iron); flex: none; rotate: 10deg; }
+.scr-search input { flex: 1; min-width: 0; border: 0; outline: 0; background: transparent; font-family: var(--plume); font-size: 24px; line-height: 1.5; color: var(--iron); border-bottom: 1px solid var(--rule); padding: 2px 2px 0; }
+.scr-search input::placeholder { font-family: var(--fell); font-style: italic; font-size: 16px; color: var(--iron-2); opacity: .85; }
+.scr-search:focus-within { box-shadow: 0 0 0 3px var(--gilt), 0 14px 30px -18px rgba(0,0,0,.75); }
+.scr-filters { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 14px; }
+.scr-filters button { border: 0; background: none; padding: 3px 0; font-family: var(--fell); font-style: italic; font-size: 16px; color: #DCC9A1; border-bottom: 1px solid transparent; cursor: pointer; }
+.scr-filters button[aria-pressed="true"] { color: #F5E9CC; border-bottom-color: #D2A75A; }
+.scr-filters button:focus-visible { outline: 2px solid #D2A75A; outline-offset: 3px; }
+.scr-pages { display: grid; gap: 18px; }
+@media (min-width: 700px) { .scr-pages { grid-template-columns: 1fr 1fr; } }
+.scr-page { display: grid; gap: 9px; padding: 18px 20px 18px; }
+.scr-page:nth-child(odd) { rotate: -.3deg; } .scr-page:nth-child(even) { rotate: .25deg; }
+.scr-page .head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; border-bottom: 1px solid var(--rule); padding-bottom: 6px; }
+.scr-page .no { font-family: var(--fell); font-size: 13px; color: var(--gilt); letter-spacing: .04em; }
+.scr-page .theme { font-family: var(--fell); font-style: italic; font-size: 14px; color: var(--iron-2); }
+.scr-page h4 { margin: 0; font-family: var(--fell); font-weight: 400; font-size: 20px; line-height: 1.25; text-wrap: pretty; }
+.scr-page .verdict { font-family: var(--plume); font-size: 26px; line-height: 1; rotate: -4deg; justify-self: start; }
+.scr-page .verdict.ok { color: var(--w-ok); } .scr-page .verdict.no { color: var(--w-no); } .scr-page .verdict.wish { color: var(--w-wish); } .scr-page .verdict.meh { color: var(--w-meh); }
+.scr-page .open { font-family: var(--fell); font-style: italic; font-size: 14px; color: var(--gilt); }
+.scr-page dl { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; align-items: baseline; }
+.scr-page dt { font-family: var(--fell); font-style: italic; font-size: 13.5px; color: var(--iron-2); }
+.scr-page dd { margin: 0; font-family: var(--fell); font-size: 15px; line-height: 1.4; }
+.scr-page dd.hand { font-family: var(--plume); font-size: 20px; line-height: 1.2; }
+.scr-page dd b { font-weight: 400; font-size: 17px; }
+.sceau { display: inline-flex; align-items: center; gap: 7px; font-family: var(--fell); font-style: italic; font-size: 13.5px; color: var(--iron-2); }
+.sceau i { width: 22px; height: 22px; border-radius: 50%; flex: none; background: radial-gradient(circle at 35% 30%, #C4523F, #8A2F23 60%, #5E1F17); box-shadow: 0 2px 3px rgba(0,0,0,.35); }
+.scr-page .act { display: flex; justify-content: flex-start; padding-top: 2px; }
+.scr-page .act a, .scr-page .act button { border: 0; background: none; padding: 2px 0; cursor: pointer; font-family: var(--fell); font-style: italic; font-size: 16px; color: var(--iron); border-bottom: 1px solid var(--gilt); text-decoration: none; }
+.scr-page .act a:focus-visible, .scr-page .act button:focus-visible { outline: 2px solid var(--gilt); outline-offset: 3px; }
+.scr-empty { text-align: center; font-family: var(--plume); font-size: 22px; color: #E9D9B4; }
 </style>
 
 <div id="app">
@@ -403,14 +447,14 @@ textarea { width: 100%; min-height: 90px; resize: vertical; border: 1px solid va
     </section>
 
     <section class="view" id="view-search" aria-label="Recherche" hidden>
-      <div class="scroll" style="flex:1;min-height:0"><div class="wrap">
-        <div class="case-head">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><circle cx="10" cy="10" r="6"/><path d="M14.5 14.5 20 20"/><path d="M7.5 9a3 3 0 0 1 2.5-2" /></svg>
-          <div><h2>Bureau des enquêtes</h2><p>12 dossiers ouverts · pièces sourcées A/B/C</p></div>
-        </div>
-        <label class="search"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="10" cy="10" r="6"/><path d="M14.5 14.5 20 20"/></svg><span class="sr">Rechercher</span><input id="q" type="search" placeholder="Ouvrir une enquête : smic, dette, héritage…" autocomplete="off"></label>
-        <div class="filters" id="filters"></div>
-        <div id="dossiers"></div>
+      <div class="scroll grimoire" style="flex:1;min-height:0"><div class="wrap scr-wrap">
+        <header class="parch scr-head" id="scr-head">
+          <h2>Le Scriptorium</h2>
+          <p class="scr-sub"><span class="scr-ink">Douze promesses, chaque pièce sourcée</span><svg class="quill" viewBox="0 0 64 64" aria-hidden="true"><path d="M58 4C40 6 22 18 14 38l-4 12 3 1 4-11C27 22 42 10 58 4z" fill="currentColor" opacity=".9"/><path d="M58 4C46 14 34 26 24 40" fill="none" stroke="var(--vellum)" stroke-width="1.2" opacity=".7"/><path d="M10 50 6 60" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></p>
+        </header>
+        <label class="parch scr-search"><svg class="quill-sm" viewBox="0 0 64 64" aria-hidden="true"><path d="M58 4C40 6 22 18 14 38l-4 12 3 1 4-11C27 22 42 10 58 4z" fill="currentColor"/><path d="M10 50 6 60" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg><span class="sr">Rechercher une promesse</span><input id="q" type="search" placeholder="Écrivez un mot : smic, dette, héritage…" autocomplete="off" spellcheck="false"></label>
+        <div class="scr-filters" id="filters" role="group" aria-label="Filtrer par thème"></div>
+        <div id="dossiers" class="scr-pages"></div>
       </div></div>
     </section>
 
@@ -837,15 +881,18 @@ textarea { width: 100%; min-height: 90px; resize: vertical; border: 1px solid va
     $("#dossiers").innerHTML = list.length ? list.map(function (c) {
       var d = S.dec[c.id], n = Object.keys(c.pos).length;
       var lv = { A: 0, B: 0, C: 0 }; Object.keys(c.pos).forEach(function (s) { lv[c.pos[s][1]] = (lv[c.pos[s][1]] || 0) + 1; });
-      var who = d ? esc(CANDS[c.centre].name) + stPill(c.centre) : '<span class="redact">' + esc(CANDS[c.centre].name) + '</span> <span class="fine">(tranchez la carte pour lever le secret)</span>';
-      return '<article class="dossier" data-tab="DOSSIER N° ' + c.n + " · " + esc(c.theme.toUpperCase()) + '">' +
-        (d ? '<span class="stampd" style="color:var(--d-' + d.d + ')">' + LABEL[d.d].toUpperCase() + "</span>" : '<span class="stampd" style="color:var(--muted)">OUVERT</span>') +
+      var st = stOf(c.centre);
+      var who = d ? '<dd class="hand">' + esc(CANDS[c.centre].name) + (st ? ' <span class="sceau">(' + esc(st.label.toLowerCase()) + ")</span>" : "") + "</dd>"
+        : '<dd><span class="sceau"><i aria-hidden="true"></i>Nom scellé jusqu\'à votre choix</span></dd>';
+      return '<article class="parch scr-page"><div class="head"><span class="no">Folio ' + roman(c.n) + '</span><span class="theme">' + esc(c.theme) + "</span></div>" +
+        (d ? '<span class="verdict ' + d.d + '">' + LABEL[d.d] + "</span>" : '<span class="open">Promesse à examiner</span>') +
         "<h4>" + esc(d ? c.title : c.mesure) + "</h4>" +
-        '<div class="meta">Auteur : ' + who + "</div>" +
-        '<div class="meta">Pièces : ' + n + "/12 positions documentées · A " + (lv.A || 0) + " · B " + (lv.B || 0) + " · C " + (lv.C || 0) + "</div>" +
-        '<div class="meta">Indice : <b>' + esc(c.fig) + "</b> " + esc(c.fig_label) + "</div>" +
-        '<a href="' + c.url + '" target="_blank" rel="noopener" style="font-size:13px;font-weight:600">Consulter l\'analyse complète ↗</a></article>';
-    }).join("") : '<p class="fine">Aucun dossier ne correspond. Essayez « dette », « smic » ou « héritage ».</p>';
+        "<dl><dt>Portée par</dt>" + who +
+        "<dt>Pièces</dt><dd>" + n + " positions sur 12, cotées A " + (lv.A || 0) + ", B " + (lv.B || 0) + ", C " + (lv.C || 0) + "</dd>" +
+        "<dt>Chiffre clé</dt><dd><b>" + esc(c.fig) + "</b> " + esc(c.fig_label) + "</dd></dl>" +
+        '<div class="act">' + (d ? '<a href="' + c.url + '" target="_blank" rel="noopener">Lire l\'analyse complète</a>' : '<button type="button" data-fiche="' + c.id + '">Comprendre la mesure</button>') + "</div></article>";
+    }).join("") : '<p class="scr-empty">Aucune page ne porte ce mot. Essayez « dette », « smic » ou « héritage ».</p>';
+    Array.prototype.forEach.call(document.querySelectorAll("#dossiers [data-fiche]"), function (b) { b.onclick = function () { openFiche(b.dataset.fiche); }; });
   }
 
   // ---------- Puits aux souhaits ----------
@@ -877,7 +924,7 @@ textarea { width: 100%; min-height: 90px; resize: vertical; border: 1px solid va
     ["deck", "search", "maison"].forEach(function (k) { $("#view-" + k).hidden = k !== v; });
     Array.prototype.forEach.call(document.querySelectorAll(".tabs button"), function (b) { b.setAttribute("aria-selected", b.dataset.view === v); });
     cancelAnimationFrame(wellRAF);
-    if (v === "search") renderSearch();
+    if (v === "search") { renderSearch(); var h = $("#scr-head"); h.classList.remove("anim"); void h.offsetWidth; h.classList.add("anim"); }
     if (v === "maison") startWell();
   }
   Array.prototype.forEach.call(document.querySelectorAll(".tabs button"), function (b) { b.onclick = function () { showView(b.dataset.view); }; });

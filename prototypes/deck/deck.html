@@ -279,7 +279,31 @@ h3 { font-family: var(--serif); font-size: 18px; margin: 0; }
 .cosmos canvas { display: block; width: 100%; height: min(calc(100vw - 32px), 440px); touch-action: pan-y; }
 .cosmos .ttl { position: absolute; left: 16px; top: 12px; font-family: var(--fell); font-size: 19px; color: #EAF6F5; pointer-events: none; }
 .cosmos .sub { position: absolute; left: 16px; top: 36px; font-family: var(--fell); font-style: italic; font-size: 12.5px; color: #9ED7D3; pointer-events: none; }
-.cosmos-cap { margin: -10px 0 0; text-align: center; font-family: var(--fell); font-style: italic; font-size: 13px; line-height: 1.45; color: var(--ink-2); text-wrap: balance; }
+.cosmos-leg { margin-top: -6px; padding: 16px 18px 14px; display: grid; gap: 12px; }
+.cosmos-leg h3 { font-family: var(--fell); font-weight: 400; font-size: 21px; margin: 0; }
+.cosmos-leg .li { display: grid; grid-template-columns: 44px 1fr; gap: 12px; align-items: center; }
+.cosmos-leg svg { width: 44px; height: 44px; border-radius: 50%; background: radial-gradient(circle at 50% 45%, color-mix(in oklab, var(--deck) 35%, #06262a), #04191c 72%); }
+.cosmos-leg p { margin: 0; font-family: var(--fell); font-size: 16.5px; line-height: 1.38; color: var(--iron); text-wrap: pretty; }
+.cosmos-leg p b { font-weight: 400; color: var(--deck); }
+.cosmos-leg .hint { display: flex; align-items: center; gap: 8px; font-family: var(--plume); font-size: 20px; line-height: 1.2; color: var(--iron-2); border-top: 1px solid var(--rule); padding-top: 10px; }
+.cosmos-leg .hint i { flex: none; width: 12px; height: 12px; border-radius: 50%; border: 2px dashed var(--gilt); animation: spin 4s linear infinite; }
+@keyframes spin { to { rotate: 360deg; } }
+@media (prefers-reduced-motion: reduce) { .cosmos-leg .hint i { animation: none; } }
+.lrow[role="button"] { cursor: pointer; }
+.lrow[role="button"]:hover .nm b { color: var(--deck); }
+.lrow[role="button"]:focus-visible { outline: 2px solid var(--deck); outline-offset: 2px; }
+/* Feuille « les mesures du candidat » */
+.cm-aff { display: grid; gap: 6px; }
+.cm-aff .big { font-family: var(--serif); font-size: 26px; line-height: 1; color: var(--deck); }
+.cm-aff .big small { font-family: var(--sans); font-size: 12.5px; color: var(--muted); margin-left: 6px; }
+.cm-sum { display: flex; flex-wrap: wrap; gap: 6px; }
+.cm-grp { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); font-weight: 700; margin: 6px 0 -4px; }
+.cm-item { display: grid; gap: 5px; width: 100%; text-align: left; border: 1px solid var(--line); background: var(--surface); border-radius: 12px; padding: 10px 12px; }
+.cm-item:hover { border-color: var(--deck); }
+.cm-item .t { font-family: var(--serif); font-size: 15.5px; line-height: 1.3; }
+.cm-item .ps { font-size: 12.5px; color: var(--ink-2); }
+.cm-item .ag { font-size: 12.5px; font-weight: 700; }
+.cm-item .ag.yes { color: var(--d-ok); } .cm-item .ag.nope { color: var(--d-no); }
 
 /* Feuilles et superpositions */
 .scrim { position: fixed; inset: 0; background: rgba(4,20,22,.45); z-index: 20; }
@@ -832,7 +856,7 @@ textarea { width: 100%; min-height: 90px; resize: vertical; border: 1px solid va
       var tie = !weak && sc.list.some(function (o, j) { return j !== i && o.n >= MIN_N && o.pct === r.pct; });
       var col = "oklch(calc(0.5 + var(--lift)) 0.1 " + CANDS[r.s].hue + ")";
       var ret = stOf(r.s) && stOf(r.s).kind === "retire";
-      rank += '<div class="lrow' + (r.s === L ? " lead" : "") + (weak ? " weak" : "") + (ret ? " retire" : "") + '"><span class="pos">' + (weak ? "–" : (tie ? "=" : "") + roman(pos)) + '</span><img src="' + CANDS[r.s].img + '" alt=""><span class="nm"><b>' + esc(CANDS[r.s].name) + "</b>" + (r.s === L ? '<span class="maison">votre maison</span>' : "") + (stOf(r.s) ? stPill(r.s) : "") +
+      rank += '<div role="button" tabindex="0" data-s="' + r.s + '" aria-label="Voir les mesures de ' + esc(CANDS[r.s].name) + '" class="lrow' + (r.s === L ? " lead" : "") + (weak ? " weak" : "") + (ret ? " retire" : "") + '"><span class="pos">' + (weak ? "–" : (tie ? "=" : "") + roman(pos)) + '</span><img src="' + CANDS[r.s].img + '" alt=""><span class="nm"><b>' + esc(CANDS[r.s].name) + "</b>" + (r.s === L ? '<span class="maison">votre maison</span>' : "") + (stOf(r.s) ? stPill(r.s) : "") +
         '<span class="ink" style="width:' + (r.pct == null ? 0 : Math.round(r.pct * 100)) + "%;color:" + col + '"></span></span><span class="pct plume">' + (r.pct == null ? "—" : Math.round(r.pct * 100) + " %") + "<small>n = " + r.n + (weak ? ", trop peu" : "") + "</small></span></div>";
     });
     rank += "</section>";
@@ -856,8 +880,16 @@ textarea { width: 100%; min-height: 90px; resize: vertical; border: 1px solid va
     var near = sc.list.filter(function (r) { return r.n >= MIN_N && r.s !== L; }).slice(0, 3).map(function (r) { return CANDS[r.s].name + " (" + Math.round(r.pct * 100) + " %)"; });
     var cosmosLbl = (L ? "Votre maison : " + houseLabel(L) + ". " : "Pas encore de maison. ") + (near.length ? "Ensuite : " + near.join(", ") + "." : "");
     var cosmos = '<section class="cosmos" aria-label="Votre galaxie"><div class="cosmos-in"><canvas id="cosmos" role="img" aria-label="' + esc(cosmosLbl) + '"></canvas><span class="ttl">Votre galaxie</span><span class="sub">' + (L ? esc(houseLabel(L)) + " au centre" : decided ? "Encore trop peu de cartes communes" : "Tranchez des cartes pour la voir bouger") + "</span></div></section>" +
-      '<p class="cosmos-cap">Plus un candidat est grand et proche du centre, plus vous êtes d\'accord avec lui. Ses voisins sur le cercle défendent des positions qui ressemblent aux siennes. Les points sont ses mesures : plus votre taux d\'affinité avec lui est élevé, plus ils brillent ; un halo marque celles où vous êtes d\'accord.</p>';
+      '<section class="parch cosmos-leg" aria-label="Lire la galaxie"><h3>Lire la galaxie</h3>' +
+      '<div class="li"><svg viewBox="0 0 44 44" aria-hidden="true"><circle cx="19" cy="24" r="9" fill="none" stroke="#FCE58C" stroke-width="2"/><circle cx="19" cy="24" r="6.5" fill="#9ED7D3"/><circle cx="34" cy="11" r="3.4" fill="#9ED7D3" opacity=".7"/></svg><p><b>Plus un candidat est grand et proche du centre</b>, plus vous êtes d\'accord avec lui.</p></div>' +
+      '<div class="li"><svg viewBox="0 0 44 44" aria-hidden="true"><path d="M8 30 A16 16 0 0 1 36 30" fill="none" stroke="#9ED7D3" stroke-opacity=".45" stroke-dasharray="2 3"/><circle cx="11" cy="22" r="4" fill="#F8BD7A"/><circle cx="18" cy="15" r="4" fill="#F0A04B"/><circle cx="33" cy="22" r="4" fill="#7DB2FF"/><path d="M11 22 18 15" stroke="#EAF6F5" stroke-opacity=".6"/></svg><p><b>Ses voisins sur le cercle</b> défendent des positions qui ressemblent aux siennes.</p></div>' +
+      '<div class="li"><svg viewBox="0 0 44 44" aria-hidden="true"><circle cx="15" cy="20" r="7" fill="#7FD9D3" opacity=".25"/><circle cx="15" cy="20" r="3" fill="#BFF0EC"/><circle cx="29" cy="14" r="2.2" fill="#7FD9D3" opacity=".75"/><circle cx="30" cy="29" r="1.8" fill="#7FD9D3" opacity=".35"/></svg><p><b>Les points sont ses mesures</b> : plus votre taux d\'affinité avec lui est élevé, plus ils brillent ; un halo marque celles où vous êtes d\'accord.</p></div>' +
+      '<p class="hint"><i aria-hidden="true"></i>Survolez ou touchez un candidat pour ouvrir ses mesures</p></section>';
     $("#mine-wrap").innerHTML = cosmos + front + rank + pages + note + tools;
+    Array.prototype.forEach.call(document.querySelectorAll(".lrow[data-s]"), function (row) {
+      row.onclick = function () { candSheet(row.dataset.s); };
+      row.onkeydown = function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); candSheet(row.dataset.s); } };
+    });
     startCosmos(!!anim);
     Array.prototype.forEach.call(document.querySelectorAll(".folio"), function (b) { b.onclick = function () { editSheet(b.dataset.id); }; });
     $("#m-copy").onclick = copyDeck; $("#m-import").onclick = importSheet; $("#m-reset").onclick = resetSheet;
@@ -1026,6 +1058,7 @@ textarea { width: 100%; min-height: 90px; resize: vertical; border: 1px solid va
     });
     var links = [];
     for (var x = 0; x < SLUGS.length; x++) for (var y = x + 1; y < SLUGS.length; y++) { var f = AFF[SLUGS[x]][SLUGS[y]]; if (f >= 0.7) links.push([x, y, f]); }
+    var hits = [], hov = null, down = null;
     var t0 = performance.now();
     function frame(now) {
       if ($("#mine").hidden || $("#view-deck").hidden) return;
@@ -1033,6 +1066,7 @@ textarea { width: 100%; min-height: 90px; resize: vertical; border: 1px solid va
       var spin = reduce ? 0 : t * 0.035, cs = Math.cos(spin), sn = Math.sin(spin);
       ctx.clearRect(0, 0, W, H);
       var xy = N.map(function (n) { var px = n.x * cs - n.y * sn, py = n.x * sn + n.y * cs; return [W / 2 + px * RX * e, H / 2 + 8 + py * RY * e]; });
+      hits = N.map(function (n, k) { return { s: n.s, x: xy[k][0], y: xy[k][1], r: n.rad }; });
       links.forEach(function (l) { ctx.strokeStyle = "rgba(190,236,232," + ((l[2] - 0.6) * 0.9).toFixed(3) + ")"; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(xy[l[0]][0], xy[l[0]][1]); ctx.lineTo(xy[l[1]][0], xy[l[1]][1]); ctx.stroke(); });
       N.forEach(function (n, k) {
         var X = xy[k][0], Y = xy[k][1], col = "oklch(0.8 0.13 " + n.hue + ")";
@@ -1058,10 +1092,66 @@ textarea { width: 100%; min-height: 90px; resize: vertical; border: 1px solid va
         else { ctx.font = "600 11px Georgia, serif"; ctx.fillStyle = "#DDEFEE"; ctx.fillText(lastName(n.s), X, Y + n.rad + 4); if (n.pct != null) { ctx.font = "10px Georgia, serif"; ctx.fillStyle = "#9ED7D3"; ctx.fillText(Math.round(n.pct * 100) + " %", X, Y + n.rad + 17); } }
         ctx.globalAlpha = 1;
       });
+      var hh = hov && hits.filter(function (h) { return h.s === hov; })[0];
+      if (hh) {
+        var pulse = reduce ? 0 : Math.sin(now / 220) * 2.2;
+        ctx.save(); ctx.strokeStyle = "#FCE58C"; ctx.lineWidth = 2; ctx.setLineDash([4, 4]); ctx.lineDashOffset = reduce ? 0 : -now / 60;
+        ctx.beginPath(); ctx.arc(hh.x, hh.y, hh.r + 7 + pulse, 0, 6.2832); ctx.stroke(); ctx.restore();
+        var lbl = "Voir ses mesures ›"; ctx.font = "700 11.5px Georgia, serif";
+        var bw = ctx.measureText(lbl).width + 18, bx = Math.max(4, Math.min(W - bw - 4, hh.x - bw / 2)), by = hh.y - hh.r - 36;
+        if (by < 4) by = hh.y + hh.r + 34;
+        ctx.fillStyle = "rgba(252,229,140,.96)"; ctx.beginPath();
+        if (ctx.roundRect) ctx.roundRect(bx, by, bw, 22, 11); else ctx.rect(bx, by, bw, 22);
+        ctx.fill(); ctx.fillStyle = "#04191c"; ctx.textAlign = "center"; ctx.textBaseline = "middle"; ctx.fillText(lbl, bx + bw / 2, by + 11.5);
+      }
       if (!reduce && !document.hidden) cosmosRAF = requestAnimationFrame(frame);
     }
+    function pick(ev) {
+      var b = cv.getBoundingClientRect(), x = ev.clientX - b.left, y = ev.clientY - b.top, best = null, bd = 1e9;
+      hits.forEach(function (h) { var d = Math.hypot(h.x - x, h.y - y); if (d < h.r + 12 && d < bd) { bd = d; best = h.s; } });
+      return best;
+    }
+    cv.addEventListener("pointermove", function (ev) {
+      if (ev.pointerType !== "mouse") return;
+      var s = pick(ev); if (s === hov) return;
+      hov = s; cv.style.cursor = s ? "pointer" : ""; if (reduce) frame(performance.now());
+    });
+    cv.addEventListener("pointerleave", function () { hov = null; cv.style.cursor = ""; if (reduce) frame(performance.now()); });
+    cv.addEventListener("pointerdown", function (ev) { down = [ev.clientX, ev.clientY]; });
+    cv.addEventListener("pointerup", function (ev) {
+      var d0 = down; down = null; if (!d0 || Math.hypot(ev.clientX - d0[0], ev.clientY - d0[1]) > 10) return;
+      var s = pick(ev); if (s) candSheet(s);
+    });
     cosmosRAF = requestAnimationFrame(frame);
     if (reduce) SLUGS.forEach(function (s) { portrait(s).onload = function () { frame(performance.now()); }; });
+  }
+  // Les mesures d'un candidat, regroupées selon votre choix. Sur une carte pas encore tranchée,
+  // sa position reste scellée (même règle que la Recherche : rien n'est dévoilé avant le choix).
+  function candSheet(s) {
+    var k = CANDS[s], r = scores().list.filter(function (x) { return x.s === s; })[0];
+    var cards = ORDER.filter(function (c) { return c.pos[s]; });
+    var cnt = { ok: 0, no: 0, wish: 0, meh: 0, todo: 0 };
+    cards.forEach(function (c) { cnt[S.dec[c.id] ? S.dec[c.id].d : "todo"]++; });
+    var aff = r.n >= MIN_N ? '<span class="big">' + Math.round(r.pct * 100) + ' %<small>taux d\'affinité · accord sur ' + r.agree + " carte" + (r.agree > 1 ? "s" : "") + " sur " + r.n + "</small></span>"
+      : '<span class="fine">' + (r.n ? r.agree + " accord" + (r.agree > 1 ? "s" : "") + " sur " + r.n + " carte" + (r.n > 1 ? "s" : "") + " tranchée" + (r.n > 1 ? "s" : "") + " : il en faut " + MIN_N + " pour un taux fiable." : "Aucune carte tranchée en commun pour l'instant.") + "</span>";
+    var sum = ["ok", "no", "wish", "meh"].map(function (d) { return '<span class="badge ' + d + '">' + GLYPH[d] + " " + LABEL[d] + " " + cnt[d] + "</span>"; }).join("") + '<span class="badge todo">À examiner ' + cnt.todo + "</span>";
+    var GRP = [["ok", "Vous : Aligné"], ["no", "Vous : Désaligné"], ["wish", "Vous : J'aimerais"], ["meh", "Vous : M'en fous"], ["todo", "Promesses à examiner"]];
+    var body = GRP.map(function (g) {
+      var list = cards.filter(function (c) { return (S.dec[c.id] ? S.dec[c.id].d : "todo") === g[0]; });
+      if (!list.length) return "";
+      return '<div class="cm-grp">' + g[1] + " · " + list.length + "</div>" + list.map(function (c) {
+        var p = c.pos[s], d = S.dec[c.id] ? S.dec[c.id].d : null;
+        var stance = p[2] === "c" ? "◆ " + esc(c.pole_c) : p[0] === 1 ? "▲ Pour la mesure" : "▼ Contre la mesure";
+        var ps = d ? "Sa position : " + stance + " · source de niveau " + p[1] : "Sa position reste scellée jusqu'à votre choix · source de niveau " + p[1];
+        var ag = d === "ok" || d === "no" ? (((d === "ok" ? 1 : -1) === p[0]) ? '<span class="ag yes">✓ Vous êtes d\'accord avec lui</span>' : '<span class="ag nope">✕ Vous divergez</span>') : "";
+        return '<button class="cm-item" data-id="' + c.id + '"><span class="num">N° ' + c.n + " · " + esc(c.theme) + (c.centre === s ? " · sa promesse" : "") + '</span><span class="t">' + esc(c.mesure) + '</span><span class="ps">' + ps + "</span>" + ag + "</button>";
+      }).join("");
+    }).join("");
+    var sh = openSheet('<div class="reveal-head"><img src="' + k.img + '" alt="Portrait stylisé de ' + esc(k.name) + '"><div><h3>' + esc(k.name) + "</h3><p>" + esc(k.tag) + "</p>" + stPill(s) + "</div></div>" +
+      '<div class="cm-aff">' + aff + '<div class="cm-sum">' + sum + "</div></div>" +
+      '<p class="fine" style="margin:0">' + cards.length + " mesure" + (cards.length > 1 ? "s" : "") + " où sa position est documentée, sur " + CARDS.length + ". Touchez une mesure pour changer d'avis.</p>" +
+      '<div class="cm-list">' + body + "</div>");
+    Array.prototype.forEach.call(sh.querySelectorAll(".cm-item"), function (b) { b.onclick = function () { editSheet(b.dataset.id); }; });
   }
   // Le bouton central s'agrandit jusqu'à devenir la galaxie.
   function growFromOrb() {

@@ -82,7 +82,7 @@ main { flex: 1; min-height: 0; position: relative; }
 .card.next { transform: scale(.94) translateY(3%); filter: saturate(.8); opacity: .85; pointer-events: none; }
 .card.anim { transition: transform 280ms cubic-bezier(.2,.8,.2,1), opacity 280ms ease; }
 .frame { position: absolute; inset: 0; border-radius: 6cqw; background: var(--deck); padding: 2.4cqw; box-shadow: 0 18px 40px -18px rgba(5,40,44,.55), 0 2px 6px rgba(5,40,44,.18); }
-.inner { height: 100%; border-radius: 4.4cqw; background: var(--surface); display: flex; flex-direction: column; gap: 2.2cqh; padding: 4cqw; overflow: hidden; position: relative; }
+.inner { box-sizing: border-box; height: 100%; border-radius: 4.4cqw; background: var(--surface); display: flex; flex-direction: column; gap: 2.2cqh; padding: 4cqw; overflow: hidden; position: relative; }
 .c-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
 .chip { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px 3px 6px; border-radius: 999px; background: var(--deck-soft); color: var(--ink); font-size: clamp(10px, 3.4cqw, 13px); font-weight: 600; }
 .chip svg { width: 1.3em; height: 1.3em; }

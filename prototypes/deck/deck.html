@@ -56,9 +56,9 @@ a { color: var(--link); }
 #app { height: 100%; display: flex; flex-direction: column; }
 .top { flex: none; height: var(--top-h); display: flex; align-items: center; gap: 10px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); border-bottom: 3px solid var(--deck); background: var(--surface); }
 .top svg.logo { width: 26px; height: 26px; flex: none; }
-.brand { display: flex; flex-direction: column; line-height: 1.1; min-width: 0; }
+.brand { display: flex; flex-direction: column; line-height: 1.1; min-width: 0; flex: 1 1 auto; }
 .brand b { font-family: var(--serif); font-size: 16px; font-weight: 700; letter-spacing: .01em; white-space: nowrap; }
-.brand span { font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
+.brand span { font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .week { margin-left: auto; display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--ink-2); white-space: nowrap; font-variant-numeric: tabular-nums; }
 .dots { display: flex; gap: 4px; }
 .dots i { width: 8px; height: 8px; border-radius: 50%; border: 1.5px solid var(--deck); }
@@ -211,24 +211,75 @@ h3 { font-family: var(--serif); font-size: 18px; margin: 0; }
 .redact { background: var(--ink); color: transparent; border-radius: 2px; padding: 0 .3em; user-select: none; }
 .dossier .stampd { position: absolute; right: 10px; top: 8px; rotate: 8deg; font-family: var(--mono); font-weight: 800; font-size: 10.5px; letter-spacing: .1em; border: 2px solid currentColor; padding: 1px 6px; border-radius: 4px; }
 
-/* La Maison Magnitude — esthétique maison de parfum */
-#view-maison .scroll { background: radial-gradient(120% 60% at 50% 0%, color-mix(in oklab, var(--amber) 10%, var(--page)), var(--page)); }
-.maison { max-width: 520px; margin: 0 auto; text-align: center; display: grid; gap: 22px; padding-top: 8px; }
-.maison .house { font-family: var(--serif); font-size: 13px; letter-spacing: .5em; text-transform: uppercase; padding-left: .5em; }
-.maison h2 { font-family: var(--serif); font-weight: 400; font-style: italic; font-size: 30px; line-height: 1.15; margin: 0; text-wrap: balance; }
-.rule { height: 1px; background: linear-gradient(90deg, transparent, var(--amber), transparent); }
-.flacon { width: 120px; height: 168px; margin: 0 auto; }
-.notes { display: grid; gap: 14px; text-align: center; }
-.notes div { display: grid; gap: 2px; }
-.notes .k { font-size: 10.5px; letter-spacing: .3em; text-transform: uppercase; color: var(--amber); font-weight: 700; padding-left: .3em; }
-.notes .v { font-family: var(--serif); font-size: 18px; }
-.notes .d { font-size: 13px; color: var(--ink-2); max-width: 40ch; margin: 0 auto; }
-.well { position: relative; width: 100%; max-width: 360px; aspect-ratio: 1; margin: 0 auto; border-radius: 50%; overflow: hidden; background: radial-gradient(closest-side, #0b3b42, #04191c); box-shadow: inset 0 0 0 6px color-mix(in oklab, var(--amber) 40%, #04191c), inset 0 0 40px rgba(0,0,0,.6); }
+/* La Maison Magnitude — l'atelier des données (parchemin et plume, comme Deck et Recherche) */
+.mai-wrap { gap: 20px; padding-top: 22px; padding-bottom: 40px; }
+.mai-head { display: grid; justify-items: center; gap: 2px; }
+.mai-head .hat-mark { width: 70px; height: 70px; margin-bottom: 2px; }
+.mai-intro { margin: 0; text-align: center; font-family: var(--fell); font-size: 16px; line-height: 1.5; color: var(--iron); text-wrap: pretty; }
+.mai-sec { padding: 18px 18px 16px; display: grid; gap: 12px; }
+.mai-sec h3 { font-family: var(--fell); font-weight: 400; font-size: 23px; margin: 0; line-height: 1.1; }
+.mai-sec .rubric { font-family: var(--fell); font-style: italic; font-size: 13.5px; color: var(--iron-2); margin: 0; line-height: 1.45; }
+.kfig { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.kfig div { display: grid; align-content: start; text-align: center; padding: 0 4px; border-right: 1px solid var(--rule); }
+.kfig div:last-child { border-right: 0; }
+.kfig b { font-family: var(--plume); font-weight: 400; font-size: 30px; line-height: 1.15; color: var(--deck); white-space: nowrap; }
+.kfig span { font-family: var(--fell); font-style: italic; font-size: 12.5px; color: var(--iron-2); line-height: 1.25; }
+.mx { display: grid; grid-template-columns: 2.1em repeat(12, minmax(0, 1fr)); gap: 4px 1px; align-items: center; }
+.mx img { width: 100%; max-width: 24px; aspect-ratio: 1; border-radius: 50%; justify-self: center; }
+.mx img.retire { filter: grayscale(1); opacity: .5; }
+.mx .rl { font-family: var(--fell); font-size: 12px; color: var(--iron-2); text-align: right; padding-right: 5px; white-space: nowrap; }
+.mx .rl.ready { color: var(--deck); }
+.mx .rl.ready::before { content: "✦ "; font-size: 9px; }
+.mx i, .mx-leg i { justify-self: center; display: inline-block; width: 12px; height: 12px; border-radius: 50%; vertical-align: -1px; }
+.dA { background: var(--deck); }
+.dB { background: color-mix(in oklab, var(--deck) 50%, var(--surface)); }
+.dC { box-shadow: inset 0 0 0 1.8px color-mix(in oklab, var(--deck) 60%, var(--surface)); }
+.mx i.dx { width: 4px; height: 4px; background: var(--rule); }
+.mx-leg { display: flex; flex-wrap: wrap; gap: 4px 14px; font-family: var(--fell); font-style: italic; font-size: 13px; color: var(--iron-2); }
+.mx-leg span { white-space: nowrap; }
+.mx-leg .ready { color: var(--deck); font-style: normal; font-size: 10px; }
+.gauge { display: grid; grid-template-columns: repeat(6, 1fr); gap: 5px; }
+.gauge i { height: 8px; border-radius: 4px; background: var(--rule); }
+.gauge i.on { background: var(--deck); }
+.mybar { display: flex; height: 14px; border-radius: 7px; overflow: hidden; background: var(--rule); }
+.mybar i { display: block; height: 100%; }
+.mybar .ok { background: var(--d-ok); } .mybar .no { background: var(--d-no); } .mybar .wish { background: var(--d-wish); } .mybar .meh { background: var(--d-meh); }
+.myleg { display: flex; flex-wrap: wrap; gap: 4px 14px; font-family: var(--fell); font-size: 14px; color: var(--iron-2); }
+.myleg b { font-weight: 400; } .myleg .ok b { color: var(--d-ok); } .myleg .no b { color: var(--d-no); } .myleg .wish b { color: var(--d-wish); } .myleg .meh b { color: var(--d-meh); }
+.mai-link { justify-self: start; border: 0; background: none; padding: 2px 0; cursor: pointer; font-family: var(--fell); font-style: italic; font-size: 16px; color: var(--iron); border-bottom: 1px solid var(--gilt); }
+.well { position: relative; width: 100%; max-width: 340px; aspect-ratio: 1; margin: 0 auto; border-radius: 50%; overflow: hidden; background: radial-gradient(closest-side, #0b3b42, #04191c); box-shadow: inset 0 0 0 6px color-mix(in oklab, var(--deck) 45%, #04191c), inset 0 0 40px rgba(0,0,0,.6); }
 .well canvas { width: 100%; height: 100%; display: block; }
-.well-cap { font-size: 13px; color: var(--ink-2); }
-.promise { text-align: left; display: grid; gap: 8px; font-size: 14px; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; }
+.well-cap { margin: 0; text-align: center; font-family: var(--fell); font-style: italic; font-size: 13.5px; color: var(--iron-2); }
+.wl-tabs { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 16px; }
+.wl-tabs button { border: 0; background: none; padding: 3px 0; cursor: pointer; font-family: var(--fell); font-style: italic; font-size: 16px; color: var(--ink-2); border-bottom: 2px solid transparent; }
+.wl-tabs button.wish { color: var(--d-wish); } .wl-tabs button.meh { color: var(--d-meh); }
+.wl-tabs button[aria-pressed="true"] { border-bottom-color: currentColor; color: var(--ink); }
+.wl-tabs button.wish[aria-pressed="true"] { color: var(--d-wish); } .wl-tabs button.meh[aria-pressed="true"] { color: var(--d-meh); }
+.wl-list { display: grid; gap: 0; }
+.wl-item { border: 0; background: none; text-align: left; cursor: pointer; display: grid; gap: 2px; padding: 10px 0; border-top: 1px solid var(--rule); font: inherit; color: var(--iron); }
+.wl-item .verdict { font-family: var(--plume); font-size: 22px; line-height: 1; }
+.wl-item .verdict.wish { color: var(--d-wish); } .wl-item .verdict.meh { color: var(--d-meh); }
+.wl-item .titre { font-family: var(--fell); font-size: 16.5px; line-height: 1.3; }
+.wl-item .billet { font-family: var(--plume); font-size: 19px; line-height: 1.3; color: var(--iron-2); }
+.wl-item .nonote { font-family: var(--fell); font-style: italic; font-size: 13px; color: var(--iron-2); }
+.wl-item:focus-visible { outline: 2px solid var(--deck); outline-offset: 2px; }
+.wl-empty { margin: 0; text-align: center; font-family: var(--plume); font-size: 20px; line-height: 1.35; color: var(--ink-2); }
+.commu ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+.commu li a { font-family: var(--fell); font-size: 16.5px; color: var(--iron); text-decoration: none; border-bottom: 1px solid var(--gilt); }
+.commu li span { display: block; font-family: var(--fell); font-style: italic; font-size: 13px; color: var(--iron-2); }
+.commu .mail { margin: 0; font-family: var(--plume); font-size: 22px; }
+.commu .mail a { color: var(--deck); }
+.promise { padding: 14px 18px; display: grid; gap: 6px; font-family: var(--fell); font-size: 14px; line-height: 1.5; color: var(--iron-2); }
 .promise p { margin: 0; }
-.fine { font-size: 11.5px; color: var(--muted); }
+.promise b { font-weight: 400; font-size: 17px; color: var(--iron); }
+
+/* Mon deck : la galaxie grand format (le bouton central qui s'agrandit) */
+.cosmos { border-radius: 22px; overflow: hidden; }
+.cosmos-in { position: relative; background: radial-gradient(circle at 50% 50%, color-mix(in oklab, var(--deck) 34%, #06262a), #04191c 72%); box-shadow: inset 0 0 0 1px rgba(234,246,245,.08); }
+.cosmos canvas { display: block; width: 100%; height: min(calc(100vw - 32px), 440px); touch-action: pan-y; }
+.cosmos .ttl { position: absolute; left: 16px; top: 12px; font-family: var(--fell); font-size: 19px; color: #EAF6F5; pointer-events: none; }
+.cosmos .sub { position: absolute; left: 16px; top: 36px; font-family: var(--fell); font-style: italic; font-size: 12.5px; color: #9ED7D3; pointer-events: none; }
+.cosmos-cap { margin: -10px 0 0; text-align: center; font-family: var(--fell); font-style: italic; font-size: 13px; line-height: 1.45; color: var(--ink-2); text-wrap: balance; }
 
 /* Feuilles et superpositions */
 .scrim { position: fixed; inset: 0; background: rgba(4,20,22,.45); z-index: 20; }
@@ -459,44 +510,14 @@ textarea { width: 100%; min-height: 90px; resize: vertical; border: 1px solid va
     </section>
 
     <section class="view" id="view-maison" aria-label="La Maison Magnitude" hidden>
-      <div class="scroll" style="flex:1;min-height:0"><div class="maison">
-        <div class="house">Maison Magnitude</div>
-        <h2>Ce n'est pas de la magie : c'est la data et vos votes.</h2>
-        <svg class="flacon" viewBox="0 0 120 168" aria-hidden="true">
-          <rect x="48" y="4" width="24" height="18" rx="3" fill="var(--amber)"/>
-          <rect x="44" y="22" width="32" height="10" rx="2" fill="var(--teal-900)"/>
-          <path d="M20 46 Q20 32 34 32 H86 Q100 32 100 46 V150 Q100 164 86 164 H34 Q20 164 20 150Z" fill="var(--surface)" stroke="var(--teal-900)" stroke-width="2"/>
-          <rect x="34" y="112" width="8" height="38" rx="2" fill="#FCE58C"/><rect x="46" y="100" width="8" height="50" rx="2" fill="#FBBF24"/><rect x="58" y="88" width="8" height="62" rx="2" fill="#F59E0B"/><rect x="70" y="76" width="8" height="74" rx="2" fill="#D97706"/><rect x="82" y="64" width="8" height="86" rx="2" fill="#B45309"/>
-          <text x="60" y="56" text-anchor="middle" font-family="Georgia, serif" font-size="9" letter-spacing="2" fill="var(--ink)">MAGNITUDE</text>
-        </svg>
-        <div class="rule"></div>
-        <div class="notes">
-          <div><span class="k">Note de tête</span><span class="v">Les données publiques</span><span class="d">INSEE, Eurostat, data.gouv.fr, documents budgétaires : chaque chiffre porte le lien de sa source.</span></div>
-          <div><span class="k">Note de cœur</span><span class="v">La méthode</span><span class="d">Des niveaux de confiance A, B, C affichés, un calcul du deck publié et reproductible, les mêmes règles pour chaque candidat.</span></div>
-          <div><span class="k">Note de fond</span><span class="v">Vos votes</span><span class="d">Vos choix composent votre deck. Ils restent sur votre appareil.</span></div>
-        </div>
-        <div class="rule"></div>
-        <p class="d" style="margin:0;font-family:var(--serif);font-size:16px">Magnitude est une publication apartisane et gratuite qui aide chacun à lire les chiffres de la vie politique, pour se forger sa propre conviction.</p>
-        <div>
-          <div class="eyebrow" style="margin-bottom:10px">Le Puits aux souhaits</div>
-          <div class="well"><canvas id="well" aria-label="Animation : des souhaits anonymes flottent dans un puits"></canvas></div>
-          <p class="well-cap" id="well-cap"></p>
-        </div>
-        <div class="promise">
-          <b style="font-family:var(--serif);font-size:16px">Notre promesse</b>
-          <p>Vos choix, vos souhaits et votre maison sont calculés et gardés dans ce navigateur. Aucun compte, aucun email, aucun traceur.</p>
-          <p>Le score compare vos choix aux positions documentées des candidats. Les cartes « J'aimerais » et « M'en fous » n'entrent pas dans le calcul.</p>
-          <p>Une consultation de la communauté ne sera jamais présentée comme un sondage.</p>
-        </div>
-        <p class="fine">Prototype interne · 14 octobre 2026 · ne pas diffuser · données des numéros #0 et #1.</p>
-      </div></div>
+      <div class="scroll grimoire" id="mai-scroll" style="flex:1;min-height:0"><div class="wrap mai-wrap" id="mai-wrap"></div></div>
     </section>
   </main>
 
   <nav class="tabs" role="tablist" aria-label="Navigation">
     <button role="tab" data-view="search" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 3.5C14 4 8.6 8.4 6.6 14.6L5.5 18"/><path d="M20.5 3.5c-1.2 4.6-4.6 8.7-9.6 10.6l-4.3 .5"/><path d="M11.4 8.6 9 11M14.6 7.2 11.3 11.6"/><path d="M5.5 18 4 21"/><path d="M3 21h8" opacity=".55"/></svg>Recherche</button>
     <button role="tab" data-view="deck" aria-selected="true" class="tab-deck"><span class="orb" aria-hidden="true"><canvas id="galaxy" width="64" height="64"></canvas></span>Deck</button>
-    <button role="tab" data-view="maison" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><rect x="9.5" y="2.5" width="5" height="3" rx="1"/><path d="M9 5.5h6v1.8"/><rect x="5.5" y="7.3" width="13" height="14.2" rx="3"/><path d="M9 18v-2M12 18v-3.5M15 18v-5" stroke-linecap="round"/></svg>La Maison</button>
+    <button role="tab" data-view="maison" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.4 17.3 15.4H6.7Z"/><path d="M2.6 16.5c3.2-2 15.6-2 18.8 0-3.2 2.7-15.6 2.7-18.8 0Z"/><path d="M10 13.6v-1.4M12 13.6v-2.8M14 13.6v-4.2"/><circle cx="11.2" cy="6.9" r=".5" fill="currentColor"/></svg>La Maison</button>
   </nav>
 </div>
 
@@ -764,6 +785,7 @@ textarea { width: 100%; min-height: 90px; resize: vertical; border: 1px solid va
     var weekDone = WEEK.every(function (id) { return S.dec[id]; });
     if (weekDone && !S.triSeen) { S.triSeen = true; save(); grandTri(); }
     if (activeSeg === "mine") renderMine();
+    if (!$("#view-maison").hidden) renderMaison();
   }
 
   // ---------- Le Grand Tri ----------
@@ -784,14 +806,16 @@ textarea { width: 100%; min-height: 90px; resize: vertical; border: 1px solid va
   // ---------- Mon deck ----------
   var activeSeg = "play";
   function showSeg(s) {
-    activeSeg = s;
+    var was = activeSeg; activeSeg = s;
     $("#seg-play").setAttribute("aria-selected", s === "play"); $("#seg-mine").setAttribute("aria-selected", s === "mine");
     $("#play").hidden = s !== "play"; $("#mine").hidden = s !== "mine";
-    if (s === "mine") renderMine();
+    cancelAnimationFrame(cosmosRAF);
+    if (s === "mine") { var opening = was !== "mine"; if (opening) $("#mine").scrollTop = 0; renderMine(opening); if (opening) growFromOrb(); }
   }
+  function refreshViews() { renderMine(); renderStack(); if (!$("#view-maison").hidden) renderMaison(); }
 
   function roman(n) { var v = [[10, "X"], [9, "IX"], [5, "V"], [4, "IV"], [1, "I"]], o = ""; n = +n; v.forEach(function (p) { while (n >= p[0]) { o += p[1]; n -= p[0]; } }); return o; }
-  function renderMine() {
+  function renderMine(anim) {
     var sc = scores(), L = sc.leader, decided = Object.keys(S.dec).length;
     var counted = Object.keys(S.dec).filter(function (id) { return S.dec[id].d === "ok" || S.dec[id].d === "no"; }).length;
     var orn = '<svg class="orn" viewBox="0 0 150 14" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true"><path d="M2 7h52M96 7h52"/><path d="M60 7c4-6 10-6 15 0 5 6 11 6 15 0-4-6-10-6-15 0-5 6-11 6-15 0z"/><circle cx="75" cy="7" r="1.6" fill="currentColor"/></svg>';
@@ -826,9 +850,15 @@ textarea { width: 100%; min-height: 90px; resize: vertical; border: 1px solid va
         '<span class="author' + w + '">Promesse de ' + esc(CANDS[c.centre].name) + (st ? ' <span class="st">(' + esc(st.label.toLowerCase()) + ")</span>" : "") + "</span>" +
         (d.note ? '<span class="billet' + w + '">« ' + esc(d.note) + " »</span>" : "") + "</span></button>";
     }).join("") + "</div>";
-    var note = '<aside class="parch nb"><b>Nota bene.</b> Les positions des candidats sont documentées pour 82 cases sur 144 (57 %). Avec ces trous, le calcul peut avantager certains candidats : il ne sera pas publié avant que 6 cartes réunissent au moins 8 positions documentées et que le test de neutralité passe (INV-03, INV-04).</aside>';
+    var stx = deckStats();
+    var note = '<aside class="parch nb"><b>Nota bene.</b> Les positions des candidats sont documentées pour ' + stx.doc + " cases sur " + stx.tot + " (" + Math.round(stx.doc / stx.tot * 100) + " %). Avec ces trous, le calcul peut avantager certains candidats : ce classement reste indicatif tant que 6 cartes ne réunissent pas au moins 8 positions documentées et qu'un test de neutralité n'est pas passé.</aside>";
     var tools = '<div class="quill-tools"><button id="m-copy">Copier mon registre</button><button id="m-import">Importer un registre</button><button id="m-reset">Tout recommencer</button><button id="m-intro">Revoir l\'introduction</button></div>';
-    $("#mine-wrap").innerHTML = front + rank + pages + note + tools;
+    var near = sc.list.filter(function (r) { return r.n >= MIN_N && r.s !== L; }).slice(0, 3).map(function (r) { return CANDS[r.s].name + " (" + Math.round(r.pct * 100) + " %)"; });
+    var cosmosLbl = (L ? "Votre maison : " + houseLabel(L) + ". " : "Pas encore de maison. ") + (near.length ? "Ensuite : " + near.join(", ") + "." : "");
+    var cosmos = '<section class="cosmos" aria-label="Votre galaxie"><div class="cosmos-in"><canvas id="cosmos" role="img" aria-label="' + esc(cosmosLbl) + '"></canvas><span class="ttl">Votre galaxie</span><span class="sub">' + (L ? esc(houseLabel(L)) + " au centre" : decided ? "Encore trop peu de cartes communes" : "Tranchez des cartes pour la voir bouger") + "</span></div></section>" +
+      '<p class="cosmos-cap">Plus un candidat est grand et proche du centre, plus vous êtes d\'accord avec lui. Ses voisins sur le cercle défendent des positions qui ressemblent aux siennes. Les points sont ses mesures : plus votre taux d\'affinité avec lui est élevé, plus ils brillent ; un halo marque celles où vous êtes d\'accord.</p>';
+    $("#mine-wrap").innerHTML = cosmos + front + rank + pages + note + tools;
+    startCosmos(!!anim);
     Array.prototype.forEach.call(document.querySelectorAll(".folio"), function (b) { b.onclick = function () { editSheet(b.dataset.id); }; });
     $("#m-copy").onclick = copyDeck; $("#m-import").onclick = importSheet; $("#m-reset").onclick = resetSheet;
     $("#m-intro").onclick = function () { onboarding(0); };
@@ -838,10 +868,10 @@ textarea { width: 100%; min-height: 90px; resize: vertical; border: 1px solid va
     var opts = ["ok", "no", "wish", "meh"].map(function (k) { return '<button class="' + k + '" data-d="' + k + '" aria-pressed="' + (d === k) + '"><span>' + GLYPH[k] + " " + LABEL[k] + "</span></button>"; }).join("");
     var sh = openSheet('<span class="num">N° ' + c.n + " · " + esc(c.theme) + '</span><h3>' + esc(c.mesure) + '</h3><div class="fig"><b style="font-size:28px">' + esc(c.fig) + '</b><span>' + esc(c.fig_label) + '</span></div><div class="choice4">' + opts + '</div>' + (d ? '<div class="row-btns"><button class="btn ghost" id="e-clear">Retirer ma décision</button>' + '<button class="btn" id="e-see">Voir qui défend quoi</button></div>' : ""));
     Array.prototype.forEach.call(sh.querySelectorAll(".choice4 button"), function (b) {
-      b.onclick = function () { decide(id, b.dataset.d, S.dec[id] && S.dec[id].note); closeSheet(true); renderMine(); renderStack(); };
+      b.onclick = function () { decide(id, b.dataset.d, S.dec[id] && S.dec[id].note); closeSheet(true); refreshViews(); };
     });
     if (d) {
-      $("#e-clear", sh).onclick = function () { var before = scores().leader; delete S.dec[id]; var after = scores().leader; S.leader = after; save(); applyDeck(after); renderWeek(); if (before !== after) toast(after ? "Bascule ! Nouvelle maison : <b>" + esc(houseLabel(after)) + "</b>." : "Votre deck redevient neutre."); closeSheet(true); renderMine(); renderStack(); };
+      $("#e-clear", sh).onclick = function () { var before = scores().leader; delete S.dec[id]; var after = scores().leader; S.leader = after; save(); applyDeck(after); renderWeek(); if (before !== after) toast(after ? "Bascule ! Nouvelle maison : <b>" + esc(houseLabel(after)) + "</b>." : "Votre deck redevient neutre."); closeSheet(true); refreshViews(); };
       $("#e-see", sh).onclick = function () { reveal(id); };
     }
   }
@@ -933,39 +963,236 @@ textarea { width: 100%; min-height: 90px; resize: vertical; border: 1px solid va
     window.__galaxyRedraw = function () { if (reduce) draw(performance.now()); };
   })();
 
-  // ---------- Puits aux souhaits ----------
+  // ---------- Mon deck : la galaxie grand format ----------
+  // Ressemblance entre deux candidats = part des cartes où ils prennent la même position
+  // (lissée : avec peu de cartes communes, elle tend vers 50 %).
+  var AFF = (function () {
+    var M = {};
+    SLUGS.forEach(function (a) { M[a] = {}; SLUGS.forEach(function (b) {
+      if (a === b) return; var ag = 0, n = 0;
+      CARDS.forEach(function (c) { var pa = c.pos[a], pb = c.pos[b]; if (pa && pb) { n++; if (pa[0] === pb[0]) ag++; } });
+      M[a][b] = (ag + 0.5) / (n + 1);
+    }); });
+    return M;
+  })();
+  function layout(L) {
+    // Placement déterministe : la distance entre deux candidats suit leur dissemblance ; la maison est fixée au centre.
+    var P = {};
+    SLUGS.forEach(function (s, k) { var a = k / SLUGS.length * Math.PI * 2; P[s] = [Math.cos(a) * 0.6, Math.sin(a) * 0.6]; });
+    if (L) P[L] = [0, 0];
+    for (var it = 0; it < 500; it++) {
+      var lr = 0.12 * (1 - it / 500) + 0.01;
+      for (var x = 0; x < SLUGS.length; x++) for (var y = x + 1; y < SLUGS.length; y++) {
+        var a = SLUGS[x], b = SLUGS[y], pa = P[a], pb = P[b];
+        var dx = pb[0] - pa[0], dy = pb[1] - pa[1], d = Math.hypot(dx, dy) || 1e-3;
+        var f = (d - (0.24 + 0.9 * (1 - AFF[a][b]))) / d * lr * 0.5;
+        if (a !== L) { pa[0] += dx * f; pa[1] += dy * f; }
+        if (b !== L) { pb[0] -= dx * f; pb[1] -= dy * f; }
+      }
+    }
+    var cx = 0, cy = 0;
+    if (!L) { SLUGS.forEach(function (s) { cx += P[s][0]; cy += P[s][1]; }); cx /= SLUGS.length; cy /= SLUGS.length; }
+    var mx = 1e-3; SLUGS.forEach(function (s) { P[s][0] -= cx; P[s][1] -= cy; mx = Math.max(mx, Math.hypot(P[s][0], P[s][1])); });
+    SLUGS.forEach(function (s) { P[s][0] /= mx; P[s][1] /= mx; });
+    return P;
+  }
+  var cosmosRAF = null, IMG = {};
+  function portrait(s) { if (!IMG[s]) { IMG[s] = new Image(); IMG[s].src = CANDS[s].img; } return IMG[s]; }
+  function lastName(s) { var n = CANDS[s].name; return n.indexOf("Le Pen") >= 0 ? "Le Pen" : n.indexOf("de Villepin") >= 0 ? "Villepin" : n.split(" ").slice(-1)[0]; }
+  function startCosmos(anim) {
+    cancelAnimationFrame(cosmosRAF);
+    var cv = $("#cosmos"); if (!cv || !cv.getContext) return;
+    var W = cv.clientWidth, H = cv.clientHeight; if (!W || !H) return;
+    var dpr = Math.min(2, window.devicePixelRatio || 1); cv.width = W * dpr; cv.height = H * dpr;
+    var ctx = cv.getContext("2d"); ctx.scale(dpr, dpr);
+    var sc = scores(), L = sc.leader, by = {}; sc.list.forEach(function (r) { by[r.s] = r; });
+    var P0 = layout(null), others = SLUGS.filter(function (s) { return s !== L; });
+    others.sort(function (a, b) { return Math.atan2(P0[a][1], P0[a][0]) - Math.atan2(P0[b][1], P0[b][0]); });
+    var P = {}; if (L) P[L] = [0, 0];
+    others.forEach(function (s, k) {
+      var r = by[s], d = r && r.n >= MIN_N ? 0.42 + 0.58 * (1 - r.pct) : 1, a = -Math.PI / 2 + k / others.length * Math.PI * 2;
+      P[s] = [Math.cos(a) * d, Math.sin(a) * d];
+    });
+    var R = Math.min(W, H) / 2, m = Math.max(36, R * 0.21);
+    var RX = W / 2 - m, RY = H / 2 - m - 8;
+    var N = SLUGS.map(function (s) {
+      var r = by[s], ok = r && r.n >= MIN_N, rad = R * (s === L ? 0.14 : ok ? 0.05 + 0.07 * r.pct : 0.045);
+      var parts = CARDS.filter(function (c) { return c.pos[s]; }).map(function (c, k) {
+        var d = S.dec[c.id], st = 0;
+        if (d && (d.d === "ok" || d.d === "no")) st = ((d.d === "ok" ? 1 : -1) === c.pos[s][0]) ? 1 : -1;
+        return { st: st, a: k * 2.39996, w: (0.22 + (k % 5) * 0.07) * (k % 2 ? 1 : -1), o: rad + 5 + (k % 4) * 3.4 };
+      });
+      return { s: s, x: P[s][0], y: P[s][1], rad: rad, ok: ok, pct: ok ? r.pct : null, parts: parts, hue: CANDS[s].hue, ret: !!(stOf(s) && stOf(s).kind === "retire") };
+    });
+    var links = [];
+    for (var x = 0; x < SLUGS.length; x++) for (var y = x + 1; y < SLUGS.length; y++) { var f = AFF[SLUGS[x]][SLUGS[y]]; if (f >= 0.7) links.push([x, y, f]); }
+    var t0 = performance.now();
+    function frame(now) {
+      if ($("#mine").hidden || $("#view-deck").hidden) return;
+      var t = (now - t0) / 1000, e = anim && !reduce ? 1 - Math.pow(1 - Math.min(1, t / 1.3), 3) : 1;
+      var spin = reduce ? 0 : t * 0.035, cs = Math.cos(spin), sn = Math.sin(spin);
+      ctx.clearRect(0, 0, W, H);
+      var xy = N.map(function (n) { var px = n.x * cs - n.y * sn, py = n.x * sn + n.y * cs; return [W / 2 + px * RX * e, H / 2 + 8 + py * RY * e]; });
+      links.forEach(function (l) { ctx.strokeStyle = "rgba(190,236,232," + ((l[2] - 0.6) * 0.9).toFixed(3) + ")"; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(xy[l[0]][0], xy[l[0]][1]); ctx.lineTo(xy[l[1]][0], xy[l[1]][1]); ctx.stroke(); });
+      N.forEach(function (n, k) {
+        var X = xy[k][0], Y = xy[k][1], col = "oklch(0.8 0.13 " + n.hue + ")";
+        var aff = n.pct == null ? 0 : n.pct, glow = (n.ret ? 0.45 : 1) * (0.28 + 0.72 * aff);
+        var pc = "oklch(" + (0.45 + 0.45 * aff).toFixed(3) + " " + (0.05 + 0.11 * aff).toFixed(3) + " " + n.hue + ")";
+        n.parts.forEach(function (p) {
+          var a = p.a + (reduce ? 0 : t * p.w), px = X + Math.cos(a) * p.o * e, py = Y + Math.sin(a) * p.o * e;
+          ctx.fillStyle = pc; ctx.strokeStyle = pc;
+          if (p.st === 1) { ctx.globalAlpha = glow; ctx.beginPath(); ctx.arc(px, py, 2.4, 0, 6.2832); ctx.fill(); ctx.globalAlpha = 0.3 * glow; ctx.beginPath(); ctx.arc(px, py, 5.4, 0, 6.2832); ctx.fill(); }
+          else if (p.st === -1) { ctx.globalAlpha = glow; ctx.lineWidth = 1; ctx.beginPath(); ctx.arc(px, py, 2, 0, 6.2832); ctx.stroke(); }
+          else { ctx.globalAlpha = glow * 0.8; ctx.beginPath(); ctx.arc(px, py, 1.6, 0, 6.2832); ctx.fill(); }
+        });
+        ctx.globalAlpha = n.ret ? 0.45 : (n.ok || !L ? 1 : 0.7);
+        if (n.s === L) { var g = ctx.createRadialGradient(X, Y, n.rad, X, Y, n.rad * 2.4); g.addColorStop(0, "oklch(0.8 0.13 " + n.hue + " / .45)"); g.addColorStop(1, "oklch(0.8 0.13 " + n.hue + " / 0)"); ctx.fillStyle = g; ctx.beginPath(); ctx.arc(X, Y, n.rad * 2.4, 0, 6.2832); ctx.fill(); }
+        var im = portrait(n.s);
+        ctx.save(); ctx.beginPath(); ctx.arc(X, Y, n.rad, 0, 6.2832); ctx.clip();
+        if (n.ret && "filter" in ctx) ctx.filter = "grayscale(1)";
+        if (im.complete && im.naturalWidth) ctx.drawImage(im, X - n.rad, Y - n.rad, n.rad * 2, n.rad * 2); else { ctx.fillStyle = col; ctx.fill(); }
+        ctx.restore();
+        ctx.strokeStyle = col; ctx.lineWidth = n.s === L ? 3 : 1.6; ctx.beginPath(); ctx.arc(X, Y, n.rad + 1, 0, 6.2832); ctx.stroke();
+        ctx.textAlign = "center"; ctx.textBaseline = "top";
+        if (n.s === L) { ctx.font = "700 13px Georgia, serif"; ctx.fillStyle = "#FCE58C"; ctx.fillText(houseLabel(n.s), X, Y + n.rad + 6); }
+        else { ctx.font = "600 11px Georgia, serif"; ctx.fillStyle = "#DDEFEE"; ctx.fillText(lastName(n.s), X, Y + n.rad + 4); if (n.pct != null) { ctx.font = "10px Georgia, serif"; ctx.fillStyle = "#9ED7D3"; ctx.fillText(Math.round(n.pct * 100) + " %", X, Y + n.rad + 17); } }
+        ctx.globalAlpha = 1;
+      });
+      if (!reduce && !document.hidden) cosmosRAF = requestAnimationFrame(frame);
+    }
+    cosmosRAF = requestAnimationFrame(frame);
+    if (reduce) SLUGS.forEach(function (s) { portrait(s).onload = function () { frame(performance.now()); }; });
+  }
+  // Le bouton central s'agrandit jusqu'à devenir la galaxie.
+  function growFromOrb() {
+    var box = $(".cosmos-in"), orb = $(".tabs .orb");
+    if (reduce || !box || !orb || !box.animate) return;
+    var b = box.getBoundingClientRect(), o = orb.getBoundingClientRect();
+    var x = o.left + o.width / 2 - b.left, y = o.top + o.height / 2 - b.top;
+    var far = Math.max(Math.hypot(x, y), Math.hypot(b.width - x, y), Math.hypot(x, b.height - y), Math.hypot(b.width - x, b.height - y));
+    box.animate([{ clipPath: "circle(27px at " + x + "px " + y + "px)" }, { clipPath: "circle(" + Math.ceil(far) + "px at " + x + "px " + y + "px)" }], { duration: 750, easing: "cubic-bezier(.3,.7,.2,1)" });
+  }
+  document.addEventListener("visibilitychange", function () { if (!document.hidden && !$("#mine").hidden && !$("#view-deck").hidden) startCosmos(false); });
+
+  // ---------- La Maison Magnitude ----------
+  function deckStats() {
+    var o = { tot: CARDS.length * SLUGS.length, doc: 0, lv: { A: 0, B: 0, C: 0 }, ready: 0, isReady: {} };
+    CARDS.forEach(function (c) {
+      var ks = Object.keys(c.pos), ab = 0;
+      ks.forEach(function (s) { var l = c.pos[s][1]; o.lv[l] = (o.lv[l] || 0) + 1; if (l !== "C") ab++; });
+      o.doc += ks.length; o.isReady[c.id] = ks.length >= 8 && ab >= 6; if (o.isReady[c.id]) o.ready++;
+    });
+    return o;
+  }
+  var QUILL = '<svg class="quill" viewBox="0 0 64 64" aria-hidden="true"><path d="M58 4C40 6 22 18 14 38l-4 12 3 1 4-11C27 22 42 10 58 4z" fill="currentColor" opacity=".9"/><path d="M58 4C46 14 34 26 24 40" fill="none" stroke="var(--vellum)" stroke-width="1.2" opacity=".7"/><path d="M10 50 6 60" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>';
+  var HAT = '<svg class="hat-mark" viewBox="0 0 150 150" aria-hidden="true"><path d="M75 14 L112 108 H38 Z" fill="var(--deck)" stroke="var(--surface)" stroke-width="2"/><path d="M20 110 Q75 92 130 110 Q75 128 20 110Z" fill="var(--teal-900)" stroke="var(--surface)" stroke-width="2"/><circle cx="70" cy="62" r="3" fill="#FCE58C"/><circle cx="84" cy="80" r="2.2" fill="#FCE58C"/><circle cx="64" cy="88" r="1.8" fill="#FCE58C"/><rect x="58" y="97" width="5" height="9" rx="1" fill="#FBBF24"/><rect x="66" y="93" width="5" height="13" rx="1" fill="#F59E0B"/><rect x="74" y="89" width="5" height="17" rx="1" fill="#D97706"/><rect x="82" y="85" width="5" height="21" rx="1" fill="#B45309"/></svg>';
+  var MAIL = "contact@magnitude.pub";
+  function mailto(subj) { return "mailto:" + MAIL + "?subject=" + encodeURIComponent(subj); }
+  var wellMode = "all";
+  function renderMaison() {
+    var st = deckStats(), sc = scores(), L = sc.leader;
+    var head = '<header class="parch scr-head mai-head" id="mai-head">' + HAT + '<h2>La Maison Magnitude</h2><p class="scr-sub"><span class="scr-ink">Pas de magie : de la data et vos votes</span>' + QUILL + "</p></header>" +
+      '<p class="mai-intro">Magnitude est une publication apartisane et gratuite. Nous décortiquons les promesses de campagne avec des données publiques, chaque chiffre relié à sa source, pour que chacun se forge sa propre conviction.</p>';
+    // La matrice des preuves : couverture seulement, jamais le sens des positions (il se découvre carte par carte).
+    var cards = CARDS.slice().sort(function (a, b) { return +a.n - +b.n; });
+    var mx = '<div class="mx" role="img" aria-label="' + st.doc + " positions documentées sur " + st.tot + ", " + st.ready + ' cartes prêtes pour le classement"><span aria-hidden="true"></span>' +
+      SLUGS.map(function (s) { return '<img aria-hidden="true" class="' + (stOf(s) && stOf(s).kind === "retire" ? "retire" : "") + '" src="' + CANDS[s].img + '" alt="" title="' + esc(CANDS[s].name) + '">'; }).join("") +
+      cards.map(function (c) {
+        return '<span aria-hidden="true" class="rl' + (st.isReady[c.id] ? " ready" : "") + '" title="' + esc(c.theme) + '">' + roman(c.n) + "</span>" +
+          SLUGS.map(function (s) { var p = c.pos[s]; return '<i aria-hidden="true" class="' + (p ? "d" + p[1] : "dx") + '" title="' + esc(CANDS[s].name + " · " + (p ? "source de niveau " + p[1] : "pas encore de position documentée")) + '"></i>'; }).join("");
+      }).join("") + "</div>";
+    var preuves = '<section class="parch mai-sec" aria-label="La matrice des preuves"><h3>La matrice des preuves</h3>' +
+      '<p class="rubric">Une ligne par promesse, une colonne par candidat. Chaque point est une position retrouvée dans une source vérifiable : plus il est plein, plus la source est solide. Le sens des positions reste caché ici ; il se découvre carte par carte.</p>' +
+      '<div class="kfig"><div><b>' + st.doc + "/" + st.tot + "</b><span>positions documentées</span></div><div><b>" + st.lv.A + "</b><span>sources de niveau A, les plus solides</span></div><div><b>" + st.ready + "/6</b><span>cartes prêtes pour le classement</span></div></div>" +
+      mx + '<div class="mx-leg"><span><i class="dA"></i> niveau A</span><span><i class="dB"></i> niveau B</span><span><i class="dC"></i> niveau C</span><span><span class="ready">✦</span> carte complète</span></div>' +
+      '<div class="gauge" aria-hidden="true">' + [0, 1, 2, 3, 4, 5].map(function (k) { return '<i class="' + (k < st.ready ? "on" : "") + '"></i>'; }).join("") + "</div>" +
+      '<p class="rubric">' + (st.ready >= 6 ? "Six cartes sont complètes : le classement pourra être publié une fois le test de neutralité passé." : "Encore " + (6 - st.ready) + " carte" + (6 - st.ready > 1 ? "s" : "") + " à compléter avant de publier un classement. Une carte est complète avec au moins 8 positions documentées, dont 6 de niveau A ou B.") + "</p></section>";
+    // Votre lecture
+    var cnt = { ok: 0, no: 0, wish: 0, meh: 0 }; Object.keys(S.dec).forEach(function (id) { cnt[S.dec[id].d]++; });
+    var dec = cnt.ok + cnt.no + cnt.wish + cnt.meh, left = CARDS.length - dec;
+    var bar = ["ok", "no", "wish", "meh"].map(function (k) { return cnt[k] ? '<i class="' + k + '" style="width:' + (cnt[k] / CARDS.length * 100).toFixed(2) + '%"></i>' : ""; }).join("");
+    var lecture = '<section class="parch mai-sec" aria-label="Votre lecture"><h3>Votre lecture</h3>' +
+      '<p class="rubric">' + (dec ? dec + " promesse" + (dec > 1 ? "s" : "") + " tranchée" + (dec > 1 ? "s" : "") + " sur " + CARDS.length + (L ? ". Votre maison : " + esc(houseLabel(L)) + "." : ". Pas encore de maison.") : "Vous n'avez encore tranché aucune promesse.") + "</p>" +
+      '<div class="mybar" aria-hidden="true">' + bar + "</div>" +
+      '<div class="myleg">' + ["ok", "no", "wish", "meh"].map(function (k) { return '<span class="' + k + '"><b>' + GLYPH[k] + " " + LABEL[k] + "</b> " + cnt[k] + "</span>"; }).join("") + "<span>· " + left + " à trancher</span></div>" +
+      '<button class="mai-link" id="mai-galaxy">Voir ma galaxie</button></section>';
+    // Le Puits aux souhaits
+    var puits = '<section class="parch mai-sec" aria-label="Le Puits aux souhaits"><h3>Le Puits aux souhaits</h3>' +
+      '<p class="rubric">Vos « J\'aimerais » et vos « M\'en fous » y tombent, chacun de sa couleur, avec la mesure que vous auriez proposée. Ils restent sur votre appareil.</p>' +
+      '<div class="well"><canvas id="well" aria-label="Animation : vos souhaits et vos m\'en fous flottent dans un puits"></canvas></div><p class="well-cap" id="well-cap"></p>' +
+      '<div class="wl-tabs" id="wl-tabs" role="group" aria-label="Afficher"></div><div class="wl-list" id="wl-list"></div></section>';
+    // La communauté
+    var commu = '<section class="parch mai-sec commu" aria-label="La communauté"><h3>Une communauté, pas une audience</h3>' +
+      '<p class="rubric">Nous sommes une communauté qui se mobilise pour rendre les mesures compréhensibles par tous. Chaque erreur signalée, chaque source ajoutée améliore la matrice de tout le monde.</p>' +
+      '<ul><li><a href="' + mailto("Signaler une erreur ou une source") + '">Signaler une erreur ou une source manquante</a><span>Un chiffre faux, une position mal cotée : nous corrigeons et nous le disons.</span></li>' +
+      '<li><a href="' + mailto("Proposer une mesure") + '">Proposer une mesure à décortiquer</a><span>Les promesses dont vous voulez comprendre le coût et l\'effet.</span></li>' +
+      '<li><a href="' + mailto("Rejoindre la relecture") + '">Rejoindre la relecture</a><span>Vérifier les sources avant publication, à plusieurs regards.</span></li></ul>' +
+      '<p class="mail">Écrivez-nous : <a href="mailto:' + MAIL + '">' + MAIL + "</a></p></section>";
+    var promise = '<aside class="parch promise"><b>Notre promesse</b><p>Vos choix, vos souhaits et votre maison sont calculés et gardés dans ce navigateur. Aucun compte, aucun traceur.</p><p>Le score compare vos choix aux positions documentées des candidats. Les cartes « J\'aimerais » et « M\'en fous » n\'entrent pas dans le calcul.</p><p>Une consultation de la communauté ne sera jamais présentée comme un sondage.</p></aside>';
+    $("#mai-wrap").innerHTML = head + preuves + lecture + puits + commu + promise;
+    $("#mai-galaxy").onclick = function () { showView("deck"); showSeg("mine"); };
+    renderWell();
+  }
+  function renderWell() {
+    var all = Object.keys(S.dec).filter(function (id) { var d = S.dec[id].d; return d === "wish" || d === "meh"; }).sort(function (a, b) { return S.dec[b].t - S.dec[a].t; });
+    var nW = all.filter(function (id) { return S.dec[id].d === "wish"; }).length, nM = all.length - nW;
+    $("#wl-tabs").innerHTML = [["all", "", "Tout", all.length], ["wish", "wish", "★ J'aimerais", nW], ["meh", "meh", "∅ M'en fous", nM]].map(function (o) {
+      return '<button class="' + o[1] + '" data-m="' + o[0] + '" aria-pressed="' + (wellMode === o[0]) + '">' + o[2] + " (" + o[3] + ")</button>"; }).join("");
+    Array.prototype.forEach.call(document.querySelectorAll("#wl-tabs button"), function (b) { b.onclick = function () { wellMode = b.dataset.m; renderWell(); }; });
+    var shown = all.filter(function (id) { return wellMode === "all" || S.dec[id].d === wellMode; });
+    $("#wl-list").innerHTML = shown.length ? shown.map(function (id) {
+      var d = S.dec[id], c = byId[id];
+      return '<button class="wl-item" data-id="' + id + '"><span class="verdict ' + d.d + '">' + LABEL[d.d] + '</span><span class="titre">' + esc(c.mesure) + "</span>" +
+        (d.note ? '<span class="billet">« ' + esc(d.note) + " »</span>" : '<span class="nonote">' + (d.d === "wish" ? "Sans mesure proposée" : "Sans sujet proposé") + "</span>") + "</button>";
+    }).join("") : '<p class="wl-empty">' + (all.length ? "Rien dans cette couleur pour l'instant." : "Le puits est encore vide. Glissez une carte vers le haut (J'aimerais) ou vers le bas (M'en fous).") + "</p>";
+    Array.prototype.forEach.call(document.querySelectorAll(".wl-item"), function (b) { b.onclick = function () { editSheet(b.dataset.id); }; });
+    $("#well-cap").textContent = all.length ? nW + " souhait" + (nW > 1 ? "s" : "") + " en bleu, " + nM + " m'en fous en gris, parmi les reflets du puits." : "Chaque « J'aimerais » y deviendra un point bleu, chaque « M'en fous » un point gris.";
+    startWell(all);
+  }
   var wellRAF = null;
-  function startWell() {
+  function startWell(mine) {
+    cancelAnimationFrame(wellRAF);
     var cv = $("#well"); if (!cv) return;
-    var wishes = Object.keys(S.dec).filter(function (id) { return S.dec[id].d === "wish"; }).length;
-    $("#well-cap").textContent = wishes ? "Vos " + wishes + " souhait" + (wishes > 1 ? "s brillent" : " brille") + " en ambre parmi les autres. Ils ne quittent pas votre appareil." : "Chaque « J'aimerais » devient une étoile ambre. Personne ne sait qui l'a souhaitée.";
     var dpr = Math.min(2, window.devicePixelRatio || 1), W = cv.clientWidth, H = cv.clientHeight;
     if (!W) return;
     cv.width = W * dpr; cv.height = H * dpr; var ctx = cv.getContext("2d"); ctx.scale(dpr, dpr);
     var seed = 7; function r() { seed = (seed * 16807) % 2147483647; return seed / 2147483647; }
-    var P = []; for (var i = 0; i < 140; i++) P.push({ a: r() * Math.PI * 2, rad: Math.sqrt(r()) * W * 0.44, s: 0.6 + r() * 1.6, sp: (0.0006 + r() * 0.0016) * (r() < 0.5 ? 1 : -1), mine: i < wishes });
-    function frame(t) {
+    var COL = { wish: "125,178,255", meh: "201,214,215" };
+    var P = mine.map(function (id) { return { k: S.dec[id].d, a: r() * Math.PI * 2, rad: (0.12 + r() * 0.3) * W, s: 3.6, sp: (0.0015 + r() * 0.002) * (r() < 0.5 ? 1 : -1) }; });
+    for (var i = 0; i < 120; i++) P.push({ k: null, a: r() * Math.PI * 2, rad: Math.sqrt(r()) * W * 0.44, s: 0.5 + r() * 1.3, sp: (0.0005 + r() * 0.0014) * (r() < 0.5 ? 1 : -1) });
+    function frame(now) {
+      if ($("#view-maison").hidden) return;
       ctx.clearRect(0, 0, W, H);
-      P.forEach(function (p) {
+      P.forEach(function (p, k) {
         if (!reduce) p.a += p.sp;
         var x = W / 2 + Math.cos(p.a) * p.rad, y = H / 2 + Math.sin(p.a) * p.rad * 0.92;
-        ctx.beginPath(); ctx.arc(x, y, p.mine ? p.s + 1.6 : p.s, 0, Math.PI * 2);
-        ctx.fillStyle = p.mine ? "rgba(251,191,36,.95)" : "rgba(190,236,232," + (0.25 + p.s / 4) + ")"; ctx.fill();
+        if (!p.k) { ctx.fillStyle = "rgba(150,200,196," + (0.12 + p.s / 7) + ")"; ctx.beginPath(); ctx.arc(x, y, p.s, 0, 6.2832); ctx.fill(); return; }
+        var on = wellMode === "all" || wellMode === p.k, tw = reduce ? 1 : 0.8 + 0.2 * Math.sin(now / 500 + k);
+        ctx.fillStyle = "rgba(" + COL[p.k] + "," + (on ? 0.25 : 0.06) + ")"; ctx.beginPath(); ctx.arc(x, y, p.s * 2.6 * tw, 0, 6.2832); ctx.fill();
+        ctx.fillStyle = "rgba(" + COL[p.k] + "," + (on ? 1 : 0.22) + ")"; ctx.beginPath(); ctx.arc(x, y, p.s, 0, 6.2832); ctx.fill();
+        if (p.k === "meh") { ctx.strokeStyle = "rgba(" + COL.meh + "," + (on ? 0.9 : 0.2) + ")"; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.arc(x, y, p.s + 3.2, 0, 6.2832); ctx.stroke(); }
       });
       if (!reduce) wellRAF = requestAnimationFrame(frame);
     }
-    cancelAnimationFrame(wellRAF); frame(0);
+    frame(0);
   }
 
   // ---------- Navigation ----------
   function showView(v) {
     ["deck", "search", "maison"].forEach(function (k) { $("#view-" + k).hidden = k !== v; });
     Array.prototype.forEach.call(document.querySelectorAll(".tabs button"), function (b) { b.setAttribute("aria-selected", b.dataset.view === v); });
-    cancelAnimationFrame(wellRAF);
+    cancelAnimationFrame(wellRAF); cancelAnimationFrame(cosmosRAF);
     if (v === "search") { renderSearch(); var h = $("#scr-head"); h.classList.remove("anim"); void h.offsetWidth; h.classList.add("anim"); }
-    if (v === "maison") startWell();
+    if (v === "maison") { renderMaison(); var mh = $("#mai-head"); void mh.offsetWidth; mh.classList.add("anim"); }
+    if (v === "deck" && activeSeg === "mine") startCosmos(false);
   }
-  Array.prototype.forEach.call(document.querySelectorAll(".tabs button"), function (b) { b.onclick = function () { showView(b.dataset.view); }; });
+  Array.prototype.forEach.call(document.querySelectorAll(".tabs button"), function (b) {
+    b.onclick = function () {
+      // Déjà sur le Deck : le bouton central ouvre (ou referme) la galaxie.
+      if (b.dataset.view === "deck" && !$("#view-deck").hidden) { showSeg(activeSeg === "mine" ? "play" : "mine"); return; }
+      showView(b.dataset.view);
+    };
+  });
   $("#seg-play").onclick = function () { showSeg("play"); };
   $("#seg-mine").onclick = function () { showSeg("mine"); };
   $("#q").addEventListener("input", renderSearch);

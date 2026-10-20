@@ -651,6 +651,31 @@ button, a, .folio, .parch, .lrow, .person, .cm-item, .wl-item, .mini, .scr-filte
 .sol-chips button { flex: none; font-size: 14px; padding: 4px 11px; display: inline-flex; align-items: center; gap: 6px; }
 .sol-chips i { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
 .sol-btns { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+
+/* Affinage : inciter à continuer après le Grand Tri */
+.refine { margin: 6px max(16px, env(safe-area-inset-right, 0px)) 0 max(16px, env(safe-area-inset-left, 0px)); padding: 10px 14px 11px; border-radius: 14px; border: 1px solid color-mix(in oklab, var(--deck) 35%, var(--line)); background: linear-gradient(135deg, color-mix(in oklab, var(--deck) 12%, var(--surface)), var(--surface)); display: grid; gap: 6px; animation: refIn .6s cubic-bezier(.3,.7,.2,1) both; }
+@keyframes refIn { from { opacity: 0; transform: translateY(-8px); } }
+.refine[hidden] { display: none; }
+.refine .rf-top { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.refine .rf-top b { font-family: var(--serif); font-size: 16px; font-weight: 600; color: var(--deck); }
+.refine .rf-top span { font-size: 12px; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.refine .rf-bar { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 3px; }
+.refine .rf-bar i { height: 6px; border-radius: 3px; background: color-mix(in oklab, var(--deck) 16%, transparent); }
+.refine .rf-bar i.on { background: var(--deck); }
+.refine .rf-bar i.next { background: color-mix(in oklab, var(--deck) 45%, transparent); animation: rfPulse 1.8s ease-in-out infinite; }
+@keyframes rfPulse { 50% { opacity: .35; } }
+.refine p { margin: 0; font-size: 13px; line-height: 1.35; color: var(--ink-2); text-wrap: pretty; }
+.refine p b { color: var(--ink); font-weight: 600; }
+.tiehint { position: absolute; left: 10px; right: 10px; bottom: 8px; z-index: 2; text-align: center; font-size: 11.5px; line-height: 1.25; padding: 4px 8px; border-radius: 999px; color: #FCE58C; background: rgba(2,20,24,.72); border: 1px solid rgba(252,229,140,.5); backdrop-filter: blur(2px); }
+.card .art { position: relative; }
+.dots.sm { gap: 3px; } .dots.sm i { width: 6px; height: 6px; border-width: 1.2px; }
+.tri .tri-hook { margin: 0; font-size: 14px; line-height: 1.4; color: #EAF6F5; text-wrap: pretty; }
+.tri .tri-hook b { color: #FCE58C; font-weight: 600; }
+.tri .tri-meter { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 3px; width: 100%; }
+.tri .tri-meter i { height: 6px; border-radius: 3px; background: rgba(234,246,245,.18); }
+.tri .tri-meter i.on { background: #FCE58C; }
+.tri .tri-meter i.next { background: rgba(252,229,140,.5); animation: rfPulse 1.8s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) { .refine, .refine .rf-bar i.next, .tri .tri-meter i.next { animation: none; } }
 </style>
 
 <div id="app">
@@ -667,6 +692,7 @@ button, a, .folio, .parch, .lrow, .person, .cm-item, .wl-item, .mini, .scr-filte
         <button role="tab" id="seg-mine" aria-selected="false">Mon deck</button>
       </div>
       <div id="play">
+        <div class="refine" id="refine" hidden></div>
         <div class="stage" id="stage"><div class="halo"></div></div>
         <div class="pad" id="pad">
           <button class="no" data-dir="l" aria-label="Désaligné (glisser à gauche)"><span class="b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></span><span>Désaligné</span></button>
@@ -794,9 +820,42 @@ button, a, .folio, .parch, .lrow, .person, .cm-item, .wl-item, .mini, .scr-filte
 
   // ---------- En-tête ----------
   function renderWeek() {
-    var done = WEEK.filter(function (id) { return S.dec[id]; }).length;
-    var dots = WEEK.map(function (id) { return '<i class="' + (S.dec[id] ? "on" : "") + '"></i>'; }).join("");
-    $("#week").innerHTML = '<span><span class="sr">Semaine 42 : </span>' + done + '/6</span><span class="dots" aria-hidden="true">' + dots + "</span>";
+    var wk = weekIsDone(), list = wk ? ORDER : ORDER.filter(function (c) { return WEEK.indexOf(c.id) >= 0; });
+    var done = list.filter(function (c) { return S.dec[c.id]; }).length;
+    var dots = list.map(function (c) { return '<i class="' + (S.dec[c.id] ? "on" : "") + '"></i>'; }).join("");
+    $("#week").innerHTML = '<span><span class="sr">' + (wk ? "Affinage : " : "Semaine 42 : ") + "</span>" + done + "/" + list.length + '</span><span class="dots' + (wk ? " sm" : "") + '" aria-hidden="true">' + dots + "</span>";
+    if (typeof renderRefine === "function") renderRefine();
+  }
+
+
+  // ---------- Affinage : la maison est provisoire tant que toutes les cartes ne sont pas tranchées ----------
+  function weekIsDone() { return WEEK.every(function (id) { return S.dec[id]; }); }
+  function refine() {
+    var sc = scores(), el = sc.list.filter(function (r) { return r.n >= MIN_N && !(stOf(r.s) && stOf(r.s).kind === "retire"); });
+    var L = el[0] || null, R = el[1] || null, left = queue(), tie = [];
+    if (L && R) tie = left.filter(function (c) { return c.pos[L.s] && c.pos[R.s] && c.pos[L.s][0] !== c.pos[R.s][0]; });
+    return { L: L, R: R, left: left, tie: tie, decided: ORDER.length - left.length, total: ORDER.length };
+  }
+  function refineMsg(r) {
+    var n = r.left.length, plural = n > 1 ? "s" : "";
+    if (!n) return "Toutes les cartes sont tranchées : votre maison est au plus précis pour ce tirage. De nouvelles cartes arrivent chaque semaine pour l'affiner encore.";
+    if (r.L && r.R) {
+      var gap = Math.round((r.L.pct - r.R.pct) * 100), t = r.tie.length;
+      var lead = gap > 0 ? "<b>" + esc(houseLabel(r.L.s)) + "</b> devance <b>" + esc(lastName(r.R.s)) + "</b> de " + gap + " point" + (gap > 1 ? "s" : "") + " d'accord. " : "<b>" + esc(lastName(r.L.s)) + "</b> et <b>" + esc(lastName(r.R.s)) + "</b> sont à égalité. ";
+      return lead + (t ? t + " des " + n + " carte" + plural + " restante" + plural + " peu" + (t > 1 ? "vent" : "t") + " les départager : <b>continuez pour confirmer ou renverser votre maison.</b>" : "Les " + n + " carte" + plural + " restante" + plural + " précisent encore votre profil.");
+    }
+    return "Pas encore assez de cartes communes pour trancher entre les maisons : <b>" + n + " carte" + plural + " à jouer</b> pour faire apparaître la vôtre.";
+  }
+  function meterHTML(r, cls) {
+    var done = r.decided, h = "";
+    for (var i = 0; i < r.total; i++) h += '<i class="' + (i < done ? "on" : i === done ? "next" : "") + '"></i>';
+    return '<div class="' + cls + '" aria-hidden="true">' + h + "</div>";
+  }
+  function renderRefine() {
+    var box = $("#refine"); if (!box) return;
+    if (!weekIsDone()) { box.hidden = true; return; }
+    var r = refine(); box.hidden = false;
+    box.innerHTML = '<div class="rf-top"><b>' + (r.left.length ? "Votre maison se précise" : "Maison affinée") + '</b><span>' + r.decided + "/" + r.total + " cartes</span></div>" + meterHTML(r, "rf-bar") + "<p>" + refineMsg(r) + "</p>";
   }
 
   // ---------- Pile de cartes ----------
@@ -807,12 +866,13 @@ button, a, .folio, .parch, .lrow, .person, .cm-item, .wl-item, .mini, .scr-filte
     var q = queue();
     $("#pad").style.visibility = q.length ? "visible" : "hidden";
     if (!q.length) {
-      stage.appendChild(el('<div class="done"><div><h2>Votre deck est complet.</h2><p style="color:var(--ink-2);margin:0 0 14px">Vous pouvez changer d\'avis sur chaque carte depuis « Mon deck ».</p><button class="btn primary" id="go-mine">Voir mon deck</button></div></div>'));
+      stage.appendChild(el('<div class="done"><div><h2>Maison affinée au maximum.</h2><p style="color:var(--ink-2);margin:0 0 14px">Les 12 cartes sont tranchées. Six nouvelles cartes arrivent chaque semaine pour la préciser encore ; d\'ici là, vous pouvez changer d\'avis depuis « Mon deck ».</p><button class="btn primary" id="go-mine">Voir mon deck</button></div></div>'));
       $("#go-mine").onclick = function () { showSeg("mine"); };
       top = null; return;
     }
     if (q[1]) { var nx = el(cardHTML(q[1])); nx.classList.add("next"); stage.appendChild(nx); }
     top = el(cardHTML(q[0])); stage.appendChild(top); bindDrag(top);
+    if (weekIsDone()) { var rf = refine(); if (rf.tie.some(function (c) { return c.id === q[0].id; })) { var art = top.querySelector(".art"); if (art) art.appendChild(el('<span class="tiehint">⚖ Cette carte peut départager vos deux premières maisons</span>')); } }
     var ib = top.querySelector(".info-btn"); if (ib) ib.onclick = function (e) { e.stopPropagation(); openFiche(top.dataset.id); };
     var nb = stage.querySelector(".card.next .info-btn"); if (nb) nb.tabIndex = -1;
   }
@@ -974,15 +1034,16 @@ button, a, .folio, .parch, .lrow, .person, .cm-item, .wl-item, .mini, .scr-filte
   function grandTri() {
     var sc = scores(), L = sc.leader;
     var res = L ? '<img src="' + CANDS[L].img + '" alt=""><b style="font-family:var(--serif);font-size:22px">' + esc(houseLabel(L)) + '</b><span style="color:#CFE6E4;font-size:13px">teinte ' + esc(CANDS[L].tone) + " · " + Math.round(sc.list[0].pct * 100) + " % d'accord sur " + sc.list[0].n + " cartes documentées</span>"
-      : '<b style="font-family:var(--serif);font-size:20px">Votre deck hésite encore</b><span style="color:#CFE6E4;font-size:13px">Pas assez de cartes communes pour départager les maisons. Tranchez les cartes à réviser.</span>';
+      : '<b style="font-family:var(--serif);font-size:20px">Votre deck hésite encore</b><span style="color:#CFE6E4;font-size:13px">Pas assez de cartes communes pour départager les maisons. Tranchez les cartes suivantes pour la faire apparaître.</span>';
+    var rf0 = refine(), hook = "Votre maison est <b>provisoire</b> : " + refineMsg(rf0);
     var ov = el('<div class="overlay tri" role="dialog" aria-modal="true" aria-label="Le Grand Tri"><div class="ob">' +
       '<svg class="hat" viewBox="0 0 150 150" aria-hidden="true"><path d="M75 14 L112 108 H38 Z" fill="var(--deck)" stroke="#EAF6F5" stroke-width="2"/><path d="M20 110 Q75 92 130 110 Q75 128 20 110Z" fill="#0B4A52" stroke="#EAF6F5" stroke-width="2"/><circle cx="70" cy="62" r="3" fill="#FCE58C"/><circle cx="84" cy="80" r="2.2" fill="#FCE58C"/><circle cx="64" cy="88" r="1.8" fill="#FCE58C"/><rect x="58" y="97" width="5" height="9" rx="1" fill="#FBBF24"/><rect x="66" y="93" width="5" height="13" rx="1" fill="#F59E0B"/><rect x="74" y="89" width="5" height="17" rx="1" fill="#D97706"/><rect x="82" y="85" width="5" height="21" rx="1" fill="#B45309"/></svg>' +
       '<div class="step">Le Grand Tri · semaine 42</div><p class="big">La magie a parlé ?</p><p class="sub">Non : la data et vos votes.</p>' +
-      '<div class="res">' + res + '</div><p style="margin:0;font-size:13px;color:#CFE6E4">Prochaine étape (à venir) : votre email part en fumée, vous recevez l\'avatar commun et votre chapeau.</p><div class="row-btns"><button class="btn ghost" id="t-rev">Réviser les anciennes cartes</button><button class="btn" id="t-mine">Voir mon deck</button></div></div></div>');
+      '<div class="res">' + res + '</div><p class="tri-hook">' + hook + '</p>' + meterHTML(rf0, "tri-meter") + '<p style="margin:0;font-size:12.5px;color:#CFE6E4">À terme : votre email part en fumée, vous recevez l\'avatar commun et votre chapeau.</p><div class="row-btns"><button class="btn primary" id="t-go">Affiner ma maison →</button><button class="btn ghost" id="t-mine">Voir mon deck</button></div></div></div>');
     document.body.appendChild(ov);
-    $("#t-rev", ov).onclick = function () { ov.remove(); };
+    $("#t-go", ov).onclick = function () { ov.remove(); showSeg("play"); };
     $("#t-mine", ov).onclick = function () { ov.remove(); showSeg("mine"); };
-    setTimeout(function () { $("#t-mine", ov).focus(); }, 30);
+    setTimeout(function () { $("#t-go", ov).focus(); }, 30);
   }
 
   // ---------- Mon deck ----------

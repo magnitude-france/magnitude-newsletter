@@ -1,0 +1,1807 @@
+<title>Magnitude</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Layout : appli plein écran — en-tête, scène de carte, pavé de 4 gestes, barre d'onglets.
+   La couleur du deck (--deck) pilote cadre, halo, onglets ; elle glisse d'une maison à l'autre. */
+@property --deck-h { syntax: '<number>'; inherits: true; initial-value: 200; }
+@property --deck-c { syntax: '<number>'; inherits: true; initial-value: 0.085; }
+@property --deck-l { syntax: '<number>'; inherits: true; initial-value: 0.53; }
+:root {
+  /* Design system Magnitude (inchangé) */
+  --page: #F1F8F8; --surface: #FFFFFF; --surface-2: #EEF8F7;
+  --ink: #0B1F22; --ink-2: #3E5558; --muted: #5F7679; --line: rgba(11,74,82,.14);
+  --teal-100: #DDF2F0; --teal-700: #137A7F; --teal-900: #0B4A52;
+  --amber: #D97706; --amber-pale: #FEF3C7; --link: #0A58CA;
+  /* Décisions : jamais rouge/vert (lecture partisane, daltonisme) */
+  --d-ok: #137A7F; --d-no: #B45309; --d-wish: #0A58CA; --d-meh: #6B7F82;
+  --dossier: #FBF3DF; --dossier-edge: #E7D3A6;
+  --lift: 0; --on-deck: #FFFFFF;
+  --deck: oklch(calc(var(--deck-l) + var(--lift)) var(--deck-c) var(--deck-h));
+  --deck-soft: color-mix(in oklab, var(--deck) 14%, var(--surface));
+  --serif: Georgia, "Times New Roman", serif;
+  --sans: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+  --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --top-h: 52px; --tabs-h: 62px;
+  transition: --deck-h 1100ms ease, --deck-c 1100ms ease, --deck-l 1100ms ease;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --page: #071A1D; --surface: #0E2A2E; --surface-2: #12343A;
+    --ink: #E6F2F1; --ink-2: #B9CFD0; --muted: #8DA8AA; --line: rgba(221,242,240,.14);
+    --teal-100: #12343A; --teal-700: #4FC1BC; --teal-900: #DDF2F0;
+    --amber: #F59E0B; --amber-pale: #3A2A0B; --link: #7DB2FF;
+    --d-ok: #4FC1BC; --d-no: #F0A04B; --d-wish: #7DB2FF; --d-meh: #9AB0B2;
+    --dossier: #2A2416; --dossier-edge: #5A4A26;
+    --lift: 0.12; --on-deck: #04191C; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --page: #071A1D; --surface: #0E2A2E; --surface-2: #12343A;
+  --ink: #E6F2F1; --ink-2: #B9CFD0; --muted: #8DA8AA; --line: rgba(221,242,240,.14);
+  --teal-100: #12343A; --teal-700: #4FC1BC; --teal-900: #DDF2F0;
+  --amber: #F59E0B; --amber-pale: #3A2A0B; --link: #7DB2FF;
+  --d-ok: #4FC1BC; --d-no: #F0A04B; --d-wish: #7DB2FF; --d-meh: #9AB0B2;
+  --dossier: #2A2416; --dossier-edge: #5A4A26;
+  --lift: 0.12; --on-deck: #04191C; color-scheme: dark;
+}
+html, body { height: 100%; }
+body { background: var(--page); color: var(--ink); font-family: var(--sans); font-size: 15px; line-height: 1.45; overflow: hidden; -webkit-font-smoothing: antialiased; }
+button { font: inherit; color: inherit; cursor: pointer; }
+a { color: var(--link); }
+:focus-visible { outline: 3px solid var(--link); outline-offset: 2px; border-radius: 6px; }
+[hidden] { display: none !important; }
+:root { --st-win: color-mix(in oklab, var(--amber) 62%, var(--ink)); }  /* sinon .view{display:flex} empile les onglets masqués */
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+#app { height: 100%; display: flex; flex-direction: column; }
+.top { flex: none; height: var(--top-h); display: flex; align-items: center; gap: 10px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); border-bottom: 3px solid var(--deck); background: var(--surface); }
+.top svg.logo { width: 26px; height: 26px; flex: none; }
+.brand { display: flex; flex-direction: column; line-height: 1.1; min-width: 0; flex: 1 1 auto; }
+.brand b { font-family: var(--serif); font-size: 16px; font-weight: 700; letter-spacing: .01em; white-space: nowrap; }
+.brand span { font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.week { margin-left: auto; display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--ink-2); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.dots { display: flex; gap: 4px; }
+.dots i { width: 8px; height: 8px; border-radius: 50%; border: 1.5px solid var(--deck); }
+.dots i.on { background: var(--deck); }
+
+main { flex: 1; min-height: 0; position: relative; }
+.view { position: absolute; inset: 0; display: flex; flex-direction: column; }
+.scroll { overflow-y: auto; -webkit-overflow-scrolling: touch; padding-block: 16px 28px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.wrap { max-width: 640px; margin: 0 auto; display: grid; gap: 18px; }
+
+/* Bascule Jouer / Mon deck */
+.seg { flex: none; display: flex; gap: 4px; margin: 10px auto 0; padding: 4px; border-radius: 999px; background: var(--surface-2); border: 1px solid var(--line); }
+.seg button { border: 0; background: transparent; padding: 6px 16px; border-radius: 999px; font-size: 13px; font-weight: 600; color: var(--ink-2); }
+.seg button[aria-selected="true"] { background: var(--surface); color: var(--ink); box-shadow: 0 1px 3px rgba(0,0,0,.12); }
+
+/* Scène */
+#play { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+.stage { flex: 1; min-height: 0; position: relative; container-type: size; margin: 10px max(16px, env(safe-area-inset-right, 0px)) 6px max(16px, env(safe-area-inset-left, 0px)); }
+.halo { position: absolute; inset: 6% 4%; border-radius: 40px; background: radial-gradient(closest-side, color-mix(in oklab, var(--deck) 30%, transparent), transparent); filter: blur(18px); pointer-events: none; }
+.card { position: absolute; left: 50%; top: 50%; width: min(calc(100cqw - 8px), calc((100cqh - 8px) * 0.714)); aspect-ratio: 5 / 7; translate: -50% -50%; container-type: size; touch-action: none; user-select: none; -webkit-user-select: none; will-change: transform; }
+.card.next { transform: scale(.94) translateY(3%); filter: saturate(.8); opacity: .85; pointer-events: none; }
+.card.anim { transition: transform 280ms cubic-bezier(.2,.8,.2,1), opacity 280ms ease; }
+.frame { position: absolute; inset: 0; border-radius: 6cqw; background: var(--deck); padding: 2.4cqw; box-shadow: 0 18px 40px -18px rgba(5,40,44,.55), 0 2px 6px rgba(5,40,44,.18); }
+.inner { box-sizing: border-box; height: 100%; border-radius: 4.4cqw; background: var(--surface); display: flex; flex-direction: column; gap: 2.2cqh; padding: 4cqw; overflow: hidden; position: relative; }
+.c-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.chip { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px 3px 6px; border-radius: 999px; background: var(--deck-soft); color: var(--ink); font-size: clamp(10px, 3.4cqw, 13px); font-weight: 600; }
+.chip svg { width: 1.3em; height: 1.3em; }
+.num { font-family: var(--mono); font-size: clamp(10px, 3.2cqw, 12px); color: var(--muted); letter-spacing: .06em; }
+.art { flex: 1; min-height: 14cqh; border-radius: 3cqw; position: relative; overflow: hidden; background: radial-gradient(120% 90% at 30% 20%, color-mix(in oklab, var(--deck) 26%, var(--surface)), color-mix(in oklab, var(--deck) 62%, #06262a)); }
+.art svg.sky { position: absolute; inset: 0; width: 100%; height: 100%; }
+.art .emblem { position: absolute; left: 50%; top: 50%; translate: -50% -50%; width: min(34cqw, 70%); aspect-ratio: 1; border-radius: 50%; background: color-mix(in oklab, var(--surface) 92%, var(--deck)); display: grid; place-items: center; box-shadow: 0 0 0 4px color-mix(in oklab, var(--surface) 35%, transparent); }
+.art .emblem svg { width: 54%; height: 54%; stroke: var(--deck); }
+.fig { display: flex; align-items: baseline; gap: 3cqw; }
+.fig b { font-family: var(--serif); font-size: clamp(22px, 10cqw, 40px); line-height: 1; color: var(--deck); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.fig span { font-size: clamp(10px, 3.3cqw, 13px); color: var(--ink-2); line-height: 1.3; }
+.measure { font-family: var(--serif); font-size: clamp(14px, 5.1cqw, 21px); line-height: 1.25; text-wrap: balance; }
+.c-foot { display: flex; justify-content: space-between; align-items: center; gap: 8px; border-top: 1px solid var(--line); padding-top: 2cqh; font-size: clamp(9px, 2.8cqw, 11px); color: var(--muted); }
+.seal { display: inline-flex; align-items: center; gap: 6px; letter-spacing: .12em; text-transform: uppercase; font-weight: 600; }
+.seal svg { width: 1.6em; height: 1.6em; }
+.info-btn { display: inline-flex; align-items: center; gap: 5px; border: 1.5px solid var(--deck); color: var(--deck); background: var(--surface); border-radius: 999px; padding: .35em .85em; font: inherit; font-weight: 700; letter-spacing: .02em; cursor: pointer; }
+.info-btn svg { width: 1.25em; height: 1.25em; }
+.fiche .kick { font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.fiche h3 { font-family: var(--serif); font-size: 21px; line-height: 1.25; margin: 2px 0 0; }
+.fiche h3:focus { outline: none; }
+.fiche h4 { margin: 4px 0 0; font-size: 13px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--deck); }
+.fiche p { margin: 0; line-height: 1.5; }
+.fiche .ess { font-size: 15.5px; }
+.fiche .kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 8px; }
+.fiche .kpi { border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; display: grid; gap: 2px; }
+.fiche .kpi b { font-family: var(--serif); font-size: 22px; color: var(--deck); }
+.fiche .kpi span { font-size: 12px; color: var(--ink-2); line-height: 1.35; }
+.eu { display: grid; gap: 9px; }
+.eu .ttl { font-size: 12.5px; color: var(--ink-2); font-weight: 600; }
+.eu .bar-row { display: grid; grid-template-columns: minmax(0, 8.5em) 1fr 5.6em; gap: 8px; align-items: center; font-size: 13px; }
+.eu .bar-row .lb { overflow-wrap: anywhere; line-height: 1.2; }
+.eu .bar-row.focus .lb { font-weight: 700; }
+.eu .track { position: relative; height: 12px; background: var(--surface-2); border-radius: 6px; }
+.eu .fill { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 6px; background: color-mix(in oklab, var(--muted) 55%, var(--surface)); }
+.eu .bar-row.focus .fill { background: var(--deck); }
+.eu .range { position: absolute; top: 0; bottom: 0; border-radius: 6px; background: repeating-linear-gradient(45deg, transparent 0 3px, color-mix(in oklab, var(--muted) 45%, transparent) 3px 5px); }
+.eu .refline { position: absolute; top: -4px; bottom: -4px; width: 2px; background: var(--d-no); }
+.eu .val { font-family: var(--mono); font-size: 12px; white-space: nowrap; text-align: right; }
+.eu .legend { font-size: 12px; color: var(--muted); display: flex; align-items: center; gap: 6px; }
+.eu .legend i { display: inline-block; width: 2px; height: 12px; background: var(--d-no); }
+.eu details { font-size: 12px; color: var(--muted); }
+.eu details li { margin: 3px 0; }
+.fiche .srcs { margin: 0; padding-left: 18px; font-size: 12.5px; display: grid; gap: 4px; }
+.fiche .anon { font-size: 12.5px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 10px; display: flex; gap: 8px; align-items: flex-start; }
+.stamp { position: absolute; z-index: 3; padding: 4px 12px; border: 3px solid currentColor; border-radius: 8px; font-family: var(--sans); font-weight: 800; letter-spacing: .08em; font-size: clamp(14px, 6cqw, 24px); text-transform: uppercase; opacity: 0; pointer-events: none; background: color-mix(in oklab, var(--surface) 85%, transparent); }
+.stamp.r { top: 9%; left: 7%; color: var(--d-ok); rotate: -12deg; }
+.stamp.l { top: 9%; right: 7%; color: var(--d-no); rotate: 12deg; }
+.stamp.u { bottom: 14%; left: 50%; translate: -50% 0; color: var(--d-wish); }
+.stamp.d { top: 30%; left: 50%; translate: -50% 0; color: var(--d-meh); }
+
+.pad { flex: none; display: flex; justify-content: center; gap: 14px; padding: 4px 16px 30px; }
+.pad button { width: 58px; display: grid; justify-items: center; gap: 3px; border: 0; background: none; font-size: 11px; color: var(--ink-2); font-weight: 600; }
+.pad .b { width: 50px; height: 50px; border-radius: 50%; display: grid; place-items: center; background: var(--surface); border: 2px solid currentColor; box-shadow: 0 4px 12px -6px rgba(0,0,0,.35); transition: transform 120ms ease; }
+.pad button:active .b { transform: scale(.92); }
+.pad .b svg { width: 22px; height: 22px; }
+.pad .no { color: var(--d-no); } .pad .ok { color: var(--d-ok); } .pad .wish { color: var(--d-wish); } .pad .meh { color: var(--d-meh); }
+.pad button span:last-child { color: var(--ink-2); }
+.done { position: absolute; inset: 0; display: grid; place-items: center; text-align: center; padding: 24px; }
+.done h2 { font-family: var(--serif); font-size: 24px; margin: 0 0 6px; }
+
+/* Mon deck */
+.deckhero { display: grid; grid-template-columns: 96px 1fr; gap: 16px; align-items: center; background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 14px; }
+.swatch { width: 96px; aspect-ratio: 5/7; border-radius: 12px; background: linear-gradient(160deg, color-mix(in oklab, var(--deck) 55%, var(--surface)), var(--deck)); display: grid; place-items: center; box-shadow: inset 0 0 0 3px color-mix(in oklab, var(--surface) 40%, transparent); }
+.swatch img { width: 64px; height: 64px; border-radius: 50%; box-shadow: 0 0 0 3px var(--surface); }
+.deckhero h2 { font-family: var(--serif); font-size: 21px; margin: 0; line-height: 1.2; text-wrap: balance; }
+.deckhero p { margin: 4px 0 0; color: var(--ink-2); font-size: 13px; }
+.eyebrow { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); font-weight: 700; }
+h3 { font-family: var(--serif); font-size: 18px; margin: 0; }
+.rank { display: grid; gap: 6px; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 12px; }
+.row { display: grid; grid-template-columns: 22px 28px minmax(0, 1fr) 54px; align-items: center; gap: 8px; font-size: 13px; }
+.row .pos { font-family: var(--mono); color: var(--muted); font-size: 12px; text-align: right; }
+.row img { width: 28px; height: 28px; border-radius: 50%; }
+.row .nm { display: grid; gap: 3px; min-width: 0; }
+.row .nm b { font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.bar { height: 7px; border-radius: 4px; background: var(--surface-2); overflow: hidden; }
+.bar i { display: block; height: 100%; border-radius: 4px; transition: width 600ms ease; }
+.bar.weak i { background: repeating-linear-gradient(135deg, var(--muted) 0 3px, transparent 3px 6px) !important; }
+.row .pct { text-align: right; font-variant-numeric: tabular-nums; font-weight: 700; }
+.row .pct small { display: block; font-weight: 400; color: var(--muted); font-size: 11px; }
+.row.lead .nm b::after { content: " · maison"; color: var(--deck); font-weight: 700; }
+.note { font-size: 12.5px; color: var(--ink-2); background: var(--amber-pale); border-radius: 12px; padding: 10px 12px; border-left: 4px solid var(--amber); }
+.coll { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.mini { border: 0; text-align: left; background: var(--surface); border-radius: 12px; padding: 8px; display: grid; gap: 4px; box-shadow: inset 0 0 0 2px var(--deck-soft); min-width: 0; }
+.mini.todo { box-shadow: inset 0 0 0 1.5px var(--line); background: transparent; border: 1.5px dashed var(--line); }
+.mini svg { width: 20px; height: 20px; stroke: var(--deck); }
+.mini .t { font-size: 11.5px; font-weight: 600; line-height: 1.2; overflow-wrap: anywhere; }
+.badge { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 700; padding: 2px 7px; border-radius: 999px; width: fit-content; }
+.badge.ok { color: var(--d-ok); background: color-mix(in oklab, var(--d-ok) 14%, transparent); }
+.badge.no { color: var(--d-no); background: color-mix(in oklab, var(--d-no) 14%, transparent); }
+.badge.wish { color: var(--d-wish); background: color-mix(in oklab, var(--d-wish) 14%, transparent); }
+.badge.meh { color: var(--d-meh); background: color-mix(in oklab, var(--d-meh) 16%, transparent); }
+.badge.todo { color: var(--muted); border: 1px dashed var(--line); }
+.tools { display: flex; flex-wrap: wrap; gap: 8px; }
+.btn { border: 1px solid var(--line); background: var(--surface); padding: 9px 14px; border-radius: 10px; font-size: 13px; font-weight: 600; }
+.btn.primary { background: var(--deck); color: var(--on-deck); border-color: transparent; }
+.btn.ghost { background: transparent; }
+
+/* Onglets */
+.tabs { flex: none; display: grid; grid-template-columns: repeat(3, 1fr); height: calc(var(--tabs-h) + env(safe-area-inset-bottom, 0px)); padding-bottom: env(safe-area-inset-bottom, 0px); padding-left: env(safe-area-inset-left, 0px); padding-right: env(safe-area-inset-right, 0px); background: var(--surface); border-top: 1px solid var(--line); }
+.tabs button { border: 0; background: none; display: grid; justify-items: center; align-content: center; gap: 3px; font-family: var(--serif); font-size: 13px; font-weight: 700; letter-spacing: .01em; color: var(--muted); position: relative; }
+.tabs button svg { width: 22px; height: 22px; }
+.tabs button[aria-selected="true"] { color: var(--deck); }
+.tabs button[aria-selected="true"]::before { content: ""; position: absolute; top: 0; left: 30%; right: 30%; height: 3px; border-radius: 0 0 3px 3px; background: var(--deck); }
+.tabs .tab-deck { align-content: start; gap: 2px; padding: 0; }
+.tabs .tab-deck::before { display: none; }
+.tabs .orb { width: 54px; height: 54px; margin-top: -24px; border-radius: 50%; display: grid; place-items: center; background: radial-gradient(circle at 50% 45%, color-mix(in oklab, var(--deck) 35%, #06262a), #04191c 72%); box-shadow: 0 0 0 3px var(--surface), 0 0 0 5px color-mix(in oklab, var(--deck) 45%, transparent), 0 10px 22px -10px rgba(5,40,44,.7); transition: box-shadow 200ms ease; }
+.tabs .tab-deck[aria-selected="true"] .orb { box-shadow: 0 0 0 3px var(--surface), 0 0 0 5px var(--deck), 0 0 22px -2px color-mix(in oklab, var(--deck) 70%, transparent); }
+.tabs .orb canvas { width: 50px; height: 50px; border-radius: 50%; }
+.tabs .tab-deck:focus-visible { outline: none; } .tabs .tab-deck:focus-visible .orb { outline: 3px solid var(--d-wish); outline-offset: 3px; }
+
+/* Recherche — esthétique bureau d'enquête */
+.case-head { display: flex; align-items: center; gap: 10px; }
+.case-head svg { width: 34px; height: 34px; stroke: var(--ink); }
+.case-head h2 { font-family: var(--serif); font-size: 24px; margin: 0; }
+.case-head p { margin: 0; font-family: var(--mono); font-size: 11.5px; color: var(--muted); letter-spacing: .04em; }
+.search { display: flex; align-items: center; gap: 8px; background: var(--surface); border: 2px solid var(--ink); border-radius: 12px; padding: 8px 12px; }
+.search input { flex: 1; min-width: 0; border: 0; outline: 0; background: transparent; font: inherit; font-family: var(--mono); font-size: 14px; color: var(--ink); }
+.search svg { width: 20px; height: 20px; stroke: var(--ink); flex: none; }
+.filters { display: flex; flex-wrap: wrap; gap: 6px; }
+.filters button { border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 4px 10px; font-size: 12px; }
+.filters button[aria-pressed="true"] { background: var(--ink); color: var(--page); border-color: var(--ink); }
+.dossier { position: relative; background: var(--dossier); border: 1px solid var(--dossier-edge); border-radius: 4px 12px 12px 12px; padding: 14px 14px 12px; display: grid; gap: 6px; margin-top: 34px; }
+.dossier::before { content: attr(data-tab); position: absolute; top: -21px; left: -1px; height: 20px; padding: 0 12px; display: flex; align-items: center; background: var(--dossier); border: 1px solid var(--dossier-edge); border-bottom: 0; border-radius: 8px 8px 0 0; font-family: var(--mono); font-size: 10.5px; letter-spacing: .08em; color: var(--ink-2); }
+.dossier h4 { margin: 0; padding-right: 92px; font-family: var(--serif); font-size: 16px; line-height: 1.3; text-wrap: balance; }
+.dossier .meta { font-family: var(--mono); font-size: 11.5px; color: var(--ink-2); }
+.redact { background: var(--ink); color: transparent; border-radius: 2px; padding: 0 .3em; user-select: none; }
+.dossier .stampd { position: absolute; right: 10px; top: 8px; rotate: 8deg; font-family: var(--mono); font-weight: 800; font-size: 10.5px; letter-spacing: .1em; border: 2px solid currentColor; padding: 1px 6px; border-radius: 4px; }
+
+/* La Maison Magnitude — l'atelier des données (parchemin et plume, comme Deck et Recherche) */
+.mai-wrap { gap: 20px; padding-top: 22px; padding-bottom: 40px; }
+.mai-head { display: grid; justify-items: center; gap: 2px; }
+.mai-head .hat-mark { width: 70px; height: 70px; margin-bottom: 2px; }
+.mai-intro { margin: 0; text-align: center; font-family: var(--fell); font-size: 16px; line-height: 1.5; color: var(--iron); text-wrap: pretty; }
+.mai-sec { padding: 18px 18px 16px; display: grid; gap: 12px; }
+.mai-sec h3 { font-family: var(--fell); font-weight: 400; font-size: 23px; margin: 0; line-height: 1.1; }
+.mai-sec .rubric { font-family: var(--fell); font-style: italic; font-size: 13.5px; color: var(--iron-2); margin: 0; line-height: 1.45; }
+.kfig { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.kfig div { display: grid; align-content: start; text-align: center; padding: 0 4px; border-right: 1px solid var(--rule); }
+.kfig div:last-child { border-right: 0; }
+.kfig b { font-family: var(--plume); font-weight: 400; font-size: 30px; line-height: 1.15; color: var(--deck); white-space: nowrap; }
+.kfig span { font-family: var(--fell); font-style: italic; font-size: 12.5px; color: var(--iron-2); line-height: 1.25; }
+.mx { display: grid; grid-template-columns: 2.1em repeat(12, minmax(0, 1fr)); gap: 4px 1px; align-items: center; }
+.mx img { width: 100%; max-width: 24px; aspect-ratio: 1; border-radius: 50%; justify-self: center; }
+.mx img.retire { filter: grayscale(1); opacity: .5; }
+.mx .rl { font-family: var(--fell); font-size: 12px; color: var(--iron-2); text-align: right; padding-right: 5px; white-space: nowrap; }
+.mx .rl.ready { color: var(--deck); }
+.mx .rl.ready::before { content: "✦ "; font-size: 9px; }
+.mx i, .mx-leg i { justify-self: center; display: inline-block; width: 12px; height: 12px; border-radius: 50%; vertical-align: -1px; }
+.dA { background: var(--deck); }
+.dB { background: color-mix(in oklab, var(--deck) 50%, var(--surface)); }
+.dC { box-shadow: inset 0 0 0 1.8px color-mix(in oklab, var(--deck) 60%, var(--surface)); }
+.mx i.dx { width: 4px; height: 4px; background: var(--rule); }
+.mx-leg { display: flex; flex-wrap: wrap; gap: 4px 14px; font-family: var(--fell); font-style: italic; font-size: 13px; color: var(--iron-2); }
+.mx-leg span { white-space: nowrap; }
+.mx-leg .ready { color: var(--deck); font-style: normal; font-size: 10px; }
+.gauge { display: grid; grid-template-columns: repeat(6, 1fr); gap: 5px; }
+.gauge i { height: 8px; border-radius: 4px; background: var(--rule); }
+.gauge i.on { background: var(--deck); }
+.mybar { display: flex; height: 14px; border-radius: 7px; overflow: hidden; background: var(--rule); }
+.mybar i { display: block; height: 100%; }
+.mybar .ok { background: var(--d-ok); } .mybar .no { background: var(--d-no); } .mybar .wish { background: var(--d-wish); } .mybar .meh { background: var(--d-meh); }
+.myleg { display: flex; flex-wrap: wrap; gap: 4px 14px; font-family: var(--fell); font-size: 14px; color: var(--iron-2); }
+.myleg b { font-weight: 400; } .myleg .ok b { color: var(--d-ok); } .myleg .no b { color: var(--d-no); } .myleg .wish b { color: var(--d-wish); } .myleg .meh b { color: var(--d-meh); }
+.mai-link { justify-self: start; border: 0; background: none; padding: 2px 0; cursor: pointer; font-family: var(--fell); font-style: italic; font-size: 16px; color: var(--iron); border-bottom: 1px solid var(--gilt); }
+.well { position: relative; width: 100%; max-width: 340px; aspect-ratio: 1; margin: 0 auto; border-radius: 50%; overflow: hidden; background: radial-gradient(closest-side, #0b3b42, #04191c); box-shadow: inset 0 0 0 6px color-mix(in oklab, var(--deck) 45%, #04191c), inset 0 0 40px rgba(0,0,0,.6); }
+.well canvas { width: 100%; height: 100%; display: block; }
+.well-cap { margin: 0; text-align: center; font-family: var(--fell); font-style: italic; font-size: 13.5px; color: var(--iron-2); }
+.wl-tabs { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 16px; }
+.wl-tabs button { border: 0; background: none; padding: 3px 0; cursor: pointer; font-family: var(--fell); font-style: italic; font-size: 16px; color: var(--ink-2); border-bottom: 2px solid transparent; }
+.wl-tabs button.wish { color: var(--d-wish); } .wl-tabs button.meh { color: var(--d-meh); }
+.wl-tabs button[aria-pressed="true"] { border-bottom-color: currentColor; color: var(--ink); }
+.wl-tabs button.wish[aria-pressed="true"] { color: var(--d-wish); } .wl-tabs button.meh[aria-pressed="true"] { color: var(--d-meh); }
+.wl-list { display: grid; gap: 0; }
+.wl-item { border: 0; background: none; text-align: left; cursor: pointer; display: grid; gap: 2px; padding: 10px 0; border-top: 1px solid var(--rule); font: inherit; color: var(--iron); }
+.wl-item .verdict { font-family: var(--plume); font-size: 22px; line-height: 1; }
+.wl-item .verdict.wish { color: var(--d-wish); } .wl-item .verdict.meh { color: var(--d-meh); }
+.wl-item .titre { font-family: var(--fell); font-size: 16.5px; line-height: 1.3; }
+.wl-item .billet { font-family: var(--plume); font-size: 19px; line-height: 1.3; color: var(--iron-2); }
+.wl-item .nonote { font-family: var(--fell); font-style: italic; font-size: 13px; color: var(--iron-2); }
+.wl-item:focus-visible { outline: 2px solid var(--deck); outline-offset: 2px; }
+.wl-empty { margin: 0; text-align: center; font-family: var(--plume); font-size: 20px; line-height: 1.35; color: var(--ink-2); }
+.commu ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+.commu li a { font-family: var(--fell); font-size: 16.5px; color: var(--iron); text-decoration: none; border-bottom: 1px solid var(--gilt); }
+.commu li span { display: block; font-family: var(--fell); font-style: italic; font-size: 13px; color: var(--iron-2); }
+.commu .mail { margin: 0; font-family: var(--plume); font-size: 22px; }
+.commu .mail a { color: var(--deck); }
+.promise { padding: 14px 18px; display: grid; gap: 6px; font-family: var(--fell); font-size: 14px; line-height: 1.5; color: var(--iron-2); }
+.promise p { margin: 0; }
+.promise b { font-weight: 400; font-size: 17px; color: var(--iron); }
+
+/* Mon deck : la galaxie grand format (le bouton central qui s'agrandit) */
+.cosmos { border-radius: 22px; overflow: hidden; }
+.cosmos-in { position: relative; background: radial-gradient(circle at 50% 50%, color-mix(in oklab, var(--deck) 34%, #06262a), #04191c 72%); box-shadow: inset 0 0 0 1px rgba(234,246,245,.08); }
+.cosmos canvas { display: block; width: 100%; height: min(calc(100vw - 32px), 440px); touch-action: pan-y; }
+.cosmos .ttl { position: absolute; left: 16px; top: 12px; font-family: var(--fell); font-size: 19px; color: #EAF6F5; pointer-events: none; }
+.cosmos .sub { position: absolute; left: 16px; top: 36px; font-family: var(--fell); font-style: italic; font-size: 12.5px; color: #9ED7D3; pointer-events: none; }
+.cosmos-leg { margin-top: -6px; padding: 16px 18px 14px; display: grid; gap: 12px; }
+.cosmos-leg h3 { font-family: var(--fell); font-weight: 400; font-size: 21px; margin: 0; }
+.cosmos-leg .li { display: grid; grid-template-columns: 44px 1fr; gap: 12px; align-items: center; }
+.cosmos-leg svg { width: 44px; height: 44px; border-radius: 50%; background: radial-gradient(circle at 50% 45%, color-mix(in oklab, var(--deck) 35%, #06262a), #04191c 72%); }
+.cosmos-leg p { margin: 0; font-family: var(--fell); font-size: 16.5px; line-height: 1.38; color: var(--iron); text-wrap: pretty; }
+.cosmos-leg p b { font-weight: 400; color: var(--deck); }
+.cosmos-leg .hint { display: flex; align-items: center; gap: 8px; font-family: var(--plume); font-size: 20px; line-height: 1.2; color: var(--iron-2); border-top: 1px solid var(--rule); padding-top: 10px; }
+.cosmos-leg .hint i { flex: none; width: 12px; height: 12px; border-radius: 50%; border: 2px dashed var(--gilt); animation: spin 4s linear infinite; }
+@keyframes spin { to { rotate: 360deg; } }
+@media (prefers-reduced-motion: reduce) { .cosmos-leg .hint i { animation: none; } }
+.lrow[role="button"] { cursor: pointer; }
+.lrow[role="button"]:hover .nm b { color: var(--deck); }
+.lrow[role="button"]:focus-visible { outline: 2px solid var(--deck); outline-offset: 2px; }
+/* Feuille « les mesures du candidat » */
+.cm-aff { display: grid; gap: 6px; }
+.cm-aff .big { font-family: var(--serif); font-size: 26px; line-height: 1; color: var(--deck); }
+.cm-aff .big small { font-family: var(--sans); font-size: 12.5px; color: var(--muted); margin-left: 6px; }
+.cm-sum { display: flex; flex-wrap: wrap; gap: 6px; }
+.cm-grp { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); font-weight: 700; margin: 6px 0 -4px; }
+.cm-item { display: grid; gap: 5px; width: 100%; text-align: left; border: 1px solid var(--line); background: var(--surface); border-radius: 12px; padding: 10px 12px; }
+.cm-item:hover { border-color: var(--deck); }
+.cm-item .t { font-family: var(--serif); font-size: 15.5px; line-height: 1.3; }
+.cm-item .ps { font-size: 12.5px; color: var(--ink-2); }
+.cm-item .ag { font-size: 12.5px; font-weight: 700; }
+.cm-item .ag.yes { color: var(--d-ok); } .cm-item .ag.nope { color: var(--d-no); }
+
+/* Feuilles et superpositions */
+.scrim { position: fixed; inset: 0; background: rgba(4,20,22,.45); z-index: 20; }
+.sheet { position: fixed; left: 0; right: 0; bottom: 0; z-index: 21; max-height: 88%; overflow-y: auto; background: var(--surface); border-radius: 20px 20px 0 0; padding: 10px max(18px, env(safe-area-inset-right, 0px)) calc(20px + env(safe-area-inset-bottom, 0px)) max(18px, env(safe-area-inset-left, 0px)); box-shadow: 0 -10px 40px rgba(0,0,0,.25); animation: up 260ms cubic-bezier(.2,.8,.2,1); }
+.sheet .grab { width: 40px; height: 5px; border-radius: 3px; background: var(--line); margin: 0 auto 12px; }
+.sheet .in { max-width: 600px; margin: 0 auto; display: grid; gap: 14px; }
+@keyframes up { from { transform: translateY(40px); opacity: 0; } }
+.reveal-head { display: grid; grid-template-columns: 72px 1fr; gap: 14px; align-items: center; }
+.reveal-head img { width: 72px; height: 72px; border-radius: 50%; box-shadow: 0 0 0 3px var(--deck); }
+.reveal-head h3 { font-size: 21px; }
+.reveal-head p { margin: 2px 0 0; color: var(--muted); font-size: 13px; }
+blockquote { margin: 0; font-family: var(--serif); font-size: 16px; font-style: italic; border-left: 3px solid var(--deck); padding-left: 12px; }
+.sides { display: grid; gap: 10px; }
+.side { display: grid; gap: 6px; }
+.side .lab { font-size: 12px; font-weight: 700; display: flex; gap: 6px; align-items: center; }
+.people { display: flex; flex-wrap: wrap; gap: 6px; }
+.person { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--line); border-radius: 999px; padding: 2px 9px 2px 2px; font-size: 12.5px; }
+.person img { width: 22px; height: 22px; border-radius: 50%; }
+.person i { font-style: normal; font-family: var(--mono); font-size: 10.5px; color: var(--muted); }
+.person.me { border-color: var(--deck); box-shadow: inset 0 0 0 1px var(--deck); }
+.person.retire, .row.retire { opacity: .55; }
+.person.retire img, .row.retire img { filter: grayscale(1); }
+.st-pill { display: inline-flex; align-items: center; gap: 4px; font-family: var(--sans); font-size: 10.5px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; border-radius: 999px; padding: 2px 8px; vertical-align: middle; white-space: nowrap; }
+.st-pill.retire { background: color-mix(in oklab, var(--muted) 18%, transparent); color: var(--muted); border: 1px solid color-mix(in oklab, var(--muted) 40%, transparent); }
+.st-pill.vainqueur { background: transparent; color: var(--st-win); border: 1.5px solid currentColor; }
+.nm .st-pill { justify-self: start; }
+.mini .st-pill { white-space: normal; max-width: 100%; justify-self: start; font-size: 9.5px; padding: 1px 6px; }
+.st-stamp { display: inline-block; margin-top: 8px; padding: 3px 10px; border: 3px double var(--st-win); color: var(--st-win); border-radius: 6px; font-family: var(--sans); font-weight: 800; letter-spacing: .08em; font-size: 12px; text-transform: uppercase; rotate: -4deg; }
+.st-stamp.retire { border-color: var(--muted); color: var(--muted); rotate: 3deg; }
+.st-note { display: block; margin-top: 4px; font-size: 12px; color: var(--muted); }
+textarea { width: 100%; min-height: 90px; resize: vertical; border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; font: inherit; background: var(--page); color: var(--ink); }
+.row-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+.row-btns .btn { flex: 1; }
+.choice4 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.choice4 button { border: 2px solid currentColor; background: var(--surface); border-radius: 12px; padding: 10px; font-weight: 700; font-size: 13px; }
+.choice4 .ok { color: var(--d-ok); } .choice4 .no { color: var(--d-no); } .choice4 .wish { color: var(--d-wish); } .choice4 .meh { color: var(--d-meh); }
+.choice4 button[aria-pressed="true"] { background: currentColor; }
+.choice4 button[aria-pressed="true"] span { color: var(--surface); }
+
+.overlay { position: fixed; inset: 0; z-index: 30; display: grid; place-items: center; padding: 24px max(20px, env(safe-area-inset-right, 0px)) 24px max(20px, env(safe-area-inset-left, 0px)); background: radial-gradient(120% 80% at 50% 10%, color-mix(in oklab, var(--deck) 45%, #04191c), #031113); color: #EAF6F5; }
+.ob { max-width: 420px; width: 100%; display: grid; gap: 18px; text-align: center; }
+.ob .step { font-family: var(--mono); font-size: 11px; letter-spacing: .2em; color: #9ED7D3; }
+.ob h2 { font-family: var(--serif); font-size: 30px; margin: 0; line-height: 1.15; text-wrap: balance; }
+.ob p { margin: 0; color: #CFE6E4; font-size: 15.5px; }
+.ob .btn { background: #EAF6F5; color: #06262A; border: 0; padding: 12px 18px; font-size: 15px; }
+.ob .btn.ghost { background: transparent; color: #CFE6E4; border: 1px solid rgba(234,246,245,.35); }
+.compass { position: relative; width: 220px; height: 220px; margin: 0 auto; }
+.compass .c { position: absolute; left: 50%; top: 50%; translate: -50% -50%; width: 84px; height: 116px; border-radius: 10px; background: #EAF6F5; box-shadow: 0 0 0 4px var(--deck); }
+.compass span { position: absolute; font-size: 12.5px; font-weight: 700; display: grid; justify-items: center; }
+.compass .n { top: 0; left: 50%; translate: -50% 0; color: #9FC6FF; }
+.compass .s { bottom: 0; left: 50%; translate: -50% 0; color: #C9D6D7; }
+.compass .e { right: 0; top: 50%; translate: 0 -50%; color: #7FD9D3; }
+.compass .w { left: 0; top: 50%; translate: 0 -50%; color: #F8BD7A; }
+.tri .hat { width: 150px; height: 150px; margin: 0 auto; }
+.tri .big { font-family: var(--serif); font-size: 34px; margin: 0; }
+.tri .sub { font-family: var(--serif); font-style: italic; font-size: 19px; color: #F6D9A8; }
+.tri .res { background: rgba(234,246,245,.08); border: 1px solid rgba(234,246,245,.2); border-radius: 16px; padding: 14px; display: grid; gap: 8px; justify-items: center; }
+.tri .res img { width: 76px; height: 76px; border-radius: 50%; box-shadow: 0 0 0 4px var(--deck); }
+.toast { position: fixed; left: 50%; bottom: calc(var(--tabs-h) + env(safe-area-inset-bottom, 0px) + 14px); translate: -50% 0; z-index: 40; background: var(--ink); color: var(--page); padding: 10px 16px; border-radius: 12px; font-size: 13.5px; font-weight: 600; max-width: calc(100% - 32px); box-shadow: 0 10px 30px rgba(0,0,0,.3); }
+.toast b { color: var(--amber-pale); }
+@media (prefers-reduced-motion: reduce) {
+  :root { transition: none; }
+  .card.anim, .bar i { transition: none; }
+  .sheet { animation: none; }
+}
+
+/* ---------- Mon deck : « La Banque des Promesses » (registre sur parchemin, écrit à la plume) ---------- */
+/*__FONTS__*/
+.grimoire {
+  --vellum: var(--surface); --vellum-2: color-mix(in oklab, var(--surface) 90%, var(--deck)); --edge: color-mix(in oklab, var(--deck) 30%, var(--surface));
+  --iron: var(--ink); --iron-2: var(--ink-2); --rule: var(--line); --margin-red: var(--d-no); --gilt: var(--amber);
+  --w-ok: var(--d-ok); --w-no: var(--d-no); --w-wish: var(--d-wish); --w-meh: var(--d-meh);
+  --fell: "IM Fell English", "Iowan Old Style", Georgia, serif; --plume: "La Belle Aurore", "Snell Roundhand", "Segoe Script", cursive;
+  background: var(--page);
+  color: var(--iron);
+}
+#mine.grimoire .wrap { gap: 22px; padding-top: 22px; padding-bottom: 40px; }
+.parch { position: relative; background:
+    radial-gradient(140% 90% at 50% 40%, transparent 55%, color-mix(in oklab, var(--edge) 55%, transparent) 100%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .04 0 0 0 0 .29 0 0 0 0 .32 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E"),
+    linear-gradient(175deg, var(--vellum), var(--vellum-2));
+  color: var(--iron); border-radius: 3px 5px 4px 6px / 6px 3px 5px 4px; box-shadow: 0 0 0 1px var(--line), 0 12px 26px -18px rgba(11,74,82,.45), 0 2px 6px -3px rgba(11,74,82,.25); }
+.fell { font-family: var(--fell); }
+.plume { font-family: var(--plume); font-weight: 400; letter-spacing: .01em; }
+
+.frontis { padding: 26px 22px 22px; text-align: center; display: grid; gap: 10px; justify-items: center; }
+.frontis h2 { font-family: var(--fell); font-weight: 400; font-size: clamp(28px, 8vw, 40px); line-height: 1.05; margin: 0; letter-spacing: .01em; }
+.frontis .sub { font-family: var(--fell); font-style: italic; font-size: 15px; color: var(--iron-2); margin: 0; }
+.frontis .orn { width: 150px; height: 14px; color: var(--gilt); }
+.frontis .house { display: grid; grid-template-columns: 64px auto; gap: 14px; align-items: center; text-align: left; margin-top: 4px; }
+.seal-wax { width: 64px; height: 64px; border-radius: 50%; display: grid; place-items: center; background: radial-gradient(circle at 35% 30%, color-mix(in oklab, var(--deck) 70%, #fff), var(--deck) 55%, color-mix(in oklab, var(--deck) 70%, #000)); box-shadow: 0 0 0 4px color-mix(in oklab, var(--deck) 60%, transparent), 0 6px 10px -4px rgba(0,0,0,.5); }
+.seal-wax img { width: 40px; height: 40px; border-radius: 50%; }
+.frontis .house .plume { font-size: 26px; line-height: 1.1; color: var(--iron); }
+.frontis .house .count { font-family: var(--fell); font-style: italic; font-size: 13.5px; color: var(--iron-2); }
+
+.ledger { padding: 20px 18px 16px 34px; }
+.ledger::before { content: ""; position: absolute; top: 0; bottom: 0; left: 22px; width: 1px; background: var(--margin-red); opacity: .7; }
+.ledger h3, .recueil-h { font-family: var(--fell); font-weight: 400; font-size: 22px; margin: 0 0 2px; }
+.ledger .rubric { font-family: var(--fell); font-style: italic; font-size: 13px; color: var(--iron-2); margin: 0 0 10px; line-height: 1.4; }
+.lrow { display: grid; grid-template-columns: 1.6em 28px 1fr auto; gap: 10px; align-items: center; padding: 7px 0 6px; border-bottom: 1px solid var(--rule); }
+.lrow .pos { font-family: var(--fell); font-size: 15px; color: var(--iron-2); text-align: right; }
+.lrow img { width: 28px; height: 28px; border-radius: 50%; }
+.lrow .nm { display: grid; gap: 3px; min-width: 0; }
+.lrow .nm b { font-family: var(--fell); font-weight: 400; font-size: 16px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.lrow .ink { height: 3px; border-radius: 2px; background: currentColor; opacity: .8; transform-origin: left; }
+.lrow .pct { font-family: var(--plume); font-size: 22px; line-height: 1; text-align: right; white-space: nowrap; }
+.lrow .pct small { display: block; font-family: var(--fell); font-style: italic; font-size: 11.5px; color: var(--iron-2); }
+.lrow .maison { font-family: var(--plume); font-size: 16px; line-height: 1; color: var(--deck); }
+.lrow.weak { opacity: .62; }
+.lrow.retire { opacity: .5; }
+.lrow.retire .nm b { text-decoration: line-through; text-decoration-thickness: 1px; }
+.lrow .st-pill { justify-self: start; font-family: var(--fell); font-style: italic; text-transform: none; letter-spacing: 0; font-weight: 400; background: transparent; border: 0; padding: 0; color: var(--iron-2); font-size: 12.5px; }
+
+.recueil-h { color: var(--ink); text-align: center; margin-top: 4px; }
+.recueil-sub { margin: -14px 0 0; text-align: center; font-family: var(--fell); font-style: italic; color: var(--ink-2); font-size: 14px; }
+.pages { display: grid; gap: 18px; }
+@media (min-width: 700px) { .pages { grid-template-columns: 1fr 1fr; } }
+.folio { border: 0; margin: 0; font: inherit; text-align: left; cursor: pointer; display: grid; gap: 10px; padding: 18px 20px 20px; width: 100%; }
+.folio:focus-visible { outline: 3px solid var(--gilt); outline-offset: 3px; }
+.folio .head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; border-bottom: 1px solid var(--rule); padding-bottom: 6px; }
+.folio .no { font-family: var(--fell); font-size: 13px; color: var(--gilt); letter-spacing: .04em; }
+.folio .theme { font-family: var(--fell); font-style: italic; font-size: 14px; color: var(--iron-2); }
+.folio .titre { font-family: var(--fell); font-size: 20px; line-height: 1.22; margin: 0; text-wrap: pretty; }
+.folio .dose { font-family: var(--fell); font-size: 14px; color: var(--iron-2); line-height: 1.4; }
+.folio .dose b { font-weight: 400; color: var(--iron); font-size: 18px; }
+.folio .hand { display: grid; gap: 4px; padding-top: 4px; }
+.folio .verdict { font-family: var(--plume); font-size: 34px; line-height: 1; rotate: -3deg; transform-origin: left center; justify-self: start; }
+.folio .verdict.ok { color: var(--w-ok); } .folio .verdict.no { color: var(--w-no); } .folio .verdict.wish { color: var(--w-wish); } .folio .verdict.meh { color: var(--w-meh); }
+.folio .author { font-family: var(--plume); font-size: 20px; color: var(--iron); }
+.folio .author .st { font-family: var(--fell); font-style: italic; font-size: 12.5px; color: var(--iron-2); }
+.folio .billet { font-family: var(--plume); font-size: 19px; line-height: 1.35; color: var(--iron-2); }
+.folio.blank { opacity: .78; }
+.folio.blank .lines { height: 54px; background: repeating-linear-gradient(transparent 0 17px, var(--rule) 17px 18px); }
+.folio.blank .todo { font-family: var(--fell); font-style: italic; font-size: 14px; color: var(--iron-2); }
+.writing { animation: write 1100ms steps(28, end) both; }
+@keyframes write { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+@media (prefers-reduced-motion: reduce) { .writing { animation: none; } }
+
+.nb { padding: 14px 18px; font-family: var(--fell); font-style: italic; font-size: 13.5px; line-height: 1.5; color: var(--iron-2); }
+.nb b { font-style: normal; font-weight: 400; color: var(--margin-red); }
+.quill-tools { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 18px; }
+.quill-tools button { all: unset; cursor: pointer; font-family: var(--fell); font-style: italic; font-size: 15px; color: var(--ink-2); border-bottom: 1px solid var(--line); padding: 2px 0; }
+.quill-tools button:focus-visible { outline: 2px solid var(--deck); outline-offset: 3px; }
+
+/* ---------- Recherche : « Le Scriptorium » (pages de parchemin, plume magique) ---------- */
+.scr-wrap { gap: 18px; padding-top: 22px; padding-bottom: 40px; }
+.scr-head { padding: 22px 20px 18px; text-align: center; }
+.scr-head h2 { font-family: var(--fell); font-weight: 400; font-size: clamp(30px, 8.5vw, 42px); margin: 0; line-height: 1.05; }
+.scr-sub { position: relative; margin: 8px auto 0; width: fit-content; max-width: 100%; padding-right: 30px; font-family: var(--plume); font-size: 19px; line-height: 1.45; color: var(--iron-2); }
+.scr-sub .scr-ink { display: inline-block; white-space: nowrap; font-size: clamp(14px, 4.4vw, 19px); }
+.scr-search input::-webkit-search-cancel-button { -webkit-appearance: none; appearance: none; }
+.scr-sub .quill { position: absolute; width: 34px; height: 34px; color: var(--iron); right: -6px; bottom: -6px; pointer-events: none; }
+.scr-head.anim .scr-ink { animation: write 1500ms steps(40, end) both; }
+.scr-head.anim .quill { animation: quill 1500ms ease-in-out both; }
+@keyframes quill { 0% { right: 100%; bottom: 30px; rotate: -8deg; } 45% { right: 45%; bottom: 22px; rotate: 6deg; } 70% { right: 25%; bottom: -2px; rotate: -6deg; } 100% { right: -6px; bottom: -6px; rotate: 0deg; } }
+@media (prefers-reduced-motion: reduce) { .scr-head.anim .scr-ink, .scr-head.anim .quill { animation: none; } }
+.scr-search { display: flex; align-items: center; gap: 10px; padding: 10px 16px 12px; }
+.scr-search .quill-sm { width: 26px; height: 26px; color: var(--iron); flex: none; rotate: 10deg; }
+.scr-search input { flex: 1; min-width: 0; border: 0; outline: 0; background: transparent; font-family: var(--plume); font-size: 24px; line-height: 1.5; color: var(--iron); border-bottom: 1px solid var(--rule); padding: 2px 2px 0; }
+.scr-search input::placeholder { font-family: var(--fell); font-style: italic; font-size: 16px; color: var(--iron-2); opacity: .85; }
+.scr-search:focus-within { box-shadow: 0 0 0 3px var(--gilt), 0 14px 30px -18px rgba(0,0,0,.75); }
+.scr-filters { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 14px; }
+.scr-filters button { border: 0; background: none; padding: 3px 0; font-family: var(--fell); font-style: italic; font-size: 16px; color: var(--ink-2); border-bottom: 1px solid transparent; cursor: pointer; }
+.scr-filters button[aria-pressed="true"] { color: var(--ink); border-bottom: 2px solid var(--deck); }
+.scr-filters button:focus-visible { outline: 2px solid var(--deck); outline-offset: 3px; }
+.scr-pages { display: grid; gap: 18px; }
+@media (min-width: 700px) { .scr-pages { grid-template-columns: 1fr 1fr; } }
+.scr-page { display: grid; gap: 9px; padding: 18px 20px 18px; }
+.scr-page:nth-child(odd) { rotate: -.3deg; } .scr-page:nth-child(even) { rotate: .25deg; }
+.scr-page .head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; border-bottom: 1px solid var(--rule); padding-bottom: 6px; }
+.scr-page .no { font-family: var(--fell); font-size: 13px; color: var(--gilt); letter-spacing: .04em; }
+.scr-page .theme { font-family: var(--fell); font-style: italic; font-size: 14px; color: var(--iron-2); }
+.scr-page h4 { margin: 0; font-family: var(--fell); font-weight: 400; font-size: 20px; line-height: 1.25; text-wrap: pretty; }
+.scr-page .verdict { font-family: var(--plume); font-size: 26px; line-height: 1; rotate: -4deg; justify-self: start; }
+.scr-page .verdict.ok { color: var(--w-ok); } .scr-page .verdict.no { color: var(--w-no); } .scr-page .verdict.wish { color: var(--w-wish); } .scr-page .verdict.meh { color: var(--w-meh); }
+.scr-page .open { font-family: var(--fell); font-style: italic; font-size: 14px; color: var(--gilt); }
+.scr-page dl { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; align-items: baseline; }
+.scr-page dt { font-family: var(--fell); font-style: italic; font-size: 13.5px; color: var(--iron-2); }
+.scr-page dd { margin: 0; font-family: var(--fell); font-size: 15px; line-height: 1.4; }
+.scr-page dd.hand { font-family: var(--plume); font-size: 20px; line-height: 1.2; }
+.scr-page dd b { font-weight: 400; font-size: 17px; }
+.sceau { display: inline-flex; align-items: center; gap: 7px; font-family: var(--fell); font-style: italic; font-size: 13.5px; color: var(--iron-2); }
+.sceau i { width: 22px; height: 22px; border-radius: 50%; flex: none; background: radial-gradient(circle at 35% 30%, color-mix(in oklab, var(--deck) 65%, #fff), var(--deck) 60%, color-mix(in oklab, var(--deck) 65%, #000)); box-shadow: 0 2px 3px rgba(0,0,0,.35); }
+.scr-page .act { display: flex; justify-content: flex-start; padding-top: 2px; }
+.scr-page .act a, .scr-page .act button { border: 0; background: none; padding: 2px 0; cursor: pointer; font-family: var(--fell); font-style: italic; font-size: 16px; color: var(--iron); border-bottom: 1px solid var(--gilt); text-decoration: none; }
+.scr-page .act a:focus-visible, .scr-page .act button:focus-visible { outline: 2px solid var(--gilt); outline-offset: 3px; }
+.scr-empty { text-align: center; font-family: var(--plume); font-size: 22px; color: var(--ink-2); }
+
+/* ---------- Passe 6 : polices du recueil partout, survols doux, orbe central, recto-verso, importance, système solaire ---------- */
+:root { --fell: "IM Fell English", "Iowan Old Style", Georgia, serif; --plume: "La Belle Aurore", "Snell Roundhand", "Segoe Script", cursive; --tabs-h: 64px; }
+.seg button { font-family: var(--fell); font-size: 17px; font-weight: 400; letter-spacing: .01em; padding: 5px 18px; }
+.seg button[aria-selected="true"] { color: var(--ink); }
+.sheet { font-family: var(--fell); font-size: 16.5px; line-height: 1.4; }
+.sheet h3 { font-family: var(--fell); font-weight: 400; font-size: 23px; line-height: 1.2; }
+.sheet .fiche h4 { font-family: var(--fell); font-weight: 400; font-style: italic; text-transform: none; letter-spacing: 0; font-size: 18px; color: var(--deck); }
+.sheet .fiche .kick { font-family: var(--fell); font-style: italic; font-weight: 400; text-transform: none; letter-spacing: 0; font-size: 14.5px; }
+.sheet .num { font-family: var(--fell); font-style: italic; font-size: 14.5px; letter-spacing: 0; color: var(--muted); }
+.sheet .fig b, .sheet .kpi b, .sheet .cm-aff .big { font-family: var(--fell); font-weight: 400; }
+.sheet .fig span, .sheet .kpi span { font-family: var(--fell); font-size: 16px; color: var(--ink-2); }
+.sheet .choice4 button, .sheet .btn { font-family: var(--fell); font-weight: 400; font-size: 18px; }
+.sheet .badge { font-family: var(--fell); font-weight: 400; font-size: 14.5px; }
+.sheet :is(.person, .person i, .eyebrow, .fine, textarea, label, .side .lab, .eu, .eu .ttl, .eu .bar-row, .eu .val, .eu .legend, .eu details, .srcs, .anon, .st-note, .reveal-head p, .cm-grp, .cm-item .ps, .cm-item .ag, .st-pill, .st-stamp) { font-family: var(--fell); }
+.sheet .eyebrow, .sheet .cm-grp { text-transform: none; letter-spacing: .02em; font-style: italic; font-weight: 400; font-size: 15px; color: var(--muted); }
+.sheet blockquote { font-family: var(--fell); }
+.sheet .cm-item .t { font-family: var(--fell); font-size: 17.5px; }
+.sheet textarea { font-size: 17px; }
+
+/* Survols : changement de couleur diffus et doux, partout */
+button, a, .folio, .parch, .lrow, .person, .cm-item, .wl-item, .mini, .scr-filters button, .filters button, .quill-tools button, .mai-link, .rk button, .sol-top button, .sol-chips button, .sol-btns button, .wl-tabs button, .mx button, .mx i, .mx img {
+  transition: background-color .38s ease, color .38s ease, border-color .38s ease, box-shadow .38s ease, filter .38s ease, opacity .38s ease, transform .38s ease; }
+@media (hover: hover) {
+  a:hover { color: color-mix(in oklab, var(--link) 60%, var(--deck)); }
+  .btn:hover { background: var(--deck-soft); border-color: var(--deck); }
+  .btn.primary:hover { background: color-mix(in oklab, var(--deck) 80%, var(--ink)); }
+  .seg button[aria-selected="false"]:hover { color: var(--deck); background: var(--deck-soft); }
+  .tabs button:hover:not(.tab-deck) { color: var(--deck); }
+  .tabs .tab-deck:hover .orb { box-shadow: 0 0 0 3px var(--surface), 0 0 0 5px var(--deck), 0 0 34px 0 color-mix(in oklab, var(--deck) 80%, transparent); }
+  .pad button:hover .b { background: color-mix(in oklab, currentColor 14%, var(--surface)); box-shadow: 0 6px 18px -6px currentColor; }
+  .info-btn:hover { background: var(--deck-soft); }
+  .scr-filters button:hover, .filters button:hover { color: var(--deck); border-bottom-color: color-mix(in oklab, var(--deck) 55%, transparent); }
+  .scr-page .act a:hover, .scr-page .act button:hover, .quill-tools button:hover, .mai-link:hover, .rank-bar button:hover { color: var(--deck); border-bottom-color: var(--deck); }
+  .commu li a:hover { color: var(--deck); border-bottom-color: var(--deck); }
+  .folio:hover { box-shadow: 0 0 0 1px var(--deck), 0 16px 30px -16px color-mix(in oklab, var(--deck) 60%, transparent), 0 2px 6px -3px rgba(11,74,82,.25); }
+  .folio:hover .titre { color: var(--deck); }
+  .lrow[role="button"]:hover { background: var(--deck-soft); }
+  .cm-item:hover { background: var(--deck-soft); border-color: var(--deck); }
+  .wl-item:hover .titre { color: var(--deck); }
+  .wl-tabs button:hover { color: var(--ink); }
+  .choice4 button:not([aria-pressed="true"]):hover { background: color-mix(in oklab, currentColor 14%, var(--surface)); }
+  .rk button:not(:disabled):hover { background: var(--deck-soft); border-color: var(--deck); color: var(--deck); }
+  .person:hover { border-color: var(--deck); }
+  .sol-top button:hover, .sol-chips button:hover, .sol-btns button:hover { background: rgba(252,229,140,.2); border-color: #FCE58C; color: #FCE58C; }
+}
+
+/* Orbe central du Deck : plus grand, flottant, pour attirer le pouce */
+.tabs { position: relative; z-index: 5; }
+.tabs .orb { position: relative; width: 82px; height: 82px; margin-top: -46px; animation: orbFloat 5.5s ease-in-out infinite; }
+.tabs .orb canvas { width: 76px; height: 76px; }
+.tabs .orb::after { content: ""; position: absolute; inset: -4px; border-radius: 50%; border: 1.5px solid var(--deck); opacity: 0; animation: orbPing 3.8s ease-out infinite; pointer-events: none; }
+@keyframes orbFloat { 50% { translate: 0 -4px; } }
+@keyframes orbPing { 0% { transform: scale(.94); opacity: .6; } 100% { transform: scale(1.42); opacity: 0; } }
+.pad { padding-bottom: 46px; }
+@media (prefers-reduced-motion: reduce) { .tabs .orb, .tabs .orb::after { animation: none; } }
+
+/* Légende de la galaxie : pictogrammes animés */
+.cosmos-leg .li { grid-template-columns: 58px 1fr; gap: 14px; }
+.cosmos-leg svg.gi { width: 58px; height: 58px; border-radius: 0; background: none; filter: drop-shadow(0 5px 10px rgba(2,20,24,.4)); }
+.gi-ring { fill: none; stroke: #7FD9D3; stroke-width: 1; transform-origin: 28px 28px; animation: giRing 3.4s ease-out infinite; }
+.gi-ring.r2 { animation-delay: 1.7s; }
+.gi-spin { transform-origin: 28px 28px; animation: giSpin 16s linear infinite; }
+.gi-orb { transform-origin: 28px 28px; animation: giSpin 7s linear infinite; }
+.gi-orb.slow { animation-duration: 20s; }
+.gi-link { animation: giDash 1.8s linear infinite; }
+.gi-bob { animation: giBob 3.4s ease-in-out infinite; }
+.gi-bob.b2 { animation-delay: -1.1s; } .gi-bob.b3 { animation-delay: -2.2s; }
+.gi-tw { fill: #BFF0EC; animation: giTw 2.6s ease-in-out infinite; }
+.gi-tw.t2 { animation-delay: -.7s; } .gi-tw.t3 { animation-delay: -1.4s; } .gi-tw.t4 { animation-delay: -2s; }
+.gi-halo { transform-origin: 28px 28px; animation: giHalo 3.2s ease-in-out infinite; }
+.gi-pa { animation: giPA 2.8s ease-in-out infinite; } .gi-pb { animation: giPB 2.8s ease-in-out infinite; }
+@keyframes giRing { 0% { transform: scale(1); opacity: .85; } 100% { transform: scale(2.7); opacity: 0; } }
+@keyframes giSpin { to { transform: rotate(360deg); } }
+@keyframes giDash { to { stroke-dashoffset: -12; } }
+@keyframes giBob { 50% { transform: translateY(-3px); } }
+@keyframes giTw { 0%, 100% { opacity: .2; } 50% { opacity: 1; } }
+@keyframes giHalo { 50% { opacity: .95; transform: scale(1.3); } }
+@keyframes giPA { 50% { transform: translate(-8px, 8px); } } @keyframes giPB { 50% { transform: translate(8px, -8px); } }
+@media (prefers-reduced-motion: reduce) { .gi * { animation: none !important; } }
+
+/* Matrice des preuves cliquable */
+.mx button { border: 0; background: none; padding: 0; font: inherit; color: inherit; cursor: pointer; }
+.mx .mxh { display: grid; place-items: center; }
+.mx .mxh:hover img, .mx .mxh:focus-visible img { transform: scale(1.2); box-shadow: 0 0 0 2px var(--gilt); }
+.mx .mxc { display: grid; place-items: center; height: 22px; }
+.mx .mxc:hover i, .mx .mxc:focus-visible i { background: var(--gilt); transform: scale(1.5); box-shadow: 0 0 0 4px color-mix(in oklab, var(--gilt) 28%, transparent); }
+.mx .mxc:hover i.dC, .mx .mxc:focus-visible i.dC { background: transparent; box-shadow: inset 0 0 0 2px var(--gilt), 0 0 0 4px color-mix(in oklab, var(--gilt) 28%, transparent); }
+.mx .rl { text-align: right; }
+.mx .rl:hover, .mx .rl:focus-visible { color: var(--gilt); }
+.mx button:focus-visible { outline: 2px solid var(--gilt); outline-offset: 1px; border-radius: 4px; }
+@keyframes flashCard { 0% { box-shadow: 0 0 0 0 color-mix(in oklab, var(--gilt) 0%, transparent); } 25% { box-shadow: 0 0 0 4px var(--gilt), 0 0 34px 6px color-mix(in oklab, var(--gilt) 45%, transparent); } 100% { box-shadow: 0 0 0 1px var(--line); } }
+.scr-page.flash { animation: flashCard 2s ease-out; }
+.scr-page:focus { outline: none; }
+
+/* Recherche : recto-verso chiffres / graphiques */
+.scr-mode { display: flex; justify-content: center; gap: 6px; padding: 4px; margin: 0 auto; border-radius: 999px; background: var(--surface-2); border: 1px solid var(--line); width: fit-content; }
+.scr-mode button { border: 0; background: transparent; padding: 5px 18px; border-radius: 999px; font-family: var(--fell); font-size: 17px; color: var(--ink-2); cursor: pointer; }
+.scr-mode button[aria-pressed="true"] { background: var(--surface); color: var(--ink); box-shadow: 0 1px 3px rgba(0,0,0,.14); }
+@media (hover: hover) { .scr-mode button[aria-pressed="false"]:hover { color: var(--deck); background: var(--deck-soft); } }
+.flipper { display: grid; perspective: 1200px; }
+.face { grid-area: 1 / 1; backface-visibility: hidden; -webkit-backface-visibility: hidden; transition: transform .8s cubic-bezier(.3,.7,.2,1) var(--d, 0ms); display: grid; gap: 10px; align-content: start; }
+.face.back { transform: rotateY(180deg); }
+.flipper.is-back .face.front { transform: rotateY(-180deg); }
+.flipper.is-back .face.back { transform: rotateY(0); }
+.face[inert] { pointer-events: none; }
+@media (prefers-reduced-motion: reduce) { .face { transition: none; } }
+.bignum { display: grid; gap: 4px; }
+.bignum b { justify-self: start; font-family: var(--plume); font-weight: 400; font-size: clamp(42px, 13vw, 60px); line-height: 1.05; color: var(--deck); padding: 0 .14em; background: linear-gradient(transparent 60%, color-mix(in oklab, var(--gilt) 40%, transparent) 60% 90%, transparent 90%); }
+.bignum span { font-family: var(--fell); font-style: italic; font-size: 16px; line-height: 1.35; color: var(--iron-2); }
+.bns { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; }
+.bn { display: grid; gap: 2px; border-left: 3px solid var(--deck); padding-left: 10px; }
+.bn b { font-family: var(--plume); font-weight: 400; font-size: 28px; line-height: 1.1; color: var(--iron); }
+.bn span { font-family: var(--fell); font-style: italic; font-size: 13.5px; line-height: 1.3; color: var(--iron-2); }
+.face .ess { margin: 0; font-family: var(--fell); font-size: 16px; line-height: 1.45; }
+.face .ess strong { font-weight: 400; background: linear-gradient(transparent 55%, color-mix(in oklab, var(--deck) 24%, transparent) 55%); padding: 0 .1em; }
+.scr-chart { display: grid; gap: 8px; }
+.scr-chart .cap { font-family: var(--fell); font-style: italic; font-size: 14px; color: var(--iron-2); }
+.scr-chart .cap b { font-family: var(--plume); font-style: normal; font-weight: 400; font-size: 22px; color: var(--deck); }
+.scr-chart .eu { font-family: var(--fell); gap: 11px; }
+.scr-chart .eu .ttl { font-family: var(--fell); font-style: italic; font-size: 14.5px; color: var(--iron-2); font-weight: 400; }
+.scr-chart .eu .bar-row { grid-template-columns: minmax(0, 6.6em) 1fr 4.4em; font-size: 15px; }
+.scr-chart .eu .val { font-family: var(--plume); font-size: 19px; }
+.scr-chart .eu .track { height: 20px; border-radius: 10px; }
+.scr-chart .eu .fill { border-radius: 10px; transform-origin: left; }
+.scr-chart .eu .bar-row.focus .fill { background: linear-gradient(90deg, color-mix(in oklab, var(--deck) 70%, var(--surface)), var(--deck)); box-shadow: 0 0 14px -2px color-mix(in oklab, var(--deck) 70%, transparent); }
+.scr-chart .eu .bar-row.focus .lb, .scr-chart .eu .bar-row.focus .val { color: var(--deck); font-weight: 400; }
+.flipper.is-back .scr-chart .fill { animation: barGrow 1s cubic-bezier(.2,.8,.2,1) .35s both; }
+@keyframes barGrow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@media (prefers-reduced-motion: reduce) { .flipper.is-back .scr-chart .fill { animation: none; } }
+.scr-chart details { display: none; }
+.scr-page .act { gap: 6px 22px; flex-wrap: wrap; }
+
+/* Recueil : classement par importance */
+.rank-bar { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 20px; margin-top: -10px; }
+.rank-bar button { border: 0; background: none; cursor: pointer; padding: 2px 0; font-family: var(--fell); font-style: italic; font-size: 16px; color: var(--ink); border-bottom: 1px solid var(--gilt); }
+.rank-bar .rk-main.on { color: var(--deck); border-bottom-color: var(--deck); }
+.fw { position: relative; display: grid; gap: 8px; align-content: start; }
+.fw:nth-child(odd) > .folio { rotate: -.35deg; } .fw:nth-child(even) > .folio { rotate: .3deg; }
+.fw.ranking > .folio { box-shadow: 0 0 0 2px var(--gilt), 0 14px 26px -16px rgba(11,74,82,.5); }
+.rk { display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap; }
+.rk button { border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 5px 13px; font-family: var(--fell); font-size: 15px; color: var(--ink); cursor: pointer; }
+.rk button:disabled { opacity: .35; cursor: default; }
+.rk .rkn { font-family: var(--plume); font-size: 28px; line-height: 1; color: var(--deck); min-width: 1.4em; text-align: center; }
+.folio .imp { color: var(--deck); font-style: italic; }
+
+/* Système solaire d'un candidat */
+.solar { position: fixed; inset: 0; z-index: 15; display: flex; flex-direction: column; color: #EAF6F5; font-family: var(--fell); background: radial-gradient(120% 90% at 50% 40%, color-mix(in oklab, var(--deck) 26%, #04191c), #020c0e 78%); padding: env(safe-area-inset-top, 0px) env(safe-area-inset-right, 0px) env(safe-area-inset-bottom, 0px) env(safe-area-inset-left, 0px); }
+.sol-top { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 10px; padding: 12px 14px 2px; }
+.sol-top button, .sol-chips button, .sol-btns button { border: 1px solid rgba(234,246,245,.28); background: rgba(234,246,245,.06); color: #EAF6F5; border-radius: 999px; padding: 6px 14px; font-family: var(--fell); font-size: 16px; cursor: pointer; }
+.sol-title { text-align: center; display: grid; line-height: 1.15; min-width: 0; }
+.sol-title b { font-weight: 400; font-size: 22px; }
+.sol-title span { font-style: italic; font-size: 13.5px; color: #9ED7D3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.solar canvas { flex: 1; min-height: 0; width: 100%; touch-action: none; }
+.sol-foot { padding: 4px 16px 16px; display: grid; gap: 8px; max-width: 680px; width: 100%; margin: 0 auto; }
+.sol-legend { margin: 0; font-style: italic; font-size: 14.5px; line-height: 1.4; color: #CFE6E4; text-align: center; text-wrap: balance; }
+.sol-chips { display: flex; gap: 6px; overflow-x: auto; padding: 2px 0 4px; scrollbar-width: none; }
+.sol-chips button { flex: none; font-size: 14px; padding: 4px 11px; display: inline-flex; align-items: center; gap: 6px; }
+.sol-chips i { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+.sol-btns { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+
+/* Affinage : inciter à continuer après le Grand Tri */
+.refine { margin: 6px max(16px, env(safe-area-inset-right, 0px)) 0 max(16px, env(safe-area-inset-left, 0px)); padding: 10px 14px 11px; border-radius: 14px; border: 1px solid color-mix(in oklab, var(--deck) 35%, var(--line)); background: linear-gradient(135deg, color-mix(in oklab, var(--deck) 12%, var(--surface)), var(--surface)); display: grid; gap: 6px; animation: refIn .6s cubic-bezier(.3,.7,.2,1) both; }
+@keyframes refIn { from { opacity: 0; transform: translateY(-8px); } }
+.refine[hidden] { display: none; }
+.refine .rf-top { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.refine .rf-top b { font-family: var(--serif); font-size: 16px; font-weight: 600; color: var(--deck); }
+.refine .rf-top span { font-size: 12px; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.refine .rf-bar { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 3px; }
+.refine .rf-bar i { height: 6px; border-radius: 3px; background: color-mix(in oklab, var(--deck) 16%, transparent); }
+.refine .rf-bar i.on { background: var(--deck); }
+.refine .rf-bar i.next { background: color-mix(in oklab, var(--deck) 45%, transparent); animation: rfPulse 1.8s ease-in-out infinite; }
+@keyframes rfPulse { 50% { opacity: .35; } }
+.refine p { margin: 0; font-size: 13px; line-height: 1.35; color: var(--ink-2); text-wrap: pretty; }
+.refine p b { color: var(--ink); font-weight: 600; }
+.tiehint { position: absolute; left: 10px; right: 10px; bottom: 8px; z-index: 2; text-align: center; font-size: 11.5px; line-height: 1.25; padding: 4px 8px; border-radius: 999px; color: #FCE58C; background: rgba(2,20,24,.72); border: 1px solid rgba(252,229,140,.5); backdrop-filter: blur(2px); }
+.card .art { position: relative; }
+.dots.sm { gap: 3px; } .dots.sm i { width: 6px; height: 6px; border-width: 1.2px; }
+.tri .tri-hook { margin: 0; font-size: 14px; line-height: 1.4; color: #EAF6F5; text-wrap: pretty; }
+.tri .tri-hook b { color: #FCE58C; font-weight: 600; }
+.tri .tri-meter { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 3px; width: 100%; }
+.tri .tri-meter i { height: 6px; border-radius: 3px; background: rgba(234,246,245,.18); }
+.tri .tri-meter i.on { background: #FCE58C; }
+.tri .tri-meter i.next { background: rgba(252,229,140,.5); animation: rfPulse 1.8s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) { .refine, .refine .rf-bar i.next, .tri .tri-meter i.next { animation: none; } }
+</style>
+
+<div id="app">
+  <header class="top">
+    <svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="var(--teal-900)"/><rect x="6" y="19" width="3.2" height="5" rx="1" fill="#FCE58C"/><rect x="10.6" y="16" width="3.2" height="8" rx="1" fill="#FBBF24"/><rect x="15.2" y="13" width="3.2" height="11" rx="1" fill="#F59E0B"/><rect x="19.8" y="10" width="3.2" height="14" rx="1" fill="#D97706"/><rect x="24.4" y="7" width="3.2" height="17" rx="1" fill="#B45309"/></svg>
+    <div class="brand"><b>Magnitude</b><span>Find your candidate</span></div>
+    <div class="week" id="week" aria-live="polite" title="Cartes de la semaine 42 tranchées"></div>
+  </header>
+
+  <main>
+    <section class="view" id="view-deck" aria-label="Deck">
+      <div class="seg" role="tablist" aria-label="Deck">
+        <button role="tab" id="seg-play" aria-selected="true">Jouer</button>
+        <button role="tab" id="seg-mine" aria-selected="false">Mon deck</button>
+      </div>
+      <div id="play">
+        <div class="refine" id="refine" hidden></div>
+        <div class="stage" id="stage"><div class="halo"></div></div>
+        <div class="pad" id="pad">
+          <button class="no" data-dir="l" aria-label="Désaligné (glisser à gauche)"><span class="b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></span><span>Désaligné</span></button>
+          <button class="meh" data-dir="d" aria-label="M'en fous (glisser vers le bas)"><span class="b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="7"/><path d="M7 17 17 7"/></svg></span><span>M'en fous</span></button>
+          <button class="wish" data-dir="u" aria-label="J'aimerais (glisser vers le haut)"><span class="b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M12 3.5l2.6 5.3 5.8.8-4.2 4.1 1 5.8L12 16.8l-5.2 2.7 1-5.8-4.2-4.1 5.8-.8z"/></svg></span><span>J'aimerais</span></button>
+          <button class="ok" data-dir="r" aria-label="Aligné (glisser à droite)"><span class="b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span><span>Aligné</span></button>
+        </div>
+      </div>
+      <div id="mine" class="scroll grimoire" hidden style="flex:1;min-height:0"><div class="wrap" id="mine-wrap"></div></div>
+    </section>
+
+    <section class="view" id="view-search" aria-label="Recherche" hidden>
+      <div class="scroll grimoire" style="flex:1;min-height:0"><div class="wrap scr-wrap">
+        <header class="parch scr-head" id="scr-head">
+          <h2>Le Scriptorium</h2>
+          <p class="scr-sub"><span class="scr-ink">Douze promesses, chaque pièce sourcée</span><svg class="quill" viewBox="0 0 64 64" aria-hidden="true"><path d="M58 4C40 6 22 18 14 38l-4 12 3 1 4-11C27 22 42 10 58 4z" fill="currentColor" opacity=".9"/><path d="M58 4C46 14 34 26 24 40" fill="none" stroke="var(--vellum)" stroke-width="1.2" opacity=".7"/><path d="M10 50 6 60" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></p>
+        </header>
+        <label class="parch scr-search"><svg class="quill-sm" viewBox="0 0 64 64" aria-hidden="true"><path d="M58 4C40 6 22 18 14 38l-4 12 3 1 4-11C27 22 42 10 58 4z" fill="currentColor"/><path d="M10 50 6 60" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg><span class="sr">Rechercher une promesse</span><input id="q" type="search" placeholder="Écrivez un mot : smic, dette, héritage…" autocomplete="off" spellcheck="false"></label>
+        <div class="scr-mode" id="scr-mode" role="group" aria-label="Afficher"><button type="button" data-v="chart">Graphiques</button><button type="button" data-v="num">Chiffres</button></div>
+        <div class="scr-filters" id="filters" role="group" aria-label="Filtrer par thème"></div>
+        <div id="dossiers" class="scr-pages"></div>
+      </div></div>
+    </section>
+
+    <section class="view" id="view-maison" aria-label="Magnitude" hidden>
+      <div class="scroll grimoire" id="mai-scroll" style="flex:1;min-height:0"><div class="wrap mai-wrap" id="mai-wrap"></div></div>
+    </section>
+  </main>
+
+  <nav class="tabs" role="tablist" aria-label="Navigation">
+    <button role="tab" data-view="search" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 3.5C14 4 8.6 8.4 6.6 14.6L5.5 18"/><path d="M20.5 3.5c-1.2 4.6-4.6 8.7-9.6 10.6l-4.3 .5"/><path d="M11.4 8.6 9 11M14.6 7.2 11.3 11.6"/><path d="M5.5 18 4 21"/><path d="M3 21h8" opacity=".55"/></svg>Recherche</button>
+    <button role="tab" data-view="deck" aria-selected="true" class="tab-deck"><span class="orb" aria-hidden="true"><canvas id="galaxy" width="64" height="64"></canvas></span>Deck</button>
+    <button role="tab" data-view="maison" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.4 17.3 15.4H6.7Z"/><path d="M2.6 16.5c3.2-2 15.6-2 18.8 0-3.2 2.7-15.6 2.7-18.8 0Z"/><path d="M10 13.6v-1.4M12 13.6v-2.8M14 13.6v-4.2"/><circle cx="11.2" cy="6.9" r=".5" fill="currentColor"/></svg>Magnitude</button>
+  </nav>
+</div>
+
+<div id="layer"></div>
+<div class="toast" id="toast" role="status" hidden></div>
+
+<script>
+(function () {
+  "use strict";
+  var DATA = /*__DATA__*/null;
+  var CARDS = DATA.cards, CANDS = DATA.cands, FICHES = DATA.fiches || {};
+  var SLUGS = Object.keys(CANDS).sort();
+  var MIN_N = 4;                       // seuil de preuve (Spec § 4)
+  var KEY = "magnitude-deck-proto-v1";
+  var DIRS = { r: "ok", l: "no", u: "wish", d: "meh" };
+  var LABEL = { ok: "Aligné", no: "Désaligné", wish: "J'aimerais", meh: "M'en fous" };
+  var GLYPH = { ok: "✓", no: "✕", wish: "★", meh: "∅" };
+  var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // Ordre : les 6 nouvelles cartes (numéro #1) d'abord, puis les 6 à réviser (#0) — ordre du tirage publié.
+  var ORDER = CARDS.filter(function (c) { return c.num === "1"; }).concat(CARDS.filter(function (c) { return c.num === "0"; }));
+  var WEEK = ORDER.filter(function (c) { return c.num === "1"; }).map(function (c) { return c.id; });
+  var byId = {}; CARDS.forEach(function (c) { byId[c.id] = c; });
+
+  var S = load();
+  function load() {
+    var s = null;
+    try { s = JSON.parse(localStorage.getItem(KEY) || "null"); } catch (e) { s = null; }
+    return s && s.dec ? s : { dec: {}, onboarded: false, leader: null, triSeen: false };
+  }
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
+  function esc(t) { return String(t == null ? "" : t).replace(/[&<>"]/g, function (ch) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[ch]; }); }
+  function $(s, r) { return (r || document).querySelector(s); }
+  function el(html) { var d = document.createElement("div"); d.innerHTML = html.trim(); return d.firstChild; }
+  function icon(path, sw) { return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="' + (sw || 1.8) + '" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="' + path + '"/></svg>'; }
+
+  // ---------- Score (Spec § 4) ----------
+  function scores() {
+    var res = {};
+    SLUGS.forEach(function (s) { res[s] = { agree: 0, n: 0 }; });
+    Object.keys(S.dec).forEach(function (id) {
+      var d = S.dec[id].d, c = byId[id];
+      if (!c || (d !== "ok" && d !== "no")) return;
+      var mine = d === "ok" ? 1 : -1;
+      Object.keys(c.pos).forEach(function (s) {
+        if (!res[s]) return;
+        res[s].n += 1;
+        if (c.pos[s][0] === mine) res[s].agree += 1;
+      });
+    });
+    var list = SLUGS.map(function (s) { var r = res[s]; return { s: s, agree: r.agree, n: r.n, pct: r.n ? r.agree / r.n : null }; });
+    list.sort(function (a, b) {
+      var ea = a.n >= MIN_N, eb = b.n >= MIN_N;
+      if (ea !== eb) return ea ? -1 : 1;
+      if ((b.pct || 0) !== (a.pct || 0)) return (b.pct || 0) - (a.pct || 0);
+      return CANDS[a.s].name.localeCompare(CANDS[b.s].name, "fr");  // ex æquo : ordre alphabétique, documenté
+    });
+    var elig = list.filter(function (r) { return r.n >= MIN_N && !(stOf(r.s) && stOf(r.s).kind === "retire"); });  // un candidat qui n'est plus en lice ne donne pas de maison
+    var leader = null;
+    if (elig.length && (elig.length === 1 || elig[0].pct > elig[1].pct)) leader = elig[0].s;
+    return { list: list, leader: leader };
+  }
+
+  function applyDeck(leader) {
+    var root = document.documentElement.style;
+    if (leader) { root.setProperty("--deck-h", CANDS[leader].hue); root.setProperty("--deck-c", 0.105); root.setProperty("--deck-l", 0.56); }
+    else { root.setProperty("--deck-h", 200); root.setProperty("--deck-c", 0.085); root.setProperty("--deck-l", 0.53); }
+  }
+  function houseLabel(s) { var n = CANDS[s].name; var last = n.indexOf("Le Pen") >= 0 ? "Le Pen" : n.indexOf("de Villepin") >= 0 ? "de Villepin" : n.split(" ").slice(-1)[0]; return "Galaxie " + last; }
+
+  // ---------- Illustration générée (constellation déterministe, palette du deck) ----------
+  function sky(seed) {
+    var x = 0; for (var i = 0; i < seed.length; i++) x = (x * 31 + seed.charCodeAt(i)) >>> 0;
+    function rnd() { x ^= x << 13; x >>>= 0; x ^= x >> 17; x ^= x << 5; x >>>= 0; return (x % 10000) / 10000; }
+    var pts = [], out = '<svg class="sky" viewBox="0 0 100 70" preserveAspectRatio="xMidYMid slice" aria-hidden="true">';
+    for (var k = 0; k < 26; k++) pts.push([rnd() * 100, rnd() * 70, 0.4 + rnd() * 1.3]);
+    for (var j = 0; j < pts.length - 1; j++) if (rnd() < 0.35) out += '<line x1="' + pts[j][0].toFixed(1) + '" y1="' + pts[j][1].toFixed(1) + '" x2="' + pts[j + 1][0].toFixed(1) + '" y2="' + pts[j + 1][1].toFixed(1) + '" stroke="#ffffff" stroke-opacity=".28" stroke-width=".3"/>';
+    pts.forEach(function (p) { out += '<circle cx="' + p[0].toFixed(1) + '" cy="' + p[1].toFixed(1) + '" r="' + p[2].toFixed(2) + '" fill="#ffffff" fill-opacity="' + (0.35 + p[2] / 3).toFixed(2) + '"/>'; });
+    return out + "</svg>";
+  }
+
+  function cardHTML(c) {
+    return '<div class="card" data-id="' + c.id + '"><div class="frame"><div class="inner">' +
+      '<div class="c-head"><span class="chip">' + icon(c.icon, 2) + esc(c.theme) + '</span><span class="num">N° ' + c.n + ' · #' + c.num + '</span></div>' +
+      '<div class="art">' + sky(c.id) + '<div class="emblem">' + icon(c.icon, 1.6) + '</div></div>' +
+      '<div class="fig"><b>' + esc(c.fig) + '</b><span>' + esc(c.fig_label) + '</span></div>' +
+      '<div class="measure">' + esc(c.mesure) + '</div>' +
+      '<div class="c-foot"><span class="seal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="6" stroke-dasharray="1.5 1.5"/><path d="M9 14v-3M12 14v-5M15 14V8"/></svg>Magnitude · Labo</span><button class="info-btn" type="button" aria-label="Comprendre la mesure (fiche sans nom de candidat)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/></svg>Comprendre</button></div>' +
+      '<span class="stamp r">Aligné</span><span class="stamp l">Désaligné</span><span class="stamp u">J\'aimerais</span><span class="stamp d">M\'en fous</span>' +
+      '</div></div></div>';
+  }
+
+  // ---------- En-tête ----------
+  function renderWeek() {
+    var wk = weekIsDone(), list = wk ? ORDER : ORDER.filter(function (c) { return WEEK.indexOf(c.id) >= 0; });
+    var done = list.filter(function (c) { return S.dec[c.id]; }).length;
+    var dots = list.map(function (c) { return '<i class="' + (S.dec[c.id] ? "on" : "") + '"></i>'; }).join("");
+    $("#week").innerHTML = '<span><span class="sr">' + (wk ? "Affinage : " : "Semaine 42 : ") + "</span>" + done + "/" + list.length + '</span><span class="dots' + (wk ? " sm" : "") + '" aria-hidden="true">' + dots + "</span>";
+    if (typeof renderRefine === "function") renderRefine();
+  }
+
+
+  // ---------- Affinage : la maison est provisoire tant que toutes les cartes ne sont pas tranchées ----------
+  function weekIsDone() { return WEEK.every(function (id) { return S.dec[id]; }); }
+  function refine() {
+    var sc = scores(), el = sc.list.filter(function (r) { return r.n >= MIN_N && !(stOf(r.s) && stOf(r.s).kind === "retire"); });
+    var L = el[0] || null, R = el[1] || null, left = queue(), tie = [];
+    if (L && R) tie = left.filter(function (c) { return c.pos[L.s] && c.pos[R.s] && c.pos[L.s][0] !== c.pos[R.s][0]; });
+    return { L: L, R: R, left: left, tie: tie, decided: ORDER.length - left.length, total: ORDER.length };
+  }
+  function refineMsg(r) {
+    var n = r.left.length, plural = n > 1 ? "s" : "";
+    if (!n) return "Toutes les cartes sont tranchées : votre galaxie est au plus précis pour ce tirage. De nouvelles cartes arrivent chaque semaine pour l'affiner encore.";
+    if (r.L && r.R) {
+      var gap = Math.round((r.L.pct - r.R.pct) * 100), t = r.tie.length;
+      var lead = gap > 0 ? "<b>" + esc(houseLabel(r.L.s)) + "</b> devance <b>" + esc(lastName(r.R.s)) + "</b> de " + gap + " point" + (gap > 1 ? "s" : "") + " d'accord. " : "<b>" + esc(lastName(r.L.s)) + "</b> et <b>" + esc(lastName(r.R.s)) + "</b> sont à égalité. ";
+      return lead + (t ? t + " des " + n + " carte" + plural + " restante" + plural + " peu" + (t > 1 ? "vent" : "t") + " les départager : <b>continuez pour confirmer ou renverser votre galaxie.</b>" : "Les " + n + " carte" + plural + " restante" + plural + " précisent encore votre profil.");
+    }
+    return "Pas encore assez de cartes communes pour trancher entre les galaxies : <b>" + n + " carte" + plural + " à jouer</b> pour faire apparaître la vôtre.";
+  }
+  function meterHTML(r, cls) {
+    var done = r.decided, h = "";
+    for (var i = 0; i < r.total; i++) h += '<i class="' + (i < done ? "on" : i === done ? "next" : "") + '"></i>';
+    return '<div class="' + cls + '" aria-hidden="true">' + h + "</div>";
+  }
+  function renderRefine() {
+    var box = $("#refine"); if (!box) return;
+    if (!weekIsDone()) { box.hidden = true; return; }
+    var r = refine(); box.hidden = false;
+    box.innerHTML = '<div class="rf-top"><b>' + (r.left.length ? "Votre galaxie se précise" : "Galaxie affinée") + '</b><span>' + r.decided + "/" + r.total + " cartes</span></div>" + meterHTML(r, "rf-bar") + "<p>" + refineMsg(r) + "</p>";
+  }
+
+  // ---------- Pile de cartes ----------
+  var stage = $("#stage"), top = null, busy = false;
+  function queue() { return ORDER.filter(function (c) { return !S.dec[c.id]; }); }
+  function renderStack() {
+    Array.prototype.slice.call(stage.querySelectorAll(".card,.done")).forEach(function (n) { n.remove(); });
+    var q = queue();
+    $("#pad").style.visibility = q.length ? "visible" : "hidden";
+    if (!q.length) {
+      stage.appendChild(el('<div class="done"><div><h2>Galaxie affinée au maximum.</h2><p style="color:var(--ink-2);margin:0 0 14px">Les 12 cartes sont tranchées. Six nouvelles cartes arrivent chaque semaine pour la préciser encore ; d\'ici là, vous pouvez changer d\'avis depuis « Mon deck ».</p><button class="btn primary" id="go-mine">Voir mon deck</button></div></div>'));
+      $("#go-mine").onclick = function () { showSeg("mine"); };
+      top = null; return;
+    }
+    if (q[1]) { var nx = el(cardHTML(q[1])); nx.classList.add("next"); stage.appendChild(nx); }
+    top = el(cardHTML(q[0])); stage.appendChild(top); bindDrag(top);
+    if (weekIsDone()) { var rf = refine(); if (rf.tie.some(function (c) { return c.id === q[0].id; })) { var art = top.querySelector(".art"); if (art) art.appendChild(el('<span class="tiehint">⚖ Cette carte peut départager vos deux premières galaxies</span>')); } }
+    var ib = top.querySelector(".info-btn"); if (ib) ib.onclick = function (e) { e.stopPropagation(); openFiche(top.dataset.id); };
+    var nb = stage.querySelector(".card.next .info-btn"); if (nb) nb.tabIndex = -1;
+  }
+
+  function bindDrag(card) {
+    var sx = 0, sy = 0, dx = 0, dy = 0, t0 = 0, active = false, pid = null;
+    var stamps = { r: card.querySelector(".stamp.r"), l: card.querySelector(".stamp.l"), u: card.querySelector(".stamp.u"), d: card.querySelector(".stamp.d") };
+    function dirOf(x, y) { return Math.abs(x) >= Math.abs(y) ? (x > 0 ? "r" : "l") : (y < 0 ? "u" : "d"); }
+    card.addEventListener("pointerdown", function (e) {
+      if (busy || e.target.closest(".info-btn")) return; active = true; pid = e.pointerId; sx = e.clientX; sy = e.clientY; dx = dy = 0; t0 = Date.now();
+      card.classList.remove("anim"); try { card.setPointerCapture(pid); } catch (er) {}
+    });
+    card.addEventListener("pointermove", function (e) {
+      if (!active || e.pointerId !== pid) return;
+      dx = e.clientX - sx; dy = e.clientY - sy;
+      card.style.transform = "translate(" + dx + "px," + dy + "px) rotate(" + (dx * 0.06) + "deg)";
+      var dist = Math.hypot(dx, dy), th = threshold(), d = dirOf(dx, dy);
+      Object.keys(stamps).forEach(function (k) { stamps[k].style.opacity = k === d ? Math.min(1, dist / th) : 0; });
+    });
+    function end(e) {
+      if (!active || (e && e.pointerId !== pid)) return; active = false;
+      var dist = Math.hypot(dx, dy), v = dist / Math.max(1, Date.now() - t0);
+      if (dist > threshold() || (dist > 40 && v > 0.6)) commit(dirOf(dx, dy));
+      else if (dist < 8 && Date.now() - t0 < 400) { card.style.transform = ""; openFiche(card.dataset.id); }  // simple toucher
+      else { card.classList.add("anim"); card.style.transform = ""; Object.keys(stamps).forEach(function (k) { stamps[k].style.opacity = 0; }); }
+    }
+    card.addEventListener("pointerup", end); card.addEventListener("pointercancel", end);
+  }
+  function threshold() { return Math.min(110, stage.clientWidth * 0.26); }
+
+  function commit(dir) {
+    if (!top || busy) return; busy = true;
+    var card = top, id = card.dataset.id, w = window.innerWidth, h = window.innerHeight;
+    var to = { r: [w, 40, 25], l: [-w, 40, -25], u: [0, -h, 0], d: [0, h, 0] }[dir];
+    var st = card.querySelector(".stamp." + dir); if (st) st.style.opacity = 1;
+    card.classList.add("anim");
+    card.style.transform = "translate(" + to[0] + "px," + to[1] + "px) rotate(" + to[2] + "deg)";
+    card.style.opacity = "0";
+    setTimeout(function () {
+      var d = DIRS[dir];
+      if (d === "wish" || d === "meh") noteSheet(id, d, function (note) { decide(id, d, note); reveal(id); });
+      else { decide(id, d); reveal(id); }
+    }, reduce ? 0 : 260);
+  }
+
+  function decide(id, d, note) {
+    var before = scores().leader;
+    S.dec[id] = { d: d, t: Date.now() };
+    if (note) S.dec[id].note = note;
+    var after = scores().leader;
+    if (after !== before) {
+      if (after && before) toast("Bascule ! Votre deck passe de <b>" + esc(houseLabel(before)) + "</b> à <b>" + esc(houseLabel(after)) + "</b>.");
+      else if (after) toast("Votre deck prend sa couleur : <b>" + esc(houseLabel(after)) + "</b>.");
+      else toast("Votre deck redevient neutre : il hésite entre plusieurs galaxies.");
+    }
+    S.leader = after; save(); applyDeck(after); renderWeek();
+  }
+
+  // ---------- Feuilles ----------
+  var layer = $("#layer"), lastFocus = null;
+  function openSheet(inner, onClose) {
+    closeSheet(true); lastFocus = document.activeElement;
+    var scrim = el('<div class="scrim"></div>'), sh = el('<div class="sheet" role="dialog" aria-modal="true"><div class="grab"></div><div class="in"></div></div>');
+    sh.querySelector(".in").innerHTML = inner; layer.appendChild(scrim); layer.appendChild(sh);
+    scrim.onclick = function () { closeSheet(); };
+    layer._onClose = onClose || null;
+    var f = sh.querySelector("textarea") || sh.querySelector(".btn.primary") || sh.querySelector("button, a"); if (f) setTimeout(function () { f.focus(); }, 30);
+    return sh;
+  }
+  function closeSheet(silent) {
+    var cb = layer._onClose; layer._onClose = null; layer.innerHTML = "";
+    if (!silent && lastFocus && lastFocus.focus) try { lastFocus.focus(); } catch (e) {}
+    if (!silent && cb) cb();
+  }
+
+  function noteSheet(id, d, done) {
+    var c = byId[id];
+    var q = d === "wish" ? "Quelle mesure proposeriez-vous à la place ?" : "Quel sujet vous paraît plus important ?";
+    var sh = openSheet('<span class="badge ' + d + '">' + GLYPH[d] + " " + LABEL[d] + '</span><h3>' + esc(c.mesure) + '</h3><label for="note-txt" style="font-weight:600">' + q + ' <span style="color:var(--muted);font-weight:400">(facultatif)</span></label><textarea id="note-txt" maxlength="400" placeholder="Votre idée, en une phrase"></textarea><p class="fine" style="margin:0">Gardé uniquement sur cet appareil. Rien n\'est envoyé.</p><div class="row-btns"><button class="btn ghost" id="n-skip">Passer</button><button class="btn primary" id="n-save">Garder ma réponse</button></div>',
+      function () { done(""); });
+    $("#n-skip", sh).onclick = function () { layer._onClose = null; closeSheet(true); done(""); };
+    $("#n-save", sh).onclick = function () { var v = $("#note-txt", sh).value.trim(); layer._onClose = null; closeSheet(true); done(v); };
+  }
+
+  // Statut de campagne (ex. primaire) : pastille grisée « n'est plus candidat », tampon « vainqueur ».
+  // Montré seulement après le choix (la carte reste anonyme pendant le swipe).
+  function stOf(s) { return CANDS[s] && CANDS[s].statut; }
+  function stPill(s) { var st = stOf(s); return st ? ' <span class="st-pill ' + st.kind + '" title="' + esc(st.detail) + '">' + esc(st.label) + "</span>" : ""; }
+  function stShort(s) { var st = stOf(s); return st ? ' <span class="st-pill ' + st.kind + '" title="' + esc(st.label + " · " + st.detail) + '">' + esc(st.short || st.label) + "</span>" : ""; }
+  function stStamp(s) { var st = stOf(s); return st ? '<span class="st-stamp ' + st.kind + '">' + esc(st.label) + '</span><span class="st-note">' + esc(st.detail) + ' <a href="' + st.url + '" target="_blank" rel="noopener">Source ↗</a></span>' : ""; }
+  // Fiche « Comprendre la mesure » : lue AVANT le choix, donc sans nom de candidat ni de parti
+  // (extraite et vérifiée par prototypes/deck/extract_fiches.py).
+  function fmt(v) { return (Math.round(v * 100) / 100).toLocaleString("fr-FR"); }
+  function euBars(e) {
+    if (!e || !e.lignes || !e.lignes.length) return "";
+    var mx = e.max || Math.max.apply(null, e.lignes.map(function (l) { return l.value_max || l.value; })) * 1.1;
+    if (e.ref) mx = Math.max(mx, e.ref.value * 1.05);
+    var pc = function (v) { return Math.max(0, Math.min(100, v / mx * 100)); };
+    var rows = e.lignes.map(function (l) {
+      var r = '<div class="bar-row' + (l.focus ? " focus" : "") + '"><span class="lb">' + esc(l.label) + '</span><span class="track"><span class="fill" style="width:' + pc(l.value) + '%"></span>' +
+        (l.value_max ? '<span class="range" style="left:' + pc(l.value) + "%;width:" + (pc(l.value_max) - pc(l.value)) + '%"></span>' : "") +
+        (e.ref ? '<span class="refline" style="left:calc(' + pc(e.ref.value) + '% - 1px)"></span>' : "") +
+        '</span><span class="val">' + fmt(l.value) + (l.value_max ? "–" + fmt(l.value_max) : "") + "</span></div>";
+      return r;
+    }).join("");
+    var notes = e.lignes.filter(function (l) { return l.note; }).map(function (l) { return "<li><b>" + esc(l.label) + "</b> : " + esc(l.note) + "</li>"; }).join("");
+    return '<div class="eu" role="figure" aria-label="' + esc(e.titre) + '"><div class="ttl">' + esc(e.titre) + (e.unite ? " (" + esc(e.unite) + ")" : "") + "</div>" + rows +
+      (e.ref ? '<div class="legend"><i></i>' + esc(e.ref.label) + " : " + fmt(e.ref.value) + "</div>" : "") +
+      (notes ? "<details><summary>Notes de lecture</summary><ul>" + notes + "</ul></details>" : "") + "</div>";
+  }
+  function openFiche(id) {
+    var c = byId[id], f = FICHES[c.n];
+    if (!f) { toast("Fiche en préparation pour cette carte."); return; }
+    var kpis = (f.chiffres || []).map(function (k) { return '<div class="kpi"><b>' + esc(k.value) + "</b><span>" + esc(k.label) + "</span></div>"; }).join("");
+    var srcs = (f.sources || []).map(function (s) { return '<li><a href="' + s.url + '" target="_blank" rel="noopener">' + esc(s.nom) + "</a></li>"; }).join("");
+    var sh = openSheet('<div class="fiche" style="display:grid;gap:12px">' +
+      '<div><div class="kick">Comprendre la mesure · N° ' + c.n + " · " + esc(c.theme) + "</div><h3>" + esc(c.mesure) + "</h3></div>" +
+      "<h4>L'essentiel</h4>" + (f.essentiel ? '<p class="ess">' + f.essentiel + "</p>" : "") +
+      '<div class="kpis"><div class="kpi"><b>' + esc(c.fig) + "</b><span>" + esc(c.fig_label) + "</span></div>" + kpis + "</div>" +
+      (f.europe_texte || f.europe ? "<h4>Et chez nos voisins européens ?</h4>" + (f.europe_texte ? "<p>" + f.europe_texte + "</p>" : "") + euBars(f.europe) : "") +
+      (srcs ? "<h4>Sources</h4><ol class=\"srcs\">" + srcs + "</ol>" : "") +
+      '<div class="anon"><span aria-hidden="true">🔒</span><span>Fiche anonyme : ni nom ni position de candidat. L\'auteur de la mesure et les positions des autres candidats sont révélés après votre choix.</span></div>' +
+      '<div class="row-btns"><button class="btn primary" id="f-back">Revenir à la carte</button></div></div>');
+    $("#f-back", sh).onclick = function () { closeSheet(); };
+    var h = $("h3", sh); h.tabIndex = -1;
+    setTimeout(function () { sh.scrollTop = 0; try { h.focus({ preventScroll: true }); } catch (e) {} }, 40);  // lire depuis le haut
+  }
+
+  function people(c, side) {
+    var out = SLUGS.filter(function (s) { var p = c.pos[s]; return p && (side === "c" ? p[2] === "c" : p[0] === side && p[2] !== "c"); });
+    if (!out.length) return '<span class="fine">Aucune position documentée.</span>';
+    return out.map(function (s) { return '<span class="person' + (s === c.centre ? " me" : "") + (stOf(s) && stOf(s).kind === "retire" ? " retire" : "") + '" title="' + (stOf(s) ? esc(stOf(s).label) : "") + '"><img src="' + CANDS[s].img + '" alt="">' + esc(CANDS[s].name) + ' <i>' + c.pos[s][1] + "</i></span>"; }).join("");
+  }
+  function reveal(id) {
+    var c = byId[id], k = CANDS[c.centre], d = S.dec[id].d;
+    var undoc = SLUGS.filter(function (s) { return !c.pos[s]; }).length;
+    var sh = openSheet(
+      '<div class="eyebrow">Révélation · votre choix : <span class="badge ' + d + '">' + GLYPH[d] + " " + LABEL[d] + "</span></div>" +
+      '<div class="reveal-head"><img src="' + k.img + '" alt="Portrait stylisé de ' + esc(k.name) + '"><div><h3>' + esc(k.name) + "</h3><p>" + esc(k.tag) + "</p>" + stStamp(c.centre) + "</div></div>" +
+      "<blockquote>" + esc(c.quote) + "</blockquote>" +
+      '<p style="margin:0;color:var(--ink-2);font-size:14px">' + esc(c.message) + "</p>" +
+      '<div class="sides"><div class="side"><span class="lab" style="color:var(--d-ok)">▲ ' + esc(c.pole_a) + '</span><div class="people">' + people(c, 1) + '</div></div>' +
+      '<div class="side"><span class="lab" style="color:var(--d-no)">▼ ' + esc(c.pole_b) + '</span><div class="people">' + people(c, -1) + "</div></div>" +
+      (c.pole_c ? '<div class="side"><span class="lab" style="color:var(--muted);display:block">◆ ' + esc(c.pole_c) + ' <span class="fine" style="font-weight:400">(compté « contre » la mesure)</span></span><div class="people">' + people(c, "c") + "</div></div>" : "") +
+      '<span class="fine">' + undoc + " candidat" + (undoc > 1 ? "s" : "") + " sans position documentée sur cette mesure · lettres = niveau de confiance de la source</span></div>" +
+      '<div class="row-btns"><a class="btn" href="' + c.url + '" target="_blank" rel="noopener">Lire l\'analyse complète ↗</a><button class="btn primary" id="r-next">Carte suivante</button></div>',
+      afterReveal);
+    $("#r-next", sh).onclick = function () { closeSheet(); };
+  }
+  function afterReveal() {
+    busy = false; renderStack();
+    var weekDone = WEEK.every(function (id) { return S.dec[id]; });
+    if (weekDone && !S.triSeen) { S.triSeen = true; save(); grandTri(); }
+    if (activeSeg === "mine") renderMine();
+    if (!$("#view-maison").hidden) renderMaison();
+  }
+
+  // ---------- Le Grand Tri ----------
+  function grandTri() {
+    var sc = scores(), L = sc.leader;
+    var res = L ? '<img src="' + CANDS[L].img + '" alt=""><b style="font-family:var(--serif);font-size:22px">' + esc(houseLabel(L)) + '</b><span style="color:#CFE6E4;font-size:13px">teinte ' + esc(CANDS[L].tone) + " · " + Math.round(sc.list[0].pct * 100) + " % d'accord sur " + sc.list[0].n + " cartes documentées</span>"
+      : '<b style="font-family:var(--serif);font-size:20px">Votre deck hésite encore</b><span style="color:#CFE6E4;font-size:13px">Pas assez de cartes communes pour départager les galaxies. Tranchez les cartes suivantes pour la faire apparaître.</span>';
+    var rf0 = refine(), hook = "Votre galaxie est <b>provisoire</b> : " + refineMsg(rf0);
+    var ov = el('<div class="overlay tri" role="dialog" aria-modal="true" aria-label="Le Grand Tri"><div class="ob">' +
+      '<svg class="hat" viewBox="0 0 150 150" aria-hidden="true"><path d="M75 14 L112 108 H38 Z" fill="var(--deck)" stroke="#EAF6F5" stroke-width="2"/><path d="M20 110 Q75 92 130 110 Q75 128 20 110Z" fill="#0B4A52" stroke="#EAF6F5" stroke-width="2"/><circle cx="70" cy="62" r="3" fill="#FCE58C"/><circle cx="84" cy="80" r="2.2" fill="#FCE58C"/><circle cx="64" cy="88" r="1.8" fill="#FCE58C"/><rect x="58" y="97" width="5" height="9" rx="1" fill="#FBBF24"/><rect x="66" y="93" width="5" height="13" rx="1" fill="#F59E0B"/><rect x="74" y="89" width="5" height="17" rx="1" fill="#D97706"/><rect x="82" y="85" width="5" height="21" rx="1" fill="#B45309"/></svg>' +
+      '<div class="step">Le Grand Tri · semaine 42</div><p class="big">La magie a parlé ?</p><p class="sub">Non : la data et vos votes.</p>' +
+      '<div class="res">' + res + '</div><p class="tri-hook">' + hook + '</p>' + meterHTML(rf0, "tri-meter") + '<p style="margin:0;font-size:12.5px;color:#CFE6E4">À terme : votre email part en fumée, vous recevez l\'avatar commun et votre chapeau.</p><div class="row-btns"><button class="btn primary" id="t-go">Affiner ma galaxie →</button><button class="btn ghost" id="t-mine">Voir mon deck</button></div></div></div>');
+    document.body.appendChild(ov);
+    $("#t-go", ov).onclick = function () { ov.remove(); showSeg("play"); };
+    $("#t-mine", ov).onclick = function () { ov.remove(); showSeg("mine"); };
+    setTimeout(function () { $("#t-go", ov).focus(); }, 30);
+  }
+
+  // ---------- Mon deck ----------
+  var activeSeg = "play";
+  function showSeg(s) {
+    var was = activeSeg; activeSeg = s;
+    $("#seg-play").setAttribute("aria-selected", s === "play"); $("#seg-mine").setAttribute("aria-selected", s === "mine");
+    $("#play").hidden = s !== "play"; $("#mine").hidden = s !== "mine";
+    cancelAnimationFrame(cosmosRAF);
+    if (s === "mine") { var opening = was !== "mine"; if (opening) $("#mine").scrollTop = 0; renderMine(opening); if (opening) growFromOrb(); }
+  }
+  function refreshViews() { renderMine(); renderStack(); if (!$("#view-maison").hidden) renderMaison(); }
+
+  function roman(n) { var v = [[10, "X"], [9, "IX"], [5, "V"], [4, "IV"], [1, "I"]], o = ""; n = +n; v.forEach(function (p) { while (n >= p[0]) { o += p[1]; n -= p[0]; } }); return o; }
+  var rankMode = false;
+  function rankIds() {
+    var all = ORDER.map(function (c) { return c.id; });
+    if (!S.rank) return all;
+    var r = S.rank.filter(function (id) { return byId[id]; });
+    all.forEach(function (id) { if (r.indexOf(id) < 0) r.push(id); });
+    return r;
+  }
+  function importanceOf(id) { if (!S.rank) return 0.5; var r = rankIds(), i = r.indexOf(id); return 1 - 0.9 * i / Math.max(1, r.length - 1); }
+  function recueilHead() {
+    return '<h3 class="recueil-h">Le recueil</h3><p class="recueil-sub">' + (rankMode ? "Classez vos promesses : la plus importante pour vous en haut. Votre galaxie en tient compte." : "Une page par promesse. Touchez une page pour changer d'avis.") + '</p><div class="rank-bar"><button type="button" id="rk-toggle" class="rk-main' + (rankMode ? " on" : "") + '">' + (rankMode ? "Terminer le classement" : S.rank ? "Modifier l'ordre d'importance" : "Classer par importance") + "</button>" + (S.rank && !rankMode ? '<button type="button" id="rk-reset">Revenir à l\'ordre des folios</button>' : "") + "</div>";
+  }
+  function fw(id, ri, html) {
+    var rk = rankMode ? '<div class="rk" role="group" aria-label="Classer : ' + esc(byId[id].mesure) + '"><button type="button" data-mv="top" data-id="' + id + '"' + (ri === 0 ? " disabled" : "") + '>⤒ En tête</button><button type="button" data-mv="up" data-id="' + id + '"' + (ri === 0 ? " disabled" : "") + '>▲ Monter</button><span class="rkn" aria-label="Rang ' + (ri + 1) + '">' + (ri + 1) + '</span><button type="button" data-mv="dn" data-id="' + id + '"' + (ri === ORDER.length - 1 ? " disabled" : "") + ">▼ Descendre</button></div>" : "";
+    return '<div class="fw' + (rankMode ? " ranking" : "") + '" data-id="' + id + '">' + html + rk + "</div>";
+  }
+  function moveRank(id, mv) {
+    var ids = rankIds(), i = ids.indexOf(id), j = mv === "up" ? i - 1 : mv === "dn" ? i + 1 : 0;
+    if (i < 0 || j < 0 || j >= ids.length || j === i) return;
+    ids.splice(i, 1); ids.splice(j, 0, id); S.rank = ids; save();
+    var y = $("#mine").scrollTop; renderMine(); $("#mine").scrollTop = y;
+    var b = $('#mine .fw[data-id="' + id + '"] [data-mv="' + mv + '"]'); if (b && !b.disabled) { try { b.focus({ preventScroll: true }); } catch (e) {} }
+  }
+  function renderMine(anim) {
+    var sc = scores(), L = sc.leader, decided = Object.keys(S.dec).length;
+    var counted = Object.keys(S.dec).filter(function (id) { return S.dec[id].d === "ok" || S.dec[id].d === "no"; }).length;
+    var orn = '<svg class="orn" viewBox="0 0 150 14" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true"><path d="M2 7h52M96 7h52"/><path d="M60 7c4-6 10-6 15 0 5 6 11 6 15 0-4-6-10-6-15 0-5 6-11 6-15 0z"/><circle cx="75" cy="7" r="1.6" fill="currentColor"/></svg>';
+    var front = '<section class="parch frontis" aria-label="Votre registre">' +
+      '<h2>La Banque des Promesses</h2><p class="sub">Registre tenu de votre main, gardé sur cet appareil</p>' + orn +
+      '<div class="house"><div class="seal-wax">' + (L ? '<img src="' + CANDS[L].img + '" alt="">' : "") + "</div><div>" +
+      '<div class="plume">' + (L ? esc(houseLabel(L)) : "Le deck hésite encore") + "</div>" +
+      '<div class="count">' + decided + " promesse" + (decided > 1 ? "s" : "") + " examinée" + (decided > 1 ? "s" : "") + " sur " + CARDS.length + ", dont " + counted + " au calcul (Aligné, Désaligné)" + (L ? ", teinte " + esc(CANDS[L].tone) : "") + ".</div></div></div></section>";
+    var rank = '<section class="parch ledger" aria-label="Grand livre des candidats"><h3>Le grand livre</h3><p class="rubric">Part d\'accord avec les positions documentées de chacun ; n = promesses prises en compte. Une galaxie se déclare à partir de ' + MIN_N + " promesses, sans égalité en tête.</p>";
+    var pos = 0, prev = null;
+    sc.list.forEach(function (r, i) {
+      var weak = r.n < MIN_N;
+      if (!weak) { if (prev === null || r.pct !== prev) pos = i + 1; prev = r.pct; }
+      var tie = !weak && sc.list.some(function (o, j) { return j !== i && o.n >= MIN_N && o.pct === r.pct; });
+      var col = "oklch(calc(0.5 + var(--lift)) 0.1 " + CANDS[r.s].hue + ")";
+      var ret = stOf(r.s) && stOf(r.s).kind === "retire";
+      rank += '<div role="button" tabindex="0" data-s="' + r.s + '" aria-label="Voir les mesures de ' + esc(CANDS[r.s].name) + '" class="lrow' + (r.s === L ? " lead" : "") + (weak ? " weak" : "") + (ret ? " retire" : "") + '"><span class="pos">' + (weak ? "–" : (tie ? "=" : "") + roman(pos)) + '</span><img src="' + CANDS[r.s].img + '" alt=""><span class="nm"><b>' + esc(CANDS[r.s].name) + "</b>" + (r.s === L ? '<span class="maison">votre galaxie</span>' : "") + (stOf(r.s) ? stPill(r.s) : "") +
+        '<span class="ink" style="width:' + (r.pct == null ? 0 : Math.round(r.pct * 100)) + "%;color:" + col + '"></span></span><span class="pct plume">' + (r.pct == null ? "—" : Math.round(r.pct * 100) + " %") + "<small>n = " + r.n + (weak ? ", trop peu" : "") + "</small></span></div>";
+    });
+    rank += "</section>";
+    var last = Object.keys(S.dec).sort(function (a, b) { return S.dec[b].t - S.dec[a].t; })[0];
+    var pages = recueilHead() + '<div class="pages">' + rankIds().map(function (id, ri) { var c = byId[id]; return fw(id, ri, (function () {
+      var d = S.dec[c.id];
+      var head = '<span class="head"><span class="no">Folio ' + roman(c.n) + (S.rank ? ' <span class="imp">· importance ' + (ri + 1) + "</span>" : "") + '</span><span class="theme">' + esc(c.theme) + "</span></span>";
+      if (!d) return '<button class="folio parch blank" data-id="' + c.id + '" aria-label="Page blanche : ' + esc(c.mesure) + ', à trancher">' + head + '<span class="titre">' + esc(c.mesure) + '</span><span class="lines" aria-hidden="true"></span><span class="todo">Page encore blanche : promesse à examiner.</span></button>';
+      var w = c.id === last ? " writing" : "";
+      var st = stOf(c.centre);
+      return '<button class="folio parch" data-id="' + c.id + '" aria-label="' + esc(c.mesure) + " : votre avis, " + LABEL[d.d] + '">' + head +
+        '<span class="titre">' + esc(c.mesure) + "</span>" +
+        '<span class="dose"><b>' + esc(c.fig) + "</b> " + esc(c.fig_label) + "</span>" +
+        '<span class="hand"><span class="verdict ' + d.d + w + '">' + LABEL[d.d] + "</span>" +
+        '<span class="author' + w + '">Promesse de ' + esc(CANDS[c.centre].name) + (st ? ' <span class="st">(' + esc(st.label.toLowerCase()) + ")</span>" : "") + "</span>" +
+        (d.note ? '<span class="billet' + w + '">« ' + esc(d.note) + " »</span>" : "") + "</span></button>";
+    })()); }).join("") + "</div>";
+    var stx = deckStats();
+    var note = '<aside class="parch nb"><b>Nota bene.</b> Les positions des candidats sont documentées pour ' + stx.doc + " cases sur " + stx.tot + " (" + Math.round(stx.doc / stx.tot * 100) + " %). Avec ces trous, le calcul peut avantager certains candidats : ce classement reste indicatif tant que 6 cartes ne réunissent pas au moins 8 positions documentées et qu'un test de neutralité n'est pas passé.</aside>";
+    var tools = '<div class="quill-tools"><button id="m-copy">Copier mon registre</button><button id="m-import">Importer un registre</button><button id="m-reset">Tout recommencer</button><button id="m-intro">Revoir l\'introduction</button></div>';
+    var near = sc.list.filter(function (r) { return r.n >= MIN_N && r.s !== L; }).slice(0, 3).map(function (r) { return CANDS[r.s].name + " (" + Math.round(r.pct * 100) + " %)"; });
+    var cosmosLbl = (L ? "Votre galaxie : " + houseLabel(L) + ". " : "Pas encore de galaxie de référence. ") + (near.length ? "Ensuite : " + near.join(", ") + "." : "");
+    var cosmos = '<section class="cosmos" aria-label="Votre galaxie"><div class="cosmos-in"><canvas id="cosmos" role="img" aria-label="' + esc(cosmosLbl) + '"></canvas><span class="ttl">Votre galaxie</span><span class="sub">' + (L ? esc(houseLabel(L)) + " au centre" : decided ? "Encore trop peu de cartes communes" : "Tranchez des cartes pour la voir bouger") + "</span></div></section>" +
+      galaxyLegend();
+    $("#mine-wrap").innerHTML = cosmos + front + rank + pages + note + tools;
+    Array.prototype.forEach.call(document.querySelectorAll(".lrow[data-s]"), function (row) {
+      row.onclick = function () { candSheet(row.dataset.s); };
+      row.onkeydown = function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); candSheet(row.dataset.s); } };
+    });
+    startCosmos(!!anim);
+    Array.prototype.forEach.call(document.querySelectorAll(".folio"), function (b) { b.onclick = function () { editSheet(b.dataset.id); }; });
+    $("#rk-toggle").onclick = function () { rankMode = !rankMode; var y = $("#mine").scrollTop; renderMine(); $("#mine").scrollTop = y; if (rankMode) toast("Classez vos promesses : la plus importante en haut."); };
+    var rr = $("#rk-reset"); if (rr) rr.onclick = function () { S.rank = null; save(); renderMine(); };
+    Array.prototype.forEach.call(document.querySelectorAll(".rk [data-mv]"), function (b) { b.onclick = function () { moveRank(b.dataset.id, b.dataset.mv); }; });
+    $("#m-copy").onclick = copyDeck; $("#m-import").onclick = importSheet; $("#m-reset").onclick = resetSheet;
+    $("#m-intro").onclick = function () { onboarding(0); };
+  }
+  function editSheet(id) {
+    var c = byId[id], d = S.dec[id] ? S.dec[id].d : null;
+    var opts = ["ok", "no", "wish", "meh"].map(function (k) { return '<button class="' + k + '" data-d="' + k + '" aria-pressed="' + (d === k) + '"><span>' + GLYPH[k] + " " + LABEL[k] + "</span></button>"; }).join("");
+    var sh = openSheet('<span class="num">N° ' + c.n + " · " + esc(c.theme) + '</span><h3>' + esc(c.mesure) + '</h3><div class="fig"><b style="font-size:28px">' + esc(c.fig) + '</b><span>' + esc(c.fig_label) + '</span></div><div class="choice4">' + opts + '</div>' + (d ? '<div class="row-btns"><button class="btn ghost" id="e-clear">Retirer ma décision</button>' + '<button class="btn" id="e-see">Voir qui défend quoi</button></div>' : ""));
+    Array.prototype.forEach.call(sh.querySelectorAll(".choice4 button"), function (b) {
+      b.onclick = function () { decide(id, b.dataset.d, S.dec[id] && S.dec[id].note); closeSheet(true); refreshViews(); };
+    });
+    if (d) {
+      $("#e-clear", sh).onclick = function () { var before = scores().leader; delete S.dec[id]; var after = scores().leader; S.leader = after; save(); applyDeck(after); renderWeek(); if (before !== after) toast(after ? "Bascule ! Nouvelle galaxie : <b>" + esc(houseLabel(after)) + "</b>." : "Votre deck redevient neutre."); closeSheet(true); refreshViews(); };
+      $("#e-see", sh).onclick = function () { reveal(id); };
+    }
+  }
+  function copyDeck() {
+    var txt = JSON.stringify({ v: 1, dec: S.dec, rank: S.rank || undefined });
+    var done = function () { toast("Deck copié. Collez-le sur un autre appareil via « Importer un deck »."); };
+    try { navigator.clipboard.writeText(txt).then(done, function () { showText(txt); }); } catch (e) { showText(txt); }
+  }
+  function showText(txt) { var sh = openSheet('<h3>Votre deck</h3><p class="fine" style="margin:0">Sélectionnez et copiez ce texte.</p><textarea id="deck-txt" readonly></textarea>'); var t = $("#deck-txt", sh); t.value = txt; t.select(); }
+  function importSheet() {
+    var sh = openSheet('<h3>Importer un deck</h3><label for="imp-txt" class="fine">Collez ici le texte copié depuis un autre appareil.</label><textarea id="imp-txt"></textarea><div class="row-btns"><button class="btn ghost" id="i-cancel">Annuler</button><button class="btn primary" id="i-ok">Importer</button></div><p class="fine" id="i-err" style="margin:0;color:var(--d-no)" hidden>Ce texte n\'est pas un deck Magnitude valide.</p>');
+    $("#i-cancel", sh).onclick = function () { closeSheet(true); };
+    $("#i-ok", sh).onclick = function () {
+      try { var o = JSON.parse($("#imp-txt", sh).value); if (!o || typeof o.dec !== "object") throw 0; var clean = {}; Object.keys(o.dec).forEach(function (k) { if (byId[k] && LABEL[o.dec[k].d]) clean[k] = { d: o.dec[k].d, t: o.dec[k].t || Date.now(), note: typeof o.dec[k].note === "string" ? o.dec[k].note.slice(0, 400) : undefined }; }); S.dec = clean; S.rank = Array.isArray(o.rank) ? o.rank.filter(function (k) { return byId[k]; }) : null; S.leader = scores().leader; save(); applyDeck(S.leader); renderWeek(); renderStack(); closeSheet(true); renderMine(); toast("Deck importé."); }
+      catch (e) { $("#i-err", sh).hidden = false; }
+    };
+  }
+  function resetSheet() {
+    var sh = openSheet('<h3>Tout recommencer ?</h3><p style="margin:0">Toutes vos décisions et vos souhaits enregistrés sur cet appareil seront effacés.</p><div class="row-btns"><button class="btn ghost" id="x-no">Garder mon deck</button><button class="btn primary" id="x-yes">Effacer et recommencer</button></div>');
+    $("#x-no", sh).onclick = function () { closeSheet(true); };
+    $("#x-yes", sh).onclick = function () { S = { dec: {}, onboarded: true, leader: null, triSeen: false, rank: null }; save(); applyDeck(null); renderWeek(); renderStack(); closeSheet(true); showSeg("play"); toast("Nouveau deck. Bonne partie !"); };
+  }
+
+  // ---------- Recherche ----------
+  var theme = null, FLIP = {};
+  function isBack(id) { var chart = S.vis !== "num"; return FLIP[id] ? !chart : chart; }
+  function flipper(c, f, back) {
+    var ks = (f.chiffres || []).slice(0, 2).map(function (k) { return '<div class="bn"><b>' + esc(k.value) + "</b><span>" + esc(k.label) + "</span></div>"; }).join("");
+    var front = '<div class="face front"' + (back ? ' aria-hidden="true" inert' : "") + '><div class="bignum"><b>' + esc(c.fig) + "</b><span>" + esc(c.fig_label) + "</span></div>" + (ks ? '<div class="bns">' + ks + "</div>" : "") + (f.essentiel ? '<p class="ess">' + f.essentiel + "</p>" : "") + "</div>";
+    var chart = f.europe && f.europe.lignes ? euBars(f.europe) : '<p class="ess">Le graphique comparatif de cette carte est en préparation.</p>';
+    var bk = '<div class="face back"' + (back ? "" : ' aria-hidden="true" inert') + '><div class="scr-chart">' + chart + '<div class="cap"><b>' + esc(c.fig) + "</b> " + esc(c.fig_label) + "</div></div></div>";
+    return '<div class="flipper' + (back ? " is-back" : "") + '">' + front + bk + "</div>";
+  }
+  function setFace(a, back) {
+    if (!a) return;
+    var fl = a.querySelector(".flipper"), fr = a.querySelector(".face.front"), bk = a.querySelector(".face.back"), b = a.querySelector(".flipbtn");
+    fl.classList.toggle("is-back", back);
+    [[fr, back], [bk, !back]].forEach(function (x) { if (x[1]) { x[0].setAttribute("aria-hidden", "true"); x[0].setAttribute("inert", ""); } else { x[0].removeAttribute("aria-hidden"); x[0].removeAttribute("inert"); } });
+    if (b) { b.setAttribute("aria-pressed", String(back)); b.firstChild.nodeValue = (back ? "Voir les chiffres" : "Voir le graphique") + " "; }
+  }
+  function setMode(v) {
+    S.vis = v; FLIP = {}; save();
+    Array.prototype.forEach.call(document.querySelectorAll("#scr-mode button"), function (b) { b.setAttribute("aria-pressed", String(b.dataset.v === v)); });
+    Array.prototype.forEach.call(document.querySelectorAll("#dossiers .scr-page"), function (a, i) { a.querySelectorAll(".face").forEach(function (f) { f.style.setProperty("--d", i * 70 + "ms"); }); setFace(a, v !== "num"); });
+  }
+  Array.prototype.forEach.call(document.querySelectorAll("#scr-mode button"), function (b) { b.onclick = function () { setMode(b.dataset.v); }; });
+  function goToCard(id) {
+    theme = null; $("#q").value = ""; showView("search");
+    var a = document.getElementById("scr-" + id); if (!a) return;
+    setTimeout(function () { a.scrollIntoView({ block: "center", behavior: reduce ? "auto" : "smooth" }); a.classList.remove("flash"); void a.offsetWidth; a.classList.add("flash"); try { a.focus({ preventScroll: true }); } catch (e) {} }, 80);
+  }
+  function renderSearch() {
+    var q = ($("#q").value || "").trim().toLowerCase();
+    var themes = ORDER.map(function (c) { return c.theme; });
+    $("#filters").innerHTML = '<button aria-pressed="' + (theme === null) + '" data-t="">Tous</button>' + themes.map(function (t) { return '<button aria-pressed="' + (theme === t) + '" data-t="' + esc(t) + '">' + esc(t) + "</button>"; }).join("");
+    Array.prototype.forEach.call(document.querySelectorAll("#filters button"), function (b) { b.onclick = function () { theme = b.dataset.t || null; renderSearch(); }; });
+    var list = ORDER.filter(function (c) {
+      if (theme && c.theme !== theme) return false;
+      if (!q) return true;
+      var hay = (c.theme + " " + c.mesure + " " + c.fig_label + " " + (S.dec[c.id] ? c.title + " " + CANDS[c.centre].name : "")).toLowerCase();
+      return hay.indexOf(q) >= 0;
+    });
+    $("#dossiers").innerHTML = list.length ? list.map(function (c) {
+      var d = S.dec[c.id], n = Object.keys(c.pos).length;
+      var lv = { A: 0, B: 0, C: 0 }; Object.keys(c.pos).forEach(function (s) { lv[c.pos[s][1]] = (lv[c.pos[s][1]] || 0) + 1; });
+      var st = stOf(c.centre);
+      var who = d ? '<dd class="hand">' + esc(CANDS[c.centre].name) + (st ? ' <span class="sceau">(' + esc(st.label.toLowerCase()) + ")</span>" : "") + "</dd>"
+        : '<dd><span class="sceau"><i aria-hidden="true"></i>Nom scellé jusqu\'à votre choix</span></dd>';
+      var f = FICHES[c.n] || {}, back = isBack(c.id);
+      return '<article class="parch scr-page" id="scr-' + c.id + '" tabindex="-1"><div class="head"><span class="no">Folio ' + roman(c.n) + '</span><span class="theme">' + esc(c.theme) + "</span></div>" +
+        (d ? '<span class="verdict ' + d.d + '">' + LABEL[d.d] + "</span>" : '<span class="open">Promesse à examiner</span>') +
+        "<h4>" + esc(d ? c.title : c.mesure) + "</h4>" + flipper(c, f, back) +
+        "<dl><dt>Portée par</dt>" + who +
+        "<dt>Pièces</dt><dd>" + n + " positions sur 12, cotées A " + (lv.A || 0) + ", B " + (lv.B || 0) + ", C " + (lv.C || 0) + "</dd></dl>" +
+        '<div class="act"><button type="button" class="flipbtn" data-flip="' + c.id + '" aria-pressed="' + back + '">' + (back ? "Voir les chiffres" : "Voir le graphique") + ' <span aria-hidden="true">↻</span></button>' +
+        (d ? '<a href="' + c.url + '" target="_blank" rel="noopener">Lire l\'analyse complète</a>' : '<button type="button" data-fiche="' + c.id + '">Comprendre la mesure</button>') + "</div></article>";
+    }).join("") : '<p class="scr-empty">Aucune page ne porte ce mot. Essayez « dette », « smic » ou « héritage ».</p>';
+    Array.prototype.forEach.call(document.querySelectorAll("#dossiers [data-fiche]"), function (b) { b.onclick = function () { openFiche(b.dataset.fiche); }; });
+    Array.prototype.forEach.call(document.querySelectorAll("#dossiers .flipbtn"), function (b) { b.onclick = function () { FLIP[b.dataset.flip] = !FLIP[b.dataset.flip]; setFace(b.closest(".scr-page"), isBack(b.dataset.flip)); }; });
+    Array.prototype.forEach.call(document.querySelectorAll("#scr-mode button"), function (b) { b.setAttribute("aria-pressed", String((S.vis !== "num") === (b.dataset.v === "chart"))); });
+  }
+
+
+  // ---------- Bouton central : galaxie des mesures ----------
+  // Une particule par carte (couleur de la maison du candidat qui la porte), plus vive si tranchée ;
+  // deux mesures sont reliées quand au moins 3 candidats y prennent la même position.
+  (function galaxy() {
+    var cv = $("#galaxy"); if (!cv || !cv.getContext) return;
+    var dpr = Math.min(2, window.devicePixelRatio || 1), S0 = 50; cv.width = 76 * dpr; cv.height = 76 * dpr;
+    var ctx = cv.getContext("2d"); ctx.scale(dpr * 76 / 50, dpr * 76 / 50);
+    var P = CARDS.map(function (c, i) {
+      var seed = 0; for (var k = 0; k < c.id.length; k++) seed = (seed * 31 + c.id.charCodeAt(k)) % 997;
+      return { c: c, r: 6 + (seed % 16), a: seed / 997 * Math.PI * 2, w: (0.12 + (seed % 7) / 40) * (i % 2 ? 1 : -1), col: "oklch(0.78 0.13 " + CANDS[c.centre].hue + ")" };
+    });
+    var links = [];
+    for (var i = 0; i < CARDS.length; i++) for (var j = i + 1; j < CARDS.length; j++) {
+      var a = CARDS[i].pos, b = CARDS[j].pos, same = 0;
+      Object.keys(a).forEach(function (s) { if (b[s] && a[s][0] === b[s][0]) same++; });
+      if (same >= 3) links.push([i, j, same]);
+    }
+    var t0 = performance.now(), raf = null;
+    function draw(now) {
+      var t = (now - t0) / 1000, cx = S0 / 2, cy = S0 / 2;
+      ctx.clearRect(0, 0, S0, S0);
+      var xy = P.map(function (p) { var a = p.a + t * p.w; return [cx + Math.cos(a) * p.r, cy + Math.sin(a) * p.r * 0.82]; });
+      links.forEach(function (l) { ctx.strokeStyle = "rgba(190,236,232," + Math.min(0.42, 0.08 * l[2]) + ")"; ctx.lineWidth = 0.6; ctx.beginPath(); ctx.moveTo(xy[l[0]][0], xy[l[0]][1]); ctx.lineTo(xy[l[1]][0], xy[l[1]][1]); ctx.stroke(); });
+      P.forEach(function (p, k) {
+        var done = !!S.dec[p.c.id], tw = 0.75 + 0.25 * Math.sin(t * 2 + k);
+        ctx.globalAlpha = done ? 1 : 0.55 * tw; ctx.fillStyle = p.col;
+        ctx.beginPath(); ctx.arc(xy[k][0], xy[k][1], done ? 2.3 : 1.6, 0, Math.PI * 2); ctx.fill();
+        if (done) { ctx.globalAlpha = 0.25; ctx.beginPath(); ctx.arc(xy[k][0], xy[k][1], 4.2, 0, Math.PI * 2); ctx.fill(); }
+      });
+      ctx.globalAlpha = 1;
+      if (!reduce && !document.hidden) raf = requestAnimationFrame(draw);
+    }
+    draw(performance.now());
+    document.addEventListener("visibilitychange", function () { if (!document.hidden && !reduce) { cancelAnimationFrame(raf); raf = requestAnimationFrame(draw); } });
+    window.__galaxyRedraw = function () { if (reduce) draw(performance.now()); };
+  })();
+
+  // ---------- Mon deck : la galaxie grand format ----------
+  // Ressemblance entre deux candidats = part des cartes où ils prennent la même position
+  // (lissée : avec peu de cartes communes, elle tend vers 50 %).
+  var AFF = (function () {
+    var M = {};
+    SLUGS.forEach(function (a) { M[a] = {}; SLUGS.forEach(function (b) {
+      if (a === b) return; var ag = 0, n = 0;
+      CARDS.forEach(function (c) { var pa = c.pos[a], pb = c.pos[b]; if (pa && pb) { n++; if (pa[0] === pb[0]) ag++; } });
+      M[a][b] = (ag + 0.5) / (n + 1);
+    }); });
+    return M;
+  })();
+  function layout(L) {
+    // Placement déterministe : la distance entre deux candidats suit leur dissemblance ; la maison est fixée au centre.
+    var P = {};
+    SLUGS.forEach(function (s, k) { var a = k / SLUGS.length * Math.PI * 2; P[s] = [Math.cos(a) * 0.6, Math.sin(a) * 0.6]; });
+    if (L) P[L] = [0, 0];
+    for (var it = 0; it < 500; it++) {
+      var lr = 0.12 * (1 - it / 500) + 0.01;
+      for (var x = 0; x < SLUGS.length; x++) for (var y = x + 1; y < SLUGS.length; y++) {
+        var a = SLUGS[x], b = SLUGS[y], pa = P[a], pb = P[b];
+        var dx = pb[0] - pa[0], dy = pb[1] - pa[1], d = Math.hypot(dx, dy) || 1e-3;
+        var f = (d - (0.24 + 0.9 * (1 - AFF[a][b]))) / d * lr * 0.5;
+        if (a !== L) { pa[0] += dx * f; pa[1] += dy * f; }
+        if (b !== L) { pb[0] -= dx * f; pb[1] -= dy * f; }
+      }
+    }
+    var cx = 0, cy = 0;
+    if (!L) { SLUGS.forEach(function (s) { cx += P[s][0]; cy += P[s][1]; }); cx /= SLUGS.length; cy /= SLUGS.length; }
+    var mx = 1e-3; SLUGS.forEach(function (s) { P[s][0] -= cx; P[s][1] -= cy; mx = Math.max(mx, Math.hypot(P[s][0], P[s][1])); });
+    SLUGS.forEach(function (s) { P[s][0] /= mx; P[s][1] /= mx; });
+    return P;
+  }
+  var cosmosRAF = null, IMG = {};
+  function portrait(s) { if (!IMG[s]) { IMG[s] = new Image(); IMG[s].src = CANDS[s].img; } return IMG[s]; }
+  function lastName(s) { var n = CANDS[s].name; return n.indexOf("Le Pen") >= 0 ? "Le Pen" : n.indexOf("de Villepin") >= 0 ? "Villepin" : n.split(" ").slice(-1)[0]; }
+  function galaxyLegend() {
+    var disc = function (g) { return '<defs><radialGradient id="gb' + g + '" cx="50%" cy="38%" r="75%"><stop offset="0" stop-color="#1c525a"/><stop offset="1" stop-color="#04191c"/></radialGradient></defs><circle cx="28" cy="28" r="27" fill="url(#gb' + g + ')" stroke="rgba(252,229,140,.55)" stroke-width="1"/>'; };
+    var sph = function (id, a, b, c) { return '<radialGradient id="' + id + '" cx="35%" cy="30%" r="80%"><stop offset="0" stop-color="' + a + '"/><stop offset=".55" stop-color="' + b + '"/><stop offset="1" stop-color="' + c + '"/></radialGradient>'; };
+    var I1 = '<svg class="gi" viewBox="0 0 56 56" aria-hidden="true">' + disc(1) + "<defs>" + sph("gs1", "#F2FFFD", "#7FD9D3", "#17727a") + '</defs><circle class="gi-ring" cx="28" cy="28" r="9"/><circle class="gi-ring r2" cx="28" cy="28" r="9"/><circle cx="28" cy="28" r="9" fill="url(#gs1)"/><circle class="gi-spin" cx="28" cy="28" r="13" fill="none" stroke="#FCE58C" stroke-width="1.4" stroke-dasharray="3 3.4"/><g class="gi-orb"><circle cx="47" cy="28" r="2.6" fill="#BFF0EC"/></g></svg>';
+    var I2 = '<svg class="gi" viewBox="0 0 56 56" aria-hidden="true">' + disc(2) + "<defs>" + sph("gs2", "#FFE7C4", "#F8BD7A", "#a15a14") + sph("gs3", "#E0EEFF", "#7DB2FF", "#2250a8") + sph("gs4", "#FFD9B0", "#F0A04B", "#8f4a0c") + '</defs><path class="gi-link" d="M13 37 L25 20 L43 33" fill="none" stroke="#EAF6F5" stroke-opacity=".75" stroke-width="1.2" stroke-dasharray="3 3"/><circle class="gi-bob" cx="13" cy="37" r="5" fill="url(#gs4)"/><circle class="gi-bob b2" cx="25" cy="20" r="5.6" fill="url(#gs2)"/><circle class="gi-bob b3" cx="43" cy="33" r="5" fill="url(#gs3)"/></svg>';
+    var I3 = '<svg class="gi" viewBox="0 0 56 56" aria-hidden="true">' + disc(3) + '<defs><radialGradient id="gh3"><stop offset="0" stop-color="#7FD9D3" stop-opacity=".6"/><stop offset="1" stop-color="#7FD9D3" stop-opacity="0"/></radialGradient>' + sph("gs5", "#F2FFFD", "#7FD9D3", "#17727a") + '</defs><circle class="gi-halo" cx="28" cy="28" r="13" fill="url(#gh3)"/><circle cx="28" cy="28" r="5" fill="url(#gs5)"/><g class="gi-orb slow"><circle class="gi-tw" cx="46" cy="28" r="2.4"/><circle class="gi-tw t2" cx="28" cy="10" r="1.8"/><circle class="gi-tw t3" cx="11" cy="31" r="2.2"/><circle class="gi-tw t4" cx="31" cy="46" r="1.6"/></g></svg>';
+    var I4 = '<svg class="gi" viewBox="0 0 56 56" aria-hidden="true">' + disc(4) + "<defs>" + sph("gs6", "#F2FFFD", "#7FD9D3", "#17727a") + '</defs><circle cx="28" cy="28" r="6.5" fill="url(#gs6)"/><circle cx="28" cy="28" r="13" fill="none" stroke="#7FD9D3" stroke-opacity=".35" stroke-dasharray="2 3"/><g class="gi-pa"><circle cx="21" cy="35" r="3.6" fill="rgba(234,246,245,.18)" stroke="#EAF6F5" stroke-width="1.4"/></g><g class="gi-pb"><circle cx="35" cy="21" r="3.6" fill="rgba(234,246,245,.18)" stroke="#EAF6F5" stroke-width="1.4"/></g></svg>';
+    return '<section class="parch cosmos-leg" aria-label="Lire la galaxie"><h3>Lire la galaxie</h3>' +
+      '<div class="li">' + I1 + '<p><b>Plus un candidat est grand et proche du centre</b>, plus vous êtes d\'accord avec lui.</p></div>' +
+      '<div class="li">' + I2 + '<p><b>Ses voisins sur le cercle</b> défendent des positions qui ressemblent aux siennes.</p></div>' +
+      '<div class="li">' + I3 + '<p><b>Les points sont ses mesures</b> : plus votre taux d\'affinité avec lui est élevé, plus ils brillent ; un halo marque celles où vous êtes d\'accord. Plus une mesure compte pour vous (classement du recueil), plus son point grossit.</p></div>' +
+      '<div class="li">' + I4 + '<p><b>Écartez deux doigts sur un candidat</b> (ou touchez-le puis « système solaire ») : ses mesures deviennent des planètes sur lesquelles zoomer.</p></div>' +
+      '<p class="hint"><i aria-hidden="true"></i>Survolez ou touchez un candidat pour ouvrir ses mesures</p></section>';
+  }
+  function startCosmos(anim) {
+    cancelAnimationFrame(cosmosRAF);
+    var cv = $("#cosmos"); if (!cv || !cv.getContext) return;
+    var W = cv.clientWidth, H = cv.clientHeight; if (!W || !H) return;
+    var dpr = Math.min(2, window.devicePixelRatio || 1); cv.width = W * dpr; cv.height = H * dpr;
+    var ctx = cv.getContext("2d"); ctx.scale(dpr, dpr);
+    var sc = scores(), L = sc.leader, by = {}; sc.list.forEach(function (r) { by[r.s] = r; });
+    var P0 = layout(null), others = SLUGS.filter(function (s) { return s !== L; });
+    others.sort(function (a, b) { return Math.atan2(P0[a][1], P0[a][0]) - Math.atan2(P0[b][1], P0[b][0]); });
+    var P = {}; if (L) P[L] = [0, 0];
+    others.forEach(function (s, k) {
+      var r = by[s], d = r && r.n >= MIN_N ? 0.42 + 0.58 * (1 - r.pct) : 1, a = -Math.PI / 2 + k / others.length * Math.PI * 2;
+      P[s] = [Math.cos(a) * d, Math.sin(a) * d];
+    });
+    var R = Math.min(W, H) / 2, m = Math.max(36, R * 0.21);
+    var RX = W / 2 - m, RY = H / 2 - m - 8;
+    var N = SLUGS.map(function (s) {
+      var r = by[s], ok = r && r.n >= MIN_N, rad = R * (s === L ? 0.14 : ok ? 0.05 + 0.07 * r.pct : 0.045);
+      var parts = CARDS.filter(function (c) { return c.pos[s]; }).map(function (c, k) {
+        var d = S.dec[c.id], st = 0;
+        if (d && (d.d === "ok" || d.d === "no")) st = ((d.d === "ok" ? 1 : -1) === c.pos[s][0]) ? 1 : -1;
+        var iw = importanceOf(c.id); return { st: st, sz: S.rank ? 1.1 + 2.5 * iw : 2.4, a: k * 2.39996, w: (0.22 + (k % 5) * 0.07) * (k % 2 ? 1 : -1), o: rad + 4 + (S.rank ? (1 - iw) * 12 : (k % 4) * 3.4) };
+      });
+      return { s: s, x: P[s][0], y: P[s][1], rad: rad, ok: ok, pct: ok ? r.pct : null, parts: parts, hue: CANDS[s].hue, ret: !!(stOf(s) && stOf(s).kind === "retire") };
+    });
+    var links = [];
+    for (var x = 0; x < SLUGS.length; x++) for (var y = x + 1; y < SLUGS.length; y++) { var f = AFF[SLUGS[x]][SLUGS[y]]; if (f >= 0.7) links.push([x, y, f]); }
+    var hits = [], hov = null, down = null;
+    var t0 = performance.now();
+    function frame(now) {
+      if ($("#mine").hidden || $("#view-deck").hidden) return;
+      var t = (now - t0) / 1000, e = anim && !reduce ? 1 - Math.pow(1 - Math.min(1, t / 1.3), 3) : 1;
+      var spin = reduce ? 0 : t * 0.035, cs = Math.cos(spin), sn = Math.sin(spin);
+      ctx.clearRect(0, 0, W, H);
+      var xy = N.map(function (n) { var px = n.x * cs - n.y * sn, py = n.x * sn + n.y * cs; return [W / 2 + px * RX * e, H / 2 + 8 + py * RY * e]; });
+      hits = N.map(function (n, k) { return { s: n.s, x: xy[k][0], y: xy[k][1], r: n.rad }; });
+      links.forEach(function (l) { ctx.strokeStyle = "rgba(190,236,232," + ((l[2] - 0.6) * 0.9).toFixed(3) + ")"; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(xy[l[0]][0], xy[l[0]][1]); ctx.lineTo(xy[l[1]][0], xy[l[1]][1]); ctx.stroke(); });
+      N.forEach(function (n, k) {
+        var X = xy[k][0], Y = xy[k][1], col = "oklch(0.8 0.13 " + n.hue + ")";
+        var aff = n.pct == null ? 0 : n.pct, glow = (n.ret ? 0.45 : 1) * (0.28 + 0.72 * aff);
+        var pc = "oklch(" + (0.45 + 0.45 * aff).toFixed(3) + " " + (0.05 + 0.11 * aff).toFixed(3) + " " + n.hue + ")";
+        n.parts.forEach(function (p) {
+          var a = p.a + (reduce ? 0 : t * p.w), px = X + Math.cos(a) * p.o * e, py = Y + Math.sin(a) * p.o * e;
+          ctx.fillStyle = pc; ctx.strokeStyle = pc;
+          if (p.st === 1) { ctx.globalAlpha = glow; ctx.beginPath(); ctx.arc(px, py, p.sz, 0, 6.2832); ctx.fill(); ctx.globalAlpha = 0.3 * glow; ctx.beginPath(); ctx.arc(px, py, p.sz * 2.2, 0, 6.2832); ctx.fill(); }
+          else if (p.st === -1) { ctx.globalAlpha = glow; ctx.lineWidth = 1; ctx.beginPath(); ctx.arc(px, py, p.sz * 0.85, 0, 6.2832); ctx.stroke(); }
+          else { ctx.globalAlpha = glow * 0.8; ctx.beginPath(); ctx.arc(px, py, p.sz * 0.65, 0, 6.2832); ctx.fill(); }
+        });
+        ctx.globalAlpha = n.ret ? 0.45 : (n.ok || !L ? 1 : 0.7);
+        if (n.s === L) { var g = ctx.createRadialGradient(X, Y, n.rad, X, Y, n.rad * 2.4); g.addColorStop(0, "oklch(0.8 0.13 " + n.hue + " / .45)"); g.addColorStop(1, "oklch(0.8 0.13 " + n.hue + " / 0)"); ctx.fillStyle = g; ctx.beginPath(); ctx.arc(X, Y, n.rad * 2.4, 0, 6.2832); ctx.fill(); }
+        var im = portrait(n.s);
+        ctx.save(); ctx.beginPath(); ctx.arc(X, Y, n.rad, 0, 6.2832); ctx.clip();
+        if (n.ret && "filter" in ctx) ctx.filter = "grayscale(1)";
+        if (im.complete && im.naturalWidth) ctx.drawImage(im, X - n.rad, Y - n.rad, n.rad * 2, n.rad * 2); else { ctx.fillStyle = col; ctx.fill(); }
+        ctx.restore();
+        ctx.strokeStyle = col; ctx.lineWidth = n.s === L ? 3 : 1.6; ctx.beginPath(); ctx.arc(X, Y, n.rad + 1, 0, 6.2832); ctx.stroke();
+        ctx.textAlign = "center"; ctx.textBaseline = "top";
+        if (n.s === L) { ctx.font = "700 13px Georgia, serif"; ctx.fillStyle = "#FCE58C"; ctx.fillText(houseLabel(n.s), X, Y + n.rad + 6); }
+        else { ctx.font = "600 11px Georgia, serif"; ctx.fillStyle = "#DDEFEE"; ctx.fillText(lastName(n.s), X, Y + n.rad + 4); if (n.pct != null) { ctx.font = "10px Georgia, serif"; ctx.fillStyle = "#9ED7D3"; ctx.fillText(Math.round(n.pct * 100) + " %", X, Y + n.rad + 17); } }
+        ctx.globalAlpha = 1;
+      });
+      var hh = hov && hits.filter(function (h) { return h.s === hov; })[0];
+      if (hh) {
+        var pulse = reduce ? 0 : Math.sin(now / 220) * 2.2;
+        ctx.save(); ctx.strokeStyle = "#FCE58C"; ctx.lineWidth = 2; ctx.setLineDash([4, 4]); ctx.lineDashOffset = reduce ? 0 : -now / 60;
+        ctx.beginPath(); ctx.arc(hh.x, hh.y, hh.r + 7 + pulse, 0, 6.2832); ctx.stroke(); ctx.restore();
+        var lbl = "Voir ses mesures ›"; ctx.font = "700 11.5px Georgia, serif";
+        var bw = ctx.measureText(lbl).width + 18, bx = Math.max(4, Math.min(W - bw - 4, hh.x - bw / 2)), by = hh.y - hh.r - 36;
+        if (by < 4) by = hh.y + hh.r + 34;
+        ctx.fillStyle = "rgba(252,229,140,.96)"; ctx.beginPath();
+        if (ctx.roundRect) ctx.roundRect(bx, by, bw, 22, 11); else ctx.rect(bx, by, bw, 22);
+        ctx.fill(); ctx.fillStyle = "#04191c"; ctx.textAlign = "center"; ctx.textBaseline = "middle"; ctx.fillText(lbl, bx + bw / 2, by + 11.5);
+      }
+      if (!reduce && !document.hidden) cosmosRAF = requestAnimationFrame(frame);
+    }
+    function pick(ev) {
+      var b = cv.getBoundingClientRect(), x = ev.clientX - b.left, y = ev.clientY - b.top, best = null, bd = 1e9;
+      hits.forEach(function (h) { var d = Math.hypot(h.x - x, h.y - y); if (d < h.r + 12 && d < bd) { bd = d; best = h.s; } });
+      return best;
+    }
+    var ptrs = {}, pinch = null, multi = false;
+    function npt() { return Object.keys(ptrs).length; }
+    function span() { var k = Object.keys(ptrs); if (k.length < 2) return null; var a = ptrs[k[0]], b = ptrs[k[1]]; return { d: Math.hypot(a[0] - b[0], a[1] - b[1]), x: (a[0] + b[0]) / 2, y: (a[1] + b[1]) / 2 }; }
+    function nearest(x, y, maxd) { var b = cv.getBoundingClientRect(), best = null, bd = maxd; hits.forEach(function (h) { var d = Math.hypot(b.left + h.x - x, b.top + h.y - y); if (d < bd) { bd = d; best = h; } }); return best; }
+    function zoomOn(h) { if (!h) { toast("Écartez deux doigts <b>sur un candidat</b> pour zoomer sur son système."); return; } var b = cv.getBoundingClientRect(); openSolar(h.s, { x: b.left + h.x, y: b.top + h.y }); }
+    cv.addEventListener("pointerdown", function (ev) {
+      ptrs[ev.pointerId] = [ev.clientX, ev.clientY];
+      if (npt() === 2) { multi = true; down = null; pinch = span(); } else if (npt() === 1) { multi = false; down = [ev.clientX, ev.clientY]; }
+    });
+    cv.addEventListener("pointermove", function (ev) {
+      if (ptrs[ev.pointerId]) ptrs[ev.pointerId] = [ev.clientX, ev.clientY];
+      if (pinch && npt() === 2) { var sp = span(); if (sp && sp.d > pinch.d * 1.28 && sp.d - pinch.d > 24) { var m = pinch; pinch = null; zoomOn(nearest(m.x, m.y, 110)); } return; }
+      if (ev.pointerType !== "mouse") return;
+      var s = pick(ev); if (s === hov) return;
+      hov = s; cv.style.cursor = s ? "pointer" : ""; if (reduce) frame(performance.now());
+    });
+    function up(ev) {
+      var had = ptrs[ev.pointerId]; delete ptrs[ev.pointerId];
+      if (!npt()) pinch = null;
+      var d0 = down; down = null;
+      if (multi) { if (!npt()) multi = false; return; }
+      if (ev.type === "pointercancel" || !d0 || !had || Math.hypot(ev.clientX - d0[0], ev.clientY - d0[1]) > 10) return;
+      var s = pick(ev); if (s) candSheet(s);
+    }
+    cv.addEventListener("pointerup", up); cv.addEventListener("pointercancel", up);
+    cv.addEventListener("pointerleave", function (ev) { if (ev.pointerType === "mouse") { ptrs = {}; hov = null; cv.style.cursor = ""; if (reduce) frame(performance.now()); } });
+    cv.addEventListener("wheel", function (ev) { if (!(ev.ctrlKey || ev.metaKey) || ev.deltaY >= 0) return; ev.preventDefault(); zoomOn(nearest(ev.clientX, ev.clientY, 120)); }, { passive: false });
+    cosmosRAF = requestAnimationFrame(frame);
+    if (reduce) SLUGS.forEach(function (s) { portrait(s).onload = function () { frame(performance.now()); }; });
+  }
+  // Les mesures d'un candidat, regroupées selon votre choix. Sur une carte pas encore tranchée,
+  // sa position reste scellée (même règle que la Recherche : rien n'est dévoilé avant le choix).
+  function candSheet(s) {
+    var k = CANDS[s], r = scores().list.filter(function (x) { return x.s === s; })[0];
+    var cards = ORDER.filter(function (c) { return c.pos[s]; });
+    var cnt = { ok: 0, no: 0, wish: 0, meh: 0, todo: 0 };
+    cards.forEach(function (c) { cnt[S.dec[c.id] ? S.dec[c.id].d : "todo"]++; });
+    var aff = r.n >= MIN_N ? '<span class="big">' + Math.round(r.pct * 100) + ' %<small>taux d\'affinité · accord sur ' + r.agree + " carte" + (r.agree > 1 ? "s" : "") + " sur " + r.n + "</small></span>"
+      : '<span class="fine">' + (r.n ? r.agree + " accord" + (r.agree > 1 ? "s" : "") + " sur " + r.n + " carte" + (r.n > 1 ? "s" : "") + " tranchée" + (r.n > 1 ? "s" : "") + " : il en faut " + MIN_N + " pour un taux fiable." : "Aucune carte tranchée en commun pour l'instant.") + "</span>";
+    var sum = ["ok", "no", "wish", "meh"].map(function (d) { return '<span class="badge ' + d + '">' + GLYPH[d] + " " + LABEL[d] + " " + cnt[d] + "</span>"; }).join("") + '<span class="badge todo">À examiner ' + cnt.todo + "</span>";
+    var GRP = [["ok", "Vous : Aligné"], ["no", "Vous : Désaligné"], ["wish", "Vous : J'aimerais"], ["meh", "Vous : M'en fous"], ["todo", "Promesses à examiner"]];
+    var body = GRP.map(function (g) {
+      var list = cards.filter(function (c) { return (S.dec[c.id] ? S.dec[c.id].d : "todo") === g[0]; });
+      if (!list.length) return "";
+      return '<div class="cm-grp">' + g[1] + " · " + list.length + "</div>" + list.map(function (c) {
+        var p = c.pos[s], d = S.dec[c.id] ? S.dec[c.id].d : null;
+        var stance = p[2] === "c" ? "◆ " + esc(c.pole_c) : p[0] === 1 ? "▲ Pour la mesure" : "▼ Contre la mesure";
+        var ps = d ? "Sa position : " + stance + " · source de niveau " + p[1] : "Sa position reste scellée jusqu'à votre choix · source de niveau " + p[1];
+        var ag = d === "ok" || d === "no" ? (((d === "ok" ? 1 : -1) === p[0]) ? '<span class="ag yes">✓ Vous êtes d\'accord avec lui</span>' : '<span class="ag nope">✕ Vous divergez</span>') : "";
+        return '<button class="cm-item" data-id="' + c.id + '"><span class="num">N° ' + c.n + " · " + esc(c.theme) + (c.centre === s ? " · sa promesse" : "") + '</span><span class="t">' + esc(c.mesure) + '</span><span class="ps">' + ps + "</span>" + ag + "</button>";
+      }).join("");
+    }).join("");
+    var sh = openSheet('<div class="reveal-head"><img src="' + k.img + '" alt="Portrait stylisé de ' + esc(k.name) + '"><div><h3>' + esc(k.name) + "</h3><p>" + esc(k.tag) + "</p>" + stPill(s) + "</div></div>" +
+      '<div class="cm-aff">' + aff + '<div class="cm-sum">' + sum + "</div></div>" +
+      '<p class="fine" style="margin:0">' + cards.length + " mesure" + (cards.length > 1 ? "s" : "") + " où sa position est documentée, sur " + CARDS.length + ". Touchez une mesure pour changer d'avis.</p>" +
+      '<div class="row-btns"><button class="btn primary" id="cm-sol">Voir son système solaire</button></div><div class="cm-list">' + body + "</div>");
+    $("#cm-sol", sh).onclick = function () { closeSheet(true); openSolar(s, { x: window.innerWidth / 2, y: window.innerHeight / 2 }); };
+    Array.prototype.forEach.call(sh.querySelectorAll(".cm-item"), function (b) { b.onclick = function () { editSheet(b.dataset.id); }; });
+  }
+
+  // ---------- Système solaire d'un candidat ----------
+  // Zoom : le candidat est le soleil, chaque mesure où il a une position documentée est une planète
+  // (taille = importance pour vous, couleur = votre choix). Autour : les autres candidats, pleins s'ils
+  // partagent sa position, creux s'ils s'y opposent. Les positions restent scellées tant que la carte n'est pas tranchée.
+  var SOLAR = null, DCOL = { ok: "#4FC1BC", no: "#F0A04B", wish: "#7DB2FF", meh: "#9AB0B2" };
+  function stanceOf(c, s) { var p = c.pos[s]; return p ? (p[2] === "c" ? -1 : p[0]) : 0; }
+  function solarScene(st) {
+    var s = st.s, sc = { st: st };
+    if (st.mode === "sun") {
+      var ids = rankIds().filter(function (id) { return byId[id].pos[s]; }), n = ids.length;
+      sc.items = ids.map(function (id, k) {
+        var c = byId[id], d = S.dec[id], dd = d ? d.d : null, m = stanceOf(c, s), moons = [];
+        var agree = (dd === "ok" || dd === "no") ? (((dd === "ok" ? 1 : -1) === m) ? 1 : -1) : 0, orbit = n > 1 ? 0.3 + 0.64 * k / (n - 1) : 0.62;
+        if (dd) SLUGS.forEach(function (o) { if (o !== s && c.pos[o]) moons.push({ o: o, same: stanceOf(c, o) === m }); });
+        return { id: id, c: c, dd: dd, agree: agree, moons: moons, orbit: orbit, a0: k * 2.399963, w: 0.32 / (0.45 + orbit), imp: importanceOf(id) };
+      });
+    } else {
+      var id = st.id, c = byId[id], d = S.dec[id], dd = d ? d.d : null, m = stanceOf(c, s), al = [], op = [];
+      if (dd) SLUGS.forEach(function (o) { if (o !== s && c.pos[o]) (stanceOf(c, o) === m ? al : op).push(o); });
+      sc.c = c; sc.dd = dd; sc.m = m; sc.al = al; sc.op = op;
+    }
+    return sc;
+  }
+  function drawSolar(ctx, sc, W, H, now, scale, alpha, hov) {
+    var cx = W / 2, cy = H / 2, R = Math.min(W, H) / 2 - 22, t = reduce ? 0 : now / 1000, st = sc.st, s = st.s, hue = CANDS[s].hue, col = "oklch(0.8 0.13 " + hue + ")", hits = [], TAU = 6.2832;
+    ctx.save(); ctx.globalAlpha = alpha; ctx.translate(cx, cy); ctx.scale(scale, scale); ctx.translate(-cx, -cy);
+    function sphere(x, y, r, base, dim) {
+      ctx.save(); if (dim) ctx.globalAlpha *= 0.55;
+      ctx.fillStyle = base; ctx.beginPath(); ctx.arc(x, y, r, 0, TAU); ctx.fill();
+      var g = ctx.createRadialGradient(x - r * 0.4, y - r * 0.4, r * 0.05, x, y, r * 1.1);
+      g.addColorStop(0, "rgba(255,255,255,.8)"); g.addColorStop(0.45, "rgba(255,255,255,0)"); g.addColorStop(1, "rgba(0,0,0,.55)");
+      ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, r, 0, TAU); ctx.fill(); ctx.restore();
+    }
+    function portrait(o, x, y, r, ring, dash, dim) {
+      var im = portraitImg(o); ctx.save(); if (dim) ctx.globalAlpha *= 0.7;
+      ctx.beginPath(); ctx.arc(x, y, r, 0, TAU); ctx.clip();
+      if (im.complete && im.naturalWidth) ctx.drawImage(im, x - r, y - r, r * 2, r * 2); else { ctx.fillStyle = ring; ctx.fill(); }
+      ctx.restore(); ctx.save(); ctx.strokeStyle = ring; ctx.lineWidth = 2; if (dash) ctx.setLineDash([3, 3]); ctx.beginPath(); ctx.arc(x, y, r + 1, 0, TAU); ctx.stroke(); ctx.restore();
+    }
+    function label(txt, x, y, size, color) { ctx.font = size + "px 'IM Fell English', Georgia, serif"; ctx.textAlign = "center"; ctx.textBaseline = "top"; ctx.fillStyle = color; ctx.fillText(txt, x, y); }
+    if (st.mode === "sun") {
+      var sr = Math.max(24, R * 0.12), g0 = ctx.createRadialGradient(cx, cy, sr, cx, cy, R * 0.34);
+      g0.addColorStop(0, "oklch(0.8 0.13 " + hue + " / .5)"); g0.addColorStop(1, "oklch(0.8 0.13 " + hue + " / 0)");
+      ctx.fillStyle = g0; ctx.beginPath(); ctx.arc(cx, cy, R * 0.34, 0, TAU); ctx.fill();
+      sc.items.forEach(function (it) { ctx.strokeStyle = "rgba(190,236,232,.11)"; ctx.lineWidth = 1; ctx.beginPath(); ctx.ellipse(cx, cy, R * it.orbit, R * it.orbit * 0.86, 0, 0, TAU); ctx.stroke(); });
+      portrait(s, cx, cy, sr, col, false, !!(stOf(s) && stOf(s).kind === "retire"));
+      label(CANDS[s].name, cx, cy + sr + 6, 14, "#FCE58C");
+      hits.push({ t: "sun", k: "sun", x: cx, y: cy, r: sr });
+      sc.items.forEach(function (it) {
+        var a = it.a0 + t * it.w, x = cx + Math.cos(a) * R * it.orbit, y = cy + Math.sin(a) * R * it.orbit * 0.86, pr = Math.max(7, R * (0.03 + 0.042 * it.imp));
+        var base = it.dd ? DCOL[it.dd] : "#5E797C";
+        it.moons.forEach(function (m, j) {
+          var ang = t * 0.8 * (j % 2 ? 1 : -1) + j * TAU / it.moons.length, mr = pr + 6 + (j % 2) * 3.5, mx = x + Math.cos(ang) * mr, my = y + Math.sin(ang) * mr, mc = "oklch(0.8 0.13 " + CANDS[m.o].hue + ")";
+          ctx.save(); ctx.fillStyle = mc; ctx.strokeStyle = mc; ctx.lineWidth = 1.1; ctx.beginPath(); ctx.arc(mx, my, 2.1, 0, TAU);
+          if (m.same) ctx.fill(); else { ctx.globalAlpha *= 0.65; ctx.stroke(); } ctx.restore();
+        });
+        if (it.agree === 1) { var gh = ctx.createRadialGradient(x, y, pr, x, y, pr * 2.3); gh.addColorStop(0, "rgba(252,229,140,.42)"); gh.addColorStop(1, "rgba(252,229,140,0)"); ctx.fillStyle = gh; ctx.beginPath(); ctx.arc(x, y, pr * 2.3, 0, TAU); ctx.fill(); }
+        sphere(x, y, pr, base, !it.dd);
+        if (it.agree === -1) { ctx.save(); ctx.strokeStyle = "rgba(240,160,75,.85)"; ctx.setLineDash([3, 3]); ctx.lineWidth = 1.4; ctx.beginPath(); ctx.arc(x, y, pr + 4.5, 0, TAU); ctx.stroke(); ctx.restore(); }
+        if (!it.dd) { ctx.font = "700 " + Math.round(pr * 1.1) + "px Georgia, serif"; ctx.textAlign = "center"; ctx.textBaseline = "middle"; ctx.fillStyle = "rgba(255,255,255,.7)"; ctx.fillText("?", x, y + 1); }
+        var hot = hov === it.id;
+        if (hot) { ctx.save(); ctx.strokeStyle = "#FCE58C"; ctx.setLineDash([4, 4]); ctx.lineDashOffset = -now / 60; ctx.lineWidth = 1.8; ctx.beginPath(); ctx.arc(x, y, pr + 9 + Math.sin(now / 200) * 1.8, 0, TAU); ctx.stroke(); ctx.restore(); }
+        label(it.c.theme.length > 15 ? it.c.theme.slice(0, 14) + "…" : it.c.theme, x, y + pr + 7, hot ? 13 : 11, hot ? "#FCE58C" : "rgba(207,230,228,.85)");
+        hits.push({ t: "planet", k: it.id, id: it.id, x: x, y: y, r: pr + 10 });
+      });
+    } else {
+      var pr0 = R * 0.17, base0 = sc.dd ? DCOL[sc.dd] : "#5E797C";
+      var rA = R * 0.52, rO = R * 0.86;
+      if (sc.dd) {
+        ctx.strokeStyle = "rgba(127,217,211,.28)"; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.ellipse(cx, cy, rA, rA * 0.86, 0, 0, TAU); ctx.stroke();
+        ctx.save(); ctx.strokeStyle = "rgba(240,160,75,.3)"; ctx.setLineDash([4, 5]); ctx.beginPath(); ctx.ellipse(cx, cy, rO, rO * 0.86, 0, 0, TAU); ctx.stroke(); ctx.restore();
+        label("alignés avec " + lastName(s), cx, cy - rA * 0.86 - 17, 12.5, "#7FD9D3"); label("à l'opposé", cx, cy - rO * 0.86 - 17, 12.5, "#F0A04B");
+      }
+      var halo = ctx.createRadialGradient(cx, cy, pr0, cx, cy, pr0 * 2.4); halo.addColorStop(0, base0 + "66"); halo.addColorStop(1, base0 + "00");
+      ctx.fillStyle = halo; ctx.beginPath(); ctx.arc(cx, cy, pr0 * 2.4, 0, TAU); ctx.fill();
+      sphere(cx, cy, pr0, base0, !sc.dd);
+      ctx.font = "700 " + Math.round(pr0 * 0.9) + "px Georgia, serif"; ctx.textAlign = "center"; ctx.textBaseline = "middle"; ctx.fillStyle = "rgba(2,20,24,.8)"; ctx.fillText(sc.dd ? GLYPH[sc.dd] : "?", cx, cy + 1);
+      hits.push({ t: "center", k: "center", x: cx, y: cy, r: pr0 });
+      var place = function (list, rad, dir, dash) {
+        list.forEach(function (o, j) {
+          var ang = j * TAU / list.length - 1.2 + t * 0.16 * dir, x = cx + Math.cos(ang) * rad, y = cy + Math.sin(ang) * rad * 0.86, r = Math.max(14, R * 0.075), mc = "oklch(0.8 0.13 " + CANDS[o].hue + ")";
+          portrait(o, x, y, r, mc, dash, !!(stOf(o) && stOf(o).kind === "retire"));
+          label(lastName(o), x, y + r + 5, hov === o ? 13 : 11.5, hov === o ? "#FCE58C" : "#DDEFEE");
+          hits.push({ t: "moon", k: o, s: o, x: x, y: y, r: r + 8 });
+        });
+      };
+      place(sc.al, rA, 1, false); place(sc.op, rO, -1, true);
+    }
+    ctx.restore(); return hits;
+  }
+  var portraitCache = {};
+  function portraitImg(s) { if (!portraitCache[s]) { portraitCache[s] = new Image(); portraitCache[s].src = CANDS[s].img; } return portraitCache[s]; }
+  function openSolar(s, origin) {
+    closeSolar(true);
+    var root = el('<div class="solar" role="dialog" aria-modal="true" aria-label="Système solaire"><div class="sol-top"><button type="button" class="sol-back">‹ Retour</button><div class="sol-title"><b></b><span></span></div><button type="button" class="sol-close" aria-label="Fermer">✕</button></div><canvas aria-hidden="true"></canvas><div class="sol-foot"><p class="sol-legend"></p><div class="sol-chips"></div><div class="sol-btns"></div></div></div>');
+    document.body.appendChild(root);
+    var cv = $("canvas", root), ctx = cv.getContext("2d");
+    var W = 0, H = 0, dpr = 1;
+    SOLAR = { root: root, cv: cv, prev: null, cur: null, t0: 0, dir: 1, hits: [], hov: null, raf: null, last: document.activeElement, lastS: s };
+    function sized() { var w = cv.clientWidth, h = cv.clientHeight; dpr = Math.min(2, window.devicePixelRatio || 1); if (w !== W || h !== H || cv.width !== Math.round(w * dpr)) { W = w; H = h; cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr); } }
+    function go(st, dir) {
+      SOLAR.prev = SOLAR.cur; SOLAR.cur = solarScene(st); SOLAR.t0 = performance.now(); SOLAR.dir = dir; SOLAR.hits = [];
+      if (reduce) { SOLAR.prev = null; }
+      domUpdate();
+    }
+    SOLAR.go = go;
+    function chipDot(dd) { return '<i style="background:' + (dd ? DCOL[dd] : "#5E797C") + '"></i>'; }
+    function domUpdate() {
+      var sc = SOLAR.cur, st = sc.st, s = st.s, name = CANDS[s].name, legend = "", btns = "", chips = "";
+      var title = $(".sol-title b", root), sub = $(".sol-title span", root);
+      if (st.mode === "sun") {
+        title.textContent = "Système de " + name; sub.textContent = sc.items.length + " mesure" + (sc.items.length > 1 ? "s" : "") + " documentée" + (sc.items.length > 1 ? "s" : "") + (S.rank ? " · taille = votre classement" : "");
+        legend = "Chaque planète est une mesure : sa taille suit son importance pour vous, sa couleur votre choix. Autour d'elle, les autres candidats, pleins s'ils partagent la position de " + lastName(s) + ", creux s'ils s'y opposent. Touchez une planète pour zoomer.";
+        chips = sc.items.map(function (it) { return '<button type="button" data-id="' + it.id + '">' + chipDot(it.dd) + "Folio " + roman(it.c.n) + " · " + esc(it.c.theme) + "</button>"; }).join("");
+        btns = '<button type="button" id="sol-rank">' + (S.rank ? "Modifier mon classement d'importance" : "Classer les mesures par importance") + "</button>";
+        $(".sol-back", root).textContent = "‹ Galaxie";
+      } else {
+        var c = sc.c; title.textContent = c.theme; sub.textContent = c.mesure;
+        var stance = sc.m === 1 ? "pour la mesure" : (byId[c.id].pole_c && c.pos[s] && c.pos[s][2] === "c" ? "3e pôle, compté contre" : "contre la mesure");
+        legend = sc.dd ? "Vous : " + LABEL[sc.dd] + ". " + name + " est " + stance + ". Anneau intérieur : les candidats alignés avec " + lastName(s) + " (" + sc.al.length + "). Anneau extérieur : ceux qui s'y opposent (" + sc.op.length + "). Touchez un candidat pour passer à son système."
+          : "Cette promesse est encore scellée : tranchez-la pour voir qui s'aligne avec " + lastName(s) + " et qui s'y oppose.";
+        btns = '<button type="button" id="sol-open">' + (sc.dd ? "Ouvrir la mesure" : "Comprendre la mesure") + "</button>";
+        $(".sol-back", root).textContent = "‹ Système";
+      }
+      $(".sol-legend", root).textContent = legend; $(".sol-chips", root).innerHTML = chips; $(".sol-btns", root).innerHTML = btns;
+      Array.prototype.forEach.call(root.querySelectorAll(".sol-chips button"), function (b) { b.onclick = function () { go({ mode: "planet", s: s, id: b.dataset.id }, 1); }; });
+      var r1 = $("#sol-rank", root); if (r1) r1.onclick = function () { closeSolar(); showView("deck"); rankMode = true; showSeg("mine"); setTimeout(function () { var h = document.querySelector(".recueil-h"); if (h) h.scrollIntoView({ block: "start", behavior: reduce ? "auto" : "smooth" }); }, 120); };
+      var r2 = $("#sol-open", root); if (r2) r2.onclick = function () { if (SOLAR.cur.dd) editSheet(SOLAR.cur.c.id); else openFiche(SOLAR.cur.c.id); };
+    }
+    function back() { var st = SOLAR.cur.st; if (st.mode === "planet") go({ mode: "sun", s: st.s }, -1); else closeSolar(); }
+    SOLAR.back = back;
+    $(".sol-back", root).onclick = back; $(".sol-close", root).onclick = function () { closeSolar(); };
+    function frame(now) {
+      if (!SOLAR || SOLAR.root !== root) return;
+      sized(); ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, W, H);
+      var p = SOLAR.prev ? Math.min(1, (now - SOLAR.t0) / 650) : 1, e = 1 - Math.pow(1 - p, 3);
+      if (SOLAR.prev && p < 1) {
+        if (SOLAR.dir > 0) { drawSolar(ctx, SOLAR.prev, W, H, now, 1 + 2.4 * e, 1 - e, null); drawSolar(ctx, SOLAR.cur, W, H, now, 0.4 + 0.6 * e, e, null); }
+        else { drawSolar(ctx, SOLAR.prev, W, H, now, 1 - 0.6 * e, 1 - e, null); drawSolar(ctx, SOLAR.cur, W, H, now, 2.4 - 1.4 * e, e, null); }
+      } else { SOLAR.prev = null; SOLAR.hits = drawSolar(ctx, SOLAR.cur, W, H, now, 1, 1, SOLAR.hov); }
+      SOLAR.raf = (!reduce && !document.hidden) ? requestAnimationFrame(frame) : null;
+    }
+    SOLAR.frame = frame;
+    // gestes : toucher = zoom sur la cible, écarter = zoom avant, pincer = retour
+    var ptrs = {}, base = null, multi = false, down = null;
+    function sp() { var k = Object.keys(ptrs); if (k.length < 2) return null; var a = ptrs[k[0]], b = ptrs[k[1]]; return { d: Math.hypot(a[0] - b[0], a[1] - b[1]), x: (a[0] + b[0]) / 2, y: (a[1] + b[1]) / 2 }; }
+    function hitAt(x, y, pad) { var b = cv.getBoundingClientRect(), best = null, bd = 1e9; SOLAR.hits.forEach(function (h) { var d = Math.hypot(b.left + h.x - x, b.top + h.y - y); if (d < h.r + pad && d < bd) { bd = d; best = h; } }); return best; }
+    function act(h) {
+      if (!h) return; var st = SOLAR.cur.st;
+      if (h.t === "planet") go({ mode: "planet", s: st.s, id: h.id }, 1);
+      else if (h.t === "moon") go({ mode: "sun", s: h.s }, 1);
+      else if (h.t === "center") { if (SOLAR.cur.dd) editSheet(st.id); else openFiche(st.id); }
+      else if (h.t === "sun") candSheet(st.s);
+    }
+    cv.addEventListener("pointerdown", function (ev) { ptrs[ev.pointerId] = [ev.clientX, ev.clientY]; var n = Object.keys(ptrs).length; if (n === 2) { multi = true; base = sp(); down = null; } else if (n === 1) { multi = false; down = [ev.clientX, ev.clientY]; } });
+    cv.addEventListener("pointermove", function (ev) {
+      if (ptrs[ev.pointerId]) ptrs[ev.pointerId] = [ev.clientX, ev.clientY];
+      if (base && Object.keys(ptrs).length === 2) { var n = sp(); if (!n) return;
+        if (n.d > base.d * 1.28 && n.d - base.d > 24) { var m = base; base = null; var h = hitAt(m.x, m.y, 60); if (h && h.t !== "sun") act(h); }
+        else if (n.d < base.d * 0.72 && base.d - n.d > 24) { base = null; back(); }
+        return; }
+      if (ev.pointerType === "mouse") { var hh = hitAt(ev.clientX, ev.clientY, 4), k = hh && (hh.t === "planet" || hh.t === "moon") ? hh.k : null; if (k !== SOLAR.hov) { SOLAR.hov = k; cv.style.cursor = hh ? "pointer" : ""; if (reduce) frame(performance.now()); } }
+    });
+    function up(ev) { var had = ptrs[ev.pointerId]; delete ptrs[ev.pointerId]; if (!Object.keys(ptrs).length) base = null; var d0 = down; down = null; if (multi) { if (!Object.keys(ptrs).length) multi = false; return; } if (ev.type === "pointercancel" || !d0 || !had || Math.hypot(ev.clientX - d0[0], ev.clientY - d0[1]) > 10) return; act(hitAt(ev.clientX, ev.clientY, 8)); }
+    cv.addEventListener("pointerup", up); cv.addEventListener("pointercancel", up);
+    cv.addEventListener("wheel", function (ev) { if (!(ev.ctrlKey || ev.metaKey)) return; ev.preventDefault(); if (ev.deltaY < 0) { var h = hitAt(ev.clientX, ev.clientY, 40); if (h && h.t !== "sun") act(h); } else back(); }, { passive: false });
+    go({ mode: "sun", s: s }, 1); SOLAR.prev = null;
+    if (!reduce && root.animate && origin) {
+      var far = Math.hypot(Math.max(origin.x, window.innerWidth - origin.x), Math.max(origin.y, window.innerHeight - origin.y));
+      root.animate([{ clipPath: "circle(30px at " + origin.x + "px " + origin.y + "px)", opacity: .4 }, { clipPath: "circle(" + Math.ceil(far) + "px at " + origin.x + "px " + origin.y + "px)", opacity: 1 }], { duration: 650, easing: "cubic-bezier(.3,.7,.2,1)" });
+    }
+    SOLAR.raf = requestAnimationFrame(frame);
+    document.addEventListener("visibilitychange", function () { if (SOLAR && SOLAR.root === root && !document.hidden && !reduce) { cancelAnimationFrame(SOLAR.raf); SOLAR.raf = requestAnimationFrame(frame); } });
+    setTimeout(function () { var b = $(".sol-close", root); if (b) b.focus(); }, 40);
+  }
+  function closeSolar(silent) {
+    if (!SOLAR) return; cancelAnimationFrame(SOLAR.raf); var l = SOLAR.last; SOLAR.root.remove(); SOLAR = null;
+    if (!silent && l && l.focus) try { l.focus(); } catch (e) {}
+  }
+  // Le bouton central s'agrandit jusqu'à devenir la galaxie.
+  function growFromOrb() {
+    var box = $(".cosmos-in"), orb = $(".tabs .orb");
+    if (reduce || !box || !orb || !box.animate) return;
+    var b = box.getBoundingClientRect(), o = orb.getBoundingClientRect();
+    var x = o.left + o.width / 2 - b.left, y = o.top + o.height / 2 - b.top;
+    var far = Math.max(Math.hypot(x, y), Math.hypot(b.width - x, y), Math.hypot(x, b.height - y), Math.hypot(b.width - x, b.height - y));
+    box.animate([{ clipPath: "circle(27px at " + x + "px " + y + "px)" }, { clipPath: "circle(" + Math.ceil(far) + "px at " + x + "px " + y + "px)" }], { duration: 750, easing: "cubic-bezier(.3,.7,.2,1)" });
+  }
+  document.addEventListener("visibilitychange", function () { if (!document.hidden && !$("#mine").hidden && !$("#view-deck").hidden) startCosmos(false); });
+
+  // ---------- La Maison Magnitude ----------
+  function deckStats() {
+    var o = { tot: CARDS.length * SLUGS.length, doc: 0, lv: { A: 0, B: 0, C: 0 }, ready: 0, isReady: {} };
+    CARDS.forEach(function (c) {
+      var ks = Object.keys(c.pos), ab = 0;
+      ks.forEach(function (s) { var l = c.pos[s][1]; o.lv[l] = (o.lv[l] || 0) + 1; if (l !== "C") ab++; });
+      o.doc += ks.length; o.isReady[c.id] = ks.length >= 8 && ab >= 6; if (o.isReady[c.id]) o.ready++;
+    });
+    return o;
+  }
+  var QUILL = '<svg class="quill" viewBox="0 0 64 64" aria-hidden="true"><path d="M58 4C40 6 22 18 14 38l-4 12 3 1 4-11C27 22 42 10 58 4z" fill="currentColor" opacity=".9"/><path d="M58 4C46 14 34 26 24 40" fill="none" stroke="var(--vellum)" stroke-width="1.2" opacity=".7"/><path d="M10 50 6 60" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>';
+  var HAT = '<svg class="hat-mark" viewBox="0 0 150 150" aria-hidden="true"><path d="M75 14 L112 108 H38 Z" fill="var(--deck)" stroke="var(--surface)" stroke-width="2"/><path d="M20 110 Q75 92 130 110 Q75 128 20 110Z" fill="var(--teal-900)" stroke="var(--surface)" stroke-width="2"/><circle cx="70" cy="62" r="3" fill="#FCE58C"/><circle cx="84" cy="80" r="2.2" fill="#FCE58C"/><circle cx="64" cy="88" r="1.8" fill="#FCE58C"/><rect x="58" y="97" width="5" height="9" rx="1" fill="#FBBF24"/><rect x="66" y="93" width="5" height="13" rx="1" fill="#F59E0B"/><rect x="74" y="89" width="5" height="17" rx="1" fill="#D97706"/><rect x="82" y="85" width="5" height="21" rx="1" fill="#B45309"/></svg>';
+  var MAIL = "contact@magnitude.pub";
+  function mailto(subj) { return "mailto:" + MAIL + "?subject=" + encodeURIComponent(subj); }
+  var wellMode = "all";
+  function renderMaison() {
+    var st = deckStats(), sc = scores(), L = sc.leader;
+    var head = '<header class="parch scr-head mai-head" id="mai-head">' + HAT + '<h2>Magnitude</h2><p class="scr-sub"><span class="scr-ink">Pas de magie : de la data et vos votes</span>' + QUILL + "</p></header>" +
+      '<p class="mai-intro">Magnitude est une publication apartisane et gratuite. Nous décortiquons les promesses de campagne avec des données publiques, chaque chiffre relié à sa source, pour que chacun se forge sa propre conviction.</p>';
+    // La matrice des preuves : couverture seulement, jamais le sens des positions (il se découvre carte par carte).
+    var cards = CARDS.slice().sort(function (a, b) { return +a.n - +b.n; });
+    var mx = '<div class="mx" role="group" aria-label="Matrice des preuves : ' + st.doc + " positions documentées sur " + st.tot + ", " + st.ready + ' cartes prêtes. Touchez une case pour ouvrir la carte."><span aria-hidden="true"></span>' +
+      SLUGS.map(function (s) { return '<button type="button" class="mxh" data-s="' + s + '" aria-label="Mesures de ' + esc(CANDS[s].name) + '" title="' + esc(CANDS[s].name) + '"><img class="' + (stOf(s) && stOf(s).kind === "retire" ? "retire" : "") + '" src="' + CANDS[s].img + '" alt=""></button>'; }).join("") +
+      cards.map(function (c) {
+        return '<button type="button" class="rl' + (st.isReady[c.id] ? " ready" : "") + '" data-card="' + c.id + '" aria-label="Carte ' + roman(c.n) + " : " + esc(c.theme) + '" title="' + esc(c.theme) + '">' + roman(c.n) + "</button>" +
+          SLUGS.map(function (s) { var p = c.pos[s], lab = c.theme + " · " + CANDS[s].name + " : " + (p ? "source de niveau " + p[1] : "pas encore de position documentée"); return '<button type="button" class="mxc" data-card="' + c.id + '" aria-label="' + esc(lab) + '" title="' + esc(lab + " — ouvrir la carte") + '"><i class="' + (p ? "d" + p[1] : "dx") + '"></i></button>'; }).join("");
+      }).join("") + "</div>";
+    var preuves = '<section class="parch mai-sec" aria-label="La matrice des preuves"><h3>La matrice des preuves</h3>' +
+      '<p class="rubric">Une ligne par promesse, une colonne par candidat. Chaque point est une position retrouvée dans une source vérifiable : plus il est plein, plus la source est solide. Le sens des positions reste caché ici ; il se découvre carte par carte. Touchez un point pour atterrir sur la carte.</p>' +
+      '<div class="kfig"><div><b>' + st.doc + "/" + st.tot + "</b><span>positions documentées</span></div><div><b>" + st.lv.A + "</b><span>sources de niveau A, les plus solides</span></div><div><b>" + st.ready + "/6</b><span>cartes prêtes pour le classement</span></div></div>" +
+      mx + '<div class="mx-leg"><span><i class="dA"></i> niveau A</span><span><i class="dB"></i> niveau B</span><span><i class="dC"></i> niveau C</span><span><span class="ready">✦</span> carte complète</span></div>' +
+      '<div class="gauge" aria-hidden="true">' + [0, 1, 2, 3, 4, 5].map(function (k) { return '<i class="' + (k < st.ready ? "on" : "") + '"></i>'; }).join("") + "</div>" +
+      '<p class="rubric">' + (st.ready >= 6 ? "Six cartes sont complètes : le classement pourra être publié une fois le test de neutralité passé." : "Encore " + (6 - st.ready) + " carte" + (6 - st.ready > 1 ? "s" : "") + " à compléter avant de publier un classement. Une carte est complète avec au moins 8 positions documentées, dont 6 de niveau A ou B.") + "</p></section>";
+    // Votre lecture
+    var cnt = { ok: 0, no: 0, wish: 0, meh: 0 }; Object.keys(S.dec).forEach(function (id) { cnt[S.dec[id].d]++; });
+    var dec = cnt.ok + cnt.no + cnt.wish + cnt.meh, left = CARDS.length - dec;
+    var bar = ["ok", "no", "wish", "meh"].map(function (k) { return cnt[k] ? '<i class="' + k + '" style="width:' + (cnt[k] / CARDS.length * 100).toFixed(2) + '%"></i>' : ""; }).join("");
+    var lecture = '<section class="parch mai-sec" aria-label="Votre lecture"><h3>Votre lecture</h3>' +
+      '<p class="rubric">' + (dec ? dec + " promesse" + (dec > 1 ? "s" : "") + " tranchée" + (dec > 1 ? "s" : "") + " sur " + CARDS.length + (L ? ". Votre galaxie : " + esc(houseLabel(L)) + "." : ". Pas encore de galaxie de référence.") : "Vous n'avez encore tranché aucune promesse.") + "</p>" +
+      '<div class="mybar" aria-hidden="true">' + bar + "</div>" +
+      '<div class="myleg">' + ["ok", "no", "wish", "meh"].map(function (k) { return '<span class="' + k + '"><b>' + GLYPH[k] + " " + LABEL[k] + "</b> " + cnt[k] + "</span>"; }).join("") + "<span>· " + left + " à trancher</span></div>" +
+      '<button class="mai-link" id="mai-galaxy">Voir ma galaxie</button></section>';
+    // Le Puits aux souhaits
+    var puits = '<section class="parch mai-sec" aria-label="Le Puits aux souhaits"><h3>Le Puits aux souhaits</h3>' +
+      '<p class="rubric">Vos « J\'aimerais » et vos « M\'en fous » y tombent, chacun de sa couleur, avec la mesure que vous auriez proposée. Ils restent sur votre appareil.</p>' +
+      '<div class="well"><canvas id="well" aria-label="Animation : vos souhaits et vos m\'en fous flottent dans un puits"></canvas></div><p class="well-cap" id="well-cap"></p>' +
+      '<div class="wl-tabs" id="wl-tabs" role="group" aria-label="Afficher"></div><div class="wl-list" id="wl-list"></div></section>';
+    // La communauté
+    var commu = '<section class="parch mai-sec commu" aria-label="La communauté"><h3>Une communauté, pas une audience</h3>' +
+      '<p class="rubric">Nous sommes une communauté qui se mobilise pour rendre les mesures compréhensibles par tous. Chaque erreur signalée, chaque source ajoutée améliore la matrice de tout le monde.</p>' +
+      '<ul><li><a href="' + mailto("Signaler une erreur ou une source") + '">Signaler une erreur ou une source manquante</a><span>Un chiffre faux, une position mal cotée : nous corrigeons et nous le disons.</span></li>' +
+      '<li><a href="' + mailto("Proposer une mesure") + '">Proposer une mesure à décortiquer</a><span>Les promesses dont vous voulez comprendre le coût et l\'effet.</span></li>' +
+      '<li><a href="' + mailto("Rejoindre la relecture") + '">Rejoindre la relecture</a><span>Vérifier les sources avant publication, à plusieurs regards.</span></li></ul>' +
+      '<p class="mail">Écrivez-nous : <a href="mailto:' + MAIL + '">' + MAIL + "</a></p></section>";
+    var promise = '<aside class="parch promise"><b>Notre promesse</b><p>Vos choix, vos souhaits et votre galaxie sont calculés et gardés dans ce navigateur. Aucun compte, aucun traceur.</p><p>Le score compare vos choix aux positions documentées des candidats. Les cartes « J\'aimerais » et « M\'en fous » n\'entrent pas dans le calcul.</p><p>Une consultation de la communauté ne sera jamais présentée comme un sondage.</p></aside>';
+    $("#mai-wrap").innerHTML = head + preuves + lecture + puits + commu + promise;
+    $("#mai-galaxy").onclick = function () { showView("deck"); showSeg("mine"); };
+    Array.prototype.forEach.call(document.querySelectorAll(".mx [data-card]"), function (b) { b.onclick = function () { goToCard(b.dataset.card); }; });
+    Array.prototype.forEach.call(document.querySelectorAll(".mx .mxh"), function (b) { b.onclick = function () { candSheet(b.dataset.s); }; });
+    renderWell();
+  }
+  function renderWell() {
+    var all = Object.keys(S.dec).filter(function (id) { var d = S.dec[id].d; return d === "wish" || d === "meh"; }).sort(function (a, b) { return S.dec[b].t - S.dec[a].t; });
+    var nW = all.filter(function (id) { return S.dec[id].d === "wish"; }).length, nM = all.length - nW;
+    $("#wl-tabs").innerHTML = [["all", "", "Tout", all.length], ["wish", "wish", "★ J'aimerais", nW], ["meh", "meh", "∅ M'en fous", nM]].map(function (o) {
+      return '<button class="' + o[1] + '" data-m="' + o[0] + '" aria-pressed="' + (wellMode === o[0]) + '">' + o[2] + " (" + o[3] + ")</button>"; }).join("");
+    Array.prototype.forEach.call(document.querySelectorAll("#wl-tabs button"), function (b) { b.onclick = function () { wellMode = b.dataset.m; renderWell(); }; });
+    var shown = all.filter(function (id) { return wellMode === "all" || S.dec[id].d === wellMode; });
+    $("#wl-list").innerHTML = shown.length ? shown.map(function (id) {
+      var d = S.dec[id], c = byId[id];
+      return '<button class="wl-item" data-id="' + id + '"><span class="verdict ' + d.d + '">' + LABEL[d.d] + '</span><span class="titre">' + esc(c.mesure) + "</span>" +
+        (d.note ? '<span class="billet">« ' + esc(d.note) + " »</span>" : '<span class="nonote">' + (d.d === "wish" ? "Sans mesure proposée" : "Sans sujet proposé") + "</span>") + "</button>";
+    }).join("") : '<p class="wl-empty">' + (all.length ? "Rien dans cette couleur pour l'instant." : "Le puits est encore vide. Glissez une carte vers le haut (J'aimerais) ou vers le bas (M'en fous).") + "</p>";
+    Array.prototype.forEach.call(document.querySelectorAll(".wl-item"), function (b) { b.onclick = function () { editSheet(b.dataset.id); }; });
+    $("#well-cap").textContent = all.length ? nW + " souhait" + (nW > 1 ? "s" : "") + " en bleu, " + nM + " m'en fous en gris, parmi les reflets du puits." : "Chaque « J'aimerais » y deviendra un point bleu, chaque « M'en fous » un point gris.";
+    startWell(all);
+  }
+  var wellRAF = null;
+  function startWell(mine) {
+    cancelAnimationFrame(wellRAF);
+    var cv = $("#well"); if (!cv) return;
+    var dpr = Math.min(2, window.devicePixelRatio || 1), W = cv.clientWidth, H = cv.clientHeight;
+    if (!W) return;
+    cv.width = W * dpr; cv.height = H * dpr; var ctx = cv.getContext("2d"); ctx.scale(dpr, dpr);
+    var seed = 7; function r() { seed = (seed * 16807) % 2147483647; return seed / 2147483647; }
+    var COL = { wish: "125,178,255", meh: "201,214,215" };
+    var P = mine.map(function (id) { return { k: S.dec[id].d, a: r() * Math.PI * 2, rad: (0.12 + r() * 0.3) * W, s: 3.6, sp: (0.0015 + r() * 0.002) * (r() < 0.5 ? 1 : -1) }; });
+    for (var i = 0; i < 120; i++) P.push({ k: null, a: r() * Math.PI * 2, rad: Math.sqrt(r()) * W * 0.44, s: 0.5 + r() * 1.3, sp: (0.0005 + r() * 0.0014) * (r() < 0.5 ? 1 : -1) });
+    function frame(now) {
+      if ($("#view-maison").hidden) return;
+      ctx.clearRect(0, 0, W, H);
+      P.forEach(function (p, k) {
+        if (!reduce) p.a += p.sp;
+        var x = W / 2 + Math.cos(p.a) * p.rad, y = H / 2 + Math.sin(p.a) * p.rad * 0.92;
+        if (!p.k) { ctx.fillStyle = "rgba(150,200,196," + (0.12 + p.s / 7) + ")"; ctx.beginPath(); ctx.arc(x, y, p.s, 0, 6.2832); ctx.fill(); return; }
+        var on = wellMode === "all" || wellMode === p.k, tw = reduce ? 1 : 0.8 + 0.2 * Math.sin(now / 500 + k);
+        ctx.fillStyle = "rgba(" + COL[p.k] + "," + (on ? 0.25 : 0.06) + ")"; ctx.beginPath(); ctx.arc(x, y, p.s * 2.6 * tw, 0, 6.2832); ctx.fill();
+        ctx.fillStyle = "rgba(" + COL[p.k] + "," + (on ? 1 : 0.22) + ")"; ctx.beginPath(); ctx.arc(x, y, p.s, 0, 6.2832); ctx.fill();
+        if (p.k === "meh") { ctx.strokeStyle = "rgba(" + COL.meh + "," + (on ? 0.9 : 0.2) + ")"; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.arc(x, y, p.s + 3.2, 0, 6.2832); ctx.stroke(); }
+      });
+      if (!reduce) wellRAF = requestAnimationFrame(frame);
+    }
+    frame(0);
+  }
+
+  // ---------- Navigation ----------
+  function showView(v) {
+    ["deck", "search", "maison"].forEach(function (k) { $("#view-" + k).hidden = k !== v; });
+    Array.prototype.forEach.call(document.querySelectorAll(".tabs button"), function (b) { b.setAttribute("aria-selected", b.dataset.view === v); });
+    cancelAnimationFrame(wellRAF); cancelAnimationFrame(cosmosRAF); closeSolar(true);
+    if (v === "search") { renderSearch(); var h = $("#scr-head"); h.classList.remove("anim"); void h.offsetWidth; h.classList.add("anim"); }
+    if (v === "maison") { renderMaison(); var mh = $("#mai-head"); void mh.offsetWidth; mh.classList.add("anim"); }
+    if (v === "deck" && activeSeg === "mine") startCosmos(false);
+  }
+  Array.prototype.forEach.call(document.querySelectorAll(".tabs button"), function (b) {
+    b.onclick = function () {
+      // Déjà sur le Deck : le bouton central ouvre (ou referme) la galaxie.
+      if (b.dataset.view === "deck" && !$("#view-deck").hidden) { showSeg(activeSeg === "mine" ? "play" : "mine"); return; }
+      showView(b.dataset.view);
+    };
+  });
+  $("#seg-play").onclick = function () { showSeg("play"); };
+  $("#seg-mine").onclick = function () { showSeg("mine"); };
+  $("#q").addEventListener("input", renderSearch);
+  Array.prototype.forEach.call(document.querySelectorAll("#pad button"), function (b) { b.onclick = function () { commit(b.dataset.dir); }; });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && layer.firstChild) { closeSheet(); return; }
+    if (SOLAR) { if (e.key === "Escape") { e.preventDefault(); SOLAR.back(); } return; }
+    if (layer.firstChild || document.querySelector(".overlay") || $("#view-deck").hidden || activeSeg !== "play") return;
+    var k = { ArrowRight: "r", ArrowLeft: "l", ArrowUp: "u", ArrowDown: "d" }[e.key];
+    if (k) { e.preventDefault(); commit(k); }
+  });
+
+  var toastT = null;
+  function toast(html) { var t = $("#toast"); t.innerHTML = html; t.hidden = false; clearTimeout(toastT); toastT = setTimeout(function () { t.hidden = true; }, 3600); }
+
+  // ---------- Introduction (escape game) ----------
+  var STEPS = [
+    { k: "Porte verrouillée", h: "Vous êtes enfermé·e dans la salle des promesses.", p: "Une seule clé ouvre la porte : savoir pour qui voter, en connaissance de cause." },
+    { k: "Les règles", h: "Tranchez chaque mesure d'un geste.", p: "Le nom du candidat reste caché jusqu'à votre choix. Vous pourrez toujours changer d'avis.", compass: true },
+    { k: "La récompense", h: "Votre deck prend la couleur de vos convictions.", p: "Chaque semaine, tirez 6 nouvelles cartes. Le Grand Tri révèle la galaxie dont vous êtes le plus proche. Vos choix restent sur votre appareil." }
+  ];
+  function onboarding(i) {
+    var old = document.querySelector(".overlay.onb"); if (old) old.remove();
+    var s = STEPS[i];
+    var comp = s.compass ? '<div class="compass" aria-hidden="true"><div class="c"></div><span class="n">↑<br>J\'aimerais</span><span class="e">Aligné<br>→</span><span class="w">←<br>Désaligné</span><span class="s">M\'en fous<br>↓</span></div>' : "";
+    var ov = el('<div class="overlay onb" role="dialog" aria-modal="true" aria-label="Introduction"><div class="ob"><div class="step">' + (i + 1) + " / 3 · " + s.k.toUpperCase() + "</div><h2>" + s.h + "</h2>" + comp + "<p>" + s.p + '</p><div class="row-btns">' + (i < 2 ? '<button class="btn ghost" id="o-skip">Passer</button><button class="btn" id="o-next">Continuer</button>' : '<button class="btn" id="o-next">Entrer dans la salle</button>') + "</div></div></div>");
+    document.body.appendChild(ov);
+    function finish() { ov.remove(); S.onboarded = true; save(); }
+    $("#o-next", ov).onclick = function () { if (i < 2) onboarding(i + 1); else finish(); };
+    if (i < 2) $("#o-skip", ov).onclick = finish;
+    setTimeout(function () { $("#o-next", ov).focus(); }, 30);
+  }
+
+  // ---------- Démarrage ----------
+  S.leader = scores().leader; applyDeck(S.leader);
+  renderWeek(); renderStack();
+  if (!S.onboarded) onboarding(0);
+})();
+</script>

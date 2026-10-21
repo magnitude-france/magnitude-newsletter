@@ -69,6 +69,14 @@ jobs:
           cp -r src/candidats dist/candidats
           cp src/magnitude-icon.png dist/magnitude-icon.png
 
+      - name: Publish the deck prototype (magnitude.pub/deck)
+        # prototypes/deck/deck.html est un fichier HTML autonome (aucune
+        # requête réseau). Copié tel quel vers /deck/ ; noindex tant que le
+        # prototype n'est pas annoncé.
+        run: |
+          mkdir -p dist/deck
+          sed 's|<head>|<head><meta name="robots" content="noindex">|' prototypes/deck/deck.html > dist/deck/index.html
+
       - name: Copy CNAME (custom domain magnitude.pub)
         run: cp CNAME dist/CNAME
 

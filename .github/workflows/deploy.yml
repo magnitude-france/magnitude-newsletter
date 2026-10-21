@@ -75,7 +75,7 @@ jobs:
         # prototype n'est pas annoncé.
         run: |
           mkdir -p dist/deck
-          sed 's|<head>|<head><meta name="robots" content="noindex">|' prototypes/deck/deck.html > dist/deck/index.html
+          { printf '%s' '<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="robots" content="noindex">'; cat prototypes/deck/deck.html; } > dist/deck/index.html
 
       - name: Copy CNAME (custom domain magnitude.pub)
         run: cp CNAME dist/CNAME

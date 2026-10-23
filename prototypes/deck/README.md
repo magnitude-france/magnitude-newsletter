@@ -6,6 +6,7 @@ Candidate » en accroche. **Déployé** : depuis le 2026-10-24 (décision de
 Guilhem), `deck.html` est la page d'accueil de magnitude.pub (copié par
 `.github/workflows/deploy.yml`) ; il reste servi à /deck (noindex) et
 l'ancienne accueil Observable est servie à /newsletter.
+
 ## Ce que fait le prototype
 - Swipe dans 4 directions : → Aligné, ← Désaligné, ↑ J'aimerais, ↓ M'en fous
   (souris, doigt, flèches du clavier ou boutons).

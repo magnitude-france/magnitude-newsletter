@@ -24,10 +24,10 @@ HERE = Path(__file__).resolve().parent
 ANALYSIS = Path(sys.argv[1]) if len(sys.argv) > 1 else HERE.parents[2] / "magnitude-analysis"
 
 INTERDITS = ["Attal", "Faure", "Glucksmann", "Le Pen", "Mélenchon", "Melenchon", "Philippe", "Retailleau",
-             "Roussel", "Ruffin", "Tondelier", "Villepin", "Zemmour", "Bardella", "Knafo", "Macron",
+             "Roussel", "Ruffin", "Tondelier", "Villepin", "Zemmour", "Lisnard", "Bardella", "Knafo", "Macron",
              "Rassemblement national", "RN", "LFI", "insoumis", "PS", "socialiste", "Républicains", "LR",
              "Reconquête", "Horizons", "Renaissance", "PCF", "communiste", "Écologistes", "écologiste",
-             "Place publique", "Debout", "NFP", "candidat", "candidate", "candidats", "campagne", "programme"]
+             "Place publique", "Debout", "NFP", "Nouvelle Énergie", "Nouvelle Energie", "candidat", "candidate", "candidats", "campagne", "programme"]
 RE_INTERDIT = re.compile(r"\b(" + "|".join(re.escape(n) for n in INTERDITS) + r")\b", re.I)
 
 # Sources acceptées dans la fiche : institutions, statistiques publiques, textes de loi,
@@ -39,7 +39,8 @@ DOMAINES_OK = ["insee.fr", "ec.europa.eu", "eur-lex.europa.eu", "senat.fr", "ass
                "conseil-constitutionnel.fr", "parliament.uk", "bfs.admin.ch", "darpa.mil", "bundestag.de",
                "developpement-durable.gouv.fr", "credoc.fr", "institutmontaigne.org", "rexecode.fr",
                "recherches-solidarites.org", "acre.org.uk", "dejure.org", "lxgesetze.de", "juridischloket.nl",
-               "nyidanmark.dk", "oecd.org", "theregister.com", "inegalites.fr"]
+               "nyidanmark.dk", "oecd.org", "theregister.com", "inegalites.fr",
+               "ofce.sciences-po.fr", "education.gouv.fr", "nato.int"]
 NOMS_DOMAINES = {"insee.fr": "Insee", "ec.europa.eu": "Eurostat / Commission européenne", "eur-lex.europa.eu": "EUR-Lex (droit de l'UE)",
                  "senat.fr": "Sénat", "assemblee-nationale.fr": "Assemblée nationale", "vie-publique.fr": "Vie publique",
                  "douane.gouv.fr": "Douane française", "interieur.gouv.fr": "Ministère de l'Intérieur",
@@ -48,7 +49,8 @@ NOMS_DOMAINES = {"insee.fr": "Insee", "ec.europa.eu": "Eurostat / Commission eur
                  "dejure.org": "Droit allemand (AufenthG)", "lxgesetze.de": "Droit allemand (FreizügG/EU)",
                  "juridischloket.nl": "Juridisch Loket (Pays-Bas)", "nyidanmark.dk": "SIRI (Danemark)",
                  "inegalites.fr": "Observatoire des inégalités", "oecd.org": "OCDE", "bundestag.de": "Bundestag",
-                 "fonction-publique.gouv.fr": "DGAFP (fonction publique)"}
+                 "fonction-publique.gouv.fr": "DGAFP (fonction publique)",
+                 "ofce.sciences-po.fr": "OFCE", "education.gouv.fr": "Éducation nationale (DEPP)", "nato.int": "OTAN"}
 
 
 def propre(html):
@@ -56,7 +58,9 @@ def propre(html):
     if not html:
         return ""
     phrases = re.split(r"(?<=[.!?])\s+(?=[A-ZÉÀ<«])", html)
-    return " ".join(p for p in phrases if not RE_INTERDIT.search(re.sub(r"<[^>]+>", "", p))).strip()
+    garde = " ".join(p for p in phrases if not RE_INTERDIT.search(re.sub(r"<[^>]+>", "", p))).strip()
+    # Une phrase qui renvoyait à l'auteur retiré (« Il cite… ») ne doit pas rester orpheline.
+    return re.sub(r"(^|(?<=[.!?] ))(?:Il|Elle) cite ", r"\1La mesure s'appuie sur ", garde)
 
 
 def sans_citation(html):

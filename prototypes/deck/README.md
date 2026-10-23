@@ -10,8 +10,11 @@ l'ancienne accueil Observable est servie à /newsletter.
 ## Ce que fait le prototype
 - Swipe dans 4 directions : → Aligné, ← Désaligné, ↑ J'aimerais, ↓ M'en fous
   (souris, doigt, flèches du clavier ou boutons).
-- Swipe « à l'aveugle » : le candidat est révélé après le geste, avec les
-  positions documentées des autres candidats.
+- Tirage d'affilée, sans fenêtre « qui est le candidat » entre deux cartes
+  (décision du 2026-10-24) : les candidats se révèlent par lots de 5 cartes
+  (et à la dernière carte du paquet). Le lot retourne les cartes, montre la
+  bascule éventuelle de galaxie et permet de changer un choix ; le détail de
+  chaque carte reste accessible depuis Mon deck.
 - Badge de décision sur chaque carte, décisions modifiables (« Mon deck »).
 - Cartes « dans le score » et « hors score » (décision du 2026-10-15, seuils
   redéfinis le 2026-10-23) : une carte compte si au moins les deux tiers des

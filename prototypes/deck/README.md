@@ -11,8 +11,16 @@ dossier est hors de `src/`, le workflow GitHub Pages ne le publie pas.
 - Swipe « à l'aveugle » : le candidat est révélé après le geste, avec les
   positions documentées des autres candidats.
 - Badge de décision sur chaque carte, décisions modifiables (« Mon deck »).
+- Cartes « dans le score » et « hors score » (décision du 2026-10-15, seuils
+  redéfinis le 2026-10-23) : une carte compte si au moins les deux tiers des
+  candidats du deck ont une position documentée, dont la moitié en niveau A
+  ou B (8/6 avec 12 candidats, 9/7 avec 13 ; calcul automatique). À la
+  révélation, une carte dans le score prend la teinte Magnitude de son
+  candidat avec un reflet holographique (portrait brillant, inclinaison au
+  doigt ou à la souris) ; une carte hors score devient sobre, garde l'avis
+  mais n'entre pas dans le calcul. Le recto reste anonyme dans les deux cas.
 - Score par candidat = accords / positions documentées (cartes Aligné ou
-  Désaligné uniquement), seuil de 4 cartes, égalités affichées, classement
+  Désaligné, sur les cartes dans le score uniquement), seuil de 4 cartes, égalités affichées, classement
   des 12 toujours visible.
 - Couleur de deck qui bascule en direct quand le candidat de tête change ;
   « Le Grand Tri » après les 6 cartes de la semaine.

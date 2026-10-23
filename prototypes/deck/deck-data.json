@@ -549,6 +549,309 @@
      "A"
     ]
    }
+  },
+  {
+   "id": "carte_13_philippe_retraites",
+   "n": "13",
+   "num": "2",
+   "theme": "Retraites",
+   "centre": "philippe",
+   "mesure": "Porter progressivement l'âge de départ à 65 ans et la durée de cotisation à 45 ans en moins de dix ans",
+   "pole_a": "Le reculer au-delà de 64 ans",
+   "pole_b": "Revenir à 62 ans ou moins",
+   "fig": "",
+   "fig_label": "",
+   "title": "Philippe veut porter l'âge de départ à 65 ans — 61,7 % des 55-64 ans ont un emploi en France, 66,4 % dans l'UE",
+   "message": "Édouard Philippe (Horizons) veut porter progressivement l'âge de départ à 65 ans et la durée de cotisation à 45 ans en moins de dix ans, contre un âge légal figé à 62 ans et 9 mois jusqu'en janvier 2028. En 2025, 61,7 % des 55-64 ans ont un emploi en France, contre 66,4 % dans l'UE.",
+   "quote": "« porter progressivement l'âge de départ à 65 ans et la durée de cotisation à 45 ans en moins de dix ans »",
+   "url": "https://magnitude.pub/numeros/2/reports/carte_13_philippe_retraites.html",
+   "pos": {
+    "attal": [
+     -1,
+     "B",
+     "c"
+    ],
+    "glucksmann": [
+     -1,
+     "A"
+    ],
+    "le-pen": [
+     -1,
+     "B"
+    ],
+    "melenchon": [
+     -1,
+     "A"
+    ],
+    "philippe": [
+     1,
+     "A"
+    ],
+    "retailleau": [
+     1,
+     "B"
+    ],
+    "roussel": [
+     -1,
+     "C"
+    ],
+    "ruffin": [
+     -1,
+     "A"
+    ],
+    "tondelier": [
+     -1,
+     "A"
+    ],
+    "villepin": [
+     -1,
+     "C",
+     "c"
+    ],
+    "zemmour": [
+     1,
+     "C"
+    ]
+   },
+   "pole_c": "Supprimer l'âge légal (durée de cotisation seule)"
+  },
+  {
+   "id": "carte_14_attal_ecole",
+   "n": "14",
+   "num": "2",
+   "theme": "École",
+   "centre": "attal",
+   "mesure": "Revaloriser les enseignants de 200 à 500 € net par mois et viser moins de 20 élèves par classe en primaire",
+   "pole_a": "Hausse générale des salaires",
+   "pole_b": "Pas de hausse générale",
+   "fig": "",
+   "fig_label": "",
+   "title": "Attal veut mieux payer les enseignants et moins de 20 élèves par classe — 17,9 élèves par enseignant en primaire, 13,3 dans l'UE",
+   "message": "Gabriel Attal (Renaissance) veut revaloriser les enseignants de 200 à 500 € net par mois et viser moins de 20 élèves par classe en primaire. En 2024, l'école primaire française compte 17,9 élèves par enseignant, contre 13,3 en moyenne dans l'UE.",
+   "quote": "« revalorisé de 200 euros net par mois, jusqu'à 500 euros net pour les milieux de carrière »",
+   "url": "https://magnitude.pub/numeros/2/reports/carte_14_attal_ecole.html",
+   "pos": {
+    "attal": [
+     1,
+     "B"
+    ],
+    "glucksmann": [
+     1,
+     "A"
+    ],
+    "le-pen": [
+     1,
+     "C"
+    ],
+    "lisnard": [
+     1,
+     "A"
+    ],
+    "melenchon": [
+     1,
+     "A"
+    ],
+    "philippe": [
+     1,
+     "A"
+    ],
+    "retailleau": [
+     -1,
+     "B",
+     "c"
+    ],
+    "roussel": [
+     1,
+     "C"
+    ],
+    "tondelier": [
+     1,
+     "A"
+    ]
+   },
+   "pole_c": "Hausse ciblée (mérite, missions)"
+  },
+  {
+   "id": "carte_15_tondelier_nucleaire",
+   "n": "15",
+   "num": "2",
+   "theme": "Énergie",
+   "centre": "tondelier",
+   "mesure": "Planifier la sortie du nucléaire : arrêter les nouveaux réacteurs EPR2 et SMR, fermer progressivement les centrales sur une vingtaine d'années",
+   "pole_a": "Planifier la sortie",
+   "pole_b": "Maintenir et construire de nouveaux réacteurs",
+   "fig": "",
+   "fig_label": "",
+   "title": "Tondelier veut planifier la sortie du nucléaire — l'atome produit 66,6 % de l'électricité française, 23,0 % dans l'UE",
+   "message": "Marine Tondelier (Les Écologistes) veut planifier la sortie du nucléaire : plus de nouveaux EPR2 ni SMR, et un arrêt des centrales étalé sur une vingtaine d'années. En 2024, le nucléaire a produit 66,6 % de l'électricité française, contre 23,0 % dans l'UE.",
+   "quote": "« Planifier la sortie du nucléaire. Mettre fin aux nouveaux programmes EPR-2 et SMR extrêmement dispendieux. »",
+   "url": "https://magnitude.pub/numeros/2/reports/carte_15_tondelier_nucleaire.html",
+   "pos": {
+    "glucksmann": [
+     -1,
+     "A"
+    ],
+    "le-pen": [
+     -1,
+     "A"
+    ],
+    "lisnard": [
+     -1,
+     "C"
+    ],
+    "melenchon": [
+     1,
+     "A"
+    ],
+    "philippe": [
+     -1,
+     "A"
+    ],
+    "retailleau": [
+     -1,
+     "B"
+    ],
+    "roussel": [
+     -1,
+     "C"
+    ],
+    "ruffin": [
+     -1,
+     "A"
+    ],
+    "tondelier": [
+     1,
+     "A"
+    ],
+    "villepin": [
+     -1,
+     "A"
+    ],
+    "zemmour": [
+     -1,
+     "C"
+    ]
+   }
+  },
+  {
+   "id": "carte_16_melenchon_otan",
+   "n": "16",
+   "num": "2",
+   "theme": "Défense",
+   "centre": "melenchon",
+   "mesure": "Sortir de l'OTAN, en commençant par son commandement militaire intégré",
+   "pole_a": "Quitter l'OTAN",
+   "pole_b": "Rester dans l'OTAN",
+   "fig": "",
+   "fig_label": "",
+   "title": "Mélenchon veut sortir de l'OTAN — 23 des 27 pays de l'UE en sont membres",
+   "message": "Jean-Luc Mélenchon (LFI) veut sortir de l'OTAN, en commençant par son commandement intégré. 23 des 27 pays de l'UE sont membres de l'Alliance ; la France consacre 1,9 % de son PIB à la défense, contre 1,5 % en moyenne dans l'UE (2024).",
+   "quote": "« Sortir de l'OTAN en commençant par son commandement intégré »",
+   "url": "https://magnitude.pub/numeros/2/reports/carte_16_melenchon_otan.html",
+   "pos": {
+    "le-pen": [
+     -1,
+     "B",
+     "c"
+    ],
+    "melenchon": [
+     1,
+     "A"
+    ],
+    "roussel": [
+     1,
+     "A"
+    ],
+    "tondelier": [
+     -1,
+     "A"
+    ],
+    "zemmour": [
+     1,
+     "C"
+    ]
+   },
+   "pole_c": "Quitter seulement le commandement intégré"
+  },
+  {
+   "id": "carte_17_retailleau_35h",
+   "n": "17",
+   "num": "2",
+   "theme": "Temps de travail",
+   "centre": "retailleau",
+   "mesure": "Sortir des 35 heures : laisser la négociation fixer le temps de travail et supprimer les cotisations au-delà de 1 623 heures par an",
+   "pole_a": "Sortir des 35 h (durée fixée par la négociation)",
+   "pole_b": "Garder les 35 h ou réduire le temps de travail",
+   "fig": "",
+   "fig_label": "",
+   "title": "Retailleau veut sortir des 35 heures — un salarié à temps plein travaille 37,0 h par semaine en France, 37,9 h dans l'UE",
+   "message": "Bruno Retailleau (LR) veut sortir des 35 heures : la négociation fixerait le temps de travail et les cotisations seraient supprimées au-delà de 1 623 heures par an (contre 1 607 heures de durée légale). En 2025, un salarié à temps plein travaille 37,0 h par semaine en France, 37,9 h dans l'UE.",
+   "quote": "« Nous proposons de libérer le temps de travail en supprimant toutes les cotisations sociales au-delà de 1 623 heures par an. »",
+   "url": "https://magnitude.pub/numeros/2/reports/carte_17_retailleau_35h.html",
+   "pos": {
+    "le-pen": [
+     -1,
+     "A"
+    ],
+    "lisnard": [
+     1,
+     "A"
+    ],
+    "melenchon": [
+     -1,
+     "A"
+    ],
+    "philippe": [
+     1,
+     "A"
+    ],
+    "retailleau": [
+     1,
+     "A"
+    ],
+    "roussel": [
+     -1,
+     "C"
+    ],
+    "tondelier": [
+     -1,
+     "A"
+    ]
+   }
+  },
+  {
+   "id": "carte_18_lisnard_effectifs",
+   "n": "18",
+   "num": "2",
+   "theme": "Fonction publique",
+   "centre": "lisnard",
+   "mesure": "Ne plus remplacer les départs de fonctionnaires, en commençant par les fonctions administratives, pour 80 Md€ d'économies dès la première année",
+   "pole_a": "Réduire les effectifs (non-remplacement des départs, suppressions de postes)",
+   "pole_b": "Maintenir ou augmenter les effectifs",
+   "fig": "",
+   "fig_label": "",
+   "title": "Lisnard veut ne plus remplacer les départs de fonctionnaires — les administrations publiques dépensent 57,3 % du PIB en France, 49,4 % dans l'UE",
+   "message": "David Lisnard (Nouvelle Énergie) veut ne plus remplacer les départs de fonctionnaires, en commençant par les fonctions administratives et sans licenciements, pour 80 Md€ d'économies dès la première année. En 2025, les administrations publiques dépensent 57,3 % du PIB en France, contre 49,4 % en moyenne dans l'UE (Eurostat).",
+   "quote": "« Nous réduirons la masse salariale publique en ne remplaçant plus l’ensemble des 500 000 départs annuels. »",
+   "url": "https://magnitude.pub/numeros/2/reports/carte_18_lisnard_effectifs.html",
+   "pos": {
+    "attal": [
+     1,
+     "B"
+    ],
+    "lisnard": [
+     1,
+     "A"
+    ],
+    "philippe": [
+     1,
+     "B"
+    ],
+    "retailleau": [
+     1,
+     "C"
+    ]
+   }
   }
  ],
  "cands": {
@@ -613,6 +916,10 @@
     "url": "https://lcp.fr/actualites/primaire-socialiste-vainqueur-des-le-1er-tour-raphael-glucksmann-sera-le-candidat-de-la",
     "short": "Plus candidat"
    }
+  },
+  "lisnard": {
+   "name": "David Lisnard",
+   "tag": "Droite — Nouvelle Énergie"
   }
  },
  "fiches": {
@@ -1554,6 +1861,730 @@
      "url": "https://dejure.org/gesetze/AufenthG/5.html"
     }
    ]
+  },
+  "13": {
+   "essentiel": "Porter progressivement l'<strong>âge de départ à 65 ans</strong> et la <strong>durée de cotisation à 45 ans</strong> en moins de dix ans. Depuis la suspension de la réforme de 2023, l'âge légal est figé à <strong>62 ans et 9 mois</strong> jusqu'en janvier 2028 : 65 ans, c'est <strong>2 ans et 3 mois de plus</strong>.",
+   "chiffres": [
+    {
+     "value": "65 ans",
+     "label": "âge de départ visé, contre 62 ans et 9 mois aujourd'hui (âge figé par la suspension de la réforme de 2023, jusqu'en janvier 2028)"
+    },
+    {
+     "value": "45 ans",
+     "label": "durée de cotisation visée, à atteindre en moins de dix ans"
+    }
+   ],
+   "europe_texte": "En 2025, <strong>61,7 %</strong> des 55-64 ans ont un emploi en France, contre <strong>66,4 %</strong> en moyenne dans l'UE et <strong>75,3 %</strong> en Allemagne (<a href=\"https://ec.europa.eu/eurostat/databrowser/view/tesem050/default/table?lang=fr\">Eurostat</a>).",
+   "europe_chiffres": [
+    {
+     "value": "61,7 %",
+     "label": "France — taux d'emploi des 55-64 ans (Eurostat, 2025)"
+    },
+    {
+     "value": "66,4 %",
+     "label": "moyenne UE-27 (Eurostat, 2025)"
+    },
+    {
+     "value": "75,3 %",
+     "label": "Allemagne — même indicateur (Eurostat, 2025)"
+    }
+   ],
+   "europe": {
+    "titre": "Taux d'emploi des 55-64 ans en 2025",
+    "unite": "%",
+    "max": 100,
+    "ref": {
+     "label": "Moyenne UE-27",
+     "value": 66.4
+    },
+    "lignes": [
+     {
+      "label": "Suède",
+      "value": 78.3,
+      "value_max": null,
+      "focus": false,
+      "note": ""
+     },
+     {
+      "label": "Pays-Bas",
+      "value": 75.8,
+      "value_max": null,
+      "focus": false,
+      "note": ""
+     },
+     {
+      "label": "Allemagne",
+      "value": 75.3,
+      "value_max": null,
+      "focus": false,
+      "note": ""
+     },
+     {
+      "label": "Danemark",
+      "value": 74.7,
+      "value_max": null,
+      "focus": false,
+      "note": ""
+     },
+     {
+      "label": "Espagne",
+      "value": 62.4,
+      "value_max": null,
+      "focus": false,
+      "note": ""
+     },
+     {
+      "label": "France",
+      "value": 61.7,
+      "value_max": null,
+      "focus": true,
+      "note": "Eurostat tesem050, 2025"
+     },
+     {
+      "label": "Belgique",
+      "value": 61.5,
+      "value_max": null,
+      "focus": false,
+      "note": ""
+     },
+     {
+      "label": "Italie",
+      "value": 61.2,
+      "value_max": null,
+      "focus": false,
+      "note": ""
+     },
+     {
+      "label": "Pologne",
+      "value": 60.1,
+      "value_max": null,
+      "focus": false,
+      "note": ""
+     }
+    ]
+   },
+   "sources": [
+    {
+     "nom": "Eurostat — Taux d'emploi des travailleurs âgés, 55-64 ans (tesem050), mise à jour du 10/09/2026",
+     "url": "https://ec.europa.eu/eurostat/databrowser/view/tesem050/default/table?lang=fr"
+    },
+    {
+     "nom": "OFCE (M. Dauvin) — La réforme des retraites, sa suspension et la population active : âge légal figé à 62 ans et 9 mois jusqu'en janvier 2028",
+     "url": "https://www.ofce.sciences-po.fr/blog2024/fr/2026/20260129_MD/20260129_MD.fr.pdf"
+    }
+   ]
+  },
+  "14": {
+   "essentiel": "Revaloriser les enseignants de <strong>200 € net par mois</strong>, jusqu'à <strong>500 € net</strong> en milieu de carrière, et viser <strong>moins de 20 élèves par classe</strong> en primaire en profitant de la baisse du nombre d'élèves : <strong>560 800 élèves de moins</strong> dans le premier degré attendus entre 2024 et 2029.",
+   "chiffres": [
+    {
+     "value": "+200 à 500 €",
+     "label": "net par mois pour les enseignants, le haut de la fourchette en milieu de carrière (coût annoncé : 2,5 Md€)"
+    },
+    {
+     "value": "−560 800",
+     "label": "élèves dans le premier degré entre les rentrées 2024 et 2029 (prévision DEPP)"
+    }
+   ],
+   "europe_texte": "En 2024, l'école primaire française compte <strong>17,9 élèves par enseignant</strong>, contre <strong>13,3</strong> en moyenne dans l'UE : c'est l'un des taux les plus élevés d'Europe, derrière la Roumanie (<a href=\"https://ec.europa.eu/eurostat/databrowser/view/educ_uoe_perp04/default/table?lang=fr\">Eurostat</a> ; un ratio d'encadrement n'est pas une taille de classe).",
+   "europe_chiffres": [
+    {
+     "value": "17,9",
+     "label": "France — élèves par enseignant en primaire (Eurostat, 2024)"
+    },
+    {
+     "value": "13,3",
+     "label": "moyenne UE-27 (Eurostat, 2024)"
+    },
+    {
+     "value": "10,5",
+     "label": "Italie — même indicateur (Eurostat, 2024)"
+    }
+   ],
+   "europe": {
+    "titre": "Élèves par enseignant dans le primaire, 2024",
+    "unite": "",
+    "max": 20,
+    "ref": {
+     "label": "Moyenne UE-27",
+     "value": 13.3
+    },
+    "lignes": [
+     {
+      "label": "Roumanie",
+      "value": 18.2,
+      "value_max": null,
+      "focus": false,
+      "note": ""
+     },
+     {
+      "label": "France",
+      "value": 17.9,
+      "value_max": null,
+      "focus": true,
+      "note": "Eurostat : définition différente (voir métadonnées)"
+     },
+     {
+      "label": "Tchéquie",
+      "value": 17.9,
+      "value_max": null,
+      "focus": false,
+      "note": ""
+     },
+     {
+      "label": "Pays-Bas",
+      "value": 16.3,
+      "value_max": null,
+      "focus": false,
+      "note": ""
+     },
+     {
+      "label": "Allemagne",
+      "value": 15.2,
+      "value_max": null,
+      "focus": false,
+      "note": ""
+     },
+     {
+      "label": "Pologne",
+      "value": 13.0,
+      "value_max": null,
+      "focus": false,
+      "note": ""
+     },
+     {
+      "label": "Suède",
+      "value": 12.4,
+      "value_max": null,
+      "focus": false,
+      "note": ""
+     },
+     {
+      "label": "Espagne",
+      "value": 11.9,
+      "value_max": null,
+      "focus": false,
+      "note": ""
+     },
+     {
+      "label": "Italie",
+      "value": 10.5,
+      "value_max": null,
+      "focus": false,
+      "note": ""
+     }
+    ]
+   },
+   "sources": [
+    {
+     "nom": "Eurostat — Élèves par enseignant selon le niveau d'enseignement (educ_uoe_perp04), CITE 1, 2024, mise à jour du 05/08/2026",
+     "url": "https://ec.europa.eu/eurostat/databrowser/view/educ_uoe_perp04/default/table?lang=fr"
+    },
+    {
+     "nom": "DEPP — Prévisions d'effectifs d'élèves du premier degré : la baisse devrait se poursuivre jusqu'en 2029 (Note d'information 25-12, 18/03/2025)",
+     "url": "https://www.education.gouv.fr/depp/previsions-d-effectifs-d-eleves-du-premier-degre-la-baisse-devrait-se-poursuivre-jusqu-en-2029-452706"
+    }
+   ]
+  },
+  "15": {
+   "essentiel": "<strong>Planifier la sortie du nucléaire</strong> : arrêter les nouveaux programmes EPR2 et SMR et étaler l'arrêt des centrales existantes sur une vingtaine d'années. En 2024, le nucléaire a produit <strong>66,6 %</strong> de l'électricité française.",
+   "chiffres": [
+    {
+     "value": "66,6 %",
+     "label": "part du nucléaire dans la production d'électricité en France en 2024 (Eurostat)"
+    },
+    {
+     "value": "~20 ans",
+     "label": "durée sur laquelle serait étalé l'arrêt des centrales existantes"
+    }
+   ],
+   "europe_texte": "Le nucléaire pèse <strong>23,0 %</strong> de la production d'électricité de l'UE. La France est le pays le plus dépendant de l'atome, devant la Slovaquie (<strong>60,6 %</strong>) ; l'Allemagne et l'Italie n'en produisent plus (<a href=\"https://ec.europa.eu/eurostat/databrowser/view/nrg_bal_peh/default/table?lang=fr\">Eurostat</a>, 2024).",
+   "europe_chiffres": [
+    {
+     "value": "66,6 %",
+     "label": "France — part du nucléaire dans la production d'électricité (Eurostat, 2024)"
+    },
+    {
+     "value": "23,0 %",
+     "label": "Union européenne (Eurostat, 2024)"
+    },
+    {
+     "value": "0 %",
+     "label": "Allemagne — aucune production nucléaire en 2024 (Eurostat)"
+    }
+   ],
+   "europe": {
+    "titre": "Part du nucléaire dans la production d'électricité, 2024",
+    "unite": "%",
+    "max": 100,
+    "ref": {
+     "label": "UE-27",
+     "value": 23.0
+    },
+    "lignes": [
+     {
+      "label": "France",
+      "value": 66.6,
+      "value_max": null,
+      "focus": true,
+      "note": "380 451 GWh sur 570 904 GWh"
+     },
+     {
+      "label": "Slovaquie",
+      "value": 60.6,
+      "value_max": null,
+      "focus": false,
+      "note": ""
+     },
+     {
+      "label": "Hongrie",
+      "value": 42.2,
+      "value_max": null,
+      "focus": false,
+      "note": ""
+     },
+     {
+      "label": "Bulgarie",
+      "value": 40.9,
+      "value_max": null,
+      "focus": false,
+      "note": ""
+     },
+     {
+      "label": "Belgique",
+      "value": 40.5,
+      "value_max": null,
+      "focus": false,
+      "note": ""
+     },
+     {
+      "label": "Tchéquie",
+      "value": 40.2,
+      "value_max": null,
+      "focus": false,
+      "note": ""
+     },
+     {
+      "label": "Finlande",
+      "value": 39.2,
+      "value_max": null,
+      "focus": false,
+      "note": ""
+     },
+     {
+      "label": "Suède",
+      "value": 29.4,
+      "value_max": null,
+      "focus": false,
+      "note": ""
+     },
+     {
+      "label": "Espagne",
+      "value": 18.9,
+      "value_max": null,
+      "focus": false,
+      "note": ""
+     },
+     {
+      "label": "Allemagne",
+      "value": 0,
+      "value_max": null,
+      "focus": false,
+      "note": ""
+     }
+    ]
+   },
+   "sources": [
+    {
+     "nom": "Eurostat — Production brute d'électricité par combustible (nrg_bal_peh), 2024, mise à jour du 02/06/2026",
+     "url": "https://ec.europa.eu/eurostat/databrowser/view/nrg_bal_peh/default/table?lang=fr"
+    }
+   ]
+  },
+  "16": {
+   "essentiel": "<strong>Sortir de l'OTAN</strong>, en commençant par son commandement militaire intégré. L'Alliance compte <strong>32 pays</strong> depuis l'adhésion de la Suède en mars 2024, dont <strong>23 des 27 pays de l'UE</strong>.",
+   "chiffres": [
+    {
+     "value": "32",
+     "label": "pays membres de l'OTAN depuis l'adhésion de la Suède en mars 2024"
+    },
+    {
+     "value": "23 / 27",
+     "label": "pays de l'UE membres de l'OTAN ; ne le sont pas : Autriche, Irlande, Malte, Chypre"
+    }
+   ],
+   "europe_texte": "<strong>23 des 27 pays de l'UE</strong> sont membres de l'OTAN ; l'Autriche, l'Irlande, Malte et Chypre ne le sont pas. En 2024, la France consacre <strong>1,9 % de son PIB</strong> à la défense (dépenses publiques), contre <strong>1,5 %</strong> en moyenne dans l'UE (<a href=\"https://ec.europa.eu/eurostat/databrowser/view/gov_10a_exp/default/table?lang=fr\">Eurostat</a>).",
+   "europe_chiffres": [
+    {
+     "value": "1,9 %",
+     "label": "France — dépenses publiques de défense en % du PIB (Eurostat, 2024, provisoire)"
+    },
+    {
+     "value": "1,5 %",
+     "label": "moyenne UE-27 (Eurostat, 2024)"
+    },
+    {
+     "value": "23 / 27",
+     "label": "pays de l'UE membres de l'OTAN"
+    }
+   ],
+   "europe": {
+    "titre": "Dépenses publiques de défense en % du PIB, 2024 (COFOG)",
+    "unite": "%",
+    "max": 4,
+    "ref": {
+     "label": "Moyenne UE-27",
+     "value": 1.5
+    },
+    "lignes": [
+     {
+      "label": "Estonie",
+      "value": 3.7,
+      "value_max": null,
+      "focus": false,
+      "note": ""
+     },
+     {
+      "label": "Pologne",
+      "value": 2.9,
+      "value_max": null,
+      "focus": false,
+      "note": ""
+     },
+     {
+      "label": "Lettonie",
+      "value": 2.7,
+      "value_max": null,
+      "focus": false,
+      "note": ""
+     },
+     {
+      "label": "Suède",
+      "value": 2.0,
+      "value_max": null,
+      "focus": false,
+      "note": ""
+     },
+     {
+      "label": "France",
+      "value": 1.9,
+      "value_max": null,
+      "focus": true,
+      "note": "provisoire"
+     },
+     {
+      "label": "Chypre (hors OTAN)",
+      "value": 1.8,
+      "value_max": null,
+      "focus": false,
+      "note": ""
+     },
+     {
+      "label": "Allemagne",
+      "value": 1.4,
+      "value_max": null,
+      "focus": false,
+      "note": ""
+     },
+     {
+      "label": "Italie",
+      "value": 1.3,
+      "value_max": null,
+      "focus": false,
+      "note": ""
+     },
+     {
+      "label": "Espagne",
+      "value": 0.9,
+      "value_max": null,
+      "focus": false,
+      "note": ""
+     },
+     {
+      "label": "Autriche (hors OTAN)",
+      "value": 0.7,
+      "value_max": null,
+      "focus": false,
+      "note": ""
+     },
+     {
+      "label": "Irlande (hors OTAN)",
+      "value": 0.1,
+      "value_max": null,
+      "focus": false,
+      "note": ""
+     }
+    ]
+   },
+   "sources": [
+    {
+     "nom": "Eurostat — Dépenses des administrations publiques par fonction (gov_10a_exp), défense (GF02), 2024, mise à jour du 21/07/2026",
+     "url": "https://ec.europa.eu/eurostat/databrowser/view/gov_10a_exp/default/table?lang=fr"
+    },
+    {
+     "nom": "OTAN — « Sweden officially joins NATO » (07/03/2024) : 32 pays membres",
+     "url": "https://www.nato.int/cps/en/natohq/news_223446.htm"
+    }
+   ]
+  },
+  "17": {
+   "essentiel": "<strong>Sortir des 35 heures</strong> : laisser la négociation collective organiser le temps de travail et supprimer toutes les cotisations sociales au-delà de <strong>1 623 heures par an</strong>, contre une durée légale de <strong>1 607 heures</strong> aujourd'hui, soit deux jours de travail rémunérés en plus.",
+   "chiffres": [
+    {
+     "value": "1 623 h",
+     "label": "seuil annuel au-delà duquel les cotisations sociales seraient supprimées (hors CSG et CRDS), contre 1 607 h de durée légale"
+    },
+    {
+     "value": "+16 h",
+     "label": "par an, soit deux jours de travail rémunérés en plus"
+    }
+   ],
+   "europe_texte": "En 2025, un salarié à temps plein travaille en moyenne <strong>37,0 heures</strong> par semaine en France, contre <strong>37,9</strong> dans l'UE et <strong>38,4</strong> en Allemagne ; les Pays-Bas et la Belgique sont en dessous de la France (<a href=\"https://ec.europa.eu/eurostat/databrowser/view/lfsa_ewhan2/default/table?lang=fr\">Eurostat</a>).",
+   "europe_chiffres": [
+    {
+     "value": "37,0 h",
+     "label": "France — heures effectives par semaine, salariés à temps plein (Eurostat, 2025)"
+    },
+    {
+     "value": "37,9 h",
+     "label": "moyenne UE-27 (Eurostat, 2025)"
+    },
+    {
+     "value": "38,4 h",
+     "label": "Allemagne — même indicateur (Eurostat, 2025)"
+    }
+   ],
+   "europe": {
+    "titre": "Heures effectives par semaine, salariés à temps plein, 2025",
+    "unite": "h",
+    "max": 40,
+    "ref": {
+     "label": "Moyenne UE-27",
+     "value": 37.9
+    },
+    "lignes": [
+     {
+      "label": "Pologne",
+      "value": 39.0,
+      "value_max": null,
+      "focus": false,
+      "note": ""
+     },
+     {
+      "label": "Grèce",
+      "value": 38.7,
+      "value_max": null,
+      "focus": false,
+      "note": ""
+     },
+     {
+      "label": "Allemagne",
+      "value": 38.4,
+      "value_max": null,
+      "focus": false,
+      "note": ""
+     },
+     {
+      "label": "Portugal",
+      "value": 38.1,
+      "value_max": null,
+      "focus": false,
+      "note": ""
+     },
+     {
+      "label": "Espagne",
+      "value": 37.8,
+      "value_max": null,
+      "focus": false,
+      "note": ""
+     },
+     {
+      "label": "Italie",
+      "value": 37.5,
+      "value_max": null,
+      "focus": false,
+      "note": ""
+     },
+     {
+      "label": "Suède",
+      "value": 37.4,
+      "value_max": null,
+      "focus": false,
+      "note": ""
+     },
+     {
+      "label": "France",
+      "value": 37.0,
+      "value_max": null,
+      "focus": true,
+      "note": "rupture de série en 2024 (Eurostat)"
+     },
+     {
+      "label": "Pays-Bas",
+      "value": 36.4,
+      "value_max": null,
+      "focus": false,
+      "note": ""
+     },
+     {
+      "label": "Belgique",
+      "value": 36.3,
+      "value_max": null,
+      "focus": false,
+      "note": ""
+     }
+    ]
+   },
+   "sources": [
+    {
+     "nom": "Eurostat — Heures effectives hebdomadaires, salariés à temps plein (lfsa_ewhan2), 2025, mise à jour du 10/09/2026",
+     "url": "https://ec.europa.eu/eurostat/databrowser/view/lfsa_ewhan2/default/table?lang=fr"
+    }
+   ]
+  },
+  "18": {
+   "essentiel": "La mesure s'appuie sur « cinq cent mille départs annuels » ; l'Insee compte <strong>499 400 sorties</strong> d'agents civils en 2024 (<strong>9,0 %</strong> des effectifs), un ordre de grandeur voisin.",
+   "chiffres": [
+    {
+     "value": "499 400",
+     "label": "sorties d'agents civils en 2024, soit 9,0 % des effectifs : ordre de grandeur des « cinq cent mille départs annuels » cités (Insee)"
+    }
+   ],
+   "europe_texte": "En 2025, les administrations publiques dépensent <strong>57,3 %</strong> du PIB en France, contre <strong>49,4 %</strong> en moyenne dans l'UE et <strong>50,1 %</strong> en Allemagne (<a href=\"https://ec.europa.eu/eurostat/databrowser/view/tec00023/default/table?lang=fr\">Eurostat</a>). Parmi les pays affichés, seule la Finlande dépense davantage (57,5 %). Cet indicateur mesure la dépense, pas le nombre d'agents.",
+   "europe_chiffres": [
+    {
+     "value": "57,3 %",
+     "label": "France — dépenses des administrations publiques en % du PIB (Eurostat, 2025)"
+    },
+    {
+     "value": "49,4 %",
+     "label": "moyenne UE-27 (Eurostat, 2025)"
+    },
+    {
+     "value": "57,5 %",
+     "label": "Finlande — même indicateur (Eurostat, 2025)"
+    }
+   ],
+   "europe": {
+    "titre": "Dépenses des administrations publiques en 2025, % du PIB",
+    "unite": "%",
+    "max": 70,
+    "ref": {
+     "label": "Moyenne UE-27",
+     "value": 49.4
+    },
+    "lignes": [
+     {
+      "label": "Finlande",
+      "value": 57.5,
+      "value_max": null,
+      "focus": false,
+      "note": ""
+     },
+     {
+      "label": "France",
+      "value": 57.3,
+      "value_max": null,
+      "focus": true,
+      "note": "Eurostat tec00023, 2025"
+     },
+     {
+      "label": "Autriche",
+      "value": 54.6,
+      "value_max": null,
+      "focus": false,
+      "note": ""
+     },
+     {
+      "label": "Belgique (prov.)",
+      "value": 54.4,
+      "value_max": null,
+      "focus": false,
+      "note": ""
+     },
+     {
+      "label": "Italie",
+      "value": 51.1,
+      "value_max": null,
+      "focus": false,
+      "note": ""
+     },
+     {
+      "label": "Pologne",
+      "value": 50.9,
+      "value_max": null,
+      "focus": false,
+      "note": ""
+     },
+     {
+      "label": "Allemagne",
+      "value": 50.1,
+      "value_max": null,
+      "focus": false,
+      "note": ""
+     },
+     {
+      "label": "Suède",
+      "value": 49.3,
+      "value_max": null,
+      "focus": false,
+      "note": ""
+     },
+     {
+      "label": "Grèce",
+      "value": 47.8,
+      "value_max": null,
+      "focus": false,
+      "note": ""
+     },
+     {
+      "label": "Danemark",
+      "value": 47.2,
+      "value_max": null,
+      "focus": false,
+      "note": ""
+     },
+     {
+      "label": "Espagne",
+      "value": 45.3,
+      "value_max": null,
+      "focus": false,
+      "note": ""
+     },
+     {
+      "label": "Pays-Bas (prov.)",
+      "value": 45.2,
+      "value_max": null,
+      "focus": false,
+      "note": ""
+     },
+     {
+      "label": "Portugal",
+      "value": 42.3,
+      "value_max": null,
+      "focus": false,
+      "note": ""
+     },
+     {
+      "label": "Irlande",
+      "value": 22.3,
+      "value_max": null,
+      "focus": false,
+      "note": ""
+     }
+    ]
+   },
+   "sources": [
+    {
+     "nom": "Eurostat / Commission européenne",
+     "url": "https://ec.europa.eu/eurostat/databrowser/view/tec00023/default/table?lang=fr"
+    },
+    {
+     "nom": "Insee",
+     "url": "https://www.insee.fr/fr/statistiques/8732435"
+    }
+   ]
   }
- }
+ },
+ "semaine": 45
 }

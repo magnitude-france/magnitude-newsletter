@@ -37,6 +37,14 @@ FIGURES = {
     "10": ("1 Md€/an", "pendant cinq ans pour les salles des fêtes et maisons du peuple"),
     "11": ("4 Md$/an", "pour une DARPA européenne (la DARPA américaine : ~4,3 Md$)"),
     "12": ("12,4 %", "de chômage chez les immigrés (2025), contre 7,7 % pour tous"),
+    # Numéro #2 (semaine 45) : chiffres repris des résumés et chiffres clés des analyses,
+    # choisis sans nom de candidat (le recto reste anonyme).
+    "13": ("65 ans", "âge de départ visé, contre 62 ans et 9 mois aujourd'hui"),
+    "14": ("+200 à 500 €", "net par mois pour les enseignants, selon l'avancement de carrière"),
+    "15": ("66,6 %", "de l'électricité produite en France vient du nucléaire (2024)"),
+    "16": ("23 / 27", "pays de l'UE sont membres de l'OTAN"),
+    "17": ("1 623 h", "par an : seuil au-delà duquel les cotisations seraient supprimées (1 607 h légales)"),
+    "18": ("57,3 %", "du PIB : dépenses publiques en France en 2025, contre 49,4 % dans l'UE"),
 }
 
 ICONS = {  # pictogrammes génériques, tracés à la main (24×24, trait)
@@ -52,6 +60,12 @@ ICONS = {  # pictogrammes génériques, tracés à la main (24×24, trait)
     "10": "M3 20V9l9-5 9 5v11M3 20h18M8 20v-5h8v5M6 9.5c2 2 4 2 6 0 2 2 4 2 6 0",
     "11": "M9 3h6M10 3v6L5 19a1 1 0 0 0 1 1.5h12A1 1 0 0 0 19 19l-5-10V3M7.5 14h9",
     "12": "M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM3 12h18M12 3c2.5 2.5 3.5 5.5 3.5 9s-1 6.5-3.5 9c-2.5-2.5-3.5-5.5-3.5-9S9.5 5.5 12 3z",
+    "13": "M7 3h10M7 21h10M8 3v2c0 3 8 4 8 7s-8 4-8 7v2M16 3v2c0 3-8 4-8 7s8 4 8 7v2",
+    "14": "M3 6c3-1.5 6-1.5 9 0v13c-3-1.5-6-1.5-9 0zM21 6c-3-1.5-6-1.5-9 0v13c3-1.5 6-1.5 9 0z",
+    "15": "M13 2 4 14h7l-1 8 9-12h-7z",
+    "16": "M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM12 7l1.5 3.2 3.5.4-2.6 2.4.7 3.5L12 14.8l-3.1 1.7.7-3.5L7 10.6l3.5-.4z",
+    "17": "M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM12 7v5l3 2",
+    "18": "M4 8h16v11H4zM9 8V5h6v3M4 13h16M11 12h2v2h-2z",
 }
 
 # Teintes de maison : palette propre à Magnitude (tons « parfum », aucune
@@ -68,8 +82,14 @@ FORBID = {
     "tondelier": {"Olive", "Lichen", "Sauge"},
     "melenchon": {"Prune", "Rose thé", "Corail"}, "roussel": {"Prune", "Rose thé", "Corail"},
     "faure": {"Prune", "Rose thé", "Corail"}, "glucksmann": {"Prune", "Rose thé", "Corail"},
-    "ruffin": {"Rose thé", "Corail"}, "attal": {"Ocre"},
+    "ruffin": {"Rose thé", "Corail"}, "attal": {"Ocre"}, "lisnard": {"Ardoise", "Encre"},
 }
+# Les 12 teintes ont été tirées pour les 12 candidats du lancement : on ne refait pas le
+# tirage quand un candidat arrive (les maisons existantes gardent leur couleur). Un nouveau
+# candidat reçoit, par ordre alphabétique, la première teinte supplémentaire compatible.
+FONDATEURS = ["attal", "faure", "glucksmann", "le-pen", "melenchon", "philippe", "retailleau",
+              "roussel", "ruffin", "tondelier", "villepin", "zemmour"]
+TEINTES_SUPPL = [("Céladon", 175)]
 
 
 def draw_tones(cands):
@@ -82,13 +102,33 @@ def draw_tones(cands):
             return m
 
 
+def all_tones(cands):
+    tones = draw_tones(FONDATEURS)
+    libres = list(TEINTES_SUPPL)
+    for c in sorted(set(cands) - set(FONDATEURS)):
+        t = next(t for t in libres if t[0] not in FORBID.get(c, set()))
+        libres.remove(t)
+        tones[c] = t
+    return tones
+
+
+def monogramme(nom, size=160):
+    """Candidat sans portrait fourni : monogramme neutre (même rendu que magnitude-analysis)."""
+    ini = "".join(m[0] for m in nom.split() if m[0].isupper())[:2]
+    svg = (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {size} {size}"><rect width="{size}" height="{size}" fill="#E1E0D9"/>'
+           f'<text x="50%" y="54%" text-anchor="middle" dominant-baseline="middle" font-family="Georgia, serif" font-weight="700" '
+           f'font-size="{size * 0.4:.0f}" fill="#52514E">{ini}</text></svg>')
+    return "data:image/svg+xml;base64," + base64.b64encode(svg.encode()).decode()
+
+
 def main():
     data = json.loads((HERE / "deck-data.json").read_text(encoding="utf-8"))
     cands = sorted(data["cands"])
-    tones = draw_tones(cands)
+    tones = all_tones(cands)
     for slug in cands:
-        png = (ROOT / "src" / "candidats" / f"{slug}.png").read_bytes()
-        data["cands"][slug]["img"] = "data:image/png;base64," + base64.b64encode(png).decode()
+        png = ROOT / "src" / "candidats" / f"{slug}.png"
+        data["cands"][slug]["img"] = ("data:image/png;base64," + base64.b64encode(png.read_bytes()).decode()
+                                      if png.exists() else monogramme(data["cands"][slug]["name"]))
         data["cands"][slug]["tone"] = tones[slug][0]
         data["cands"][slug]["hue"] = tones[slug][1]
     for card in data["cards"]:

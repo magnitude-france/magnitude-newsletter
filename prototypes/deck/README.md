@@ -47,6 +47,10 @@ l'ancienne accueil Observable est servie à /newsletter.
   classement de tous les candidats toujours visible.
 - Mon deck : bloc « Vos priorités » (modifiable), filtres du recueil par
   choix (Aligné, Désaligné, J'aimerais, M'en fous, à trancher).
+- « Redistribuer une pioche » (fin du paquet et Mon deck) : les mesures sont
+  remélangées (ordre gardé dans `localStorage`, `order`) et se rejouent depuis
+  le début ; les choix sont effacés, les priorités gardées. « Tout
+  recommencer » rejoue dans l'ordre des numéros.
 - Couleur de deck qui bascule en direct quand le candidat de tête change ;
   « Le Grand Tri » après les 6 cartes de la semaine.
 - Onglets Deck · Recherche (bureau des enquêtes) · La Maison Magnitude

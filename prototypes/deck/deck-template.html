@@ -830,6 +830,11 @@ button, a, .folio, .parch, .lrow, .person, .cm-item, .wl-item, .mini, .scr-filte
 .card .c-foot { justify-content: center; padding-top: 1.6cqh; margin-top: auto; }
 .card .info-btn { font-family: var(--sans); font-size: clamp(11px, 3.4cqw, 13.5px); white-space: nowrap; }
 .pad.locked button { opacity: .45; }
+/* Redistribuer une pioche : les cartes arrivent comme distribuées (backwards : le glisser reprend la main dès la fin) */
+.stage.deal .card { animation: dealIn .6s cubic-bezier(.2,.8,.2,1) backwards; }
+.stage.deal .card.next { animation-delay: .1s; }
+@keyframes dealIn { from { transform: translate(-45%, 60%) rotate(-14deg) scale(.7); opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .stage.deal .card { animation: none; } }
 /* Petite carte (petit écran, guide affiché) : on allège le graphique plutôt que de déborder */
 @container (max-height: 470px) { .mchart .eu .bar-row.mid { display: none; } .card .fig span { font-size: clamp(10px, 3.2cqw, 12px); } }
 @container (max-height: 360px) { .card .fig span, .mchart .eu .legend { display: none; } .hook { font-size: clamp(16px, 7.2cqw, 32px); } }
@@ -1190,14 +1195,22 @@ button, a, .folio, .parch, .lrow, .person, .cm-item, .wl-item, .mini, .scr-filte
 
   // ---------- Pile de cartes ----------
   var stage = $("#stage"), top = null, busy = false;
-  function queue() { return ORDER.filter(function (c) { return !S.dec[c.id]; }); }
+  // Ordre de pioche : celui des numéros, ou celui d'une pioche redistribuée (S.order, 2026-10-30).
+  // Une carte parue après la redistribution passe en tête, comme les nouveautés de la semaine.
+  function drawOrder() {
+    if (!S.order) return ORDER;
+    var o = S.order.filter(function (id) { return byId[id]; }).map(function (id) { return byId[id]; });
+    return ORDER.filter(function (c) { return o.indexOf(c) < 0; }).concat(o);
+  }
+  function queue() { return drawOrder().filter(function (c) { return !S.dec[c.id]; }); }
   function renderStack() {
     Array.prototype.slice.call(stage.querySelectorAll(".card,.done")).forEach(function (n) { n.remove(); });
     var q = queue();
     $("#pad").style.visibility = q.length ? "visible" : "hidden";
     if (!q.length) {
-      stage.appendChild(el('<div class="done"><div><h2>Galaxie affinée au maximum.</h2><p style="color:var(--ink-2);margin:0 0 14px">Les ' + CARDS.length + ' cartes sont tranchées. Six nouvelles cartes arrivent chaque semaine pour la préciser encore ; d\'ici là, vous pouvez changer d\'avis depuis « Mon deck ».</p><button class="btn primary" id="go-mine">Voir mon deck</button></div></div>'));
+      stage.appendChild(el('<div class="done"><div><h2>Galaxie affinée au maximum.</h2><p style="color:var(--ink-2);margin:0 0 14px">Les ' + CARDS.length + ' cartes sont tranchées. Six nouvelles cartes arrivent chaque semaine pour la préciser encore ; d\'ici là, vous pouvez changer d\'avis depuis « Mon deck ».</p><div class="row-btns"><button class="btn" id="go-redeal">Redistribuer une pioche</button><button class="btn primary" id="go-mine">Voir mon deck</button></div></div></div>'));
       $("#go-mine").onclick = function () { showSeg("mine"); };
+      $("#go-redeal").onclick = redealSheet;
       top = null; return;
     }
     if (q[1]) { var nx = el(cardHTML(q[1])); nx.classList.add("next"); stage.appendChild(nx); }
@@ -1582,7 +1595,7 @@ button, a, .folio, .parch, .lrow, .person, .cm-item, .wl-item, .mini, .scr-filte
     var stx = deckStats();
     var nIn = CARDS.filter(inScore).length;
     var note = '<aside class="parch nb"><b>Nota bene.</b> Seules les ' + nIn + ' cartes « dans le score » (au moins ' + SEUIL_DOC + ' candidats sur ' + SLUGS.length + ' documentés, dont ' + SEUIL_AB + ' en niveau A ou B) comptent dans votre galaxie ; les autres gardent votre avis sans le compter. Les positions des candidats sont documentées pour ' + stx.doc + " cases sur " + stx.tot + " (" + Math.round(stx.doc / stx.tot * 100) + " %). Avec ces trous, le calcul peut avantager certains candidats : ce classement reste indicatif tant que 6 cartes ne réunissent pas au moins 8 positions documentées et qu'un test de neutralité n'est pas passé.</aside>";
-    var tools = '<div class="quill-tools"><button id="m-copy">Copier mon registre</button><button id="m-import">Importer un registre</button><button id="m-reset">Tout recommencer</button><button id="m-intro">Revoir l\'introduction</button></div>';
+    var tools = '<div class="quill-tools"><button id="m-copy">Copier mon registre</button><button id="m-import">Importer un registre</button><button id="m-redeal">Redistribuer une pioche</button><button id="m-reset">Tout recommencer</button><button id="m-intro">Revoir l\'introduction</button></div>';
     var near = sc.list.filter(function (r) { return r.n >= MIN_N && r.s !== L; }).slice(0, 3).map(function (r) { return CANDS[r.s].name + " (" + Math.round(r.pct * 100) + " %)"; });
     var cosmosLbl = (L ? "Votre galaxie : " + houseLabel(L) + ". " : "Pas encore de galaxie de référence. ") + (near.length ? "Ensuite : " + near.join(", ") + "." : "");
     var cosmos = '<section class="cosmos" aria-label="Votre galaxie"><div class="cosmos-in"><canvas id="cosmos" role="img" aria-label="' + esc(cosmosLbl) + '"></canvas><span class="ttl">Votre galaxie</span><span class="sub">' + (L ? esc(houseLabel(L)) + " au centre" : decided ? "Encore trop peu de cartes communes" : "Tranchez des cartes pour la voir bouger") + "</span></div></section>" +
@@ -1597,7 +1610,7 @@ button, a, .folio, .parch, .lrow, .person, .cm-item, .wl-item, .mini, .scr-filte
     $("#rk-toggle").onclick = function () { rankMode = !rankMode; var y = $("#mine").scrollTop; renderMine(); $("#mine").scrollTop = y; if (rankMode) toast("Classez vos promesses : la plus importante en haut."); };
     var rr = $("#rk-reset"); if (rr) rr.onclick = function () { S.rank = null; save(); renderMine(); };
     Array.prototype.forEach.call(document.querySelectorAll(".rk [data-mv]"), function (b) { b.onclick = function () { moveRank(b.dataset.id, b.dataset.mv); }; });
-    $("#m-copy").onclick = copyDeck; $("#m-import").onclick = importSheet; $("#m-reset").onclick = resetSheet;
+    $("#m-copy").onclick = copyDeck; $("#m-import").onclick = importSheet; $("#m-reset").onclick = resetSheet; $("#m-redeal").onclick = redealSheet;
     $("#m-intro").onclick = welcome;
     $("#m-prio").onclick = function () { prioPicker(true, prioChanged); };
     Array.prototype.forEach.call(document.querySelectorAll(".dec-filter button"), function (b) { b.onclick = function () { mineFilter = b.dataset.f; var y = $("#mine").scrollTop; renderMine(); $("#mine").scrollTop = y; }; });
@@ -1632,6 +1645,23 @@ button, a, .folio, .parch, .lrow, .person, .cm-item, .wl-item, .mini, .scr-filte
     var sh = openSheet('<h3>Tout recommencer ?</h3><p style="margin:0">Toutes vos décisions et vos souhaits enregistrés sur cet appareil seront effacés.</p><div class="row-btns"><button class="btn ghost" id="x-no">Garder mon deck</button><button class="btn primary" id="x-yes">Effacer et recommencer</button></div>');
     $("#x-no", sh).onclick = function () { closeSheet(true); };
     $("#x-yes", sh).onclick = function () { S = { dec: {}, onboarded: true, leader: null, triSeen: false, rank: null, themes: S.themes, tuto: "done" }; shownId = null; save(); applyDeck(null); renderWeek(); renderStack(); closeSheet(true); showSeg("play"); toast("Nouveau deck. Bonne partie !"); };
+  }
+  // Redistribuer une pioche (2026-10-30) : les mesures sont remélangées et se rejouent depuis le début.
+  // Les choix sont effacés (une mesure se tranche une fois par partie) ; les priorités sont gardées.
+  function redealSheet() {
+    var n = Object.keys(S.dec).length;
+    var sh = openSheet('<h3>Redistribuer une pioche ?</h3><p style="margin:0">Les ' + CARDS.length + " mesures sont remélangées : vous les piochez à nouveau, dans un autre ordre.</p>" +
+      (n ? '<p style="margin:0">' + (n > 1 ? "Vos " + n + " choix actuels seront effacés" : "Votre choix actuel sera effacé") + " de cet appareil ; vos priorités sont gardées.</p>" : "") +
+      '<div class="row-btns"><button class="btn ghost" id="rd-no">Garder ma partie</button><button class="btn primary" id="rd-yes">Redistribuer</button></div>');
+    $("#rd-no", sh).onclick = function () { closeSheet(true); };
+    $("#rd-yes", sh).onclick = function () {
+      var ids = CARDS.map(function (c) { return c.id; });
+      for (var i = ids.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)), x = ids[i]; ids[i] = ids[j]; ids[j] = x; }  // mélange de Fisher-Yates
+      S = { dec: {}, onboarded: true, leader: null, triSeen: S.triSeen, rank: null, themes: S.themes, tuto: "done", order: ids };
+      shownId = null; mineFilter = "all"; save(); applyDeck(null); renderWeek(); closeSheet(true); showView("deck"); showSeg("play");
+      stage.classList.add("deal"); renderStack(); setTimeout(function () { stage.classList.remove("deal"); }, 900);
+      toast("Nouvelle pioche : " + CARDS.length + " mesures remélangées. À vous de jouer !");
+    };
   }
 
   // ---------- Recherche ----------

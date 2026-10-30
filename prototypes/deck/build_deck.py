@@ -50,7 +50,7 @@ FIGURES = {
 # Accroche du recto : la mesure entière dite en une phrase courte et directe, pour un
 # électeur qui découvre le sujet. Anonyme (aucun nom, aucun parti), aucun chiffre qui ne
 # soit déjà dans la mesure ; le libellé complet reste dans la fiche « Comprendre ».
-# Brouillon du 2026-10-30, à relire avant publication.
+# Rédigées le 2026-10-30, relues par Guilhem le jour même.
 ACCROCHES = {
     "01": "Aider les ménages à devenir propriétaires",
     "02": "Ouvrir le référendum à toute question de loi",

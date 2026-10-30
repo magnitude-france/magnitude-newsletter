@@ -16,7 +16,7 @@ l'ancienne accueil Observable est servie à /newsletter.
 - Carte mystère : le verso montre le thème sur un motif holographique tiré au
   hasard à chaque carte ; un toucher (ou Entrée, Espace, une flèche) la
   retourne avec un zoom. Le recto, allégé : thème, accroche directe
-  (`ACCROCHES`, brouillon à relire), chiffre-clé, graphique européen réduit à
+  (`ACCROCHES`, relues le 2026-10-30), chiffre-clé, graphique européen réduit à
   5 lignes au plus (la ligne France toujours gardée), bouton « Comprendre ·
   sources » vers la fiche complète.
 - Swipe dans 4 directions : → Aligné (d'accord), ← Désaligné (pas d'accord),

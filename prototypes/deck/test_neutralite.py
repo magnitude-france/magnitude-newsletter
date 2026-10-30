@@ -7,12 +7,16 @@ On simule des utilisateurs SANS opinion structurée : chacun a une propension
 p ~ U(0, 1) à répondre « Aligné », puis tranche chaque carte au hasard avec
 cette propension (sinon « Désaligné »). On compte qui sort n°1.
 
-Deux lectures, sur les seules cartes « dans le score » (même règle que le deck) :
+Trois lectures, sur les seules cartes « dans le score » (même règle que le deck) :
 - « protocole INV-03 » : part d'accord = accords / positions documentées,
   égalités réparties, sans seuil minimal de cartes (comme le test du 16/10) ;
 - « règles du deck » : ce que voit l'utilisateur — seuil de MIN_N cartes,
   candidats qui ne sont plus en lice exclus, galaxie seulement si un
-  candidat est strictement en tête (sinon « le deck hésite »).
+  candidat est strictement en tête (sinon « le deck hésite ») ;
+- « règles du deck avec priorités » (2026-10-30) : mêmes règles, mais chaque
+  utilisateur simulé choisit au hasard 0 à MAX_PRIO thèmes prioritaires parmi
+  ceux de l'écran « Vos priorités » ; une carte prioritaire pèse W_PRIO et un
+  candidat sans position documentée sur elle prend PEN × W_PRIO au dénominateur.
 Critère : aucun candidat n°1 chez plus de 1,5 fois ni moins de 0,5 fois la
 part neutre (1 / nombre de candidats en lice).
 Aucune dépendance hors bibliothèque standard Python.
@@ -24,10 +28,13 @@ import sys
 from collections import Counter
 from pathlib import Path
 
+from build_deck import THEMES_ATTENDUS
+
 HERE = Path(__file__).resolve().parent
 N = int(sys.argv[sys.argv.index("--n") + 1]) if "--n" in sys.argv else 20000
 GRAINE = int(sys.argv[sys.argv.index("--graine") + 1]) if "--graine" in sys.argv else 42
 MIN_N = 4  # même valeur que deck-template.html
+W_PRIO, PEN, MAX_PRIO = 2, 0.5, 5  # idem (priorités, 2026-10-30)
 
 
 def main():
@@ -62,6 +69,32 @@ def main():
         else:
             hesite += 1
 
+    # Avec priorités : tirage séparé (même graine), pour garder les deux lectures précédentes inchangées.
+    themes = sorted({c["theme"] for c in data["cards"]} | set(THEMES_ATTENDUS))
+    rng = random.Random(GRAINE)
+    prio_deck, prio_hesite = Counter(), 0
+    for _ in range(N):
+        p = rng.random()
+        choix = [1 if rng.random() < p else -1 for _ in cartes]
+        prio = set(rng.sample(themes, rng.randint(0, MAX_PRIO)))
+        wa, wn, n = Counter(), Counter(), Counter()
+        for c, ch in zip(cartes, choix):
+            w = W_PRIO if c["theme"] in prio else 1
+            for s in cands:
+                v = c["pos"].get(s)
+                if v:
+                    n[s] += 1
+                    wn[s] += w
+                    wa[s] += w * (v[0] == ch)
+                elif c["theme"] in prio:
+                    wn[s] += PEN * w  # silence sur une priorité : demi-désaccord
+        pct = {s: wa[s] / wn[s] for s in cands if n[s]}
+        elig = sorted((s for s in en_lice if n[s] >= MIN_N), key=lambda s: -pct[s])
+        if elig and (len(elig) == 1 or pct[elig[0]] > pct[elig[1]]):
+            prio_deck[elig[0]] += 1
+        else:
+            prio_hesite += 1
+
     def verdict(parts, k):
         lo, hi = 50 / k, 150 / k
         hors = {s: v for s, v in parts.items() if not lo <= v <= hi}
@@ -79,8 +112,14 @@ def main():
     out["regles_du_deck"] = {"sans_galaxie_pct": round(100 * hesite / N, 1), "bornes_parmi_galaxies": [round(lo, 1), round(hi, 1)],
                              "parts_parmi_galaxies": {nom(s): round(v, 1) for s, v in sorted(p2.items(), key=lambda x: -x[1])},
                              "hors_bornes": {nom(s): round(v, 1) for s, v in hors.items()}, "resultat": "réussi" if not hors else "échec"}
+    gal = N - prio_hesite
+    p3 = {s: 100 * prio_deck[s] / gal for s in en_lice} if gal else {}
+    lo, hi, hors = verdict(p3, len(en_lice))
+    out["regles_du_deck_avec_priorites"] = {"sans_galaxie_pct": round(100 * prio_hesite / N, 1), "bornes_parmi_galaxies": [round(lo, 1), round(hi, 1)],
+                                            "parts_parmi_galaxies": {nom(s): round(v, 1) for s, v in sorted(p3.items(), key=lambda x: -x[1])},
+                                            "hors_bornes": {nom(s): round(v, 1) for s, v in hors.items()}, "resultat": "réussi" if not hors else "échec"}
     print(json.dumps(out, ensure_ascii=False, indent=1))
-    return 0 if out["protocole_inv03"]["resultat"] == "réussi" and out["regles_du_deck"]["resultat"] == "réussi" else 1
+    return 0 if all(out[k]["resultat"] == "réussi" for k in ("protocole_inv03", "regles_du_deck", "regles_du_deck_avec_priorites")) else 1
 
 
 if __name__ == "__main__":

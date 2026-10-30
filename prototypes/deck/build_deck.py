@@ -47,6 +47,37 @@ FIGURES = {
     "18": ("57,3 %", "du PIB : dépenses publiques en France en 2025, contre 49,4 % dans l'UE"),
 }
 
+# Accroche du recto : la mesure entière dite en une phrase courte et directe, pour un
+# électeur qui découvre le sujet. Anonyme (aucun nom, aucun parti), aucun chiffre qui ne
+# soit déjà dans la mesure ; le libellé complet reste dans la fiche « Comprendre ».
+# Brouillon du 2026-10-30, à relire avant publication.
+ACCROCHES = {
+    "01": "Aider les ménages à devenir propriétaires",
+    "02": "Ouvrir le référendum à toute question de loi",
+    "03": "Moins d'impôts de production, moins d'aides aux entreprises",
+    "04": "Taxer davantage les très gros héritages",
+    "05": "Surtaxer de 10 % le 1 % des plus gros héritages, pour le climat",
+    "06": "Passer à une VIe République par une Constituante",
+    "07": "Zéro déficit en 2037, 100 000 postes publics en moins",
+    "08": "Smic à 1 700 € net, aides aux entreprises liées aux hausses de salaire",
+    "09": "60 000 agents de plus contre le narcotrafic",
+    "10": "1 Md€ par an pour les salles des fêtes et les associations",
+    "11": "Une agence européenne d'innovation à 4 Md$ par an",
+    "12": "Expulser les étrangers au chômage depuis un an",
+    "13": "Retraite à 65 ans, 45 ans de cotisation",
+    "14": "Enseignants : +200 à 500 € net, moins de 20 élèves par classe",
+    "15": "Sortir du nucléaire en une vingtaine d'années",
+    "16": "Quitter l'OTAN",
+    "17": "Fin des 35 h : temps de travail négocié, cotisations supprimées au-delà de 1 623 h",
+    "18": "Ne plus remplacer les fonctionnaires qui partent, pour 80 Md€ d'économies visées",
+}
+
+# Thèmes proposés au joueur à l'écran « Vos priorités » en plus de ceux des cartes, sans les
+# distinguer : un thème choisi sans carte est signalé à la rédaction, il ne touche pas au score.
+THEMES_ATTENDUS = ["Santé & hôpital", "Pouvoir d'achat", "Agriculture", "Justice", "Transports",
+                   "Numérique & IA", "Culture", "Jeunesse", "Handicap", "Égalité femmes-hommes",
+                   "Europe", "Services publics & ruralité"]
+
 ICONS = {  # pictogrammes génériques, tracés à la main (24×24, trait)
     "01": "M3 11 12 4l9 7M5 10v10h14V10M10 20v-6h4v6",
     "02": "M4 11h16v9H4zM8 11V4h8v7M10 7h4M9 15h6",
@@ -135,11 +166,15 @@ def main():
         n = card["n"]
         card["fig"], card["fig_label"] = FIGURES[n]
         card["icon"] = ICONS[n]
+        card["accroche"] = ACCROCHES[n]
+    data["themes_attendus"] = THEMES_ATTENDUS
     tpl = (HERE / "deck-template.html").read_text(encoding="utf-8")
-    # Polices du registre (SIL OFL, voir fonts/) intégrées : aucune requête réseau.
+    # Polices (SIL OFL, voir fonts/) intégrées : aucune requête réseau. Literata pour la lecture,
+    # IM Fell English pour les grands titres, La Belle Aurore (manuscrite) pour quelques encarts.
     faces = []
-    for fam, fichier, style in [("IM Fell English", "im-fell-english-latin-400-normal.woff2", "normal"),
-                                ("IM Fell English", "im-fell-english-latin-400-italic.woff2", "italic"),
+    for fam, fichier, style in [("Literata", "literata-latin-400-normal.woff2", "normal"),
+                                ("Literata", "literata-latin-400-italic.woff2", "italic"),
+                                ("IM Fell English", "im-fell-english-latin-400-normal.woff2", "normal"),
                                 ("La Belle Aurore", "la-belle-aurore-latin-400-normal.woff2", "normal")]:
         b64 = base64.b64encode((HERE / "fonts" / fichier).read_bytes()).decode()
         faces.append(f'@font-face {{ font-family: "{fam}"; font-style: {style}; font-weight: 400; font-display: swap; src: url(data:font/woff2;base64,{b64}) format("woff2"); }}')

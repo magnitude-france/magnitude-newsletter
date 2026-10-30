@@ -18,7 +18,8 @@
   --lift: 0; --on-deck: #FFFFFF;
   --deck: oklch(calc(var(--deck-l) + var(--lift)) var(--deck-c) var(--deck-h));
   --deck-soft: color-mix(in oklab, var(--deck) 14%, var(--surface));
-  --serif: Georgia, "Times New Roman", serif;
+  --serif: "Literata", "Iowan Old Style", Georgia, serif;  /* lecture (passe 7) */
+  --display: "IM Fell English", "Iowan Old Style", Georgia, serif;  /* grands titres seulement */
   --sans: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
   --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   --top-h: 52px; --tabs-h: 62px;
@@ -64,7 +65,7 @@ a { color: var(--link); }
 .dots i { width: 8px; height: 8px; border-radius: 50%; border: 1.5px solid var(--deck); }
 .dots i.on { background: var(--deck); }
 
-main { flex: 1; min-height: 0; position: relative; }
+main { flex: 1; min-height: 0; position: relative; overflow: hidden; }  /* une carte jetée hors écran n'élargit pas la page */
 .view { position: absolute; inset: 0; display: flex; flex-direction: column; }
 .scroll { overflow-y: auto; -webkit-overflow-scrolling: touch; padding-block: 16px 28px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
 .wrap { max-width: 640px; margin: 0 auto; display: grid; gap: 18px; }
@@ -87,17 +88,10 @@ main { flex: 1; min-height: 0; position: relative; }
 .chip { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px 3px 6px; border-radius: 999px; background: var(--deck-soft); color: var(--ink); font-size: clamp(10px, 3.4cqw, 13px); font-weight: 600; }
 .chip svg { width: 1.3em; height: 1.3em; }
 .num { font-family: var(--mono); font-size: clamp(10px, 3.2cqw, 12px); color: var(--muted); letter-spacing: .06em; }
-.art { flex: 1; min-height: 14cqh; border-radius: 3cqw; position: relative; overflow: hidden; background: radial-gradient(120% 90% at 30% 20%, color-mix(in oklab, var(--deck) 26%, var(--surface)), color-mix(in oklab, var(--deck) 62%, #06262a)); }
-.art svg.sky { position: absolute; inset: 0; width: 100%; height: 100%; }
-.art .emblem { position: absolute; left: 50%; top: 50%; translate: -50% -50%; width: min(34cqw, 70%); aspect-ratio: 1; border-radius: 50%; background: color-mix(in oklab, var(--surface) 92%, var(--deck)); display: grid; place-items: center; box-shadow: 0 0 0 4px color-mix(in oklab, var(--surface) 35%, transparent); }
-.art .emblem svg { width: 54%; height: 54%; stroke: var(--deck); }
 .fig { display: flex; align-items: baseline; gap: 3cqw; }
 .fig b { font-family: var(--serif); font-size: clamp(22px, 10cqw, 40px); line-height: 1; color: var(--deck); font-variant-numeric: tabular-nums; white-space: nowrap; }
 .fig span { font-size: clamp(10px, 3.3cqw, 13px); color: var(--ink-2); line-height: 1.3; }
-.measure { font-family: var(--serif); font-size: clamp(14px, 5.1cqw, 21px); line-height: 1.25; text-wrap: balance; }
 .c-foot { display: flex; justify-content: space-between; align-items: center; gap: 8px; border-top: 1px solid var(--line); padding-top: 2cqh; font-size: clamp(9px, 2.8cqw, 11px); color: var(--muted); }
-.seal { display: inline-flex; align-items: center; gap: 6px; letter-spacing: .12em; text-transform: uppercase; font-weight: 600; }
-.seal svg { width: 1.6em; height: 1.6em; }
 .info-btn { display: inline-flex; align-items: center; gap: 5px; border: 1.5px solid var(--deck); color: var(--deck); background: var(--surface); border-radius: 999px; padding: .35em .85em; font: inherit; font-weight: 700; letter-spacing: .02em; cursor: pointer; }
 .info-btn svg { width: 1.25em; height: 1.25em; }
 .fiche .kick { font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
@@ -442,7 +436,7 @@ blockquote { margin: 0; font-family: var(--serif); font-size: 16px; font-style: 
 .st-stamp { display: inline-block; margin-top: 8px; padding: 3px 10px; border: 3px double var(--st-win); color: var(--st-win); border-radius: 6px; font-family: var(--sans); font-weight: 800; letter-spacing: .08em; font-size: 12px; text-transform: uppercase; rotate: -4deg; }
 .st-stamp.retire { border-color: var(--muted); color: var(--muted); rotate: 3deg; }
 .st-note { display: block; margin-top: 4px; font-size: 12px; color: var(--muted); }
-textarea { width: 100%; min-height: 90px; resize: vertical; border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; font: inherit; background: var(--page); color: var(--ink); }
+textarea { box-sizing: border-box; width: 100%; min-height: 90px; resize: vertical; border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; font: inherit; background: var(--page); color: var(--ink); }
 .row-btns { display: flex; gap: 8px; flex-wrap: wrap; }
 .row-btns .btn { flex: 1; }
 .choice4 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
@@ -458,13 +452,6 @@ textarea { width: 100%; min-height: 90px; resize: vertical; border: 1px solid va
 .ob p { margin: 0; color: #CFE6E4; font-size: 15.5px; }
 .ob .btn { background: #EAF6F5; color: #06262A; border: 0; padding: 12px 18px; font-size: 15px; }
 .ob .btn.ghost { background: transparent; color: #CFE6E4; border: 1px solid rgba(234,246,245,.35); }
-.compass { position: relative; width: 220px; height: 220px; margin: 0 auto; }
-.compass .c { position: absolute; left: 50%; top: 50%; translate: -50% -50%; width: 84px; height: 116px; border-radius: 10px; background: #EAF6F5; box-shadow: 0 0 0 4px var(--deck); }
-.compass span { position: absolute; font-size: 12.5px; font-weight: 700; display: grid; justify-items: center; }
-.compass .n { top: 0; left: 50%; translate: -50% 0; color: #9FC6FF; }
-.compass .s { bottom: 0; left: 50%; translate: -50% 0; color: #C9D6D7; }
-.compass .e { right: 0; top: 50%; translate: 0 -50%; color: #7FD9D3; }
-.compass .w { left: 0; top: 50%; translate: 0 -50%; color: #F8BD7A; }
 .tri .hat { width: 150px; height: 150px; margin: 0 auto; }
 .tri .big { font-family: var(--serif); font-size: 34px; margin: 0; }
 .tri .sub { font-family: var(--serif); font-style: italic; font-size: 19px; color: #F6D9A8; }
@@ -484,7 +471,7 @@ textarea { width: 100%; min-height: 90px; resize: vertical; border: 1px solid va
   --vellum: var(--surface); --vellum-2: color-mix(in oklab, var(--surface) 90%, var(--deck)); --edge: color-mix(in oklab, var(--deck) 30%, var(--surface));
   --iron: var(--ink); --iron-2: var(--ink-2); --rule: var(--line); --margin-red: var(--d-no); --gilt: var(--amber);
   --w-ok: var(--d-ok); --w-no: var(--d-no); --w-wish: var(--d-wish); --w-meh: var(--d-meh);
-  --fell: "IM Fell English", "Iowan Old Style", Georgia, serif; --plume: "La Belle Aurore", "Snell Roundhand", "Segoe Script", cursive;
+  --fell: "Literata", "Iowan Old Style", Georgia, serif; --plume: "La Belle Aurore", "Snell Roundhand", "Segoe Script", cursive;
   background: var(--page);
   color: var(--iron);
 }
@@ -601,7 +588,7 @@ textarea { width: 100%; min-height: 90px; resize: vertical; border: 1px solid va
 .scr-empty { text-align: center; font-family: var(--plume); font-size: 22px; color: var(--ink-2); }
 
 /* ---------- Passe 6 : polices du recueil partout, survols doux, orbe central, recto-verso, importance, système solaire ---------- */
-:root { --fell: "IM Fell English", "Iowan Old Style", Georgia, serif; --plume: "La Belle Aurore", "Snell Roundhand", "Segoe Script", cursive; --tabs-h: 64px; }
+:root { --fell: "Literata", "Iowan Old Style", Georgia, serif; --plume: "La Belle Aurore", "Snell Roundhand", "Segoe Script", cursive; --tabs-h: 64px; }
 .seg button { font-family: var(--fell); font-size: 17px; font-weight: 400; letter-spacing: .01em; padding: 5px 18px; }
 .seg button[aria-selected="true"] { color: var(--ink); }
 .sheet { font-family: var(--fell); font-size: 16.5px; line-height: 1.4; }
@@ -775,7 +762,6 @@ button, a, .folio, .parch, .lrow, .person, .cm-item, .wl-item, .mini, .scr-filte
 .refine p { margin: 0; font-size: 13px; line-height: 1.35; color: var(--ink-2); text-wrap: pretty; }
 .refine p b { color: var(--ink); font-weight: 600; }
 .tiehint { position: absolute; left: 10px; right: 10px; bottom: 8px; z-index: 2; text-align: center; font-size: 11.5px; line-height: 1.25; padding: 4px 8px; border-radius: 999px; color: #FCE58C; background: rgba(2,20,24,.72); border: 1px solid rgba(252,229,140,.5); backdrop-filter: blur(2px); }
-.card .art { position: relative; }
 .dots.sm { gap: 3px; } .dots.sm i { width: 6px; height: 6px; border-width: 1.2px; }
 .tri .tri-hook { margin: 0; font-size: 14px; line-height: 1.4; color: #EAF6F5; text-wrap: pretty; }
 .tri .tri-hook b { color: #FCE58C; font-weight: 600; }
@@ -784,6 +770,155 @@ button, a, .folio, .parch, .lrow, .person, .cm-item, .wl-item, .mini, .scr-filte
 .tri .tri-meter i.on { background: #FCE58C; }
 .tri .tri-meter i.next { background: rgba(252,229,140,.5); animation: rfPulse 1.8s ease-in-out infinite; }
 @media (prefers-reduced-motion: reduce) { .refine, .refine .rf-bar i.next, .tri .tri-meter i.next { animation: none; } }
+
+/* ---------- Passe 7 : maître du jeu — carte mystère, recto allégé, priorités, guidage ----------
+   Verso : motif holographique tiré au hasard à chaque carte, thème au centre. Retournement avec
+   zoom pour révéler le recto : accroche, chiffre-clé, graphique, lien vers la fiche et ses sources. */
+.stage { margin-top: 8px; }
+.card { perspective: 1600px; }
+.flip3d { position: absolute; inset: 0; transform-style: preserve-3d; transform: scale(.9) rotateX(var(--ry, 0deg)) rotateY(var(--rx, 0deg)); transition: transform .25s ease; }
+.card.revealed .flip3d { transform: rotateY(180deg) scale(1); transition: none; animation: flipZoom 900ms cubic-bezier(.25,.8,.25,1) both; }
+.card.revealed.still .flip3d { animation: none; }
+@keyframes flipZoom { 0% { transform: rotateY(0deg) scale(.9); } 45% { transform: rotateY(110deg) scale(1.08); } 75% { transform: rotateY(192deg) scale(1.02); } 100% { transform: rotateY(180deg) scale(1); } }
+.cback, .card .frame { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+.card .frame { transform: rotateY(180deg) translateZ(1px); }
+.cback { position: absolute; inset: 0; border-radius: 6cqw; overflow: hidden; isolation: isolate; display: grid; place-items: center; background: #0a1e22; cursor: pointer;
+  box-shadow: 0 22px 50px -20px rgba(5,40,44,.65), inset 0 0 0 1.5px rgba(255,255,255,.4); }
+.cback::after { content: ""; position: absolute; inset: 0; z-index: 2; pointer-events: none; background: radial-gradient(closest-side, transparent 52%, rgba(2,14,16,.5)); }
+.cb-pat { position: absolute; inset: -35%; z-index: 0; animation: trip 14s linear infinite, swirl 70s linear infinite; }
+@keyframes trip { to { filter: hue-rotate(360deg); } }
+@keyframes swirl { to { rotate: 360deg; } }
+.cb-foil { position: absolute; inset: 0; z-index: 1; mix-blend-mode: overlay; opacity: .55; pointer-events: none;
+  background: repeating-linear-gradient(115deg, #ff5fa2 0%, #ffd23f 4%, #4dffa6 8%, #3fc8ff 12%, #9b6bff 16%, #ff5fa2 20%);
+  background-size: 260% 260%; background-position: var(--mx, 30%) var(--my, 50%); animation: cbShim 9s ease-in-out infinite; }
+@keyframes cbShim { 0%, 100% { background-position: 0% 40%; } 50% { background-position: 100% 60%; } }
+.cb-glare { position: absolute; inset: -50%; z-index: 2; mix-blend-mode: soft-light; pointer-events: none; opacity: .7;
+  background: radial-gradient(circle at var(--gx, 40%) var(--gy, 35%), rgba(255,255,255,.95), rgba(255,255,255,0) 22%); animation: rc-drift 7s ease-in-out infinite; }
+.card.live .cb-foil, .card.live .cb-glare { animation: none; translate: 0 0; }
+.cb-plate { position: relative; z-index: 3; display: grid; justify-items: center; gap: 1.6cqh; padding: 6cqw 7cqw 5.5cqw; max-width: 80%; border-radius: 5cqw; text-align: center; color: #F3FBFA;
+  background: rgba(3,22,25,.6); -webkit-backdrop-filter: blur(6px) saturate(1.2); backdrop-filter: blur(6px) saturate(1.2); box-shadow: inset 0 0 0 1px rgba(255,255,255,.38), 0 12px 30px rgba(0,0,0,.35); }
+.cb-ico { width: 15cqw; aspect-ratio: 1; border-radius: 50%; display: grid; place-items: center; background: rgba(255,255,255,.12); box-shadow: inset 0 0 0 1px rgba(255,255,255,.45); }
+.cb-ico svg { width: 58%; height: 58%; stroke: #fff; }
+.cb-k { font-family: var(--sans); font-size: clamp(10px, 3.2cqw, 13px); letter-spacing: .22em; text-transform: uppercase; font-weight: 700; color: #BFEDEA; }
+.cb-theme { font-family: var(--display); font-size: clamp(24px, 10.5cqw, 46px); line-height: 1.05; text-wrap: balance; }
+.cb-hint { position: absolute; z-index: 3; left: 0; right: 0; bottom: 6cqh; text-align: center; font-family: var(--sans); font-size: clamp(11px, 3.4cqw, 14px); font-weight: 700; letter-spacing: .02em; color: #fff; text-shadow: 0 1px 4px rgba(0,0,0,.7); animation: hintPulse 2.4s ease-in-out infinite; }
+@keyframes hintPulse { 50% { opacity: .55; } }
+.card.next .cb-hint, .card.next .tiehint { display: none; }
+.cback .tiehint { z-index: 4; top: 5cqh; bottom: auto; }
+.card.hint .cback { animation: cardCall 2.2s ease-in-out infinite; }
+@keyframes cardCall { 50% { box-shadow: 0 22px 50px -20px rgba(5,40,44,.65), inset 0 0 0 1.5px rgba(255,255,255,.4), 0 0 0 6px color-mix(in oklab, var(--deck) 55%, transparent), 0 0 46px 6px color-mix(in oklab, var(--deck) 50%, transparent); } }
+.halo { transition: opacity .6s ease, inset .6s ease; opacity: .7; }
+.stage.lit .halo { opacity: 1; inset: 2% 0; }
+
+/* Recto allégé : thème, accroche, chiffre-clé, graphique, fiche */
+.card .inner { gap: 2.4cqh; padding: 5cqw 5cqw 4cqw; }
+.card .c-head { justify-content: flex-start; }
+.hook { margin: 0; font-family: var(--serif); font-size: clamp(18px, 7.2cqw, 32px); line-height: 1.2; color: var(--ink); text-wrap: balance; }
+.card .fig { align-items: baseline; gap: 3cqw; padding: 2.4cqw 3.4cqw; border-radius: 3cqw; background: var(--deck-soft); }
+.card .fig b { font-size: clamp(22px, 9cqw, 40px); }
+.card .fig span { font-size: clamp(11px, 3.5cqw, 14px); line-height: 1.3; }
+.mchart { flex: 1; min-height: 0; display: flex; flex-direction: column; justify-content: center; }
+.mchart .eu { gap: 1.5cqh; }
+.mchart .eu .ttl { font-size: clamp(10.5px, 3.3cqw, 13px); line-height: 1.25; }
+.mchart .eu .bar-row { grid-template-columns: minmax(0, 27cqw) 1fr 17cqw; gap: 2cqw; font-size: clamp(10.5px, 3.4cqw, 13.5px); }
+.mchart .eu .track { height: clamp(8px, 2.3cqh, 14px); }
+.mchart .eu .val { font-size: clamp(10px, 3.2cqw, 12.5px); }
+.mchart .eu .legend { font-size: clamp(10px, 3cqw, 12px); }
+.card.revealed:not(.still) .mchart .fill { transform-origin: left; animation: barGrow .5s cubic-bezier(.2,.8,.2,1) .35s both; }
+.card .c-foot { justify-content: center; padding-top: 1.6cqh; }
+.card .info-btn { font-family: var(--sans); font-size: clamp(11px, 3.4cqw, 13.5px); white-space: nowrap; }
+.pad.locked button { opacity: .45; }
+/* Petite carte (petit écran, guide affiché) : on allège le graphique plutôt que de déborder */
+@container (max-height: 470px) { .mchart .eu .bar-row.mid { display: none; } .card .fig span { font-size: clamp(10px, 3.2cqw, 12px); } }
+@container (max-height: 360px) { .mchart, .card .fig span { display: none; } }
+/* Tampons : le sens du geste écrit sous son nom */
+.stamp small { display: block; margin-top: 1px; font-size: .52em; font-weight: 700; letter-spacing: .01em; text-transform: none; text-align: center; white-space: nowrap; }
+
+/* Démonstration des 4 gestes (premier tour) : la carte esquisse chaque direction */
+.card.revealed.demo .flip3d { animation: demoNudge 3.4s ease-in-out both; }
+@keyframes demoNudge { 0%, 20%, 42%, 64%, 86%, 100% { translate: 0 0; rotate: 0deg; } 10% { translate: 11% 0; rotate: 4deg; } 32% { translate: -11% 0; rotate: -4deg; } 54% { translate: 0 -8%; } 76% { translate: 0 8%; } }
+.card.demo .stamp { animation: stampDemo 3.4s both; }
+.card.demo .stamp.l { animation-delay: .75s; } .card.demo .stamp.u { animation-delay: 1.5s; } .card.demo .stamp.d { animation-delay: 2.25s; }
+@keyframes stampDemo { 0%, 22%, 100% { opacity: 0; } 8%, 14% { opacity: 1; } }
+
+/* Bulle du maître du jeu */
+.coach { flex: none; display: grid; grid-template-columns: 36px minmax(0, 1fr) auto; gap: 10px; align-items: start; margin: 8px max(16px, env(safe-area-inset-right, 0px)) 0 max(16px, env(safe-area-inset-left, 0px)); padding: 10px 12px; border-radius: 16px;
+  background: var(--surface); border: 1px solid color-mix(in oklab, var(--deck) 40%, var(--line)); box-shadow: 0 10px 26px -18px rgba(5,40,44,.6); font-family: var(--serif); font-size: 14px; line-height: 1.38; animation: refIn .5s cubic-bezier(.3,.7,.2,1) both; }
+.coach { grid-template-columns: 30px minmax(0, 1fr) auto; padding: 8px 12px; }
+.coach[hidden] { display: none; }
+.cc-mj svg { width: 30px; height: 30px; display: block; }
+.cc-tx { display: grid; gap: 4px; min-width: 0; }
+.cc-tx p { margin: 0; text-wrap: pretty; }
+.cc-sm { font-size: 12.5px; color: var(--ink-2); }
+.cc-guide { list-style: none; margin: 0; padding: 0; display: grid; gap: 1px; }
+@media (min-width: 560px) { .cc-guide { grid-template-columns: 1fr 1fr; column-gap: 16px; } }
+.cc-guide li { font-size: 12.5px; line-height: 1.3; color: var(--ink-2); }
+.cc-guide b { font-family: var(--sans); font-size: 12.5px; }
+.cc-guide .ok b { color: var(--d-ok); } .cc-guide .no b { color: var(--d-no); } .cc-guide .wish b { color: var(--d-wish); } .cc-guide .meh b { color: var(--d-meh); }
+.cc-x { border: 0; background: none; font-size: 22px; line-height: 1; color: var(--muted); padding: 0 2px; }
+.mj-line { display: grid; grid-template-columns: 34px 1fr; gap: 10px; align-items: center; margin: 0; padding: 10px 12px; border-radius: 12px; background: var(--deck-soft); font-size: 15px; line-height: 1.4; }
+.mj-line svg { width: 34px; height: 34px; }
+
+/* Introduction et écran « Vos priorités » */
+.ob .hat { width: 104px; height: 104px; margin: 0 auto; }
+.ob p { font-family: var(--serif); font-size: 16px; line-height: 1.5; }
+.ob p b { color: #FCE58C; font-weight: 400; }
+.overlay.prio { overflow-y: auto; place-items: start center; padding-top: max(28px, env(safe-area-inset-top, 0px)); }
+.ob.wide { max-width: 580px; gap: 16px; }
+.prio-chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+.prio-chips button { border: 1px solid rgba(234,246,245,.35); background: rgba(234,246,245,.06); color: #EAF6F5; border-radius: 999px; padding: 8px 14px; font-family: var(--serif); font-size: 15px; }
+.prio-chips button[aria-pressed="true"] { background: #FCE58C; border-color: #FCE58C; color: #06262A; }
+.prio-chips.full button[aria-pressed="false"] { opacity: .5; }
+.prio-n { font-family: var(--sans); font-size: 13px; color: #9ED7D3; }
+.ob .btn:disabled { opacity: .4; cursor: default; }
+@media (hover: hover) { .prio-chips button[aria-pressed="false"]:hover { border-color: #FCE58C; color: #FCE58C; } }
+
+/* Feuilles : thèmes à proposer (M'en fous), explication des votes */
+.alt-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.alt-chips button { border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 4px 11px; font-size: 14px; }
+.alt-chips button[aria-pressed="true"] { background: var(--d-meh); border-color: transparent; color: var(--surface); }
+.choice4 small { display: block; margin-top: 2px; font-family: var(--fell); font-weight: 400; font-size: 13px; line-height: 1.25; color: var(--ink-2); }
+.choice4 button[aria-pressed="true"] small { color: var(--surface); }
+
+/* Mon deck : priorités, filtres par choix */
+.prio-box { padding: 18px 18px 16px; display: grid; gap: 10px; }
+.prio-box h3 { font-family: var(--display); font-weight: 400; font-size: 22px; margin: 0; }
+.prio-box .rubric { margin: 0; font-style: italic; font-size: 14px; color: var(--iron-2); line-height: 1.4; }
+.pcs { display: flex; flex-wrap: wrap; gap: 6px; }
+.pc { display: inline-flex; gap: 6px; align-items: baseline; padding: 3px 11px; border-radius: 999px; background: var(--deck-soft); font-family: var(--fell); font-size: 14.5px; }
+.pc i { font-size: 12px; color: var(--muted); }
+.pc.off { background: transparent; box-shadow: inset 0 0 0 1px var(--line); color: var(--muted); text-decoration: line-through; }
+.dec-filter { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; margin-top: -8px; }
+.dec-filter button { border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 4px 12px; font-family: var(--fell); font-size: 14.5px; color: var(--ink-2); }
+.dec-filter button[aria-pressed="true"] { border-color: currentColor; box-shadow: inset 0 0 0 1px currentColor; color: var(--ink); }
+.dec-filter .ok { color: var(--d-ok); } .dec-filter .no { color: var(--d-no); } .dec-filter .wish { color: var(--d-wish); } .dec-filter .meh { color: var(--d-meh); }
+.pages-empty { text-align: center; font-style: italic; color: var(--ink-2); margin: 0; }
+
+/* Typographie : Literata pour lire, IM Fell pour les grands titres, la manuscrite pour quelques encarts */
+.brand b, .frontis h2, .scr-head h2, .ledger h3, .recueil-h, .mai-sec h3, .cosmos-leg h3, .cosmos .ttl, .sheet .lot-h, .ob h2, .tri .big, .lot-h, .sol-title b, .case-head h2 { font-family: var(--display); font-weight: 400; }
+.lrow .pct { font-family: var(--fell); font-size: 17px; }
+.kfig b { font-family: var(--fell); font-size: 24px; }
+.folio .author { font-family: var(--fell); font-size: 15.5px; }
+.folio .billet, .wl-item .billet { font-family: var(--fell); font-style: italic; font-size: 15.5px; }
+.scr-search input { font-family: var(--fell); font-size: 18px; }
+.scr-page dd.hand { font-family: var(--fell); font-size: 15.5px; }
+.bignum b { font-family: var(--fell); font-size: clamp(34px, 10vw, 48px); }
+.bn b { font-family: var(--fell); font-size: 22px; }
+.scr-chart .cap b { font-family: var(--fell); font-size: 17px; }
+.scr-chart .eu .val { font-family: var(--fell); font-size: 14px; }
+.rk .rkn { font-family: var(--fell); font-size: 20px; }
+.cosmos-leg .hint { font-family: var(--fell); font-style: italic; font-size: 15px; }
+.sheet { font-size: 15.5px; }
+.sheet h3 { font-size: 24px; }
+.folio .titre, .scr-page h4 { font-size: 18px; }
+.lrow .nm b { font-size: 15px; }
+.cosmos-leg p { font-size: 15.5px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .card.revealed .flip3d, .card.revealed.demo .flip3d { animation: none; }
+  .cb-pat, .cb-foil, .cb-glare, .cb-hint, .card.hint .cback, .coach { animation: none; }
+  .card.revealed .mchart .fill { animation: none !important; }
+}
 </style>
 
 <div id="app">
@@ -801,12 +936,13 @@ button, a, .folio, .parch, .lrow, .person, .cm-item, .wl-item, .mini, .scr-filte
       </div>
       <div id="play">
         <div class="refine" id="refine" hidden></div>
+        <div class="coach" id="coach" role="status" aria-live="polite" hidden></div>
         <div class="stage" id="stage"><div class="halo"></div></div>
         <div class="pad" id="pad">
-          <button class="no" data-dir="l" aria-label="Désaligné (glisser à gauche)"><span class="b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></span><span>Désaligné</span></button>
-          <button class="meh" data-dir="d" aria-label="M'en fous (glisser vers le bas)"><span class="b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="7"/><path d="M7 17 17 7"/></svg></span><span>M'en fous</span></button>
-          <button class="wish" data-dir="u" aria-label="J'aimerais (glisser vers le haut)"><span class="b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M12 3.5l2.6 5.3 5.8.8-4.2 4.1 1 5.8L12 16.8l-5.2 2.7 1-5.8-4.2-4.1 5.8-.8z"/></svg></span><span>J'aimerais</span></button>
-          <button class="ok" data-dir="r" aria-label="Aligné (glisser à droite)"><span class="b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span><span>Aligné</span></button>
+          <button class="no" data-dir="l" aria-label="Désaligné : pas d'accord avec la mesure (glisser à gauche)"><span class="b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></span><span>Désaligné</span></button>
+          <button class="meh" data-dir="d" aria-label="M'en fous : pas ma priorité, je préfère un autre sujet (glisser vers le bas)"><span class="b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="7"/><path d="M7 17 17 7"/></svg></span><span>M'en fous</span></button>
+          <button class="wish" data-dir="u" aria-label="J'aimerais : le sujet compte, la mesure est à revoir (glisser vers le haut)"><span class="b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M12 3.5l2.6 5.3 5.8.8-4.2 4.1 1 5.8L12 16.8l-5.2 2.7 1-5.8-4.2-4.1 5.8-.8z"/></svg></span><span>J'aimerais</span></button>
+          <button class="ok" data-dir="r" aria-label="Aligné : d'accord avec la mesure (glisser à droite)"><span class="b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span><span>Aligné</span></button>
         </div>
       </div>
       <div id="mine" class="scroll grimoire" hidden style="flex:1;min-height:0"><div class="wrap" id="mine-wrap"></div></div>
@@ -893,6 +1029,10 @@ button, a, .folio, .parch, .lrow, .person, .cm-item, .wl-item, .mini, .scr-filte
   var DIRS = { r: "ok", l: "no", u: "wish", d: "meh" };
   var LABEL = { ok: "Aligné", no: "Désaligné", wish: "J'aimerais", meh: "M'en fous" };
   var GLYPH = { ok: "✓", no: "✕", wish: "★", meh: "∅" };
+  // Sens des votes (clarifié le 2026-10-30) : J'aimerais = le thème compte, la mesure est à revoir ;
+  // M'en fous = le thème n'est pas une priorité, un autre sujet passerait avant.
+  var DESC = { ok: "D'accord avec la mesure", no: "Pas d'accord avec la mesure", wish: "Le sujet compte, la mesure est à revoir", meh: "Pas ma priorité, je préfère un autre sujet" };
+  var SHORT = { ok: "d'accord", no: "pas d'accord", wish: "bon sujet, mesure à revoir", meh: "pas ma priorité" };  // tampons et guide
   var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   // Ordre : les 6 nouvelles cartes (dernier numéro) d'abord, puis les numéros précédents à réviser,
@@ -915,21 +1055,42 @@ button, a, .folio, .parch, .lrow, .person, .cm-item, .wl-item, .mini, .scr-filte
   function el(html) { var d = document.createElement("div"); d.innerHTML = html.trim(); return d.firstChild; }
   function icon(path, sw) { return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="' + (sw || 1.8) + '" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="' + path + '"/></svg>'; }
 
-  // ---------- Score (Spec § 4) ----------
+  // ---------- Priorités du joueur (2026-10-30) ----------
+  // Thèmes choisis à l'introduction, plus ceux des cartes votées J'aimerais, moins ceux des cartes
+  // votées M'en fous (le vote sur la carte, plus récent, l'emporte).
+  var ALL_THEMES = CARDS.map(function (c) { return c.theme; }).concat(DATA.themes_attendus || [])
+    .filter(function (t, i, a) { return a.indexOf(t) === i; }).sort(function (a, b) { return a.localeCompare(b, "fr"); });
+  var MAX_PRIO = 5, W_PRIO = 2, PEN = 0.5;  // priorité = poids double ; silence sur une priorité = demi-désaccord
+  function hasCard(t) { return CARDS.some(function (c) { return c.theme === t; }); }
+  function prioThemes() {
+    var p = {};
+    (S.themes || []).forEach(function (t) { p[t] = "choix"; });
+    Object.keys(S.dec).forEach(function (id) { var c = byId[id]; if (c && S.dec[id].d === "wish" && !p[c.theme]) p[c.theme] = "wish"; });
+    Object.keys(S.dec).forEach(function (id) { var c = byId[id]; if (c && S.dec[id].d === "meh") delete p[c.theme]; });
+    return p;
+  }
+
+  // ---------- Score (Spec § 4, pondéré par les priorités depuis le 2026-10-30) ----------
+  // Accords pondérés / (positions pondérées + pénalités). Sur une carte dans le score d'un thème
+  // prioritaire, un candidat sans position documentée compte un demi-désaccord (« silence »).
+  // n (seuil MIN_N) reste le nombre de cartes où le candidat a une position.
   function scores() {
-    var res = {};
-    SLUGS.forEach(function (s) { res[s] = { agree: 0, n: 0 }; });
+    var res = {}, P = prioThemes();
+    SLUGS.forEach(function (s) { res[s] = { agree: 0, n: 0, wa: 0, wn: 0, miss: 0 }; });
     Object.keys(S.dec).forEach(function (id) {
       var d = S.dec[id].d, c = byId[id];
-      if (!c || !inScore(c) || (d !== "ok" && d !== "no")) return;  // carte hors score : avis gardé, pas compté
+      if (!c || !inScore(c)) return;  // carte hors score : avis gardé, pas compté
+      var w = P[c.theme] ? W_PRIO : 1;
+      if (P[c.theme]) SLUGS.forEach(function (s) { if (!c.pos[s]) { res[s].wn += PEN * w; res[s].miss += 1; } });
+      if (d !== "ok" && d !== "no") return;
       var mine = d === "ok" ? 1 : -1;
       Object.keys(c.pos).forEach(function (s) {
         if (!res[s]) return;
-        res[s].n += 1;
-        if (c.pos[s][0] === mine) res[s].agree += 1;
+        res[s].n += 1; res[s].wn += w;
+        if (c.pos[s][0] === mine) { res[s].agree += 1; res[s].wa += w; }
       });
     });
-    var list = SLUGS.map(function (s) { var r = res[s]; return { s: s, agree: r.agree, n: r.n, pct: r.n ? r.agree / r.n : null }; });
+    var list = SLUGS.map(function (s) { var r = res[s]; return { s: s, agree: r.agree, n: r.n, miss: r.miss, pct: r.n ? r.wa / r.wn : null }; });
     list.sort(function (a, b) {
       var ea = a.n >= MIN_N, eb = b.n >= MIN_N;
       if (ea !== eb) return ea ? -1 : 1;
@@ -949,26 +1110,39 @@ button, a, .folio, .parch, .lrow, .person, .cm-item, .wl-item, .mini, .scr-filte
   }
   function houseLabel(s) { var n = CANDS[s].name; var last = n.indexOf("Le Pen") >= 0 ? "Le Pen" : n.indexOf("de Villepin") >= 0 ? "de Villepin" : n.split(" ").slice(-1)[0]; return "Galaxie " + last; }
 
-  // ---------- Illustration générée (constellation déterministe, palette du deck) ----------
-  function sky(seed) {
-    var x = 0; for (var i = 0; i < seed.length; i++) x = (x * 31 + seed.charCodeAt(i)) >>> 0;
-    function rnd() { x ^= x << 13; x >>>= 0; x ^= x >> 17; x ^= x << 5; x >>>= 0; return (x % 10000) / 10000; }
-    var pts = [], out = '<svg class="sky" viewBox="0 0 100 70" preserveAspectRatio="xMidYMid slice" aria-hidden="true">';
-    for (var k = 0; k < 26; k++) pts.push([rnd() * 100, rnd() * 70, 0.4 + rnd() * 1.3]);
-    for (var j = 0; j < pts.length - 1; j++) if (rnd() < 0.35) out += '<line x1="' + pts[j][0].toFixed(1) + '" y1="' + pts[j][1].toFixed(1) + '" x2="' + pts[j + 1][0].toFixed(1) + '" y2="' + pts[j + 1][1].toFixed(1) + '" stroke="#ffffff" stroke-opacity=".28" stroke-width=".3"/>';
-    pts.forEach(function (p) { out += '<circle cx="' + p[0].toFixed(1) + '" cy="' + p[1].toFixed(1) + '" r="' + p[2].toFixed(2) + '" fill="#ffffff" fill-opacity="' + (0.35 + p[2] / 3).toFixed(2) + '"/>'; });
-    return out + "</svg>";
+  // ---------- Carte : verso holographique (le thème) → recto (accroche, chiffre-clé, graphique) ----------
+  // Motif du verso tiré au hasard à chaque affichage : quatre familles de dégradés (tourbillon,
+  // anneaux, moiré, kaléidoscope), teintes, angles et centres aléatoires. Générique, aucun élément
+  // propre à un jeu existant.
+  function holoBg() {
+    var r = Math.random, h = Math.floor(r() * 360), d = 40 + Math.floor(r() * 100);
+    var col = function (k, l) { return "hsl(" + ((h + k * d) % 360) + " 92% " + (l || 60) + "%)"; };
+    var x = Math.round(20 + r() * 60), y = Math.round(20 + r() * 60), a = Math.floor(r() * 360), s = 6 + Math.floor(r() * 12);
+    return [
+      "repeating-conic-gradient(from " + a + "deg at " + x + "% " + y + "%, " + col(0) + " 0deg, " + col(1) + " " + s + "deg, " + col(2) + " " + 2 * s + "deg, " + col(0) + " " + 3 * s + "deg)",
+      "repeating-radial-gradient(circle at " + x + "% " + y + "%, " + col(0) + " 0, " + col(1) + " " + s / 2 + "%, " + col(2) + " " + s + "%, " + col(0) + " " + 1.5 * s + "%)",
+      "repeating-linear-gradient(" + a + "deg, " + col(0, 70) + " 0 " + (s / 4).toFixed(1) + "%, transparent 0 " + (s / 2).toFixed(1) + "%), repeating-linear-gradient(" + (a + 50 + Math.floor(r() * 80)) + "deg, " + col(1) + " 0 " + (s / 4).toFixed(1) + "%, " + col(2, 45) + " 0 " + (s / 2).toFixed(1) + "%)",
+      "radial-gradient(circle at 50% 50%, " + col(3, 75) + ", transparent 40%), repeating-conic-gradient(from " + a + "deg at 50% 50%, " + col(0) + " 0 " + s + "deg, " + col(1) + " 0 " + 2 * s + "deg, " + col(2, 45) + " 0 " + 3 * s + "deg)"
+    ][Math.floor(r() * 4)];
   }
-
+  function backHTML(c) {
+    return '<div class="cback" aria-hidden="true"><span class="cb-pat" style="background:' + holoBg() + '"></span><span class="cb-foil"></span><span class="cb-glare"></span>' +
+      '<span class="cb-plate"><span class="cb-ico">' + icon(c.icon, 1.7) + '</span><span class="cb-k">Thème</span><span class="cb-theme">' + esc(c.theme) + "</span></span>" +
+      '<span class="cb-hint">Touchez pour révéler la mesure</span></div>';
+  }
+  function frontHTML(c) {
+    var f = FICHES[c.n], e = f && f.europe;
+    return '<div class="frame"><div class="inner">' +
+      '<div class="c-head"><span class="chip">' + icon(c.icon, 2) + esc(c.theme) + "</span></div>" +
+      '<p class="hook">' + esc(c.accroche || c.mesure) + "</p>" +
+      (c.fig ? '<div class="fig"><b>' + esc(c.fig) + "</b><span>" + esc(c.fig_label) + "</span></div>" : "") +
+      (e && e.lignes && e.lignes.length ? '<div class="mchart">' + euBars(e, 5) + "</div>" : "") +
+      '<div class="c-foot"><button class="info-btn" type="button" tabindex="-1" aria-label="Comprendre la mesure et voir les sources (fiche sans nom de candidat)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/></svg>Comprendre · sources</button></div>' +
+      [["r", "ok"], ["l", "no"], ["u", "wish"], ["d", "meh"]].map(function (s) { return '<span class="stamp ' + s[0] + '">' + LABEL[s[1]] + "<small>" + SHORT[s[1]] + "</small></span>"; }).join("") +
+      "</div></div>";
+  }
   function cardHTML(c) {
-    return '<div class="card" data-id="' + c.id + '"><div class="frame"><div class="inner">' +
-      '<div class="c-head"><span class="chip">' + icon(c.icon, 2) + esc(c.theme) + '</span><span class="num">N° ' + c.n + ' · #' + c.num + '</span></div>' +
-      '<div class="art">' + sky(c.id) + '<div class="emblem">' + icon(c.icon, 1.6) + '</div></div>' +
-      '<div class="fig"><b>' + esc(c.fig) + '</b><span>' + esc(c.fig_label) + '</span></div>' +
-      '<div class="measure">' + esc(c.mesure) + '</div>' +
-      '<div class="c-foot"><span class="seal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="6" stroke-dasharray="1.5 1.5"/><path d="M9 14v-3M12 14v-5M15 14V8"/></svg>Magnitude · Labo</span><button class="info-btn" type="button" aria-label="Comprendre la mesure (fiche sans nom de candidat)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/></svg>Comprendre</button></div>' +
-      '<span class="stamp r">Aligné</span><span class="stamp l">Désaligné</span><span class="stamp u">J\'aimerais</span><span class="stamp d">M\'en fous</span>' +
-      '</div></div></div>';
+    return '<div class="card" data-id="' + c.id + '" aria-label="Carte mystère, thème : ' + esc(c.theme) + '"><div class="flip3d">' + backHTML(c) + frontHTML(c) + "</div></div>";
   }
 
   // ---------- En-tête ----------
@@ -1024,10 +1198,45 @@ button, a, .folio, .parch, .lrow, .person, .cm-item, .wl-item, .mini, .scr-filte
       top = null; return;
     }
     if (q[1]) { var nx = el(cardHTML(q[1])); nx.classList.add("next"); stage.appendChild(nx); }
-    top = el(cardHTML(q[0])); stage.appendChild(top); bindDrag(top);
-    if (weekIsDone()) { var rf = refine(); if (rf.tie.some(function (c) { return c.id === q[0].id; })) { var art = top.querySelector(".art"); if (art) art.appendChild(el('<span class="tiehint">⚖ Cette carte peut départager vos deux premières galaxies</span>')); } }
-    var ib = top.querySelector(".info-btn"); if (ib) ib.onclick = function (e) { e.stopPropagation(); openFiche(top.dataset.id); };
-    var nb = stage.querySelector(".card.next .info-btn"); if (nb) nb.tabIndex = -1;
+    top = el(cardHTML(q[0])); stage.appendChild(top); bindDrag(top); bindTilt(top);
+    var shown = q[0].id === shownId;  // déjà retournée (re-rendu de la pile) : pas de seconde animation
+    if (shown) top.classList.add("revealed", "still");
+    stage.classList.toggle("lit", shown); $("#pad").classList.toggle("locked", !shown);
+    if (!shown && S.tuto === "flip") top.classList.add("hint");
+    var ib = top.querySelector(".info-btn"); if (ib) { ib.tabIndex = shown ? 0 : -1; ib.onclick = function (e) { e.stopPropagation(); openFiche(top.dataset.id); }; }
+    if (weekIsDone()) { var rf = refine(); if (rf.tie.some(function (c) { return c.id === q[0].id; })) top.querySelector(".cback").appendChild(el('<span class="tiehint">⚖ Cette carte peut départager vos deux premières galaxies</span>')); }
+  }
+
+  // Retourner la carte du dessus : verso (thème) → recto (mesure), avec zoom.
+  var shownId = null;
+  function flipTop() {
+    if (!top || busy || top.classList.contains("revealed")) return false;
+    shownId = top.dataset.id;
+    top.classList.remove("hint"); top.classList.add("revealed"); top.setAttribute("aria-label", "Mesure : " + (byId[shownId].accroche || byId[shownId].mesure));
+    var flipped = top;  // retournement terminé : « still », pour ne pas le rejouer quand une autre animation se termine
+    if (reduce) flipped.classList.add("still");
+    else flipped.addEventListener("animationend", function (e) { if (e.animationName === "flipZoom") flipped.classList.add("still"); });
+    stage.classList.add("lit"); $("#pad").classList.remove("locked");
+    var ib = top.querySelector(".info-btn"); if (ib) ib.tabIndex = 0;
+    if (S.tuto === "flip") {
+      S.tuto = "vote"; save(); coach();
+      if (!reduce) { var card = top; setTimeout(function () { if (card === top && !busy) { card.classList.add("demo"); card.addEventListener("animationend", function (e) { if (e.animationName === "demoNudge") card.classList.remove("demo"); }); } }, 950); }
+    }
+    return true;
+  }
+  // Verso : reflet qui suit le doigt ou la souris, comme les cartes révélées (bindHolo).
+  function bindTilt(card) {
+    if (reduce) return;
+    function mv(e) {
+      if (card.classList.contains("revealed")) return;
+      var r = card.getBoundingClientRect(), x = Math.max(0, Math.min(1, (e.clientX - r.left) / r.width)), y = Math.max(0, Math.min(1, (e.clientY - r.top) / r.height));
+      card.classList.add("live");
+      card.style.setProperty("--mx", (x * 100).toFixed(1) + "%"); card.style.setProperty("--my", (y * 100).toFixed(1) + "%");
+      card.style.setProperty("--gx", (25 + x * 50).toFixed(1) + "%"); card.style.setProperty("--gy", (25 + y * 50).toFixed(1) + "%");
+      card.style.setProperty("--rx", ((x - 0.5) * 16).toFixed(1) + "deg"); card.style.setProperty("--ry", ((0.5 - y) * 16).toFixed(1) + "deg");
+    }
+    function out() { card.classList.remove("live"); ["--mx", "--my", "--gx", "--gy", "--rx", "--ry"].forEach(function (p) { card.style.removeProperty(p); }); }
+    card.addEventListener("pointermove", mv); card.addEventListener("pointerleave", out); card.addEventListener("pointercancel", out);
   }
 
   function bindDrag(card) {
@@ -1036,11 +1245,12 @@ button, a, .folio, .parch, .lrow, .person, .cm-item, .wl-item, .mini, .scr-filte
     function dirOf(x, y) { return Math.abs(x) >= Math.abs(y) ? (x > 0 ? "r" : "l") : (y < 0 ? "u" : "d"); }
     card.addEventListener("pointerdown", function (e) {
       if (busy || e.target.closest(".info-btn")) return; active = true; pid = e.pointerId; sx = e.clientX; sy = e.clientY; dx = dy = 0; t0 = Date.now();
-      card.classList.remove("anim"); try { card.setPointerCapture(pid); } catch (er) {}
+      card.classList.remove("anim", "demo"); try { card.setPointerCapture(pid); } catch (er) {}
     });
     card.addEventListener("pointermove", function (e) {
       if (!active || e.pointerId !== pid) return;
       dx = e.clientX - sx; dy = e.clientY - sy;
+      if (!card.classList.contains("revealed")) return;  // la mesure se lit avant de se trancher
       card.style.transform = "translate(" + dx + "px," + dy + "px) rotate(" + (dx * 0.06) + "deg)";
       var dist = Math.hypot(dx, dy), th = threshold(), d = dirOf(dx, dy);
       Object.keys(stamps).forEach(function (k) { stamps[k].style.opacity = k === d ? Math.min(1, dist / th) : 0; });
@@ -1048,6 +1258,7 @@ button, a, .folio, .parch, .lrow, .person, .cm-item, .wl-item, .mini, .scr-filte
     function end(e) {
       if (!active || (e && e.pointerId !== pid)) return; active = false;
       var dist = Math.hypot(dx, dy), v = dist / Math.max(1, Date.now() - t0);
+      if (!card.classList.contains("revealed")) { if (dist < 14) flipTop(); return; }
       if (dist > threshold() || (dist > 40 && v > 0.6)) commit(dirOf(dx, dy));
       else if (dist < 8 && Date.now() - t0 < 400) { card.style.transform = ""; openFiche(card.dataset.id); }  // simple toucher
       else { card.classList.add("anim"); card.style.transform = ""; Object.keys(stamps).forEach(function (k) { stamps[k].style.opacity = 0; }); }
@@ -1057,7 +1268,9 @@ button, a, .folio, .parch, .lrow, .person, .cm-item, .wl-item, .mini, .scr-filte
   function threshold() { return Math.min(110, stage.clientWidth * 0.26); }
 
   function commit(dir) {
-    if (!top || busy) return; busy = true;
+    if (!top || busy) return;
+    if (!top.classList.contains("revealed")) { flipTop(); return; }  // geste ou flèche sur le verso : on révèle d'abord
+    busy = true; top.classList.remove("demo"); shownId = null;
     var card = top, id = card.dataset.id, w = window.innerWidth, h = window.innerHeight;
     var to = { r: [w, 40, 25], l: [-w, 40, -25], u: [0, -h, 0], d: [0, h, 0] }[dir];
     var st = card.querySelector(".stamp." + dir); if (st) st.style.opacity = 1;
@@ -1066,7 +1279,7 @@ button, a, .folio, .parch, .lrow, .person, .cm-item, .wl-item, .mini, .scr-filte
     card.style.opacity = "0";
     setTimeout(function () {
       var d = DIRS[dir];
-      var next = function (note) { decide(id, d, note, true); queueReveal(id); };
+      var next = function (note) { decide(id, d, note, true); queueReveal(id, d); };
       if (d === "wish" || d === "meh") noteSheet(id, d, next); else next();
     }, reduce ? 0 : 260);
   }
@@ -1104,9 +1317,13 @@ button, a, .folio, .parch, .lrow, .person, .cm-item, .wl-item, .mini, .scr-filte
 
   function noteSheet(id, d, done) {
     var c = byId[id];
-    var q = d === "wish" ? "Quelle mesure proposeriez-vous à la place ?" : "Quel sujet vous paraît plus important ?";
-    var sh = openSheet('<span class="badge ' + d + '">' + GLYPH[d] + " " + LABEL[d] + '</span><h3>' + esc(c.mesure) + '</h3><label for="note-txt" style="font-weight:600">' + q + ' <span style="color:var(--muted);font-weight:400">(facultatif)</span></label><textarea id="note-txt" maxlength="400" placeholder="Votre idée, en une phrase"></textarea><p class="fine" style="margin:0">Gardé uniquement sur cet appareil. Rien n\'est envoyé.</p><div class="row-btns"><button class="btn ghost" id="n-skip">Passer</button><button class="btn primary" id="n-save">Garder ma réponse</button></div>',
+    var q = d === "wish" ? "Que changeriez-vous à cette mesure ?" : "Quel thème vous paraît plus important ?";
+    var alt = d === "meh" ? '<div class="alt-chips" role="group" aria-label="Thèmes">' + ALL_THEMES.filter(function (t) { return t !== c.theme; }).map(function (t) { return '<button type="button" aria-pressed="false" data-t="' + esc(t) + '">' + esc(t) + "</button>"; }).join("") + "</div>" : "";
+    var sh = openSheet('<span class="badge ' + d + '">' + GLYPH[d] + " " + LABEL[d] + " · " + DESC[d] + '</span><h3>' + esc(c.accroche || c.mesure) + '</h3><label for="note-txt" style="font-weight:600">' + q + ' <span style="color:var(--muted);font-weight:400">(facultatif)</span></label>' + alt + '<textarea id="note-txt" maxlength="400" placeholder="' + (d === "meh" ? "Touchez un thème ou écrivez le vôtre" : "Votre idée, en une phrase") + '"></textarea><p class="fine" style="margin:0">Gardé uniquement sur cet appareil. Rien n\'est envoyé.</p><div class="row-btns"><button class="btn ghost" id="n-skip">Passer</button><button class="btn primary" id="n-save">Garder ma réponse</button></div>',
       function () { done(""); });
+    Array.prototype.forEach.call(sh.querySelectorAll(".alt-chips button"), function (b) {
+      b.onclick = function () { Array.prototype.forEach.call(sh.querySelectorAll(".alt-chips button"), function (o) { o.setAttribute("aria-pressed", String(o === b)); }); $("#note-txt", sh).value = b.dataset.t; };
+    });
     $("#n-skip", sh).onclick = function () { layer._onClose = null; closeSheet(true); done(""); };
     $("#n-save", sh).onclick = function () { var v = $("#note-txt", sh).value.trim(); layer._onClose = null; closeSheet(true); done(v); };
   }
@@ -1120,19 +1337,30 @@ button, a, .folio, .parch, .lrow, .person, .cm-item, .wl-item, .mini, .scr-filte
   // Fiche « Comprendre la mesure » : lue AVANT le choix, donc sans nom de candidat ni de parti
   // (extraite et vérifiée par prototypes/deck/extract_fiches.py).
   function fmt(v) { return (Math.round(v * 100) / 100).toLocaleString("fr-FR"); }
-  function euBars(e) {
+  // Graphique du recto : au plus `max` lignes (la ligne mise en avant, les deux extrêmes, puis des
+  // lignes régulièrement espacées), à la même échelle ; le graphique complet reste dans la fiche.
+  function chartRows(L, max) {
+    if (L.length <= max) return L;
+    var keep = [0, L.length - 1];
+    L.forEach(function (l, i) { if (l.focus && keep.indexOf(i) < 0) keep.push(i); });
+    for (var k = 1; keep.length < max && k < max - 1; k++) { var i = Math.round(k * (L.length - 1) / (max - 1)); if (keep.indexOf(i) < 0) keep.push(i); }
+    return keep.sort(function (a, b) { return a - b; }).map(function (i) { return L[i]; });
+  }
+  function euBars(e, max) {
     if (!e || !e.lignes || !e.lignes.length) return "";
     var mx = e.max || Math.max.apply(null, e.lignes.map(function (l) { return l.value_max || l.value; })) * 1.1;
     if (e.ref) mx = Math.max(mx, e.ref.value * 1.05);
     var pc = function (v) { return Math.max(0, Math.min(100, v / mx * 100)); };
-    var rows = e.lignes.map(function (l) {
-      var r = '<div class="bar-row' + (l.focus ? " focus" : "") + '"><span class="lb">' + esc(l.label) + '</span><span class="track"><span class="fill" style="width:' + pc(l.value) + '%"></span>' +
+    var L = max ? chartRows(e.lignes, max) : e.lignes;
+    var rows = L.map(function (l, j) {
+      var mid = max && !l.focus && j > 0 && j < L.length - 1;  // ligne intermédiaire : masquée sur une petite carte
+      var r = '<div class="bar-row' + (l.focus ? " focus" : "") + (mid ? " mid" : "") + '"><span class="lb">' + esc(l.label) + '</span><span class="track"><span class="fill" style="width:' + pc(l.value) + '%"></span>' +
         (l.value_max ? '<span class="range" style="left:' + pc(l.value) + "%;width:" + (pc(l.value_max) - pc(l.value)) + '%"></span>' : "") +
         (e.ref ? '<span class="refline" style="left:calc(' + pc(e.ref.value) + '% - 1px)"></span>' : "") +
         '</span><span class="val">' + fmt(l.value) + (l.value_max ? "–" + fmt(l.value_max) : "") + "</span></div>";
       return r;
     }).join("");
-    var notes = e.lignes.filter(function (l) { return l.note; }).map(function (l) { return "<li><b>" + esc(l.label) + "</b> : " + esc(l.note) + "</li>"; }).join("");
+    var notes = max ? "" : e.lignes.filter(function (l) { return l.note; }).map(function (l) { return "<li><b>" + esc(l.label) + "</b> : " + esc(l.note) + "</li>"; }).join("");
     return '<div class="eu" role="figure" aria-label="' + esc(e.titre) + '"><div class="ttl">' + esc(e.titre) + (e.unite ? " (" + esc(e.unite) + ")" : "") + "</div>" + rows +
       (e.ref ? '<div class="legend"><i></i>' + esc(e.ref.label) + " : " + fmt(e.ref.value) + "</div>" : "") +
       (notes ? "<details><summary>Notes de lecture</summary><ul>" + notes + "</ul></details>" : "") + "</div>";
@@ -1183,28 +1411,30 @@ button, a, .folio, .parch, .lrow, .person, .cm-item, .wl-item, .mini, .scr-filte
   // (et à la dernière carte), les cartes tranchées se retournent ensemble avec leur candidat.
   var LOT = 5;
   function pending() { return (S.pend || []).filter(function (x) { return S.dec[x] && byId[x]; }); }
-  function queueReveal(id) {
+  function queueReveal(id, d) {
     S.pend = pending().filter(function (x) { return x !== id; }); S.pend.push(id); save();
+    if (d) tutoVoted(d);
     if (S.pend.length >= LOT || !queue().length) batchReveal();
     else { busy = false; renderStack(); if (activeSeg === "mine") renderMine(); }
   }
   function batchReveal() {
     var ids = pending(); if (!ids.length) { afterBatch(); return; }
     S.pend = []; var before = S.leader, after = scores().leader;
+    var intro = S.tuto === "lot"; if (intro) S.tuto = "go";  // première révélation : le maître du jeu commente
     S.leader = after; save(); applyDeck(after); renderWeek();
-    openBatch(ids, before, after, false);
+    openBatch(ids, before, after, false, intro);
   }
   function backFace(c) {
     return '<span class="flip-back" aria-hidden="true"><i>' + icon(c.icon, 1.8) + "</i>N° " + c.n + "</span>";
   }
-  function openBatch(ids, before, after, still) {
+  function openBatch(ids, before, after, still, intro) {
     var items = ids.map(function (id, i) {
       var c = byId[id], k = CANDS[c.centre], d = S.dec[id] ? S.dec[id].d : null, f = (still ? 0 : 0.25 + i * 0.32);
       var card = revealCard(c).replace('style="--rc-hue:', 'style="--d:' + (f + 0.35).toFixed(2) + "s;--rc-hue:");
       return '<li class="lot-it" style="--f:' + f.toFixed(2) + 's"><button type="button" class="lot-card" data-see="' + id + '" aria-label="Détails : ' + esc(c.mesure) + ", proposée par " + esc(k.name) + '">' +
         '<span class="flip"><span class="flip-in">' + backFace(c) + '<span class="flip-front">' + card + "</span></span></span></button>" +
         '<div class="lot-tx">' + (d ? '<span class="badge ' + d + '">' + GLYPH[d] + " " + LABEL[d] + "</span>" : "") + "<b>" + esc(k.name) + stShort(c.centre) + "</b>" +
-        '<span class="fine">' + esc(c.mesure) + "</span>" +
+        '<span class="fine">' + esc(c.accroche || c.mesure) + "</span>" +
         (inScore(c) ? '<span class="sc-mini score">✦ Dans le score</span>' : '<span class="sc-mini off">Hors score : ne compte pas encore</span>') +
         '<span class="lot-acts"><button type="button" class="lnk" data-see="' + id + '">Détails</button><button type="button" class="lnk" data-edit="' + id + '">Changer mon choix</button></span></div></li>';
     }).join("");
@@ -1212,6 +1442,7 @@ button, a, .folio, .parch, .lrow, .person, .cm-item, .wl-item, .mini, .scr-filte
       : "Votre galaxie reste <b>" + esc(houseLabel(after)) + "</b>.") : (before ? "Votre deck redevient neutre : il hésite entre plusieurs galaxies." : "Votre deck hésite encore : continuez pour faire apparaître votre galaxie.");
     var left = queue().length;
     var sh = openSheet('<div class="eyebrow">Révélation · ' + ids.length + " carte" + (ids.length > 1 ? "s" : "") + '</div><h3 class="lot-h">Qui se cache derrière vos cartes ?</h3>' +
+      (intro ? '<p class="mj-line">' + MJ_HAT + "<span>Les masques tombent ! Chaque carte prend la couleur du candidat qui l'a proposée. Une carte sobre ne compte pas encore dans le score : trop peu de candidats y sont documentés.</span></p>" : "") +
       '<ol class="lot' + (still ? " still" : "") + '">' + items + '</ol><p class="lot-gal">' + gal + "</p>" +
       '<div class="row-btns"><button class="btn primary" id="lot-next">' + (left ? "Continuer : " + Math.min(LOT, left) + " carte" + (Math.min(LOT, left) > 1 ? "s" : "") + " suivante" + (Math.min(LOT, left) > 1 ? "s" : "") : "Voir mon deck") + "</button></div>",
       function () { afterBatch(false); });
@@ -1224,8 +1455,9 @@ button, a, .folio, .parch, .lrow, .person, .cm-item, .wl-item, .mini, .scr-filte
     busy = false; renderStack();
     var weekDone = WEEK.every(function (id) { return S.dec[id]; });
     var weekPending = pending().some(function (id) { return WEEK.indexOf(id) >= 0; });
+    coach();
     if (weekDone && !weekPending && S.triSeen !== SEMAINE) { S.triSeen = SEMAINE; save(); grandTri(); return; }
-    if (goMine) showSeg("mine");
+    if (goMine || !queue().length) { showSeg("mine"); if (!queue().length) toast("Partie terminée : voici vos cartes et vos choix."); }  // fin du paquet : on montre le deck
     else if (activeSeg === "mine") renderMine();
     if (!$("#view-maison").hidden) renderMaison();
   }
@@ -1238,13 +1470,14 @@ button, a, .folio, .parch, .lrow, .person, .cm-item, .wl-item, .mini, .scr-filte
   }
 
   // ---------- Le Grand Tri ----------
+  // Le chapeau : emblème du Grand Tri et visage du maître du jeu.
+  var MJ_HAT = '<svg class="hat" viewBox="0 0 150 150" aria-hidden="true"><path d="M75 14 L112 108 H38 Z" fill="var(--deck)" stroke="#EAF6F5" stroke-width="2"/><path d="M20 110 Q75 92 130 110 Q75 128 20 110Z" fill="#0B4A52" stroke="#EAF6F5" stroke-width="2"/><circle cx="70" cy="62" r="3" fill="#FCE58C"/><circle cx="84" cy="80" r="2.2" fill="#FCE58C"/><circle cx="64" cy="88" r="1.8" fill="#FCE58C"/><rect x="58" y="97" width="5" height="9" rx="1" fill="#FBBF24"/><rect x="66" y="93" width="5" height="13" rx="1" fill="#F59E0B"/><rect x="74" y="89" width="5" height="17" rx="1" fill="#D97706"/><rect x="82" y="85" width="5" height="21" rx="1" fill="#B45309"/></svg>';
   function grandTri() {
     var sc = scores(), L = sc.leader;
     var res = L ? '<img src="' + CANDS[L].img + '" alt=""><b style="font-family:var(--serif);font-size:22px">' + esc(houseLabel(L)) + '</b><span style="color:#CFE6E4;font-size:13px">teinte ' + esc(CANDS[L].tone) + " · " + Math.round(sc.list[0].pct * 100) + " % d'accord sur " + sc.list[0].n + " cartes documentées</span>"
       : '<b style="font-family:var(--serif);font-size:20px">Votre deck hésite encore</b><span style="color:#CFE6E4;font-size:13px">Pas assez de cartes communes pour départager les galaxies. Tranchez les cartes suivantes pour la faire apparaître.</span>';
     var rf0 = refine(), hook = "Votre galaxie est <b>provisoire</b> : " + refineMsg(rf0);
-    var ov = el('<div class="overlay tri" role="dialog" aria-modal="true" aria-label="Le Grand Tri"><div class="ob">' +
-      '<svg class="hat" viewBox="0 0 150 150" aria-hidden="true"><path d="M75 14 L112 108 H38 Z" fill="var(--deck)" stroke="#EAF6F5" stroke-width="2"/><path d="M20 110 Q75 92 130 110 Q75 128 20 110Z" fill="#0B4A52" stroke="#EAF6F5" stroke-width="2"/><circle cx="70" cy="62" r="3" fill="#FCE58C"/><circle cx="84" cy="80" r="2.2" fill="#FCE58C"/><circle cx="64" cy="88" r="1.8" fill="#FCE58C"/><rect x="58" y="97" width="5" height="9" rx="1" fill="#FBBF24"/><rect x="66" y="93" width="5" height="13" rx="1" fill="#F59E0B"/><rect x="74" y="89" width="5" height="17" rx="1" fill="#D97706"/><rect x="82" y="85" width="5" height="21" rx="1" fill="#B45309"/></svg>' +
+    var ov = el('<div class="overlay tri" role="dialog" aria-modal="true" aria-label="Le Grand Tri"><div class="ob">' + MJ_HAT +
       '<div class="step">Le Grand Tri · semaine ' + SEMAINE + '</div><p class="big">La magie a parlé ?</p><p class="sub">Non : la data et vos votes.</p>' +
       '<div class="res">' + res + '</div><p class="tri-hook">' + hook + '</p>' + meterHTML(rf0, "tri-meter") + '<p style="margin:0;font-size:12.5px;color:#CFE6E4">À terme : votre email part en fumée, vous recevez l\'avatar commun et votre chapeau.</p><div class="row-btns"><button class="btn primary" id="t-go">Affiner ma galaxie →</button><button class="btn ghost" id="t-mine">Voir mon deck</button></div></div></div>');
     document.body.appendChild(ov);
@@ -1275,7 +1508,26 @@ button, a, .folio, .parch, .lrow, .person, .cm-item, .wl-item, .mini, .scr-filte
   }
   function importanceOf(id) { if (!S.rank) return 0.5; var r = rankIds(), i = r.indexOf(id); return 1 - 0.9 * i / Math.max(1, r.length - 1); }
   function recueilHead() {
-    return '<h3 class="recueil-h">Le recueil</h3><p class="recueil-sub">' + (rankMode ? "Classez vos promesses : la plus importante pour vous en haut. Votre galaxie en tient compte." : "Une page par promesse. Touchez une page pour changer d'avis.") + '</p><div class="rank-bar"><button type="button" id="rk-toggle" class="rk-main' + (rankMode ? " on" : "") + '">' + (rankMode ? "Terminer le classement" : S.rank ? "Modifier l'ordre d'importance" : "Classer par importance") + "</button>" + (S.rank && !rankMode ? '<button type="button" id="rk-reset">Revenir à l\'ordre des folios</button>' : "") + "</div>";
+    return '<h3 class="recueil-h">Le recueil</h3><p class="recueil-sub">' + (rankMode ? "Classez vos promesses : la plus importante pour vous en haut. Votre galaxie en tient compte." : "Une page par promesse. Touchez une page pour changer d'avis.") + '</p><div class="rank-bar"><button type="button" id="rk-toggle" class="rk-main' + (rankMode ? " on" : "") + '">' + (rankMode ? "Terminer le classement" : S.rank ? "Modifier l'ordre d'importance" : "Classer par importance") + "</button>" + (S.rank && !rankMode ? '<button type="button" id="rk-reset">Revenir à l\'ordre des folios</button>' : "") + "</div>" + (rankMode ? "" : filterBar());
+  }
+  // Filtres du recueil par choix (2026-10-30) : retrouver d'un coup ses Aligné, J'aimerais, etc.
+  var mineFilter = "all";
+  function decOf(id) { return S.dec[id] ? S.dec[id].d : "todo"; }
+  function filterBar() {
+    var cnt = { all: CARDS.length, ok: 0, no: 0, wish: 0, meh: 0, todo: 0 };
+    CARDS.forEach(function (c) { cnt[decOf(c.id)]++; });
+    return '<div class="dec-filter" role="group" aria-label="Filtrer par choix">' + [["all", "Toutes"], ["ok", GLYPH.ok + " " + LABEL.ok], ["no", GLYPH.no + " " + LABEL.no], ["wish", GLYPH.wish + " " + LABEL.wish], ["meh", GLYPH.meh + " " + LABEL.meh], ["todo", "À trancher"]]
+      .map(function (f) { return '<button type="button" class="' + f[0] + '" data-f="' + f[0] + '" aria-pressed="' + (mineFilter === f[0]) + '">' + f[1] + " · " + cnt[f[0]] + "</button>"; }).join("") + "</div>";
+  }
+  // Vos priorités : choisies à l'introduction, ajoutées par un J'aimerais, retirées par un M'en fous.
+  function prioBox() {
+    var P = prioThemes(), chosen = S.themes || [];
+    var chips = Object.keys(P).sort(function (a, b) { return a.localeCompare(b, "fr"); }).map(function (t) {
+      return '<span class="pc">' + esc(t) + (P[t] === "wish" ? " <i>par un J'aimerais</i>" : !hasCard(t) ? " <i>pas encore de carte</i>" : "") + "</span>";
+    }).concat(chosen.filter(function (t) { return !P[t]; }).map(function (t) { return '<span class="pc off" title="Retiré par un M\'en fous">' + esc(t) + "</span>"; })).join("");
+    return '<section class="parch prio-box" aria-label="Vos priorités"><h3>Vos priorités</h3><p class="rubric">Elles pèsent double dans votre galaxie. Un candidat sans position connue sur l\'une d\'elles compte un demi-désaccord.</p>' +
+      (chips ? '<div class="pcs">' + chips + "</div>" : '<p class="rubric">Aucune priorité choisie : toutes les mesures pèsent pareil.</p>') +
+      '<button type="button" class="mai-link" id="m-prio">Modifier mes priorités</button></section>';
   }
   function fw(id, ri, html) {
     var rk = rankMode ? '<div class="rk" role="group" aria-label="Classer : ' + esc(byId[id].mesure) + '"><button type="button" data-mv="top" data-id="' + id + '"' + (ri === 0 ? " disabled" : "") + '>⤒ En tête</button><button type="button" data-mv="up" data-id="' + id + '"' + (ri === 0 ? " disabled" : "") + '>▲ Monter</button><span class="rkn" aria-label="Rang ' + (ri + 1) + '">' + (ri + 1) + '</span><button type="button" data-mv="dn" data-id="' + id + '"' + (ri === ORDER.length - 1 ? " disabled" : "") + ">▼ Descendre</button></div>" : "";
@@ -1297,7 +1549,7 @@ button, a, .folio, .parch, .lrow, .person, .cm-item, .wl-item, .mini, .scr-filte
       '<div class="house"><div class="seal-wax">' + (L ? '<img src="' + CANDS[L].img + '" alt="">' : "") + "</div><div>" +
       '<div class="plume">' + (L ? esc(houseLabel(L)) : "Le deck hésite encore") + "</div>" +
       '<div class="count">' + decided + " promesse" + (decided > 1 ? "s" : "") + " examinée" + (decided > 1 ? "s" : "") + " sur " + CARDS.length + ", dont " + counted + " au calcul (Aligné ou Désaligné sur une carte dans le score)" + (L ? ", teinte " + esc(CANDS[L].tone) : "") + ".</div></div></div></section>";
-    var rank = '<section class="parch ledger" aria-label="Grand livre des candidats"><h3>Le grand livre</h3><p class="rubric">Part d\'accord avec les positions documentées de chacun ; n = promesses prises en compte. Une galaxie se déclare à partir de ' + MIN_N + " promesses, sans égalité en tête.</p>";
+    var rank = '<section class="parch ledger" aria-label="Grand livre des candidats"><h3>Le grand livre</h3><p class="rubric">Part d\'accord avec les positions documentées de chacun ; n = promesses prises en compte. Vos priorités pèsent double ; un « silence » (aucune position connue sur une de vos priorités) compte un demi-désaccord. Une galaxie se déclare à partir de ' + MIN_N + " promesses, sans égalité en tête.</p>";
     var pos = 0, prev = null;
     sc.list.forEach(function (r, i) {
       var weak = r.n < MIN_N;
@@ -1306,23 +1558,24 @@ button, a, .folio, .parch, .lrow, .person, .cm-item, .wl-item, .mini, .scr-filte
       var col = "oklch(calc(0.5 + var(--lift)) 0.1 " + CANDS[r.s].hue + ")";
       var ret = stOf(r.s) && stOf(r.s).kind === "retire";
       rank += '<div role="button" tabindex="0" data-s="' + r.s + '" aria-label="Voir les mesures de ' + esc(CANDS[r.s].name) + '" class="lrow' + (r.s === L ? " lead" : "") + (weak ? " weak" : "") + (ret ? " retire" : "") + '"><span class="pos">' + (weak ? "–" : (tie ? "=" : "") + roman(pos)) + '</span><img src="' + CANDS[r.s].img + '" alt=""><span class="nm"><b>' + esc(CANDS[r.s].name) + "</b>" + (r.s === L ? '<span class="maison">votre galaxie</span>' : "") + (stOf(r.s) ? stPill(r.s) : "") +
-        '<span class="ink" style="width:' + (r.pct == null ? 0 : Math.round(r.pct * 100)) + "%;color:" + col + '"></span></span><span class="pct plume">' + (r.pct == null ? "—" : Math.round(r.pct * 100) + " %") + "<small>n = " + r.n + (weak ? ", trop peu" : "") + "</small></span></div>";
+        '<span class="ink" style="width:' + (r.pct == null ? 0 : Math.round(r.pct * 100)) + "%;color:" + col + '"></span></span><span class="pct plume">' + (r.pct == null ? "—" : Math.round(r.pct * 100) + " %") + "<small>n = " + r.n + (weak ? ", trop peu" : "") + (r.miss ? " · " + r.miss + " silence" + (r.miss > 1 ? "s" : "") : "") + "</small></span></div>";
     });
     rank += "</section>";
     var last = Object.keys(S.dec).sort(function (a, b) { return S.dec[b].t - S.dec[a].t; })[0];
-    var pages = recueilHead() + '<div class="pages">' + rankIds().map(function (id, ri) { var c = byId[id]; return fw(id, ri, (function () {
+    var folios = rankIds().map(function (id, ri) { if (!rankMode && mineFilter !== "all" && decOf(id) !== mineFilter) return ""; var c = byId[id]; return fw(id, ri, (function () {
       var d = S.dec[c.id];
       var head = '<span class="head"><span class="no">Folio ' + roman(c.n) + (S.rank ? ' <span class="imp">· importance ' + (ri + 1) + "</span>" : "") + '</span><span class="theme">' + esc(c.theme) + "</span></span>";
-      if (!d) return '<button class="folio parch blank" data-id="' + c.id + '" aria-label="Page blanche : ' + esc(c.mesure) + ', à trancher">' + head + '<span class="titre">' + esc(c.mesure) + '</span><span class="lines" aria-hidden="true"></span><span class="todo">Page encore blanche : promesse à examiner.</span></button>';
+      if (!d) return '<button class="folio parch blank" data-id="' + c.id + '" aria-label="Page blanche : ' + esc(c.mesure) + ', à trancher">' + head + '<span class="titre">' + esc(c.accroche || c.mesure) + '</span><span class="lines" aria-hidden="true"></span><span class="todo">Page encore blanche : promesse à examiner.</span></button>';
       var w = c.id === last ? " writing" : "";
       var st = stOf(c.centre), pend = pending().indexOf(c.id) >= 0;
       return '<button class="folio parch" data-id="' + c.id + '" aria-label="' + esc(c.mesure) + " : votre avis, " + LABEL[d.d] + '">' + head +
-        '<span class="titre">' + esc(c.mesure) + "</span>" +
+        '<span class="titre">' + esc(c.accroche || c.mesure) + "</span>" +
         '<span class="dose"><b>' + esc(c.fig) + "</b> " + esc(c.fig_label) + "</span>" +
         '<span class="hand-wrap"><span class="hand"><span class="verdict ' + d.d + w + '">' + LABEL[d.d] + "</span>" +
         (pend ? '<span class="author pend">Auteur révélé au prochain lot de cartes</span>' : '<span class="author' + w + '">Promesse de ' + esc(CANDS[c.centre].name) + (st ? ' <span class="st">(' + esc(st.label.toLowerCase()) + ")</span>" : "") + "</span>") +
         (d.note ? '<span class="billet' + w + '">« ' + esc(d.note) + " »</span>" : "") + (pend ? "" : scLine(c)) + "</span>" + (pend ? "" : revealCard(c, true)) + "</span></button>";
-    })()); }).join("") + "</div>";
+    })()); }).join("");
+    var pages = recueilHead() + (folios ? '<div class="pages">' + folios + "</div>" : '<p class="pages-empty">Aucune carte pour ce choix.</p>');
     var stx = deckStats();
     var nIn = CARDS.filter(inScore).length;
     var note = '<aside class="parch nb"><b>Nota bene.</b> Seules les ' + nIn + ' cartes « dans le score » (au moins ' + SEUIL_DOC + ' candidats sur ' + SLUGS.length + ' documentés, dont ' + SEUIL_AB + ' en niveau A ou B) comptent dans votre galaxie ; les autres gardent votre avis sans le compter. Les positions des candidats sont documentées pour ' + stx.doc + " cases sur " + stx.tot + " (" + Math.round(stx.doc / stx.tot * 100) + " %). Avec ces trous, le calcul peut avantager certains candidats : ce classement reste indicatif tant que 6 cartes ne réunissent pas au moins 8 positions documentées et qu'un test de neutralité n'est pas passé.</aside>";
@@ -1331,7 +1584,7 @@ button, a, .folio, .parch, .lrow, .person, .cm-item, .wl-item, .mini, .scr-filte
     var cosmosLbl = (L ? "Votre galaxie : " + houseLabel(L) + ". " : "Pas encore de galaxie de référence. ") + (near.length ? "Ensuite : " + near.join(", ") + "." : "");
     var cosmos = '<section class="cosmos" aria-label="Votre galaxie"><div class="cosmos-in"><canvas id="cosmos" role="img" aria-label="' + esc(cosmosLbl) + '"></canvas><span class="ttl">Votre galaxie</span><span class="sub">' + (L ? esc(houseLabel(L)) + " au centre" : decided ? "Encore trop peu de cartes communes" : "Tranchez des cartes pour la voir bouger") + "</span></div></section>" +
       galaxyLegend();
-    $("#mine-wrap").innerHTML = cosmos + front + rank + pages + note + tools;
+    $("#mine-wrap").innerHTML = cosmos + front + prioBox() + rank + pages + note + tools;
     Array.prototype.forEach.call(document.querySelectorAll(".lrow[data-s]"), function (row) {
       row.onclick = function () { candSheet(row.dataset.s); };
       row.onkeydown = function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); candSheet(row.dataset.s); } };
@@ -1342,11 +1595,13 @@ button, a, .folio, .parch, .lrow, .person, .cm-item, .wl-item, .mini, .scr-filte
     var rr = $("#rk-reset"); if (rr) rr.onclick = function () { S.rank = null; save(); renderMine(); };
     Array.prototype.forEach.call(document.querySelectorAll(".rk [data-mv]"), function (b) { b.onclick = function () { moveRank(b.dataset.id, b.dataset.mv); }; });
     $("#m-copy").onclick = copyDeck; $("#m-import").onclick = importSheet; $("#m-reset").onclick = resetSheet;
-    $("#m-intro").onclick = function () { onboarding(0); };
+    $("#m-intro").onclick = welcome;
+    $("#m-prio").onclick = function () { prioPicker(true, prioChanged); };
+    Array.prototype.forEach.call(document.querySelectorAll(".dec-filter button"), function (b) { b.onclick = function () { mineFilter = b.dataset.f; var y = $("#mine").scrollTop; renderMine(); $("#mine").scrollTop = y; }; });
   }
   function editSheet(id, backIds) {
     var c = byId[id], d = S.dec[id] ? S.dec[id].d : null;
-    var opts = ["ok", "no", "wish", "meh"].map(function (k) { return '<button class="' + k + '" data-d="' + k + '" aria-pressed="' + (d === k) + '"><span>' + GLYPH[k] + " " + LABEL[k] + "</span></button>"; }).join("");
+    var opts = ["ok", "no", "wish", "meh"].map(function (k) { return '<button class="' + k + '" data-d="' + k + '" aria-pressed="' + (d === k) + '"><span>' + GLYPH[k] + " " + LABEL[k] + "<small>" + DESC[k] + "</small></span></button>"; }).join("");
     var sh = openSheet('<span class="num">N° ' + c.n + " · " + esc(c.theme) + '</span><h3>' + esc(c.mesure) + '</h3><div class="fig"><b style="font-size:28px">' + esc(c.fig) + '</b><span>' + esc(c.fig_label) + '</span></div><div class="choice4">' + opts + '</div>' + (d ? '<div class="row-btns"><button class="btn ghost" id="e-clear">Retirer ma décision</button>' + '<button class="btn" id="e-see">Voir qui défend quoi</button></div>' : ""));
     Array.prototype.forEach.call(sh.querySelectorAll(".choice4 button"), function (b) {
       b.onclick = function () { decide(id, b.dataset.d, S.dec[id] && S.dec[id].note); closeSheet(true); refreshViews(); if (backIds) openBatch(backIds, S.leader, S.leader, true); };
@@ -1357,7 +1612,7 @@ button, a, .folio, .parch, .lrow, .person, .cm-item, .wl-item, .mini, .scr-filte
     }
   }
   function copyDeck() {
-    var txt = JSON.stringify({ v: 1, dec: S.dec, rank: S.rank || undefined });
+    var txt = JSON.stringify({ v: 1, dec: S.dec, rank: S.rank || undefined, themes: S.themes || undefined });
     var done = function () { toast("Deck copié. Collez-le sur un autre appareil via « Importer un deck »."); };
     try { navigator.clipboard.writeText(txt).then(done, function () { showText(txt); }); } catch (e) { showText(txt); }
   }
@@ -1366,14 +1621,14 @@ button, a, .folio, .parch, .lrow, .person, .cm-item, .wl-item, .mini, .scr-filte
     var sh = openSheet('<h3>Importer un deck</h3><label for="imp-txt" class="fine">Collez ici le texte copié depuis un autre appareil.</label><textarea id="imp-txt"></textarea><div class="row-btns"><button class="btn ghost" id="i-cancel">Annuler</button><button class="btn primary" id="i-ok">Importer</button></div><p class="fine" id="i-err" style="margin:0;color:var(--d-no)" hidden>Ce texte n\'est pas un deck Magnitude valide.</p>');
     $("#i-cancel", sh).onclick = function () { closeSheet(true); };
     $("#i-ok", sh).onclick = function () {
-      try { var o = JSON.parse($("#imp-txt", sh).value); if (!o || typeof o.dec !== "object") throw 0; var clean = {}; Object.keys(o.dec).forEach(function (k) { if (byId[k] && LABEL[o.dec[k].d]) clean[k] = { d: o.dec[k].d, t: o.dec[k].t || Date.now(), note: typeof o.dec[k].note === "string" ? o.dec[k].note.slice(0, 400) : undefined }; }); S.dec = clean; S.rank = Array.isArray(o.rank) ? o.rank.filter(function (k) { return byId[k]; }) : null; S.leader = scores().leader; save(); applyDeck(S.leader); renderWeek(); renderStack(); closeSheet(true); renderMine(); toast("Deck importé."); }
+      try { var o = JSON.parse($("#imp-txt", sh).value); if (!o || typeof o.dec !== "object") throw 0; var clean = {}; Object.keys(o.dec).forEach(function (k) { if (byId[k] && LABEL[o.dec[k].d]) clean[k] = { d: o.dec[k].d, t: o.dec[k].t || Date.now(), note: typeof o.dec[k].note === "string" ? o.dec[k].note.slice(0, 400) : undefined }; }); S.dec = clean; S.rank = Array.isArray(o.rank) ? o.rank.filter(function (k) { return byId[k]; }) : null; if (Array.isArray(o.themes)) S.themes = o.themes.filter(function (t) { return ALL_THEMES.indexOf(t) >= 0; }).slice(0, MAX_PRIO); S.leader = scores().leader; save(); applyDeck(S.leader); renderWeek(); renderStack(); closeSheet(true); renderMine(); toast("Deck importé."); }
       catch (e) { $("#i-err", sh).hidden = false; }
     };
   }
   function resetSheet() {
     var sh = openSheet('<h3>Tout recommencer ?</h3><p style="margin:0">Toutes vos décisions et vos souhaits enregistrés sur cet appareil seront effacés.</p><div class="row-btns"><button class="btn ghost" id="x-no">Garder mon deck</button><button class="btn primary" id="x-yes">Effacer et recommencer</button></div>');
     $("#x-no", sh).onclick = function () { closeSheet(true); };
-    $("#x-yes", sh).onclick = function () { S = { dec: {}, onboarded: true, leader: null, triSeen: false, rank: null }; save(); applyDeck(null); renderWeek(); renderStack(); closeSheet(true); showSeg("play"); toast("Nouveau deck. Bonne partie !"); };
+    $("#x-yes", sh).onclick = function () { S = { dec: {}, onboarded: true, leader: null, triSeen: false, rank: null, themes: S.themes, tuto: "done" }; shownId = null; save(); applyDeck(null); renderWeek(); renderStack(); closeSheet(true); showSeg("play"); toast("Nouveau deck. Bonne partie !"); };
   }
 
   // ---------- Recherche ----------
@@ -1983,6 +2238,7 @@ button, a, .folio, .parch, .lrow, .person, .cm-item, .wl-item, .mini, .scr-filte
     if (e.key === "Escape" && layer.firstChild) { closeSheet(); return; }
     if (SOLAR) { if (e.key === "Escape") { e.preventDefault(); SOLAR.back(); } return; }
     if (layer.firstChild || document.querySelector(".overlay") || $("#view-deck").hidden || activeSeg !== "play") return;
+    if ((e.key === "Enter" || e.key === " ") && !e.target.closest("button, a, input, textarea") && flipTop()) { e.preventDefault(); return; }
     var k = { ArrowRight: "r", ArrowLeft: "l", ArrowUp: "u", ArrowDown: "d" }[e.key];
     if (k) { e.preventDefault(); commit(k); }
   });
@@ -1990,28 +2246,92 @@ button, a, .folio, .parch, .lrow, .person, .cm-item, .wl-item, .mini, .scr-filte
   var toastT = null;
   function toast(html) { var t = $("#toast"); t.innerHTML = html; t.hidden = false; clearTimeout(toastT); toastT = setTimeout(function () { t.hidden = true; }, 3600); }
 
-  // ---------- Introduction (escape game) ----------
-  var STEPS = [
-    { k: "Porte verrouillée", h: "Vous êtes enfermé·e dans la salle des promesses.", p: "Une seule clé ouvre la porte : savoir pour qui voter, en connaissance de cause." },
-    { k: "Les règles", h: "Tranchez chaque mesure d'un geste.", p: "Tirez les cartes d'affilée : les candidats restent cachés et se révèlent par lots de 5 cartes. Vous pourrez toujours changer d'avis.", compass: true },
-    { k: "La récompense", h: "Votre deck prend la couleur de vos convictions.", p: "Chaque semaine, tirez 6 nouvelles cartes. Le Grand Tri révèle la galaxie dont vous êtes le plus proche. Vos choix restent sur votre appareil." }
-  ];
-  function onboarding(i) {
-    var old = document.querySelector(".overlay.onb"); if (old) old.remove();
-    var s = STEPS[i];
-    var comp = s.compass ? '<div class="compass" aria-hidden="true"><div class="c"></div><span class="n">↑<br>J\'aimerais</span><span class="e">Aligné<br>→</span><span class="w">←<br>Désaligné</span><span class="s">M\'en fous<br>↓</span></div>' : "";
-    var ov = el('<div class="overlay onb" role="dialog" aria-modal="true" aria-label="Introduction"><div class="ob"><div class="step">' + (i + 1) + " / 3 · " + s.k.toUpperCase() + "</div><h2>" + s.h + "</h2>" + comp + "<p>" + s.p + '</p><div class="row-btns">' + (i < 2 ? '<button class="btn ghost" id="o-skip">Passer</button><button class="btn" id="o-next">Continuer</button>' : '<button class="btn" id="o-next">Entrer dans la salle</button>') + "</div></div></div>");
+  // ---------- Introduction : le maître du jeu (2026-10-30, remplace l'escape game) ----------
+  // Accueil → Vos priorités → première carte guidée (retourner, trancher, premier lot de 5).
+  function welcome() {
+    var ov = el('<div class="overlay onb" role="dialog" aria-modal="true" aria-label="Bienvenue"><div class="ob">' + MJ_HAT +
+      '<div class="step">VOTRE MAÎTRE DU JEU</div><h2>Bienvenue dans Magnitude.</h2>' +
+      "<p>Ici, vous simulez votre propre élection. Je vous tends les mesures des candidats, une par une, <b>sans vous dire qui les propose</b>. Vous tranchez, je révèle.</p>" +
+      "<p>À la fin, vous saurez de quel candidat vous êtes le plus proche. Vos choix restent sur votre appareil.</p>" +
+      '<div class="row-btns"><button class="btn" id="o-next">Commencer</button></div></div></div>');
     document.body.appendChild(ov);
-    function finish() { ov.remove(); S.onboarded = true; save(); }
-    $("#o-next", ov).onclick = function () { if (i < 2) onboarding(i + 1); else finish(); };
-    if (i < 2) $("#o-skip", ov).onclick = finish;
+    $("#o-next", ov).onclick = function () { ov.remove(); prioPicker(false, startTuto); };
     setTimeout(function () { $("#o-next", ov).focus(); }, 30);
+  }
+  // Vos priorités : 1 à 5 thèmes, cartes et thèmes sans carte mêlés (ordre alphabétique).
+  function prioPicker(edit, done) {
+    var sel = (S.themes || []).filter(function (t) { return ALL_THEMES.indexOf(t) >= 0; });
+    var ov = el('<div class="overlay onb prio" role="dialog" aria-modal="true" aria-label="Vos priorités"><div class="ob wide">' +
+      '<div class="step">' + (edit ? "VOS PRIORITÉS" : "AVANT DE PIOCHER") + '</div><h2>Quels sujets comptent le plus pour vous ?</h2>' +
+      "<p>Choisissez jusqu'à " + MAX_PRIO + " thèmes. Ils pèseront <b>double</b> dans votre résultat, et un candidat qui ne dit rien sur l'un d'eux perdra des points.</p>" +
+      '<div class="prio-chips" role="group" aria-label="Thèmes">' + ALL_THEMES.map(function (t) { return '<button type="button" data-t="' + esc(t) + '" aria-pressed="' + (sel.indexOf(t) >= 0) + '">' + esc(t) + "</button>"; }).join("") + "</div>" +
+      '<div class="prio-n" id="p-n" aria-live="polite"></div>' +
+      '<div class="row-btns"><button class="btn ghost" id="p-skip">' + (edit ? "Annuler" : "Passer") + '</button><button class="btn" id="p-ok">' + (edit ? "Enregistrer" : "C'est parti") + "</button></div></div></div>");
+    document.body.appendChild(ov);
+    function upd() {
+      $("#p-n", ov).textContent = sel.length + " / " + MAX_PRIO + (sel.length >= MAX_PRIO ? " : c'est le maximum" : sel.length ? "" : " : touchez un thème");
+      $(".prio-chips", ov).classList.toggle("full", sel.length >= MAX_PRIO);
+      $("#p-ok", ov).disabled = !sel.length;
+    }
+    Array.prototype.forEach.call(ov.querySelectorAll(".prio-chips button"), function (b) {
+      b.onclick = function () {
+        var t = b.dataset.t, i = sel.indexOf(t);
+        if (i >= 0) sel.splice(i, 1); else if (sel.length < MAX_PRIO) sel.push(t); else return;
+        b.setAttribute("aria-pressed", String(i < 0)); upd();
+      };
+    });
+    $("#p-ok", ov).onclick = function () { ov.remove(); S.themes = sel; save(); done(sel); };
+    $("#p-skip", ov).onclick = function () { ov.remove(); if (edit) return; S.themes = []; save(); done([]); };
+    upd(); setTimeout(function () { $(".prio-chips button", ov).focus(); }, 30);
+  }
+  function noCardLine(sel) {
+    var none = (sel || []).filter(function (t) { return !hasCard(t); });
+    if (!none.length) return "";
+    return '<p class="cc-sm">' + none.map(function (t) { return "« " + esc(t) + " »"; }).join(", ") + (none.length > 1 ? " n'ont" : " n'a") + " pas encore de carte : " + (none.length > 1 ? "ils restent" : "il reste") + " dans vos priorités (Mon deck).</p>";
+  }
+  function startTuto(sel) {
+    S.onboarded = true; S.tuto = "flip"; shownId = null; save();
+    prioChanged(true); showView("deck"); showSeg("play"); renderStack(); coach(noCardLine(sel));
+  }
+  // Les priorités changent le score : la galaxie peut basculer.
+  function prioChanged(quiet) {
+    var before = S.leader; S.leader = scores().leader; save(); applyDeck(S.leader); renderWeek();
+    if (activeSeg === "mine") renderMine();
+    if (quiet) return;
+    toast(before !== S.leader ? (S.leader ? "Priorités enregistrées. Nouvelle galaxie : <b>" + esc(houseLabel(S.leader)) + "</b>." : "Priorités enregistrées. Votre deck hésite entre plusieurs galaxies.") : "Priorités enregistrées : elles pèsent double dans votre galaxie.");
+  }
+
+  // Bulle du maître du jeu pendant la première partie : S.tuto = flip → vote → lot → go → done.
+  var FEEDBACK = {
+    ok: "<b>Aligné, c'est noté.</b> Les candidats qui partagent votre avis se rapprochent de vous ; la révélation vous dira si cette carte compte dans le score.",
+    no: "<b>Désaligné, c'est noté.</b> Les candidats qui portent cette mesure s'éloignent de vous ; la révélation vous dira si cette carte compte dans le score.",
+    wish: "<b>J'aimerais, c'est noté.</b> Ce sujet compte pour vous : il devient une priorité, et les candidats muets dessus perdront des points.",
+    meh: "<b>M'en fous, c'est noté.</b> Ce sujet n'est pas votre priorité : il ne départagera pas les candidats."
+  };
+  function coach(extra) {
+    var box = $("#coach"), t = S.tuto, h = "";
+    if (t === "flip") h = "<p><b>Votre première carte mystère.</b> Le thème est au dos. Touchez la carte pour révéler la mesure.</p>" + (extra || "");
+    else if (t === "vote") h = "<p><b>Tranchez d'un geste ou d'une flèche :</b></p>" +
+      '<ul class="cc-guide">' + [["ok", "→"], ["no", "←"], ["wish", "↑"], ["meh", "↓"]].map(function (g) { return '<li class="' + g[0] + '"><b>' + g[1] + " " + LABEL[g[0]] + "</b> : " + SHORT[g[0]] + "</li>"; }).join("") + "</ul>";
+    else if (t === "lot") { var k = Math.min(LOT - pending().length, queue().length); if (k > 0) h = (extra ? "<p>" + extra + "</p>" : "") + "<p>Encore <b>" + k + " carte" + (k > 1 ? "s" : "") + "</b> avant que les candidats se dévoilent.</p>"; }
+    else if (t === "go") h = "<p><b>Vous avez compris le jeu.</b> Continuez : toutes les 5 cartes, les candidats se dévoilent. À la fin, je vous ouvre votre deck.</p>";
+    if (!h || !queue().length) { box.hidden = true; box.innerHTML = ""; return; }
+    box.innerHTML = '<span class="cc-mj" aria-hidden="true">' + MJ_HAT + '</span><div class="cc-tx">' + h + "</div>" + (t === "go" ? '<button type="button" class="cc-x" aria-label="Fermer le guide">×</button>' : "");
+    box.hidden = false;
+    var x = $(".cc-x", box); if (x) x.onclick = function () { S.tuto = "done"; save(); coach(); };
+  }
+  function tutoVoted(d) {
+    if (S.tuto === "vote") { S.tuto = "lot"; save(); coach(FEEDBACK[d]); }
+    else if (S.tuto === "lot") coach();
+    else if (S.tuto === "go") { S.tuto = "done"; save(); coach(); }
   }
 
   // ---------- Démarrage ----------
+  if (S.tuto === "vote") S.tuto = "flip";  // rechargée en plein guidage : la carte est de nouveau face cachée
   S.leader = scores().leader; applyDeck(S.leader);
-  renderWeek(); renderStack();
-  if (!S.onboarded) onboarding(0);
+  renderWeek(); renderStack(); coach();
+  if (!S.onboarded) welcome();
+  else if (!S.themes) prioPicker(false, function () { prioChanged(); });  // joueur d'avant les priorités : seulement cet écran
   else if (pending().length && !queue().length) batchReveal();
 })();
 </script>

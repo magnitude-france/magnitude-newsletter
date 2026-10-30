@@ -81,7 +81,7 @@ jobs:
           mkdir -p dist/deck
           { printf '%s' "$ENTETE" '<meta name="robots" content="noindex">'; cat prototypes/deck/deck.html; } > dist/deck/index.html
           mv dist/index.html dist/newsletter.html
-          { printf '%s' "$ENTETE" '<meta name="description" content="Magnitude, présidentielle 2027 : une mesure par carte, un chiffre sourcé. Vos choix dessinent la galaxie des candidats dont vous êtes le plus proche.">'; cat prototypes/deck/deck.html; } > dist/index.html
+          { printf '%s' "$ENTETE" '<meta name="description" content="Magnitude — La Pioche Politique · Find your Candidate. Présidentielle 2027 : une mesure par carte, un chiffre sourcé. Vos choix dessinent la galaxie des candidats dont vous êtes le plus proche.">'; cat prototypes/deck/deck.html; } > dist/index.html
 
       - name: Copy CNAME (custom domain magnitude.pub)
         run: cp CNAME dist/CNAME

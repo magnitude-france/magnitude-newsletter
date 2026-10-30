@@ -1,9 +1,10 @@
-# Deck Magnitude (« Find your Candidate »)
+# La Pioche Politique — le deck Magnitude (« Find your Candidate »)
 
 Jeu de cartes à collectionner de Magnitude (comité de direction n°1,
-2026-10-14). Nom retenu le 2026-10-15 : **Magnitude**, avec « Find your
-Candidate » en accroche. **Déployé** : depuis le 2026-10-24 (décision de
-Guilhem), `deck.html` est la page d'accueil de magnitude.pub (copié par
+2026-10-14). Nom retenu le 2026-10-30 : **La Pioche Politique**, premier
+jeu de la marque **Magnitude**, avec « Find your Candidate » en accroche.
+**Déployé** : depuis le 2026-10-24 (décision de Guilhem), `deck.html` est
+la page d'accueil de magnitude.pub (copié par
 `.github/workflows/deploy.yml`) ; il reste servi à /deck (noindex) et
 l'ancienne accueil Observable est servie à /newsletter.
 

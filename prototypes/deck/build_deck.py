@@ -1,4 +1,4 @@
-"""Construit le prototype autonome du Deck « Find your Candidate ».
+"""Construit le prototype autonome du deck La Pioche Politique (« Find your Candidate »).
 
 Usage (depuis la racine du repo magnitude-newsletter) :
     python3 prototypes/deck/build_deck.py

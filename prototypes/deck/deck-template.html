@@ -784,7 +784,9 @@ button, a, .folio, .parch, .lrow, .person, .cm-item, .wl-item, .mini, .scr-filte
 .card .frame { transform: rotateY(180deg) translateZ(1px); }
 .cback { position: absolute; inset: 0; border-radius: 6cqw; overflow: hidden; isolation: isolate; display: grid; place-items: center; background: #0a1e22; cursor: pointer;
   box-shadow: 0 22px 50px -20px rgba(5,40,44,.65), inset 0 0 0 1.5px rgba(255,255,255,.4); }
-.cback::after { content: ""; position: absolute; inset: 0; z-index: 2; pointer-events: none; background: radial-gradient(closest-side, transparent 52%, rgba(2,14,16,.5)); }
+/* Calques du motif dans un conteneur masqué : en 3D, Safari ignore overflow + border-radius sur .cback */
+.cb-in { position: absolute; inset: 0; z-index: 0; border-radius: inherit; overflow: hidden; -webkit-mask-image: -webkit-radial-gradient(white, black); mask-image: radial-gradient(white, black); }
+.cb-in::after { content: ""; position: absolute; inset: 0; z-index: 3; pointer-events: none; background: radial-gradient(closest-side, transparent 52%, rgba(2,14,16,.5)); }
 .cb-pat { position: absolute; inset: -35%; z-index: 0; animation: trip 14s linear infinite, swirl 70s linear infinite; }
 @keyframes trip { to { filter: hue-rotate(360deg); } }
 @keyframes swirl { to { rotate: 360deg; } }
@@ -825,12 +827,13 @@ button, a, .folio, .parch, .lrow, .person, .cm-item, .wl-item, .mini, .scr-filte
 .mchart .eu .val { font-size: clamp(10px, 3.2cqw, 12.5px); }
 .mchart .eu .legend { font-size: clamp(10px, 3cqw, 12px); }
 .card.revealed:not(.still) .mchart .fill { transform-origin: left; animation: barGrow .5s cubic-bezier(.2,.8,.2,1) .35s both; }
-.card .c-foot { justify-content: center; padding-top: 1.6cqh; }
+.card .c-foot { justify-content: center; padding-top: 1.6cqh; margin-top: auto; }
 .card .info-btn { font-family: var(--sans); font-size: clamp(11px, 3.4cqw, 13.5px); white-space: nowrap; }
 .pad.locked button { opacity: .45; }
 /* Petite carte (petit écran, guide affiché) : on allège le graphique plutôt que de déborder */
 @container (max-height: 470px) { .mchart .eu .bar-row.mid { display: none; } .card .fig span { font-size: clamp(10px, 3.2cqw, 12px); } }
-@container (max-height: 360px) { .mchart, .card .fig span { display: none; } }
+@container (max-height: 360px) { .card .fig span, .mchart .eu .legend { display: none; } .hook { font-size: clamp(16px, 7.2cqw, 32px); } }
+@container (max-height: 230px) { .mchart { display: none; } }
 /* Tampons : le sens du geste écrit sous son nom */
 .stamp small { display: block; margin-top: 1px; font-size: .52em; font-weight: 700; letter-spacing: .01em; text-transform: none; text-align: center; white-space: nowrap; }
 
@@ -1126,7 +1129,7 @@ button, a, .folio, .parch, .lrow, .person, .cm-item, .wl-item, .mini, .scr-filte
     ][Math.floor(r() * 4)];
   }
   function backHTML(c) {
-    return '<div class="cback" aria-hidden="true"><span class="cb-pat" style="background:' + holoBg() + '"></span><span class="cb-foil"></span><span class="cb-glare"></span>' +
+    return '<div class="cback" aria-hidden="true"><span class="cb-in"><span class="cb-pat" style="background:' + holoBg() + '"></span><span class="cb-foil"></span><span class="cb-glare"></span></span>' +
       '<span class="cb-plate"><span class="cb-ico">' + icon(c.icon, 1.7) + '</span><span class="cb-k">Thème</span><span class="cb-theme">' + esc(c.theme) + "</span></span>" +
       '<span class="cb-hint">Touchez pour révéler la mesure</span></div>';
   }
@@ -2303,17 +2306,17 @@ button, a, .folio, .parch, .lrow, .person, .cm-item, .wl-item, .mini, .scr-filte
 
   // Bulle du maître du jeu pendant la première partie : S.tuto = flip → vote → lot → go → done.
   var FEEDBACK = {
-    ok: "<b>Aligné, c'est noté.</b> Les candidats qui partagent votre avis se rapprochent de vous ; la révélation vous dira si cette carte compte dans le score.",
-    no: "<b>Désaligné, c'est noté.</b> Les candidats qui portent cette mesure s'éloignent de vous ; la révélation vous dira si cette carte compte dans le score.",
-    wish: "<b>J'aimerais, c'est noté.</b> Ce sujet compte pour vous : il devient une priorité, et les candidats muets dessus perdront des points.",
-    meh: "<b>M'en fous, c'est noté.</b> Ce sujet n'est pas votre priorité : il ne départagera pas les candidats."
+    ok: "<b>Aligné, c'est noté :</b> les candidats du même avis se rapprochent de vous.",
+    no: "<b>Désaligné, c'est noté :</b> les candidats qui portent cette mesure s'éloignent.",
+    wish: "<b>J'aimerais, c'est noté :</b> ce sujet devient une priorité ; les candidats muets dessus perdent des points.",
+    meh: "<b>M'en fous, c'est noté :</b> ce sujet ne départagera pas les candidats."
   };
   function coach(extra) {
     var box = $("#coach"), t = S.tuto, h = "";
     if (t === "flip") h = "<p><b>Votre première carte mystère.</b> Le thème est au dos. Touchez la carte pour révéler la mesure.</p>" + (extra || "");
     else if (t === "vote") h = "<p><b>Tranchez d'un geste ou d'une flèche :</b></p>" +
       '<ul class="cc-guide">' + [["ok", "→"], ["no", "←"], ["wish", "↑"], ["meh", "↓"]].map(function (g) { return '<li class="' + g[0] + '"><b>' + g[1] + " " + LABEL[g[0]] + "</b> : " + SHORT[g[0]] + "</li>"; }).join("") + "</ul>";
-    else if (t === "lot") { var k = Math.min(LOT - pending().length, queue().length); if (k > 0) h = (extra ? "<p>" + extra + "</p>" : "") + "<p>Encore <b>" + k + " carte" + (k > 1 ? "s" : "") + "</b> avant que les candidats se dévoilent.</p>"; }
+    else if (t === "lot") { var k = Math.min(LOT - pending().length, queue().length); if (k > 0) h = "<p>" + (extra ? extra + " " : "") + "Encore <b>" + k + " carte" + (k > 1 ? "s" : "") + "</b> avant que les candidats se dévoilent.</p>"; }
     else if (t === "go") h = "<p><b>Vous avez compris le jeu.</b> Continuez : toutes les 5 cartes, les candidats se dévoilent. À la fin, je vous ouvre votre deck.</p>";
     if (!h || !queue().length) { box.hidden = true; box.innerHTML = ""; return; }
     box.innerHTML = '<span class="cc-mj" aria-hidden="true">' + MJ_HAT + '</span><div class="cc-tx">' + h + "</div>" + (t === "go" ? '<button type="button" class="cc-x" aria-label="Fermer le guide">×</button>' : "");

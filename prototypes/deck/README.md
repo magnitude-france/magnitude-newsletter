@@ -70,14 +70,21 @@ l'ancienne accueil Observable est servie à /newsletter.
   réseau ; export / import du deck par copier-coller.
 
 ## Limites connues (voir le vault, `07-Recherches/INV-03-faisabilite-scoring`)
-- La matrice des positions n'est couverte qu'à 42 % : le score est biaisé
-  mécaniquement et **ne doit pas être publié** en l'état.
+- La matrice des positions est couverte à 73,5 % (172 / 234) depuis le sprint
+  INV-05 du 2026-11-01 (vault, `07-Recherches/INV-05-sprint-positions-lisnard`,
+  positions appliquées par son `couverture.py --appliquer`) : 14 cartes sur 18
+  dans le score. Les positions INV-04 et INV-05 vivent dans `deck-data.json`
+  mais pas encore dans `magnitude-analysis` (reports publiés). Le score reste
+  biaisé et **ne doit pas être publié** en l'état.
 - Teintes de maison provisoires (tirage déterministe contraint, graine
   `magnitude-2027`) — règle des couleurs à trancher en comité.
 - Test de neutralité (`test_neutralite.py`, trois lectures dont une avec
   priorités) en **échec** au 2026-10-30, avant comme après la pondération :
   sur les 7 cartes dans le score, Philippe sort n°1 chez ~44 % des
-  utilisateurs simulés qui obtiennent une galaxie (borne : 12,5 %).
+  utilisateurs simulés qui obtiennent une galaxie (borne : 12,5 %). Toujours
+  en échec après INV-05 (2026-11-01, 14 cartes), mais moins biaisé : 5,5 %
+  d'utilisateurs sans galaxie (43 % avant), part maximale 23 % (Glucksmann),
+  5 candidats hors bornes (10 avant), Lisnard 1,8 % (0 % avant).
 - Polices : Literata (lecture), IM Fell English (grands titres), La Belle
   Aurore (quelques encarts manuscrits), SIL OFL, intégrées dans `deck.html`.
 

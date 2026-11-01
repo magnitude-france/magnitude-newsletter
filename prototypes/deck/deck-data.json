@@ -51,6 +51,10 @@
     "roussel": [
      1,
      "A"
+    ],
+    "zemmour": [
+     1,
+     "A"
     ]
    }
   },
@@ -105,6 +109,10 @@
     "tondelier": [
      1,
      "A"
+    ],
+    "lisnard": [
+     1,
+     "A"
     ]
    }
   },
@@ -146,6 +154,26 @@
     ],
     "villepin": [
      1,
+     "A"
+    ],
+    "attal": [
+     1,
+     "A"
+    ],
+    "lisnard": [
+     1,
+     "A"
+    ],
+    "melenchon": [
+     -1,
+     "A"
+    ],
+    "roussel": [
+     -1,
+     "A"
+    ],
+    "ruffin": [
+     -1,
      "A"
     ]
    }
@@ -213,6 +241,10 @@
     "zemmour": [
      -1,
      "B"
+    ],
+    "lisnard": [
+     -1,
+     "A"
     ]
    }
   },
@@ -263,6 +295,10 @@
     "retailleau": [
      -1,
      "B"
+    ],
+    "lisnard": [
+     -1,
+     "A"
     ]
    }
   },
@@ -296,6 +332,26 @@
     ],
     "glucksmann": [
      1,
+     "A"
+    ],
+    "le-pen": [
+     -1,
+     "B"
+    ],
+    "lisnard": [
+     -1,
+     "A"
+    ],
+    "retailleau": [
+     -1,
+     "A"
+    ],
+    "roussel": [
+     1,
+     "A"
+    ],
+    "villepin": [
+     -1,
      "A"
     ]
    }
@@ -345,6 +401,18 @@
      "C"
     ],
     "tondelier": [
+     -1,
+     "A"
+    ],
+    "lisnard": [
+     1,
+     "A"
+    ],
+    "roussel": [
+     -1,
+     "C"
+    ],
+    "ruffin": [
      -1,
      "A"
     ]
@@ -414,6 +482,16 @@
      -1,
      "A",
      "c"
+    ],
+    "lisnard": [
+     -1,
+     "A",
+     "c"
+    ],
+    "zemmour": [
+     -1,
+     "A",
+     "c"
     ]
    },
    "pole_c": "Hausse du net par les cotisations, sans hausse du Smic"
@@ -461,6 +539,22 @@
     "melenchon": [
      1,
      "A"
+    ],
+    "attal": [
+     -1,
+     "A"
+    ],
+    "lisnard": [
+     -1,
+     "A"
+    ],
+    "retailleau": [
+     -1,
+     "B"
+    ],
+    "zemmour": [
+     -1,
+     "A"
     ]
    }
   },
@@ -499,6 +593,18 @@
     "melenchon": [
      1,
      "A"
+    ],
+    "retailleau": [
+     -1,
+     "A"
+    ],
+    "roussel": [
+     1,
+     "A"
+    ],
+    "zemmour": [
+     -1,
+     "A"
     ]
    }
   },
@@ -519,6 +625,14 @@
    "url": "https://magnitude.pub/numeros/1/reports/carte_11_villepin_darpa.html",
    "pos": {
     "villepin": [
+     1,
+     "A"
+    ],
+    "attal": [
+     1,
+     "A"
+    ],
+    "lisnard": [
      1,
      "A"
     ]
@@ -611,6 +725,10 @@
     "zemmour": [
      1,
      "C"
+    ],
+    "lisnard": [
+     1,
+     "C"
     ]
    },
    "pole_c": "Supprimer l'âge légal (durée de cotisation seule)"
@@ -667,6 +785,19 @@
     "tondelier": [
      1,
      "A"
+    ],
+    "ruffin": [
+     1,
+     "A"
+    ],
+    "villepin": [
+     1,
+     "A"
+    ],
+    "zemmour": [
+     -1,
+     "A",
+     "c"
     ]
    },
    "pole_c": "Hausse ciblée (mérite, missions)"
@@ -730,6 +861,10 @@
     "zemmour": [
      -1,
      "C"
+    ],
+    "attal": [
+     -1,
+     "A"
     ]
    }
   },
@@ -769,6 +904,22 @@
     "zemmour": [
      1,
      "C"
+    ],
+    "lisnard": [
+     -1,
+     "A"
+    ],
+    "philippe": [
+     -1,
+     "A"
+    ],
+    "retailleau": [
+     -1,
+     "A"
+    ],
+    "villepin": [
+     -1,
+     "A"
     ]
    },
    "pole_c": "Quitter seulement le commandement intégré"
@@ -816,6 +967,10 @@
     "tondelier": [
      -1,
      "A"
+    ],
+    "ruffin": [
+     -1,
+     "A"
     ]
    }
   },
@@ -849,6 +1004,26 @@
     ],
     "retailleau": [
      1,
+     "C"
+    ],
+    "le-pen": [
+     1,
+     "B"
+    ],
+    "melenchon": [
+     -1,
+     "A"
+    ],
+    "roussel": [
+     -1,
+     "A"
+    ],
+    "ruffin": [
+     -1,
+     "A"
+    ],
+    "tondelier": [
+     -1,
      "C"
     ]
    }

@@ -881,7 +881,58 @@ button, a, .folio, .parch, .lrow, .person, .cm-item, .wl-item, .mini, .scr-filte
 .ob .btn:disabled { opacity: .4; cursor: default; }
 @media (hover: hover) { .prio-chips button[aria-pressed="false"]:hover { border-color: #FCE58C; color: #FCE58C; } }
 
-/* Feuilles : thèmes à proposer (M'en fous), explication des votes */
+/* École des gestes (2026-11-01) : une carte d'exemple, un geste à la fois, rien n'est voté */
+.overlay.train { overflow-y: auto; place-items: start center; padding-top: max(18px, env(safe-area-inset-top, 0px)); }
+.train .ob { gap: 12px; }
+.t-head { display: grid; gap: 8px; justify-items: center; }
+.t-dots { display: flex; gap: 8px; }
+.t-dots i { width: 9px; height: 9px; border-radius: 50%; background: rgba(234,246,245,.25); }
+.t-dots i.on { background: #9ED7D3; }
+.t-dots i.cur { background: #FCE58C; box-shadow: 0 0 0 4px rgba(252,229,140,.25); }
+.t-stage { position: relative; container-type: size; height: min(34vh, 290px); min-height: 200px; }
+.t-card { cursor: grab; outline: none; }
+.t-card .c-foot { display: none; }
+.ob .t-card p.hook { color: var(--ink); font-size: clamp(18px, 7.2cqw, 32px); line-height: 1.2; }  /* pas le texte clair de .ob p */
+.t-card[data-want="r"] { --tx: 10%; --ty: 0%; --tr: 4deg; }
+.t-card[data-want="l"] { --tx: -10%; --ty: 0%; --tr: -4deg; }
+.t-card[data-want="u"] { --tx: 0%; --ty: -8%; --tr: 0deg; }
+.t-card[data-want="d"] { --tx: 0%; --ty: 8%; --tr: 0deg; }
+.card.revealed.still.t-card .flip3d { animation: tNudge 2.2s ease-in-out .6s infinite; }
+@keyframes tNudge { 0%, 55%, 100% { translate: 0 0; rotate: 0deg; } 25% { translate: var(--tx) var(--ty); rotate: var(--tr); } }
+.t-card[data-want="r"] .stamp.r, .t-card[data-want="l"] .stamp.l, .t-card[data-want="u"] .stamp.u, .t-card[data-want="d"] .stamp.d { animation: tStamp 2.2s ease-in-out .6s infinite; }
+@keyframes tStamp { 0%, 50%, 100% { opacity: 0; } 20%, 32% { opacity: .9; } }
+.card.revealed.still.t-card.drag .flip3d, .t-card.drag .stamp { animation: none; }
+.t-card.miss { animation: tShake .4s ease-in-out; }
+@keyframes tShake { 25% { rotate: -3deg; } 75% { rotate: 3deg; } }
+.t-tx { display: grid; gap: 6px; min-height: 118px; align-content: start; }
+.ob h2.t-name { font-size: 34px; }
+.t-name.ok, .t-recap .ok b { color: #4FC1BC; } .t-name.no, .t-recap .no b { color: #F0A04B; }
+.t-name.wish, .t-recap .wish b { color: #7DB2FF; } .t-name.meh, .t-recap .meh b { color: #C3D3D4; }
+.t-arrow { display: inline-block; animation: tArrow 1.2s ease-in-out infinite; }
+.t-name.ok .t-arrow { --ax: 7px; --ay: 0px; } .t-name.no .t-arrow { --ax: -7px; --ay: 0px; }
+.t-name.wish .t-arrow { --ax: 0px; --ay: -6px; } .t-name.meh .t-arrow { --ax: 0px; --ay: 6px; }
+@keyframes tArrow { 50% { translate: var(--ax) var(--ay); } }
+.ob p.t-desc { font-style: italic; color: #EAF6F5; font-size: 17px; }
+.ob p.t-how, .ob p.t-miss { font-family: var(--sans); font-size: 13.5px; line-height: 1.45; color: #9ED7D3; }
+.ob p.t-how b { color: #FCE58C; font-weight: 700; }
+.ob p.t-miss { color: #F6B38A; }
+.ob p.t-ok { font-size: 21px; color: #FCE58C; }
+.t-pad { padding: 2px 0 0; gap: 10px; }
+.t-pad button span:last-child { color: #CFE6E4; }
+.t-pad button:not(.want) { opacity: .55; }
+.t-pad button.want .b { animation: tPulse 1.6s ease-in-out infinite; }
+@keyframes tPulse { 50% { box-shadow: 0 0 0 7px color-mix(in oklab, currentColor 35%, transparent); } }
+.t-skip { justify-self: center; border: 0; background: none; color: #9ED7D3; font-family: var(--sans); font-size: 13px; text-decoration: underline; text-underline-offset: 3px; padding: 4px 8px; cursor: pointer; }
+.t-recap { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; text-align: left; }
+.t-recap li { display: grid; gap: 2px; padding: 10px 12px; border-radius: 12px; background: rgba(234,246,245,.07); border: 1px solid rgba(234,246,245,.16); }
+.t-recap b { font-family: var(--sans); font-size: 14px; }
+.t-recap span { font-family: var(--serif); font-size: 15px; line-height: 1.35; color: #CFE6E4; }
+@media (prefers-reduced-motion: reduce) { .card.revealed.still.t-card .flip3d, .t-card .stamp, .t-card.miss, .t-arrow, .t-pad button.want .b { animation: none; } }
+/* Libellés plus longs depuis le renommage : pad un peu plus large, tampon du bas plus petit */
+.pad button { width: 66px; line-height: 1.15; }
+.stamp.d { font-size: clamp(12px, 4.8cqw, 19px); text-align: center; }
+
+/* Feuilles : thèmes à proposer (Non prioritaire), explication des votes */
 .alt-chips { display: flex; flex-wrap: wrap; gap: 6px; }
 .alt-chips button { border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 4px 11px; font-size: 14px; }
 .alt-chips button[aria-pressed="true"] { background: var(--d-meh); border-color: transparent; color: var(--surface); }
@@ -947,10 +998,10 @@ button, a, .folio, .parch, .lrow, .person, .cm-item, .wl-item, .mini, .scr-filte
         <div class="coach" id="coach" role="status" aria-live="polite" hidden></div>
         <div class="stage" id="stage"><div class="halo"></div></div>
         <div class="pad" id="pad">
-          <button class="no" data-dir="l" aria-label="Désaligné : pas d'accord avec la mesure (glisser à gauche)"><span class="b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></span><span>Désaligné</span></button>
-          <button class="meh" data-dir="d" aria-label="M'en fous : pas ma priorité, je préfère un autre sujet (glisser vers le bas)"><span class="b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="7"/><path d="M7 17 17 7"/></svg></span><span>M'en fous</span></button>
-          <button class="wish" data-dir="u" aria-label="J'aimerais : le sujet compte, la mesure est à revoir (glisser vers le haut)"><span class="b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M12 3.5l2.6 5.3 5.8.8-4.2 4.1 1 5.8L12 16.8l-5.2 2.7 1-5.8-4.2-4.1 5.8-.8z"/></svg></span><span>J'aimerais</span></button>
-          <button class="ok" data-dir="r" aria-label="Aligné : d'accord avec la mesure (glisser à droite)"><span class="b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span><span>Aligné</span></button>
+          <button class="no" data-dir="l" aria-label="Désaligné : je suis plutôt en défaveur de cette mesure (glisser à gauche)"><span class="b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></span><span>Désaligné</span></button>
+          <button class="meh" data-dir="d" aria-label="Non prioritaire : je ne trouve pas la thématique prioritaire par rapport à d'autres (glisser vers le bas)"><span class="b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="7"/><path d="M7 17 17 7"/></svg></span><span>Non prioritaire</span></button>
+          <button class="wish" data-dir="u" aria-label="Affiner : je suis d'accord avec la thématique mais pas avec le contenu de la mesure (glisser vers le haut)"><span class="b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 19.5h4l10-10-4-4-10 10z"/><path d="M12.5 7.5l4 4"/></svg></span><span>Affiner</span></button>
+          <button class="ok" data-dir="r" aria-label="Aligné : je suis plutôt en faveur de cette mesure (glisser à droite)"><span class="b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span><span>Aligné</span></button>
         </div>
       </div>
       <div id="mine" class="scroll grimoire" hidden style="flex:1;min-height:0"><div class="wrap" id="mine-wrap"></div></div>
@@ -1035,12 +1086,14 @@ button, a, .folio, .parch, .lrow, .person, .cm-item, .wl-item, .mini, .scr-filte
   }
   var KEY = "magnitude-deck-proto-v1";
   var DIRS = { r: "ok", l: "no", u: "wish", d: "meh" };
-  var LABEL = { ok: "Aligné", no: "Désaligné", wish: "J'aimerais", meh: "M'en fous" };
-  var GLYPH = { ok: "✓", no: "✕", wish: "★", meh: "∅" };
-  // Sens des votes (clarifié le 2026-10-30) : J'aimerais = le thème compte, la mesure est à revoir ;
-  // M'en fous = le thème n'est pas une priorité, un autre sujet passerait avant.
-  var DESC = { ok: "D'accord avec la mesure", no: "Pas d'accord avec la mesure", wish: "Le sujet compte, la mesure est à revoir", meh: "Pas ma priorité, je préfère un autre sujet" };
-  var SHORT = { ok: "d'accord", no: "pas d'accord", wish: "bon sujet, mesure à revoir", meh: "pas ma priorité" };  // tampons et guide
+  // Libellés renommés le 2026-11-01 (J'aimerais → Affiner, M'en fous → Non prioritaire) ; les clés
+  // wish / meh restent pour ne pas casser les decks déjà enregistrés dans localStorage.
+  var LABEL = { ok: "Aligné", no: "Désaligné", wish: "Affiner", meh: "Non prioritaire" };
+  var GLYPH = { ok: "✓", no: "✕", wish: "✎", meh: "∅" };
+  // Sens des votes, mots de Guilhem (2026-11-01).
+  var DESC = { ok: "Je suis plutôt en faveur de cette mesure", no: "Je suis plutôt en défaveur de cette mesure", wish: "Je suis d'accord avec la thématique mais pas avec le contenu de la mesure", meh: "Je ne trouve pas la thématique prioritaire par rapport à d'autres" };
+  var SHORT = { ok: "plutôt pour", no: "plutôt contre", wish: "bon thème, mesure à revoir", meh: "thème pas prioritaire" };  // tampons et guide
+  var ARROW = { ok: "→", no: "←", wish: "↑", meh: "↓" };
   var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   // Ordre : les 6 nouvelles cartes (dernier numéro) d'abord, puis les numéros précédents à réviser,
@@ -1064,8 +1117,8 @@ button, a, .folio, .parch, .lrow, .person, .cm-item, .wl-item, .mini, .scr-filte
   function icon(path, sw) { return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="' + (sw || 1.8) + '" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="' + path + '"/></svg>'; }
 
   // ---------- Priorités du joueur (2026-10-30) ----------
-  // Thèmes choisis à l'introduction, plus ceux des cartes votées J'aimerais, moins ceux des cartes
-  // votées M'en fous (le vote sur la carte, plus récent, l'emporte).
+  // Thèmes choisis à l'introduction, plus ceux des cartes votées Affiner, moins ceux des cartes
+  // votées Non prioritaire (le vote sur la carte, plus récent, l'emporte).
   var ALL_THEMES = CARDS.map(function (c) { return c.theme; }).concat(DATA.themes_attendus || [])
     .filter(function (t, i, a) { return a.indexOf(t) === i; }).sort(function (a, b) { return a.localeCompare(b, "fr"); });
   var MAX_PRIO = 5, W_PRIO = 2, PEN = 0.5;  // priorité = poids double ; silence sur une priorité = demi-désaccord
@@ -1258,7 +1311,6 @@ button, a, .folio, .parch, .lrow, .person, .cm-item, .wl-item, .mini, .scr-filte
   function bindDrag(card) {
     var sx = 0, sy = 0, dx = 0, dy = 0, t0 = 0, active = false, pid = null;
     var stamps = { r: card.querySelector(".stamp.r"), l: card.querySelector(".stamp.l"), u: card.querySelector(".stamp.u"), d: card.querySelector(".stamp.d") };
-    function dirOf(x, y) { return Math.abs(x) >= Math.abs(y) ? (x > 0 ? "r" : "l") : (y < 0 ? "u" : "d"); }
     card.addEventListener("pointerdown", function (e) {
       if (busy || e.target.closest(".info-btn")) return; active = true; pid = e.pointerId; sx = e.clientX; sy = e.clientY; dx = dy = 0; t0 = Date.now();
       card.classList.remove("anim", "demo"); try { card.setPointerCapture(pid); } catch (er) {}
@@ -1281,7 +1333,34 @@ button, a, .folio, .parch, .lrow, .person, .cm-item, .wl-item, .mini, .scr-filte
     }
     card.addEventListener("pointerup", end); card.addEventListener("pointercancel", end);
   }
-  function threshold() { return Math.min(110, stage.clientWidth * 0.26); }
+  function dirOf(x, y) { return Math.abs(x) >= Math.abs(y) ? (x > 0 ? "r" : "l") : (y < 0 ? "u" : "d"); }
+  function threshold(box) { return Math.min(110, (box || stage).clientWidth * 0.26); }
+  // Carte de l'école des gestes : même glisser que bindDrag, mais rien n'est voté ; try(dir) décide.
+  function bindTrain(card, box, attempt) {
+    var sx = 0, sy = 0, dx = 0, dy = 0, t0 = 0, active = false, pid = null;
+    card.addEventListener("pointerdown", function (e) {
+      active = true; pid = e.pointerId; sx = e.clientX; sy = e.clientY; dx = dy = 0; t0 = Date.now();
+      card.classList.remove("anim", "miss"); card.classList.add("drag"); try { card.setPointerCapture(pid); } catch (er) {}
+    });
+    card.addEventListener("pointermove", function (e) {
+      if (!active || e.pointerId !== pid) return;
+      dx = e.clientX - sx; dy = e.clientY - sy;
+      card.style.transform = "translate(" + dx + "px," + dy + "px) rotate(" + (dx * 0.06) + "deg)";
+      var dist = Math.hypot(dx, dy), d = dirOf(dx, dy);
+      Array.prototype.forEach.call(card.querySelectorAll(".stamp"), function (s) { s.style.opacity = s.classList.contains(d) ? Math.min(1, dist / threshold(box)) : 0; });
+    });
+    function end(e) {
+      if (!active || (e && e.pointerId !== pid)) return; active = false;
+      var dist = Math.hypot(dx, dy), v = dist / Math.max(1, Date.now() - t0);
+      if (dist > threshold(box) || (dist > 40 && v > 0.6)) attempt(dirOf(dx, dy));
+      else trainBack(card);
+    }
+    card.addEventListener("pointerup", end); card.addEventListener("pointercancel", end);
+  }
+  function trainBack(card) {
+    card.classList.remove("drag"); card.classList.add("anim"); card.style.transform = "";
+    Array.prototype.forEach.call(card.querySelectorAll(".stamp"), function (s) { s.style.opacity = 0; });
+  }
 
   function commit(dir) {
     if (!top || busy) return;
@@ -1526,7 +1605,7 @@ button, a, .folio, .parch, .lrow, .person, .cm-item, .wl-item, .mini, .scr-filte
   function recueilHead() {
     return '<h3 class="recueil-h">Le recueil</h3><p class="recueil-sub">' + (rankMode ? "Classez vos promesses : la plus importante pour vous en haut. Votre galaxie en tient compte." : "Une page par promesse. Touchez une page pour changer d'avis.") + '</p><div class="rank-bar"><button type="button" id="rk-toggle" class="rk-main' + (rankMode ? " on" : "") + '">' + (rankMode ? "Terminer le classement" : S.rank ? "Modifier l'ordre d'importance" : "Classer par importance") + "</button>" + (S.rank && !rankMode ? '<button type="button" id="rk-reset">Revenir à l\'ordre des folios</button>' : "") + "</div>" + (rankMode ? "" : filterBar());
   }
-  // Filtres du recueil par choix (2026-10-30) : retrouver d'un coup ses Aligné, J'aimerais, etc.
+  // Filtres du recueil par choix (2026-10-30) : retrouver d'un coup ses Aligné, Affiner, etc.
   var mineFilter = "all";
   function decOf(id) { return S.dec[id] ? S.dec[id].d : "todo"; }
   function filterBar() {
@@ -1535,12 +1614,12 @@ button, a, .folio, .parch, .lrow, .person, .cm-item, .wl-item, .mini, .scr-filte
     return '<div class="dec-filter" role="group" aria-label="Filtrer par choix">' + [["all", "Toutes"], ["ok", GLYPH.ok + " " + LABEL.ok], ["no", GLYPH.no + " " + LABEL.no], ["wish", GLYPH.wish + " " + LABEL.wish], ["meh", GLYPH.meh + " " + LABEL.meh], ["todo", "À trancher"]]
       .map(function (f) { return '<button type="button" class="' + f[0] + '" data-f="' + f[0] + '" aria-pressed="' + (mineFilter === f[0]) + '">' + f[1] + " · " + cnt[f[0]] + "</button>"; }).join("") + "</div>";
   }
-  // Vos priorités : choisies à l'introduction, ajoutées par un J'aimerais, retirées par un M'en fous.
+  // Vos priorités : choisies à l'introduction, ajoutées par un Affiner, retirées par un Non prioritaire.
   function prioBox() {
     var P = prioThemes(), chosen = S.themes || [];
     var chips = Object.keys(P).sort(function (a, b) { return a.localeCompare(b, "fr"); }).map(function (t) {
-      return '<span class="pc">' + esc(t) + (P[t] === "wish" ? " <i>par un J'aimerais</i>" : !hasCard(t) ? " <i>pas encore de carte</i>" : "") + "</span>";
-    }).concat(chosen.filter(function (t) { return !P[t]; }).map(function (t) { return '<span class="pc off" title="Retiré par un M\'en fous">' + esc(t) + "</span>"; })).join("");
+      return '<span class="pc">' + esc(t) + (P[t] === "wish" ? " <i>par un Affiner</i>" : !hasCard(t) ? " <i>pas encore de carte</i>" : "") + "</span>";
+    }).concat(chosen.filter(function (t) { return !P[t]; }).map(function (t) { return '<span class="pc off" title="Retiré par un Non prioritaire">' + esc(t) + "</span>"; })).join("");
     return '<section class="parch prio-box" aria-label="Vos priorités"><h3>Vos priorités</h3><p class="rubric">Elles pèsent double dans votre galaxie. Un candidat sans position connue sur l\'une d\'elles compte un demi-désaccord.</p>' +
       (chips ? '<div class="pcs">' + chips + "</div>" : '<p class="rubric">Aucune priorité choisie : toutes les mesures pèsent pareil.</p>') +
       '<button type="button" class="mai-link" id="m-prio">Modifier mes priorités</button></section>';
@@ -1595,7 +1674,7 @@ button, a, .folio, .parch, .lrow, .person, .cm-item, .wl-item, .mini, .scr-filte
     var stx = deckStats();
     var nIn = CARDS.filter(inScore).length;
     var note = '<aside class="parch nb"><b>Nota bene.</b> Seules les ' + nIn + ' cartes « dans le score » (au moins ' + SEUIL_DOC + ' candidats sur ' + SLUGS.length + ' documentés, dont ' + SEUIL_AB + ' en niveau A ou B) comptent dans votre galaxie ; les autres gardent votre avis sans le compter. Les positions des candidats sont documentées pour ' + stx.doc + " cases sur " + stx.tot + " (" + Math.round(stx.doc / stx.tot * 100) + " %). Avec ces trous, le calcul peut avantager certains candidats : ce classement reste indicatif tant que 6 cartes ne réunissent pas au moins 8 positions documentées et qu'un test de neutralité n'est pas passé.</aside>";
-    var tools = '<div class="quill-tools"><button id="m-copy">Copier mon registre</button><button id="m-import">Importer un registre</button><button id="m-redeal">Redistribuer une pioche</button><button id="m-reset">Tout recommencer</button><button id="m-intro">Revoir l\'introduction</button></div>';
+    var tools = '<div class="quill-tools"><button id="m-copy">Copier mon registre</button><button id="m-import">Importer un registre</button><button id="m-redeal">Redistribuer une pioche</button><button id="m-reset">Tout recommencer</button><button id="m-gestures">Revoir les gestes</button><button id="m-intro">Revoir l\'introduction</button></div>';
     var near = sc.list.filter(function (r) { return r.n >= MIN_N && r.s !== L; }).slice(0, 3).map(function (r) { return CANDS[r.s].name + " (" + Math.round(r.pct * 100) + " %)"; });
     var cosmosLbl = (L ? "Votre galaxie : " + houseLabel(L) + ". " : "Pas encore de galaxie de référence. ") + (near.length ? "Ensuite : " + near.join(", ") + "." : "");
     var cosmos = '<section class="cosmos" aria-label="Votre galaxie"><div class="cosmos-in"><canvas id="cosmos" role="img" aria-label="' + esc(cosmosLbl) + '"></canvas><span class="ttl">Votre galaxie</span><span class="sub">' + (L ? esc(houseLabel(L)) + " au centre" : decided ? "Encore trop peu de cartes communes" : "Tranchez des cartes pour la voir bouger") + "</span></div></section>" +
@@ -1612,6 +1691,7 @@ button, a, .folio, .parch, .lrow, .person, .cm-item, .wl-item, .mini, .scr-filte
     Array.prototype.forEach.call(document.querySelectorAll(".rk [data-mv]"), function (b) { b.onclick = function () { moveRank(b.dataset.id, b.dataset.mv); }; });
     $("#m-copy").onclick = copyDeck; $("#m-import").onclick = importSheet; $("#m-reset").onclick = resetSheet; $("#m-redeal").onclick = redealSheet;
     $("#m-intro").onclick = welcome;
+    $("#m-gestures").onclick = function () { gestureSchool(true, function () {}); };
     $("#m-prio").onclick = function () { prioPicker(true, prioChanged); };
     Array.prototype.forEach.call(document.querySelectorAll(".dec-filter button"), function (b) { b.onclick = function () { mineFilter = b.dataset.f; var y = $("#mine").scrollTop; renderMine(); $("#mine").scrollTop = y; }; });
   }
@@ -1642,7 +1722,7 @@ button, a, .folio, .parch, .lrow, .person, .cm-item, .wl-item, .mini, .scr-filte
     };
   }
   function resetSheet() {
-    var sh = openSheet('<h3>Tout recommencer ?</h3><p style="margin:0">Toutes vos décisions et vos souhaits enregistrés sur cet appareil seront effacés.</p><div class="row-btns"><button class="btn ghost" id="x-no">Garder mon deck</button><button class="btn primary" id="x-yes">Effacer et recommencer</button></div>');
+    var sh = openSheet('<h3>Tout recommencer ?</h3><p style="margin:0">Toutes vos décisions et vos notes enregistrées sur cet appareil seront effacées.</p><div class="row-btns"><button class="btn ghost" id="x-no">Garder mon deck</button><button class="btn primary" id="x-yes">Effacer et recommencer</button></div>');
     $("#x-no", sh).onclick = function () { closeSheet(true); };
     $("#x-yes", sh).onclick = function () { S = { dec: {}, onboarded: true, leader: null, triSeen: false, rank: null, themes: S.themes, tuto: "done" }; shownId = null; save(); applyDeck(null); renderWeek(); renderStack(); closeSheet(true); showSeg("play"); toast("Nouveau deck. Bonne partie !"); };
   }
@@ -1931,7 +2011,7 @@ button, a, .folio, .parch, .lrow, .person, .cm-item, .wl-item, .mini, .scr-filte
     var aff = r.n >= MIN_N ? '<span class="big">' + Math.round(r.pct * 100) + ' %<small>taux d\'affinité · accord sur ' + r.agree + " carte" + (r.agree > 1 ? "s" : "") + " sur " + r.n + "</small></span>"
       : '<span class="fine">' + (r.n ? r.agree + " accord" + (r.agree > 1 ? "s" : "") + " sur " + r.n + " carte" + (r.n > 1 ? "s" : "") + " tranchée" + (r.n > 1 ? "s" : "") + " : il en faut " + MIN_N + " pour un taux fiable." : "Aucune carte tranchée en commun pour l'instant.") + "</span>";
     var sum = ["ok", "no", "wish", "meh"].map(function (d) { return '<span class="badge ' + d + '">' + GLYPH[d] + " " + LABEL[d] + " " + cnt[d] + "</span>"; }).join("") + '<span class="badge todo">À examiner ' + cnt.todo + "</span>";
-    var GRP = [["ok", "Vous : Aligné"], ["no", "Vous : Désaligné"], ["wish", "Vous : J'aimerais"], ["meh", "Vous : M'en fous"], ["todo", "Promesses à examiner"]];
+    var GRP = [["ok", "Vous : Aligné"], ["no", "Vous : Désaligné"], ["wish", "Vous : Affiner"], ["meh", "Vous : Non prioritaire"], ["todo", "Promesses à examiner"]];
     var body = GRP.map(function (g) {
       var list = cards.filter(function (c) { return (S.dec[c.id] ? S.dec[c.id].d : "todo") === g[0]; });
       if (!list.length) return "";
@@ -2185,8 +2265,8 @@ button, a, .folio, .parch, .lrow, .person, .cm-item, .wl-item, .mini, .scr-filte
       '<button class="mai-link" id="mai-galaxy">Voir ma galaxie</button></section>';
     // Le Puits aux souhaits
     var puits = '<section class="parch mai-sec" aria-label="Le Puits aux souhaits"><h3>Le Puits aux souhaits</h3>' +
-      '<p class="rubric">Vos « J\'aimerais » et vos « M\'en fous » y tombent, chacun de sa couleur, avec la mesure que vous auriez proposée. Ils restent sur votre appareil.</p>' +
-      '<div class="well"><canvas id="well" aria-label="Animation : vos souhaits et vos m\'en fous flottent dans un puits"></canvas></div><p class="well-cap" id="well-cap"></p>' +
+      '<p class="rubric">Vos « Affiner » et vos « Non prioritaire » y tombent, chacun de sa couleur, avec la mesure que vous auriez proposée. Ils restent sur votre appareil.</p>' +
+      '<div class="well"><canvas id="well" aria-label="Animation : vos mesures à affiner et vos thèmes non prioritaires flottent dans un puits"></canvas></div><p class="well-cap" id="well-cap"></p>' +
       '<div class="wl-tabs" id="wl-tabs" role="group" aria-label="Afficher"></div><div class="wl-list" id="wl-list"></div></section>';
     // La communauté
     var commu = '<section class="parch mai-sec commu" aria-label="La communauté"><h3>Une communauté, pas une audience</h3>' +
@@ -2196,7 +2276,7 @@ button, a, .folio, .parch, .lrow, .person, .cm-item, .wl-item, .mini, .scr-filte
       '<li><a href="' + mailto("Rejoindre la relecture") + '">Rejoindre la relecture</a><span>Vérifier les sources avant publication, à plusieurs regards.</span></li>' +
       '<li><a href="/newsletter">Recevoir la lettre Magnitude</a><span>Les numéros, les analyses complètes et l\'abonnement gratuit.</span></li></ul>' +
       '<p class="mail">Écrivez-nous : <a href="mailto:' + MAIL + '">' + MAIL + "</a></p></section>";
-    var promise = '<aside class="parch promise"><b>Notre promesse</b><p>Vos choix, vos souhaits et votre galaxie sont calculés et gardés dans ce navigateur. Aucun compte, aucun traceur.</p><p>Le score compare vos choix aux positions documentées des candidats, sur les cartes « dans le score » seulement. Les cartes « J\'aimerais » et « M\'en fous » n\'entrent pas dans le calcul.</p><p>Une consultation de la communauté ne sera jamais présentée comme un sondage.</p></aside>';
+    var promise = '<aside class="parch promise"><b>Notre promesse</b><p>Vos choix, vos notes et votre galaxie sont calculés et gardés dans ce navigateur. Aucun compte, aucun traceur.</p><p>Le score compare vos choix aux positions documentées des candidats, sur les cartes « dans le score » seulement. Les cartes « Affiner » et « Non prioritaire » n\'entrent pas dans le calcul.</p><p>Une consultation de la communauté ne sera jamais présentée comme un sondage.</p></aside>';
     $("#mai-wrap").innerHTML = head + preuves + lecture + puits + commu + promise;
     $("#mai-galaxy").onclick = function () { showView("deck"); showSeg("mine"); };
     Array.prototype.forEach.call(document.querySelectorAll(".mx [data-card]"), function (b) { b.onclick = function () { goToCard(b.dataset.card); }; });
@@ -2206,7 +2286,7 @@ button, a, .folio, .parch, .lrow, .person, .cm-item, .wl-item, .mini, .scr-filte
   function renderWell() {
     var all = Object.keys(S.dec).filter(function (id) { var d = S.dec[id].d; return d === "wish" || d === "meh"; }).sort(function (a, b) { return S.dec[b].t - S.dec[a].t; });
     var nW = all.filter(function (id) { return S.dec[id].d === "wish"; }).length, nM = all.length - nW;
-    $("#wl-tabs").innerHTML = [["all", "", "Tout", all.length], ["wish", "wish", "★ J'aimerais", nW], ["meh", "meh", "∅ M'en fous", nM]].map(function (o) {
+    $("#wl-tabs").innerHTML = [["all", "", "Tout", all.length], ["wish", "wish", GLYPH.wish + " " + LABEL.wish, nW], ["meh", "meh", GLYPH.meh + " " + LABEL.meh, nM]].map(function (o) {
       return '<button class="' + o[1] + '" data-m="' + o[0] + '" aria-pressed="' + (wellMode === o[0]) + '">' + o[2] + " (" + o[3] + ")</button>"; }).join("");
     Array.prototype.forEach.call(document.querySelectorAll("#wl-tabs button"), function (b) { b.onclick = function () { wellMode = b.dataset.m; renderWell(); }; });
     var shown = all.filter(function (id) { return wellMode === "all" || S.dec[id].d === wellMode; });
@@ -2214,9 +2294,9 @@ button, a, .folio, .parch, .lrow, .person, .cm-item, .wl-item, .mini, .scr-filte
       var d = S.dec[id], c = byId[id];
       return '<button class="wl-item" data-id="' + id + '"><span class="verdict ' + d.d + '">' + LABEL[d.d] + '</span><span class="titre">' + esc(c.mesure) + "</span>" +
         (d.note ? '<span class="billet">« ' + esc(d.note) + " »</span>" : '<span class="nonote">' + (d.d === "wish" ? "Sans mesure proposée" : "Sans sujet proposé") + "</span>") + "</button>";
-    }).join("") : '<p class="wl-empty">' + (all.length ? "Rien dans cette couleur pour l'instant." : "Le puits est encore vide. Glissez une carte vers le haut (J'aimerais) ou vers le bas (M'en fous).") + "</p>";
+    }).join("") : '<p class="wl-empty">' + (all.length ? "Rien dans cette couleur pour l'instant." : "Le puits est encore vide. Glissez une carte vers le haut (Affiner) ou vers le bas (Non prioritaire).") + "</p>";
     Array.prototype.forEach.call(document.querySelectorAll(".wl-item"), function (b) { b.onclick = function () { editSheet(b.dataset.id); }; });
-    $("#well-cap").textContent = all.length ? nW + " souhait" + (nW > 1 ? "s" : "") + " en bleu, " + nM + " m'en fous en gris, parmi les reflets du puits." : "Chaque « J'aimerais » y deviendra un point bleu, chaque « M'en fous » un point gris.";
+    $("#well-cap").textContent = all.length ? nW + " mesure" + (nW > 1 ? "s" : "") + " à affiner en bleu, " + nM + " thème" + (nM > 1 ? "s" : "") + " non prioritaire" + (nM > 1 ? "s" : "") + " en gris, parmi les reflets du puits." : "Chaque « Affiner » y deviendra un point bleu, chaque « Non prioritaire » un point gris.";
     startWell(all);
   }
   var wellRAF = null;
@@ -2280,7 +2360,8 @@ button, a, .folio, .parch, .lrow, .person, .cm-item, .wl-item, .mini, .scr-filte
   function toast(html) { var t = $("#toast"); t.innerHTML = html; t.hidden = false; clearTimeout(toastT); toastT = setTimeout(function () { t.hidden = true; }, 3600); }
 
   // ---------- Introduction : le maître du jeu (2026-10-30, remplace l'escape game) ----------
-  // Accueil → Vos priorités → première carte guidée (retourner, trancher, premier lot de 5).
+  // Accueil → École des gestes (2026-11-01) → Vos priorités → première carte guidée
+  // (retourner, trancher, premier lot de 5).
   function welcome() {
     var ov = el('<div class="overlay onb" role="dialog" aria-modal="true" aria-label="Bienvenue"><div class="ob">' + MJ_HAT +
       '<div class="step">VOTRE MAÎTRE DU JEU</div><h2>Bienvenue dans La&nbsp;Pioche&nbsp;Politique.</h2><div class="step">FIND YOUR CANDIDATE</div>' +
@@ -2288,8 +2369,73 @@ button, a, .folio, .parch, .lrow, .person, .cm-item, .wl-item, .mini, .scr-filte
       "<p>À la fin, vous saurez de quel candidat vous êtes le plus proche. Vos choix restent sur votre appareil.</p>" +
       '<div class="row-btns"><button class="btn" id="o-next">Commencer</button></div></div></div>');
     document.body.appendChild(ov);
-    $("#o-next", ov).onclick = function () { ov.remove(); prioPicker(false, startTuto); };
+    $("#o-next", ov).onclick = function () { ov.remove(); gestureSchool(false, function () { prioPicker(false, startTuto); }); };
     setTimeout(function () { $("#o-next", ov).focus(); }, 30);
+  }
+
+  // École des gestes : les 4 gestes, un par un, sur une carte d'exemple qui n'est pas dans le
+  // paquet (aucun vote enregistré). Seul le geste demandé fait avancer.
+  var SCHOOL = [["r", "ok", "à droite"], ["l", "no", "à gauche"], ["u", "wish", "vers le haut"], ["d", "meh", "vers le bas"]];
+  var SCHOOL_CARD = { n: "00", theme: "Exemple · ne compte pas", icon: "M12 7v5l3 2M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18z", accroche: "Une pause goûter à 16 h pour tout le monde, au travail comme à l'école." };
+  function gestureSchool(replay, done) {
+    var i = 0, card = null, lock = false;
+    var ov = el('<div class="overlay onb train" role="dialog" aria-modal="true" aria-label="École des gestes"><div class="ob">' +
+      '<div class="t-head"><div class="step" id="t-step"></div><div class="t-dots" aria-hidden="true">' + SCHOOL.map(function () { return "<i></i>"; }).join("") + "</div></div>" +
+      '<div class="t-stage" id="t-stage"></div><div class="t-tx" id="t-tx" aria-live="polite"></div>' +
+      '<div class="pad t-pad" id="t-pad">' + $("#pad").innerHTML + "</div>" +
+      '<button type="button" class="t-skip" id="t-skip">' + (replay ? "Fermer" : "Passer l'entraînement") + "</button></div></div>");
+    document.body.appendChild(ov);
+    var box = $("#t-stage", ov), tx = $("#t-tx", ov);
+    function want() { return SCHOOL[i]; }
+    function deal() {
+      var g = want();
+      card = el('<div class="card revealed still t-card" tabindex="0" data-want="' + g[0] + '" aria-label="Carte d\'exemple : ' + esc(SCHOOL_CARD.accroche) + '"><div class="flip3d">' + frontHTML(SCHOOL_CARD) + "</div></div>");
+      box.innerHTML = ""; box.appendChild(card); bindTrain(card, box, attempt);
+      $("#t-step", ov).textContent = "GESTE " + (i + 1) + " SUR " + SCHOOL.length;
+      Array.prototype.forEach.call(ov.querySelectorAll(".t-dots i"), function (d, k) { d.className = k < i ? "on" : k === i ? "cur" : ""; });
+      Array.prototype.forEach.call(ov.querySelectorAll(".t-pad button"), function (b) { b.classList.toggle("want", b.dataset.dir === g[0]); });
+      tx.innerHTML = '<h2 class="t-name ' + g[1] + '"><span class="t-arrow" aria-hidden="true">' + ARROW[g[1]] + "</span> " + LABEL[g[1]] + "</h2>" +
+        '<p class="t-desc">«&nbsp;' + DESC[g[1]] + ".&nbsp;»</p>" +
+        '<p class="t-how">Glissez la carte <b>' + g[2] + "</b>, ou flèche " + ARROW[g[1]] + " du clavier, ou bouton «&nbsp;" + LABEL[g[1]] + "&nbsp;».</p>";
+      lock = false;
+      try { card.focus({ preventScroll: true }); } catch (e) {}
+    }
+    function attempt(dir) {
+      if (lock || !card) return;
+      var g = want();
+      if (dir !== g[0]) {
+        trainBack(card); card.classList.remove("miss"); void card.offsetWidth; card.classList.add("miss");
+        var miss = $(".t-miss", tx) || tx.appendChild(el('<p class="t-miss"></p>'));
+        miss.textContent = "Pas tout à fait : c'était « " + LABEL[DIRS[dir]] + " ». Glissez " + g[2] + ".";
+        return;
+      }
+      lock = true;
+      var w = window.innerWidth, h = window.innerHeight, to = { r: [w, 40, 25], l: [-w, 40, -25], u: [0, -h, 0], d: [0, h, 0] }[dir];
+      var st = card.querySelector(".stamp." + dir); if (st) st.style.opacity = 1;
+      card.classList.add("anim", "drag"); card.style.transform = "translate(" + to[0] + "px," + to[1] + "px) rotate(" + to[2] + "deg)"; card.style.opacity = "0";
+      tx.innerHTML = '<p class="t-ok">' + GLYPH[g[1]] + " " + LABEL[g[1]] + " : c'est compris.</p>";
+      setTimeout(function () { i++; if (i < SCHOOL.length) deal(); else recap(); }, reduce ? 500 : 800);
+    }
+    function recap() {
+      card = null;
+      $("#t-step", ov).textContent = "LES 4 GESTES";
+      Array.prototype.forEach.call(ov.querySelectorAll(".t-dots i"), function (d) { d.className = "on"; });
+      box.remove(); $("#t-pad", ov).remove();
+      tx.innerHTML = "<h2>Vous connaissez les gestes.</h2>" +
+        '<ul class="t-recap">' + SCHOOL.map(function (g) { return '<li class="' + g[1] + '"><b>' + ARROW[g[1]] + " " + LABEL[g[1]] + "</b><span>" + DESC[g[1]] + "</span></li>"; }).join("") + "</ul>" +
+        "<p>Aligné et Désaligné vous rapprochent ou vous éloignent des candidats. Affiner et Non prioritaire ne comptent pas dans le score : ils ajoutent ou retirent le thème de vos priorités.</p>" +
+        '<div class="row-btns"><button class="btn" id="t-go">' + (replay ? "Retour au jeu" : "Je suis prêt") + "</button></div>";
+      $("#t-skip", ov).remove();
+      $("#t-go", ov).onclick = finish; $("#t-go", ov).focus();
+    }
+    function finish() { ov.remove(); done(); }
+    Array.prototype.forEach.call(ov.querySelectorAll(".t-pad button"), function (b) { b.onclick = function () { attempt(b.dataset.dir); }; });
+    ov.addEventListener("keydown", function (e) {
+      var k = { ArrowRight: "r", ArrowLeft: "l", ArrowUp: "u", ArrowDown: "d" }[e.key];
+      if (k && card) { e.preventDefault(); attempt(k); }
+    });
+    $("#t-skip", ov).onclick = finish;
+    deal();
   }
   // Vos priorités : 1 à 5 thèmes, cartes et thèmes sans carte mêlés (ordre alphabétique).
   function prioPicker(edit, done) {
@@ -2338,13 +2484,13 @@ button, a, .folio, .parch, .lrow, .person, .cm-item, .wl-item, .mini, .scr-filte
   var FEEDBACK = {
     ok: "<b>Aligné, c'est noté :</b> les candidats du même avis se rapprochent de vous.",
     no: "<b>Désaligné, c'est noté :</b> les candidats qui portent cette mesure s'éloignent.",
-    wish: "<b>J'aimerais, c'est noté :</b> ce sujet devient une priorité ; les candidats muets dessus perdent des points.",
-    meh: "<b>M'en fous, c'est noté :</b> ce sujet ne départagera pas les candidats."
+    wish: "<b>Affiner, c'est noté :</b> ce thème devient une priorité ; les candidats muets dessus perdent des points.",
+    meh: "<b>Non prioritaire, c'est noté :</b> ce thème ne départagera pas les candidats."
   };
   function coach(extra) {
     var box = $("#coach"), t = S.tuto, h = "";
     if (t === "flip") h = "<p><b>Votre première carte mystère.</b> Le thème est au dos. Touchez la carte pour révéler la mesure.</p>" + (extra || "");
-    else if (t === "vote") h = "<p><b>Tranchez d'un geste ou d'une flèche :</b></p>" +
+    else if (t === "vote") h = "<p><b>À vous : tranchez d'un geste, comme à l'entraînement.</b></p>" +
       '<ul class="cc-guide">' + [["ok", "→"], ["no", "←"], ["wish", "↑"], ["meh", "↓"]].map(function (g) { return '<li class="' + g[0] + '"><b>' + g[1] + " " + LABEL[g[0]] + "</b> : " + SHORT[g[0]] + "</li>"; }).join("") + "</ul>";
     else if (t === "lot") { var k = Math.min(LOT - pending().length, queue().length); if (k > 0) h = "<p>" + (extra ? extra + " " : "") + "Encore <b>" + k + " carte" + (k > 1 ? "s" : "") + "</b> avant que les candidats se dévoilent.</p>"; }
     else if (t === "go") h = "<p><b>Vous avez compris le jeu.</b> Continuez : toutes les 5 cartes, les candidats se dévoilent. À la fin, je vous ouvre votre deck.</p>";

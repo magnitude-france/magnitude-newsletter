@@ -9,21 +9,31 @@ la page d'accueil de magnitude.pub (copié par
 l'ancienne accueil Observable est servie à /newsletter.
 
 ## Ce que fait le prototype
-- Introduction par un « maître du jeu » (2026-10-30) : accueil, écran
-  « Vos priorités » (1 à 5 thèmes parmi ceux des cartes et des thèmes sans
-  carte, `THEMES_ATTENDUS`), puis première partie guidée (retourner la carte,
-  les 4 gestes montrés par la carte, commentaire du premier vote, première
-  révélation commentée). À la fin du paquet, bascule automatique sur Mon deck.
+- Introduction par un « maître du jeu » (2026-10-30) : accueil, **école des
+  gestes** (2026-11-01), écran « Vos priorités » (1 à 5 thèmes parmi ceux des
+  cartes et des thèmes sans carte, `THEMES_ATTENDUS`), puis première partie
+  guidée (retourner la carte, rappel des 4 gestes, commentaire du premier
+  vote, première révélation commentée). À la fin du paquet, bascule
+  automatique sur Mon deck.
+- École des gestes (2026-11-01) : le joueur fait les 4 gestes un par un
+  (→ ← ↑ ↓) sur une carte d'exemple fictive, « ne compte pas » ; chaque étape
+  montre le nom et le sens du geste, seul le geste demandé fait avancer, un
+  autre geste ramène la carte avec une correction. Récapitulatif final, lien
+  « Passer », et « Revoir les gestes » dans Mon deck. Aucun vote enregistré.
 - Carte mystère : le verso montre le thème sur un motif holographique tiré au
   hasard à chaque carte ; un toucher (ou Entrée, Espace, une flèche) la
   retourne avec un zoom. Le recto, allégé : thème, accroche directe
   (`ACCROCHES`, relues le 2026-10-30), chiffre-clé, graphique européen réduit à
   5 lignes au plus (la ligne France toujours gardée), bouton « Comprendre ·
   sources » vers la fiche complète.
-- Swipe dans 4 directions : → Aligné (d'accord), ← Désaligné (pas d'accord),
-  ↑ J'aimerais (le sujet compte, la mesure est à revoir), ↓ M'en fous (pas ma
-  priorité, un autre sujet passerait avant) — souris, doigt, flèches du
-  clavier ou boutons ; la carte se lit avant de se trancher.
+- Swipe dans 4 directions (libellés renommés le 2026-11-01 ; clés internes
+  `wish` / `meh` inchangées pour les decks déjà enregistrés) :
+  → Aligné (je suis plutôt en faveur de cette mesure), ← Désaligné (je suis
+  plutôt en défaveur de cette mesure), ↑ Affiner, ex-« J'aimerais » (je suis
+  d'accord avec la thématique mais pas avec le contenu de la mesure),
+  ↓ Non prioritaire, ex-« M'en fous » (je ne trouve pas la thématique
+  prioritaire par rapport à d'autres) — souris, doigt, flèches du clavier ou
+  boutons ; la carte se lit avant de se trancher.
 - Tirage d'affilée, sans fenêtre « qui est le candidat » entre deux cartes
   (décision du 2026-10-24) : les candidats se révèlent par lots de 5 cartes
   (et à la dernière carte du paquet). Le lot retourne les cartes, montre la
@@ -43,11 +53,11 @@ l'ancienne accueil Observable est servie à /newsletter.
   priorités** (2026-10-30) : une carte d'un thème prioritaire pèse double, et
   un candidat sans position documentée sur une carte prioritaire dans le
   score compte un demi-désaccord (« silence »). Thèmes prioritaires = choisis
-  à l'introduction + ceux des cartes votées J'aimerais − ceux des cartes
-  votées M'en fous. Seuil de 4 cartes documentées, égalités affichées,
+  à l'introduction + ceux des cartes votées Affiner − ceux des cartes
+  votées Non prioritaire. Seuil de 4 cartes documentées, égalités affichées,
   classement de tous les candidats toujours visible.
 - Mon deck : bloc « Vos priorités » (modifiable), filtres du recueil par
-  choix (Aligné, Désaligné, J'aimerais, M'en fous, à trancher).
+  choix (Aligné, Désaligné, Affiner, Non prioritaire, à trancher).
 - « Redistribuer une pioche » (fin du paquet et Mon deck) : les mesures sont
   remélangées (ordre gardé dans `localStorage`, `order`) et se rejouent depuis
   le début ; les choix sont effacés, les priorités gardées. « Tout
@@ -60,14 +70,21 @@ l'ancienne accueil Observable est servie à /newsletter.
   réseau ; export / import du deck par copier-coller.
 
 ## Limites connues (voir le vault, `07-Recherches/INV-03-faisabilite-scoring`)
-- La matrice des positions n'est couverte qu'à 42 % : le score est biaisé
-  mécaniquement et **ne doit pas être publié** en l'état.
+- La matrice des positions est couverte à 73,5 % (172 / 234) depuis le sprint
+  INV-05 du 2026-11-01 (vault, `07-Recherches/INV-05-sprint-positions-lisnard`,
+  positions appliquées par son `couverture.py --appliquer`) : 14 cartes sur 18
+  dans le score. Les positions INV-04 et INV-05 vivent dans `deck-data.json`
+  mais pas encore dans `magnitude-analysis` (reports publiés). Le score reste
+  biaisé et **ne doit pas être publié** en l'état.
 - Teintes de maison provisoires (tirage déterministe contraint, graine
   `magnitude-2027`) — règle des couleurs à trancher en comité.
 - Test de neutralité (`test_neutralite.py`, trois lectures dont une avec
   priorités) en **échec** au 2026-10-30, avant comme après la pondération :
   sur les 7 cartes dans le score, Philippe sort n°1 chez ~44 % des
-  utilisateurs simulés qui obtiennent une galaxie (borne : 12,5 %).
+  utilisateurs simulés qui obtiennent une galaxie (borne : 12,5 %). Toujours
+  en échec après INV-05 (2026-11-01, 14 cartes), mais moins biaisé : 5,5 %
+  d'utilisateurs sans galaxie (43 % avant), part maximale 23 % (Glucksmann),
+  5 candidats hors bornes (10 avant), Lisnard 1,8 % (0 % avant).
 - Polices : Literata (lecture), IM Fell English (grands titres), La Belle
   Aurore (quelques encarts manuscrits), SIL OFL, intégrées dans `deck.html`.
 
